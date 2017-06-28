@@ -1,0 +1,46 @@
+:local .consoleWrapper {
+	margin-top: 20px;
+	height: 30%;
+}
+	:local .consoleWrapper h4 a {
+		float: right;
+	}
+	:local .console {
+		width: 100%;
+		height: calc(100% - 34px);
+		border: 1px solid #e5e5e5;
+		background: white;
+		font-size: 1rem;
+		overflow: scroll;
+	}
+
+		:local .console pre {
+			margin: 5px;
+			color: #333;
+		}
+		:local .console pre div {
+			border-bottom: 1px solid rgba(0, 0, 0, .1);
+			padding: 5px;
+		}
+		:local .console pre div:last-of-type {
+			background: #fffef1;
+			animation: fadeout 3s;
+			animation-iteration-count: 1;
+		}
+		:local .console .timestamp {
+			color: #bbb;
+		}
+		:local .console .error {
+			color: #e6412f;
+		}
+		:local .console .success {
+			color: #00b491;
+		}
+		:local .console .info {
+			color: #3498db;
+		}
+
+@keyframes :local(fadeout) {
+	0% {background-color: #FFFDD0;}
+	100% {background-color: #fffef1;}
+}
