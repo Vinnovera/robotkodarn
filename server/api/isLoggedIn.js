@@ -1,23 +1,22 @@
-
 const isLoggedIn = (request, reply) => {
-	reply(request.auth).code(200)
+  reply(request.auth).code(200)
 }
 
 exports.register = (server, options, next) => {
-	server.route([
-	{
-		method: 'GET',
-		path: '/api/isLoggedIn',
-		config: {
-			handler: isLoggedIn,
-			auth: 'session'
-		}
-	}
-	])
+  server.route([
+    {
+      method: 'GET',
+      path: '/api/isLoggedIn',
+      config: {
+        handler: isLoggedIn,
+        auth: 'session'
+      }
+    }
+  ])
 
-	next()
+  next()
 }
 
 exports.register.attributes = {
-	name: 'administrators'
+  name: 'administrators'
 }

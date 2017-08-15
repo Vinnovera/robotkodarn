@@ -1,16 +1,18 @@
+// TODO: Disabling is only temp.
+/* eslint-disable */
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import { isLoggedIn, signOut } from '../../actions/authentication'
-import { createWorkshop, 
-         getWorkshopsByUserId, 
+import { createWorkshop,
+         getWorkshopsByUserId,
          setSelectedWorkshop,
          setSelectedPart,
-         setSelectedLink, 
+         setSelectedLink,
          removeWorkshop,
-         removeSelectedPart, 
+         removeSelectedPart,
          removeSelectedLink,
-         addPart, 
+         addPart,
          addLink,
          changeTitle } from '../../actions/workshops'
 
@@ -77,7 +79,7 @@ export class AdminPage extends Component {
     handleCreateWorkshop(e) {
         e.preventDefault()
         var newRandomPin = Math.floor(1000 + Math.random() * 9000) // Generate a 4-pin code example: 4576
-        
+
         this.setState({
             pincode: newRandomPin,
             addWorkshop: false
@@ -200,7 +202,7 @@ export class AdminPage extends Component {
                 <select onChange={this.handleSelectWorkshop} multiple size="6">
                     {workshops.map(i => <option key={i._id}>{i.title}</option>)}
                 </select>
-                {this.state.addWorkshop == true ? 
+                {this.state.addWorkshop == true ?
                 <div>
                     <h3>Skapa ny workshop</h3>
                     <form onSubmit={this.handleCreateWorkshop.bind(this)}>
@@ -208,7 +210,7 @@ export class AdminPage extends Component {
                         <input ref="name" onChange={e => this.setState({title: e.target.value})} id="name" type="text" />
                         <input className="button primary" type="submit" value="Skapa workshop" />
                     </form>
-                </div> : 
+                </div> :
                 <input className="button primary" type="button" onClick={() => {this.state.addWorkshop == false ? this.setState({addWorkshop: true}) : null}} value="Lägg till" />}
             </div>
         )
@@ -226,7 +228,7 @@ export class AdminPage extends Component {
                     <select onChange={this.handleSelectWorkshopPart} multiple size="6">
                         {selectedWorkshop.parts.map(i => <option key={i._id}>{i.title}</option>)}
                     </select>
-                    {this.state.addPart == true ? 
+                    {this.state.addPart == true ?
                     <div>
                         <h3>Lägg till delmoment</h3>
                         <form onSubmit={this.handleAddPart.bind(this)}>
@@ -235,7 +237,7 @@ export class AdminPage extends Component {
                             <label>Kod</label>
                             <textarea onChange={e => this.setState({code: e.target.value})} ></textarea>
                             <input type="submit" value="Spara" />
-                        </form> 
+                        </form>
                     </div> :
                     <input className="button primary" type="button" onClick={() => {this.state.addPart == false ? this.setState({addPart: true}) : null}} value="Lägg till" />}
                     {this.props.selectedPartIndex != null ? <input className="button danger" type="button" onClick={() => this.handleRemovePart()} value="Ta bort" /> : ''}
@@ -256,7 +258,7 @@ export class AdminPage extends Component {
                     <select onChange={this.handleSelectWorkshopLink} multiple size="6">
                         {selectedWorkshop.links.map(i => <option key={i._id}>{i.title}</option>)}
                     </select>
-                    {this.state.addLink == true ? 
+                    {this.state.addLink == true ?
                     <div>
                     <h3>Lägg till referenslänk</h3>
                         <form onSubmit={this.handleCreateLink.bind(this)}>
@@ -266,7 +268,7 @@ export class AdminPage extends Component {
                             <input type="url" onChange={e => this.setState({url: e.target.value})} />
                             <input type="submit" value="Spara" />
                         </form>
-                    </div> : 
+                    </div> :
                     <input className="button primary" type="button" onClick={() => this.state.addLink == false ? this.setState({addLink: true}) : this.setState({addLink: false})} value="Lägg till" />}
                     {this.props.selectedLinkIndex != null ? <input className="button danger" type="button" onClick={() => this.handleRemoveLink()} value="Ta bort" /> : ''}
                 </div>
