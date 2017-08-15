@@ -1,13 +1,12 @@
 import Joi from 'joi'
-import CookieAuth from 'hapi-auth-cookie' // Not needed?
+import CookieAuth from 'hapi-auth-cookie' // TODO: Not needed?
 import { Workshop, workshopValidation } from '../models/workshop'
 
 // -----------------------------------------------------------------------------
 // Get all workshops [GET]
 // -----------------------------------------------------------------------------
 const getWorkshops = (request, reply) => {
-  // Why the commented out code?
-  Workshop.find({ /* userId: name._id */ }, (error, workshops) => {
+  Workshop.find({}, (error, workshops) => {
     if (error) {
       return reply(error).code(500)
     }

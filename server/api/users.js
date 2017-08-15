@@ -4,10 +4,7 @@ import User from '../models/user'
 // Get all the users [GET]
 // -----------------------------------------------------------------------------
 const getUsers = (request, reply) => {
-  const name = request.auth.artifacts
-
-  // QUESTION: Why is 'email: name.email' commented out?
-  User.find({ /* email: name.email */ }, (error, users) => {
+  User.find({}, (error, users) => {
     if (error) {
       return reply(error).code(500)
     }

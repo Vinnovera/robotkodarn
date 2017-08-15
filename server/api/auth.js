@@ -5,6 +5,8 @@ import User from '../models/user'
 // -----------------------------------------------------------------------------
 // Get one user using email [POST]
 // -----------------------------------------------------------------------------
+
+// TODO: Discuss the rule 'consistent-return'
 const signIn = (request, reply) => {
   if (!request.payload.email || !request.payload.password) {
     return reply({ message: 'Missing email or password' }).code(401)
@@ -13,16 +15,17 @@ const signIn = (request, reply) => {
   User.findOne({ email: request.payload.email }, (error, user) => {
     if (error) return reply(error).code(500)
 
+    // Email found, check if password is correct
     if (user) {
-      // Email found, check if password is correct
-
       const { _id } = user
 
       request.cookieAuth.set({ _id })
 
-      return (user.password === request.payload.password)
-        ? reply({ message: 'Logged in' }).code(200)
-        : reply({ message: 'Wrong username and/or password' }).code(401)
+      if (user.password === request.payload.password) {
+        reply({ message: 'Logged in' }).code(200)
+      } else {
+        reply({ message: 'Wrong username and/or password' }).code(401)
+      }
     } else {
       // Email doesn't exist in db
       reply({ message: 'Wrong username and/or password' }).code(401)

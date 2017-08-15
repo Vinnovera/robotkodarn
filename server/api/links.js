@@ -25,7 +25,7 @@ const getLink = (request, reply) => {
     }
 
     // FIXME: Is there a reason we are using == instead of === ?
-    const link = foundWorkshop.links.filter((link) => link._id == request.params.lid)[0]
+    const link = foundWorkshop.links.filter(item => item._id == request.params.lid)[0]
 
     return reply(link).code(200)
   })
@@ -42,7 +42,7 @@ const addLink = (request, reply) => {
 
     const link = new Link(request.payload)
 
-    // QUESTION: 'value' is defined but not used. Do we need it?
+    // TODO: 'value' is defined but not used. Do we need it?
     Joi.validate(link, linkValidation, (validationError, value) => {
       if (validationError) {
         return reply({ error: validationError }).code(400)

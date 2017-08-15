@@ -1,5 +1,3 @@
-// TODO: Disabling is only temp.
-/* eslint-disable */
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 

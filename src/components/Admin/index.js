@@ -67,6 +67,8 @@ export class Admin extends Component {
     this.props.dispatch(toggleUserRegister(loginOrRegister))
   }
 
+  // FIXME: Is ref needed anywhere else? Consider deprication.
+  // Why bind?
   renderContent() {
     if (this.props.loginOrRegister === 'login') {
       return (

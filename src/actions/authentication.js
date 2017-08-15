@@ -12,7 +12,7 @@ export const signIn = (credentials, path) => (dispatch) => {
       'content-type': 'application/json'
     }
   })
-    .then(response => dispatch(routeActions.push(path)))
+    .then(() => dispatch(routeActions.push(path)))
     .catch(error => console.log(error))
 }
 
@@ -22,7 +22,7 @@ export const signIn = (credentials, path) => (dispatch) => {
 export const signOut = path => (dispatch) => {
   axios.get('/auth/logout')
 
-    .then(response => dispatch(routeActions.push(path)))
+    .then(() => dispatch(routeActions.push(path)))
     .catch(error => console.log(error))
 }
 
@@ -62,17 +62,15 @@ export const toggleUserRegister = loginOrRegister => (dispatch) => {
 // and posts this to the server
 // -----------------------------------------------------------------------------
 export const registerUser = credentials => (dispatch) => {
-  credentials.admin = false
-  const data = JSON.stringify(credentials)
+  const data = JSON.stringify(Object.assign({}, credentials, { admin: false }))
 
   axios.post('/api/user', data, {
     headers: {
       'content-type': 'application/json'
     }
   })
-    .then(response => window.alert('User is registered'))
+    .then(() => window.alert('User is registered'))
     .catch((error) => {
-      console.log(error)
       dispatch(routeActions.push('/admin'))
     })
 }

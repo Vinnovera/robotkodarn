@@ -1,30 +1,22 @@
 module.exports = {
-    "extends": "airbnb",
-    "plugins": [
-      "react"
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": "airbnb",
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "semi": [
+      "error",
+      "never"
     ],
-    "rules": {
-      "semi": [
-        "error",
-        "never"
-      ],
-      "comma-dangle": [
-        "error",
-        "never"
-      ],
-      "no-shadow": [
-        "error",
-        {
-        "allow": ["error", "part"]
-        }
-      ],
-      "no-underscore-dangle": "off",
-      "react/prop-types": 0,
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [".js", ".jsx"]
-        }
-      ]
-    }
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "no-underscore-dangle": "off",
+    "react/jsx-filename-extension": "off"
+  }
 };
