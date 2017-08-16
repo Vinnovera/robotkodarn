@@ -7,7 +7,7 @@ import {
   setSelectedWorkshop,
   setSelectedPart,
   setSelectedLink,
-  removeWorkshop,
+  removeSelectedWorkshop,
   removeSelectedPart,
   removeSelectedLink,
   addPart,
@@ -106,7 +106,6 @@ export class AdminPage extends Component {
     const selectedWorkshop = this.props.userWorkshops[index]
 
     if (confirm(`Vill du verkligen ta bort ${this.getSelectedWorkshopTitle()}?`)) {
-      // FIXME: removeSelectedWorkshop is undefined. Is this removeWorkshop (see top of file)
       this.props.dispatch(removeSelectedWorkshop(selectedWorkshop))
       this.props.dispatch(setSelectedWorkshop(null))
       setTimeout(() => this.props.dispatch(getWorkshopsByUserId()), 300) // Update workshop list
