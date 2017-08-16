@@ -16,6 +16,8 @@ module.exports = {
       "error",
       "never"
     ],
+    "import/no-named-as-default": "off", // Not working with common Redux pattern
+    "react/prop-types": "off", // TODO: Discuss, not working well with mapStateToProps
     "no-underscore-dangle": "off",
     "react/jsx-filename-extension": "off"
   }

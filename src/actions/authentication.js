@@ -36,6 +36,7 @@ export const isLoggedIn = path => (dispatch) => {
         type: 'IS_LOGGED_IN',
         payload: response.data.credentials.email
       })
+      // TODO: Replace with !== ?
       if (path != null) {
         dispatch(routeActions.push(path))
       }
@@ -71,6 +72,7 @@ export const registerUser = credentials => (dispatch) => {
   })
     .then(() => window.alert('User is registered'))
     .catch((error) => {
+      console.log(error)
       dispatch(routeActions.push('/admin'))
     })
 }
