@@ -86,7 +86,6 @@ ul {
 
 .container {
   margin: 0 auto;
-  /*padding: 0;*/
   width: calc(100% - 40px);
   background-color: rgba(0, 0, 0, .1);
 }
@@ -105,18 +104,12 @@ hr {
   border-top: 1px dashed rgba(0, 0, 0, .1);
   border-bottom: 1px dashed rgba(255, 255, 255, .2);
   width: 100%;
-  /*height: 6px;
-	background: url(http://ibrahimjabbari.com/english/images/hr-11.png) repeat-x 0 0;
-    border: 0;
-    opacity: .5;*/
 }
 
 
 /* BUTTONS */
 .button {
   display: inline-block;
-  /*margin-bottom: 0;*/
-  /*font-weight: normal;*/
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
@@ -125,7 +118,6 @@ hr {
   white-space: nowrap;
   padding: 10px 15px;
   font-size: 1rem;
-  /*line-height: 1.42857143;*/
   border-radius: 4px;
   color: white;
 }

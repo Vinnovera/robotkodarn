@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
 import styles from './sidebar.css'
 
-class ReferenceList extends React.Component {
+class ReferenceList extends Component {
   renderLinks() {
     return this.props.links.map((link) => {
       return (

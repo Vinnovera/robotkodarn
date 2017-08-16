@@ -41,14 +41,15 @@ const addUser = (request, reply) => {
       return reply({ error: 'User already exists' }).code(400)
     }
 
-    user = new User(request.payload)
+    let newUser = user
+    newUser = new User(request.payload)
 
-    user.save((error) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
+    newUser.save((userError) => {
+      if (userError) {
+        return reply({ userError: error.message }).code(400)
       }
 
-      return reply(user).code(200)
+      return reply(newUser).code(200)
     })
   })
 }
@@ -66,9 +67,9 @@ const updateUser = (request, reply) => {
 
     const i = Object.assign(foundUser, request.payload)
 
-    i.save((error, doc) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
+    i.save((updateError, doc) => {
+      if (updateError) {
+        return reply({ updateError: error.message }).code(400)
       }
 
       return reply(doc).code(200)

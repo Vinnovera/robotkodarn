@@ -3,6 +3,7 @@ module.exports = {
     "browser": true,
     "node": true
   },
+  "parser": "babel-eslint",
   "extends": "airbnb",
   "plugins": [
     "react"
@@ -16,9 +17,12 @@ module.exports = {
       "error",
       "never"
     ],
-    "import/no-named-as-default": "off", // Not working with common Redux pattern
-    "react/prop-types": "off", // TODO: Discuss, not working well with mapStateToProps
+    "import/no-named-as-default": "off",
+    "react/prop-types": "off",
     "no-underscore-dangle": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "arrow-body-style": "off",
+    "consistent-return": "off",
+    "class-methods-use-this": "off" // Skip forcing static until further investigation
   }
 };

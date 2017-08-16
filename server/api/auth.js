@@ -5,8 +5,6 @@ import User from '../models/user'
 // -----------------------------------------------------------------------------
 // Get one user using email [POST]
 // -----------------------------------------------------------------------------
-
-// TODO: Discuss the rule 'consistent-return'
 const signIn = (request, reply) => {
   if (!request.payload.email || !request.payload.password) {
     return reply({ message: 'Missing email or password' }).code(401)
@@ -63,7 +61,6 @@ exports.register = (server, options, next) => {
             'hapi-auth-cookie': {
               redirectTo: false
             }
-            // auth: 'session'
           }
         }
       },

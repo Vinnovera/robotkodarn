@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { syncHistory } from 'redux-simple-router'
@@ -16,9 +16,6 @@ import Admin from './components/Admin'
 import AdminPage from './components/AdminPage'
 
 import './index.css'
-
-// import './font-awesome.min.css'
-// import '../node_modules/react-fontawesome/lib/'
 
 const reduxRouterMiddleware = syncHistory(browserHistory)
 const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware, thunkMiddleware)(createStore)

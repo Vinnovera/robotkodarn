@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
@@ -40,13 +40,13 @@ class Sidebar extends Component {
         <div className="content">
           <h2>{this.props.workshop.title}</h2>
           <PartList parts={this.props.workshop.parts} />
-          <hr/>
+          <hr />
           <h2>Referenslänkar</h2>
           <ReferenceList links={this.props.workshop.links} />
         </div>
-        {/* TODO: Should this anchor not just be a button instead? See rule 'jsx-a11y/href-no-hash */}
+        {/* TODO: Replace with button asap. See rule 'jsx-a11y/href-no-hash */}
         <a className={styles.closeBtn} href="#" onClick={this.handleSidebarClick}>
-          <FA className={this.getCloseBtnClassName()} name='angle-double-left'/>
+          <FA className={this.getCloseBtnClassName()} name="angle-double-left" />
         </a>
       </div>
     )

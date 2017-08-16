@@ -38,7 +38,7 @@ export default handleActions({
     })
   },
 
-  CLEAR_CONSOLE: (state, action) => {
+  CLEAR_CONSOLE: (state) => {
     return ({
       ...state,
       consoleOutput: []

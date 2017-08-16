@@ -1,10 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setConsoleOutput, clearConsole } from '../../actions/editor'
 import styles from './console.css'
 
-// TODO: Discuss what to do with the rule "class-methods-use-this", then remove
-/* eslint-disable class-methods-use-this */
 export class Console extends Component {
   constructor(props) {
     super(props)
@@ -34,7 +32,7 @@ export class Console extends Component {
     this.props.dispatch(clearConsole())
   }
 
-  scrollToBottom() {
+  staticscrollToBottom() {
     const consoleWrapper = document.getElementById('console')
     consoleWrapper.scrollTop = consoleWrapper.scrollHeight - consoleWrapper.clientHeight
   }
@@ -42,6 +40,7 @@ export class Console extends Component {
   render() {
     return (
       <div className={styles.consoleWrapper}>
+        {/* TODO: Replace anchor with button */}
         <h4>Konsol <a onClick={this.handleClearConsoleClick} href="#">Rensa konsol</a></h4>
         <div className={styles.console} id="console">
           <pre>

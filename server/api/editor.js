@@ -10,9 +10,6 @@ const compileCode = (request, reply) => {
   }, (err, path, fd, cleanupCallback) => {
     if (err) throw err
 
-    // TODO: Remove commented out code if no longer used.
-    // let code = JSON.stringify(request.payload)
-
     fs.writeFileSync(path, request.payload)
 
     const pkg = {

@@ -1,13 +1,3 @@
-/* TODO: Remove commented out code if no longer used. */
-
-:local .snippetsWrapper {
-  /*background-color: rgba(0, 0, 0, .1);*/
-}
-
- :local .snippetsWrapper>a {
-  /*width: 80px;
-  height: 30px;*/
-  /*display: inline-block;*/
+:local .snippetsWrapper > a {
   margin-right: 10px;
-  /*width: 20%;*/
 }

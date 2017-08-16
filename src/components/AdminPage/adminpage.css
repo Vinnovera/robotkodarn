@@ -19,11 +19,9 @@
   padding: 10px 0;
 }
 
-/* FIXME: duplicate 'width' */
 :local .header button {
   color: black;
   display: inline-block;
-  width: 10%;
   width: auto;
 }
 

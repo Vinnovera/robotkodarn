@@ -1,5 +1,4 @@
 import Joi from 'joi'
-import CookieAuth from 'hapi-auth-cookie' // Defined but not used. Do we need it?
 import { Part, partValidation } from '../models/part'
 import { Workshop } from '../models/workshop'
 
@@ -25,7 +24,7 @@ const getPart = (request, reply) => {
       return reply(error).code(500)
     }
 
-    const part = foundWorkshop.parts.filter(part => part._id == request.params.pid )[0]
+    const part = foundWorkshop.parts.filter(item => item._id === request.params.pid)[0]
 
     return reply(part).code(200)
   })
@@ -42,11 +41,8 @@ const addPart = (request, reply) => {
 
     const part = new Part(request.payload)
 
-    Joi.validate(part, partValidation, (validationError, value) => {
-      // Are these console.log still needed?
-      console.log(part)
-      console.log(request.payload)
-
+    // 'value' exists but is not in use, hence: commented out.
+    Joi.validate(part, partValidation, (validationError, /* value */) => {
       if (validationError) {
         return reply({ error: validationError }).code(400)
       }
@@ -73,13 +69,11 @@ const updatePart = (request, reply) => {
       return reply(error).code(500)
     }
 
-    // Why == instead of === ?
-    const partToUpdate = foundWorkshop.parts.filter(part => part._id == request.params.pid)[0]
-
+    const partToUpdate = foundWorkshop.parts.filter(part => part._id === request.params.pid)[0]
     const index = foundWorkshop.parts.indexOf(partToUpdate)
     const newPart = Object.assign(partToUpdate, request.payload)
 
-    Joi.validate(newPart, partValidation, (validationError, value) => {
+    Joi.validate(newPart, partValidation, (validationError, /* value */) => {
       if (validationError) {
         return reply({ error: validationError }).code(400)
       }
@@ -106,13 +100,13 @@ const deletePart = (request, reply) => {
       return reply(error).code(500)
     }
 
-    const partToDelete = foundWorkshop.parts.filter(part => part._id == request.params.pid)[0]
+    const partToDelete = foundWorkshop.parts.filter(part => part._id === request.params.pid)[0]
 
     foundWorkshop.parts.splice(foundWorkshop.parts.indexOf(partToDelete), 1)
 
-    foundWorkshop.save((error) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
+    foundWorkshop.save((partError) => {
+      if (partError) {
+        return reply({ partError: error.message }).code(400)
       }
 
       return reply(foundWorkshop).code(200)

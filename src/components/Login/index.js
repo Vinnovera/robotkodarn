@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'redux-simple-router'
 import { findWorkshopByPin } from '../../actions/workshops'
 import styles from './login.css'
-import animate from '../../animate.css'
 
 export class Login extends Component {
   constructor(props) {
@@ -60,8 +59,19 @@ export class Login extends Component {
           <h1 className={styles.logo}>Robotkodarn</h1>
           <div className={styles.loginField}>
             <form>
-              <input type="text" value={this.state.pinInputValue} className={this.state.inputClassName}onChange={this.handleChange} placeholder="Workshop PIN" />
-              <input type="submit" onClick={this.handleSubmit} className="button primary" value="Logga in" />
+              <input
+                type="text"
+                value={this.state.pinInputValue}
+                className={this.state.inputClassName}
+                onChange={this.handleChange}
+                placeholder="Workshop PIN"
+              />
+              <input
+                type="submit"
+                onClick={this.handleSubmit}
+                className="button primary"
+                value="Logga in"
+              />
             </form>
           </div>
         </div>

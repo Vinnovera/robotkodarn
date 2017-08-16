@@ -36,12 +36,12 @@ export const isLoggedIn = path => (dispatch) => {
         type: 'IS_LOGGED_IN',
         payload: response.data.credentials.email
       })
-      // TODO: Replace with !== ?
-      if (path != null) {
+
+      if (path !== null) {
         dispatch(routeActions.push(path))
       }
     })
-    .catch((error) => {
+    .catch((/* error */) => {
       dispatch(routeActions.push('/admin'))
     })
 }

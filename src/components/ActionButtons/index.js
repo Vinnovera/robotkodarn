@@ -34,7 +34,9 @@ export class ActionButtons extends Component {
       }))
 
       // true = will also be uploaded to robot after compiled
-      this.props.dispatch(compileCode(this.props.currentParts[this.props.activePartIndex].code, true))
+      this.props.dispatch(
+        compileCode(this.props.currentParts[this.props.activePartIndex].code, true)
+      )
     } else {
       this.props.dispatch(setConsoleOutput({
         type: 'error',
@@ -51,7 +53,9 @@ export class ActionButtons extends Component {
       message: 'Skickar kod till kompilator...'
     }))
     // false = will not be uploaded to robot (only compiled)
-    this.props.dispatch(compileCode(this.props.currentParts[this.props.activePartIndex].code, false))
+    this.props.dispatch(
+      compileCode(this.props.currentParts[this.props.activePartIndex].code, false)
+    )
   }
 
   // check for connected arduino
@@ -73,6 +77,7 @@ export class ActionButtons extends Component {
   render() {
     return (
       <div className={styles.actionButtonWrapper} >
+        {/* TODO: These anchor links should be replaced with buttons instead. */}
         <a onClick={this.handleTestButtonClick} className="button success" href="#">
           <FA className={styles.icons} name="cogs" />Testa min kod
         </a>

@@ -24,8 +24,7 @@ const getLink = (request, reply) => {
       return reply(error).code(500)
     }
 
-    // FIXME: Is there a reason we are using == instead of === ?
-    const link = foundWorkshop.links.filter(item => item._id == request.params.lid)[0]
+    const link = foundWorkshop.links.filter(item => item._id === request.params.lid)[0]
 
     return reply(link).code(200)
   })
@@ -42,8 +41,8 @@ const addLink = (request, reply) => {
 
     const link = new Link(request.payload)
 
-    // TODO: 'value' is defined but not used. Do we need it?
-    Joi.validate(link, linkValidation, (validationError, value) => {
+    // 'value' exists, but is not used (and is therefore commented out)
+    Joi.validate(link, linkValidation, (validationError, /* value */) => {
       if (validationError) {
         return reply({ error: validationError }).code(400)
       }
@@ -69,13 +68,11 @@ const updateLink = (request, reply) => {
       return reply(error).code(500)
     }
 
-    // FIXME: Is there a reason we are using == instead of === ?
-    const linkToUpdate = foundWorkshop.links.filter(link => link._id == request.params.lid)[0]
-
+    const linkToUpdate = foundWorkshop.links.filter(link => link._id === request.params.lid)[0]
     const index = foundWorkshop.links.indexOf(linkToUpdate)
     const newLink = Object.assign(linkToUpdate, request.payload)
 
-    Joi.validate(newLink, linkValidation, (validationError, value) => {
+    Joi.validate(newLink, linkValidation, (validationError, /* value */) => {
       if (validationError) return reply({ error: validationError }).code(400)
 
       foundWorkshop.links.splice(index, 1, newLink)
@@ -99,14 +96,13 @@ const deleteLink = (request, reply) => {
       return reply(error).code(500)
     }
 
-    // FIXME: Is there a reason we are using == instead of === ?
-    const linkToDelete = foundWorkshop.links.filter(link => link._id == request.params.lid)[0]
+    const linkToDelete = foundWorkshop.links.filter(link => link._id === request.params.lid)[0]
 
     foundWorkshop.links.splice(foundWorkshop.links.indexOf(linkToDelete), 1)
 
-    foundWorkshop.save((error) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
+    foundWorkshop.save((linkError) => {
+      if (linkError) {
+        return reply({ linkError: error.message }).code(400)
       }
 
       return reply(foundWorkshop).code(200)

@@ -1,14 +1,19 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
 import FA from 'react-fontawesome'
 
-// TODO: Discuss linting issue: " 'brace' should be listed in the project's dependencies."
+/* TODO: Right now, this weird brace import is just commented out.
+* Everything seems to be working without
+* the following imports, but leave code a little while just in case.
+
 import 'brace/mode/c_cpp'
 import brace from 'brace';
 import 'brace/theme/textmate'
 
-import { changeEditorTab, updateCode, uploadCode, setConsoleOutput } from '../../actions/editor'
+*/
+
+import { changeEditorTab, uploadCode, setConsoleOutput } from '../../actions/editor'
 import { setCurrentParts } from '../../actions/student'
 import styles from './editor.css'
 
@@ -131,13 +136,14 @@ export class Editor extends Component {
     )
   }
 
-  // FIXME: this.refs is depricated.
+  // FIXME: this.refs is depricated. Replace with best practice asap.
+  // More information: https://facebook.github.io/react/docs/refs-and-the-dom.html
   renderControlPanelIfUser() {
     if (this.props.activeTab === 'user') {
       return (
         <div>
-          <button className={styles.undo} onClick={()=> { this.refs.editor.editor.undo() }}><FA name="undo" /></button>
-          <button className={styles.redo} onClick={()=> { this.refs.editor.editor.redo() }}><FA name="repeat" /></button>
+          <button className={styles.undo} onClick={() => { this.refs.editor.editor.undo() }}><FA name="undo" /></button>
+          <button className={styles.redo} onClick={() => { this.refs.editor.editor.redo() }}><FA name="repeat" /></button>
         </div>
       )
     }
@@ -149,11 +155,12 @@ export class Editor extends Component {
         <div className={styles.codeWrapper}>
           {this.renderControlPanelIfUser()}
           <ul>
+            {/* TODO: li element should not be interactive. Replace a with button. Fix asap (also styling) */}
             <li onClick={() => this.handleTabClick('user')} className={this.props.activeTab === 'user' && styles.active}>
-              <a href='#'>Din kod</a>
+              <a href="#">Din kod</a>
             </li>
             <li onClick={() => this.handleTabClick('original')} className={this.props.activeTab === 'original' && styles.active}>
-              <a href='#'>Original</a>
+              <a href="#">Original</a>
             </li>
           </ul>
           {this.renderTab()}

@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { setActivePartIndex } from '../../actions/editor'
 import styles from './sidebar.css'
 
-class PartList extends React.Component {
+class PartList extends Component {
   changePart(index) {
     this.props.dispatch(setActivePartIndex(index))
   }
@@ -13,7 +13,7 @@ class PartList extends React.Component {
     return this.props.parts.map((part, index) => {
       return (
         <li key={part._id}>
-          <FA name="file-code-o"/>
+          <FA name="file-code-o" />
           <a onClick={() => this.changePart(index)} href="#">
             {part.title}
           </a>

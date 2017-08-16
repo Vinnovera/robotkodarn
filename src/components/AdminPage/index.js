@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { isLoggedIn, signOut } from '../../actions/authentication'
 import {
@@ -112,7 +112,7 @@ export class AdminPage extends Component {
     }
   }
 
-  handleAddPart(e) {
+  handleAddPart = (e) => {
     e.preventDefault()
 
     const credentials = {
@@ -201,19 +201,24 @@ export class AdminPage extends Component {
         <select onChange={this.handleSelectWorkshop} multiple size="6">
           {workshops.map(i => <option key={i._id}>{i.title}</option>)}
         </select>
-        {/* FIXME: Why == and not === ? */}
-        { this.state.addWorkshop == true ?
+        { this.state.addWorkshop === true ?
           <div>
             <h3>Skapa ny workshop</h3>
-            <form onSubmit={ this.handleCreateWorkshop.bind(this) }>
+            <form onSubmit={this.handleCreateWorkshop}>
               <label htmlFor="name">Namn på workshop</label>
-              <input ref="name" onChange={e => this.setState({ title: e.target.value })} id="name" type="text" />
+              <input onChange={e => this.setState({ title: e.target.value })} id="name" type="text" />
               <input className="button primary" type="submit" value="Skapa workshop" />
             </form>
           </div> :
           <input
-            className="button primary" type="button"
-            onClick={() => { this.state.addWorkshop == false ? this.setState({ addWorkshop: true }) : null }}
+            className="button primary"
+            type="button"
+            onClick={() => {
+              this.state.addWorkshop === false ?
+                this.setState({ addWorkshop: true })
+                :
+                null
+            }}
             value="Lägg till"
           />
         }
@@ -232,14 +237,14 @@ export class AdminPage extends Component {
           <select onChange={this.handleSelectWorkshopPart} multiple size="6">
             {selectedWorkshop.parts.map(i => <option key={i._id}>{i.title}</option>)}
           </select>
-          {this.state.addPart == true ?
+          {this.state.addPart === true ?
             <div>
               <h3>Lägg till delmoment</h3>
-              <form onSubmit={ this.handleAddPart.bind(this) }>
+              <form onSubmit={this.handleAddPart}>
                 <label htmlFor="title">Titel</label>
                 <input id="title" onChange={e => this.setState({ partTitle: e.target.value })} type="text" />
                 <label htmlFor="code">Kod</label>
-                <textarea id="code" onChange={e => this.setState({code: e.target.value})} />
+                <textarea id="code" onChange={e => this.setState({ code: e.target.value })} />
                 <input type="submit" value="Spara" />
               </form>
             </div> :
@@ -247,9 +252,9 @@ export class AdminPage extends Component {
               className="button primary"
               type="button"
               onClick={() => {
-              this.state.addPart == false ?
-                this.setState({ addPart: true }) :
-                null
+                this.state.addPart === false ?
+                  this.setState({ addPart: true }) :
+                  null
               }}
               value="Lägg till"
             />
@@ -279,13 +284,13 @@ export class AdminPage extends Component {
           <select onChange={this.handleSelectWorkshopLink} multiple size="6">
             {selectedWorkshop.links.map(i => <option key={i._id}>{i.title}</option>)}
           </select>
-          {this.state.addLink == true ?
+          {this.state.addLink === true ?
             <div>
               <h3>Lägg till referenslänk</h3>
               <form
-                onSubmit={this.handleCreateLink.bind(this)}>
+                onSubmit={this.handleCreateLink}>
                 <label htmlFor="title">Titel</label>
-                <input id="title" onChange={e => this.setState({ linkTitle: e.target.value })} type="text"/>
+                <input id="title" onChange={e => this.setState({ linkTitle: e.target.value })} type="text" />
                 <label htmlFor="url">URL</label>
                 <input id="url" type="url" onChange={e => this.setState({ url: e.target.value })} />
                 <input type="submit" value="Spara" />
@@ -294,8 +299,13 @@ export class AdminPage extends Component {
             <input
               className="button primary"
               type="button"
-              onClick={() => this.state.addLink == false ? this.setState({ addLink: true }) : this.setState({ addLink: false })}
-              value="Lägg till" />}
+              onClick={() => this.state.addLink === false ?
+                this.setState({ addLink: true })
+                :
+                this.setState({ addLink: false })
+              }
+              value="Lägg till"
+            />}
           {this.props.selectedLinkIndex != null ?
             <input className="button danger" type="button" onClick={() => this.handleRemoveLink()} value="Ta bort" /> :
             ''
@@ -329,7 +339,7 @@ export class AdminPage extends Component {
               <form onSubmit={this.handleChangeWorkshopTitle}>
                 <a href={`/id/${this.getSelectedWorkshopPin()}`}>Gå till workshop</a>
                 <label htmlFor="pin">Pinkod</label>
-                <input id="pin" type="text" value={this.getSelectedWorkshopPin()} disabled/>
+                <input id="pin" type="text" value={this.getSelectedWorkshopPin()} disabled />
                 <label htmlFor="title">Titel</label>
                 <input
                   id="title"

@@ -1,3 +1,4 @@
+import { routeActions } from 'redux-simple-router'
 import axios from 'axios'
 
 // -----------------------------------------------------------------------------
@@ -10,7 +11,8 @@ export const createWorkshop = credentials => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((response) => {
+    // 'response' is not used but kept for documentation purposes.
+    .then((/* response */) => {
       dispatch({
         type: 'SET_MESSAGE',
         payload: `Workshopen ${credentials.title} är nu tillagd med pinkoden: ${credentials.pincode}.`
@@ -29,7 +31,7 @@ export const changeTitle = (credentials, workshop) => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((response) => {
+    .then((/* response */) => {
       dispatch({
         type: 'SET_MESSAGE',
         payload: `Workshopen ${workshop.title} har nu titeln ${credentials.title}.`
@@ -69,7 +71,7 @@ export const addLink = (credentials, workshop) => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((response) => {
+    .then((/* response */) => {
       dispatch({
         type: 'SET_MESSAGE',
         payload: `Workshopen ${workshop.title} har nu referenslänken ${credentials.title}.`
@@ -88,7 +90,7 @@ export const removeSelectedWorkshop = workshop => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((response) => {
+    .then((/* response */) => {
       dispatch({
         type: 'SET_MESSAGE',
         payload: `Workshopen ${workshop.title} är nu borttagen.`
@@ -107,7 +109,7 @@ export const removeSelectedPart = (part, workshop) => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((response) => {
+    .then((/* response */) => {
       dispatch({
         type: 'SET_MESSAGE',
         payload: `Delmomentet ${part.title} är nu borttaget.`
@@ -126,7 +128,7 @@ export const removeSelectedLink = (link, workshop) => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((response) => {
+    .then((/* response */) => {
       dispatch({
         type: 'SET_MESSAGE',
         payload: `Delmomentet ${link.title} är nu borttaget.`
@@ -138,8 +140,6 @@ export const removeSelectedLink = (link, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // findWorkshopByPin, gets workshop by typed in PIN in the login page
 // -----------------------------------------------------------------------------
-
-// TODO: 'routeActions is not defined.
 export const findWorkshopByPin = pin => (dispatch) => {
   const request = new XMLHttpRequest()
   request.open('GET', `/api/workshop/pin/${pin}`, true)

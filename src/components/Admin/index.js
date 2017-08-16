@@ -1,6 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { routeActions } from 'redux-simple-router' // Are we gonna use this=?
 import forge from 'node-forge'
 
 import { toggleUserRegister, registerUser, signIn, isLoggedIn } from '../../actions/authentication'
@@ -30,24 +29,20 @@ export class Admin extends Component {
     }
   }
 
-  handleLoginSubmit(e) {
+  handleLoginSubmit = (e) => {
     e.preventDefault()
-    console.log(1111, this.state.password)
-
     const md = forge.md.sha256.create()
     md.update(this.state.password)
     const hash = md.digest().toHex()
-    console.log(222, this.state.password)
-
     const credentials = {
       email: this.state.email,
       password: hash
     }
 
-    this.props.dispatch( signIn(credentials, '/adminpage') )
+    this.props.dispatch(signIn(credentials, '/adminpage'))
   }
 
-  handleRegisterSubmit(e) {
+  handleRegisterSubmit = (e) => {
     e.preventDefault()
 
     const md = forge.md.sha256.create()
@@ -67,18 +62,16 @@ export class Admin extends Component {
     this.props.dispatch(toggleUserRegister(loginOrRegister))
   }
 
-  // FIXME: Is ref needed anywhere else? Consider deprication.
-  // Why bind?
   renderContent() {
     if (this.props.loginOrRegister === 'login') {
       return (
         <div className={styles.login}>
           <h1>Logga in</h1>
-          <form onSubmit={this.handleLoginSubmit.bind(this)}>
+          <form onSubmit={this.handleLoginSubmit}>
             <label htmlFor="email">Email</label>
-            <input ref="email" onChange={e => this.setState({ email: e.target.value })} id="email" type="email" />
+            <input onChange={e => this.setState({ email: e.target.value })} id="email" type="email" />
             <label htmlFor="password">Lösenord</label>
-            <input ref="password" onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
+            <input onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
             <input type="submit" value="Logga in" />
           </form>
         </div>
@@ -88,17 +81,18 @@ export class Admin extends Component {
     return (
       <div className={styles.login}>
         <h1>Registrera ny användare</h1>
-        <form onSubmit={this.handleRegisterSubmit.bind(this)}>
+        <form onSubmit={this.handleRegisterSubmit}>
           <label htmlFor="name">För och efternamn</label>
-          <input ref="name" onChange={e => this.setState({ registerName: e.target.value })} id="name" type="text" />
+          <input onChange={e => this.setState({ registerName: e.target.value })} id="name" type="text" />
 
           <label htmlFor="email">Email</label>
-          <input ref="email" onChange={e => this.setState({ registerEmail: e.target.value })} id="email" type="text" />
+          <input onChange={e => this.setState({ registerEmail: e.target.value })} id="email" type="text" />
 
           <label htmlFor="password">Lösenord</label>
-          <input ref="password" onChange={ e => this.setState({registerPassword: e.target.value })} id="password" type="text" />
+          <input onChange={e => this.setState({ registerPassword: e.target.value })} id="password" type="text" />
           <input type="submit" value="Registrera" />
         </form>
+        {/* TODO: Replace anchor with button */}
         <a href="#" onClick={() => this.handleLoginOrRegisterClick('login')}>Tillbaka till inloggning...</a>
       </div>
     )

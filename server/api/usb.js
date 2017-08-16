@@ -1,22 +1,6 @@
 const Avrgirl = require('avrgirl-arduino')
 
 const uploadCode = (request, reply) => {
-  // TODO: Remove commented out code if not used!
-
-  // kind of what you need to specify your own robot?
-
-  // var board = {
-  //     name: 'zumo',
-  //     baud: 57600,
-  //     signature: new Buffer([0x1e, 0x95, 0x87]),
-  //     productId: ['0x0036', '0x8036', '0x800c', '0x8036', '0x2300'],
-  //     protocol: 'avr109'
-  // }
-
-  // Avrgirl.list((err, ports) => {
-  //     console.log( ports )
-  // })
-
   const avrgirl = new Avrgirl({
     board: 'uno',
     debug: true,

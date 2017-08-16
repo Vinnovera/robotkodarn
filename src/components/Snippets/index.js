@@ -1,13 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-// TODO: Are these going to be needed in the future? Else, remove!
-import Navbar from './../Navbar'
-import Sidebar from './../Sidebar'
-import Editor from './../Editor'
-import Console from './../Console'
-import ActionButtons from './../ActionButtons'
-
 import styles from './snippets.css'
 
 // -----------------------------------------------------------------------------
