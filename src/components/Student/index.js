@@ -16,9 +16,7 @@ export class Student extends Component {
   constructor(props) {
     super(props)
 
-    this.getMainPaneClassName = this
-      .getMainPaneClassName
-      .bind(this)
+    this.getMainPaneClassName = this.getMainPaneClassName.bind(this)
 
     this.state = {
       workshop: null
@@ -42,12 +40,8 @@ export class Student extends Component {
       this.setState({
         workshop: JSON.parse(nextProps.currentWorkshop)
       }, () => {
-        const currentParts = JSON
-          .parse(nextProps.currentWorkshop)
-          .parts
-        this
-          .props
-          .dispatch(setCurrentParts(currentParts))
+        const currentParts = JSON.parse(nextProps.currentWorkshop).parts
+        this.props.dispatch(setCurrentParts(currentParts))
       })
     }
   }

@@ -11,12 +11,8 @@ import styles from './sidebar.css'
 class Sidebar extends Component {
   constructor() {
     super()
-    this.handleSidebarClick = this
-      .handleSidebarClick
-      .bind(this)
-    this.getSidebarClassName = this
-      .getSidebarClassName
-      .bind(this)
+    this.handleSidebarClick = this.handleSidebarClick.bind(this)
+    this.getSidebarClassName = this.getSidebarClassName.bind(this)
   }
 
   getSidebarClassName() {
@@ -34,9 +30,7 @@ class Sidebar extends Component {
   }
 
   handleSidebarClick() {
-    this
-      .props
-      .dispatch(toggleSidebar(!this.props.isSidebarOpen))
+    this.props.dispatch(toggleSidebar(!this.props.isSidebarOpen))
   }
 
 
