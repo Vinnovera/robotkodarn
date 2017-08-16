@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { setConsoleOutput, clearConsole } from '../../actions/editor'
 import styles from './console.css'
 
+// TODO: Discuss what to do with the rule "class-methods-use-this", then remove
+/* eslint-disable class-methods-use-this */
 export class Console extends Component {
   constructor(props) {
     super(props)
@@ -29,11 +31,11 @@ export class Console extends Component {
   }
 
   handleClearConsoleClick() {
-    this.props.dispatch( clearConsole())
+    this.props.dispatch(clearConsole())
   }
 
   scrollToBottom() {
-    const consoleWrapper = document.getElementById("console")
+    const consoleWrapper = document.getElementById('console')
     consoleWrapper.scrollTop = consoleWrapper.scrollHeight - consoleWrapper.clientHeight
   }
 
@@ -45,15 +47,25 @@ export class Console extends Component {
           <pre>
             {
               this.props.consoleOutput.map((message) => {
-                let h = (message.timestamp.getHours() < 10) ? '0' + message.timestamp.getHours() : message.timestamp.getHours(),
-                  m = (message.timestamp.getMinutes() < 10) ? '0' + message.timestamp.getMinutes() : message.timestamp.getMinutes(),
-                  s = (message.timestamp.getSeconds() < 10) ? '0' + message.timestamp.getSeconds() : message.timestamp.getSeconds(),
-                  timestamp = `${h}:${m}:${s}`
+                const h = (message.timestamp.getHours() < 10) ?
+                  `0${message.timestamp.getHours()}` :
+                  message.timestamp.getHours()
+
+                const m = (message.timestamp.getMinutes() < 10) ?
+                  `0${message.timestamp.getMinutes()}` :
+                  message.timestamp.getMinutes()
+
+                const s = (message.timestamp.getSeconds() < 10) ?
+                  `0${message.timestamp.getSeconds()}` :
+                  message.timestamp.getSeconds()
+
+                const timestamp = `${h}:${m}:${s}`
 
                 return (
                   <div key={message.key}>
                     <span className={styles.timestamp}>[{timestamp}] </span>
-                    <span className={styles[message.type]}>{message.heading}:</span><br/>
+                    <span className={styles[message.type]}>{message.heading}:</span>
+                    <br />
                     {message.message}
                   </div>
                 )
@@ -66,7 +78,7 @@ export class Console extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     compilerResponse: state.editor.compilerResponse || '',
     consoleOutput: state.editor.consoleOutput

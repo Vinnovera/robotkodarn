@@ -25,17 +25,17 @@ const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware, thunkMi
 const store = createStoreWithMiddleware(reducers)
 
 render((
-	<Provider store={store}>
-		<Router history={browserHistory}>
-			<Route path="/" component={App}>
-				<IndexRedirect to='/login'/>
-				<Route path="/pin" component={Student}/>
-				<Route path="/editor" component={Editor}/>
-				<Route path="/id/:pin" component={Student}/>
-				<Route path="/login" component={Login}/>
-				<Route path="/admin" component={Admin}/>
-				<Route path="/adminpage" component={AdminPage}/>
-			</Route>
-		</Router>
-	</Provider>
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={App}>
+        <IndexRedirect to="/login" />
+        <Route path="/pin" component={Student} />
+        <Route path="/editor" component={Editor} />
+        <Route path="/id/:pin" component={Student} />
+        <Route path="/login" component={Login} />
+        <Route path="/admin" component={Admin} />
+        <Route path="/adminpage" component={AdminPage} />
+      </Route>
+    </Router>
+  </Provider>
 ), document.getElementById('root'))

@@ -9,12 +9,12 @@ import login from './login'
 import adminpage from './adminpage'
 
 export default combineReducers({
-	routeReducer,
-	sidebar,
-	editor,
-	admin,
-	teacher,
-	student,
-	login,
-	adminpage
+  routeReducer,
+  sidebar,
+  editor,
+  admin,
+  teacher,
+  student,
+  login,
+  adminpage
 })
