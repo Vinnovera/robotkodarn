@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { syncHistory } from 'redux-simple-router'
@@ -17,8 +17,18 @@ import AdminPage from './components/AdminPage'
 
 import './index.css'
 
+// Enable Redux DevTools
+const enhancers = compose(
+  window.devToolsExtension ?
+    window.devToolsExtension() :
+    f => f
+)
+
 const reduxRouterMiddleware = syncHistory(browserHistory)
-const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware, thunkMiddleware)(createStore)
+const createStoreWithMiddleware = compose(applyMiddleware(
+  reduxRouterMiddleware,
+  thunkMiddleware
+), enhancers)(createStore)
 const store = createStoreWithMiddleware(reducers)
 
 render((
