@@ -7,7 +7,7 @@
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "build:clean": "rimraf dist/client/static",
-    "dev": "npm run build:clean && nodemon index.js"
+    "dev": "npm run build:clean && nodemon --inspect index.js"
   },
   "dependencies": {
     "avr-pizza": "^0.3.5",
