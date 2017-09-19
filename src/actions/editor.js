@@ -1,6 +1,6 @@
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 // changeEditorTab, sets state to pressed tab
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 export const changeEditorTab = userOrOriginal => (dispatch) => {
   dispatch({
     type: 'SET_EDITOR_TAB',
@@ -8,9 +8,9 @@ export const changeEditorTab = userOrOriginal => (dispatch) => {
   })
 }
 
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 // compileCode, sends code to compiler
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
   const request = new XMLHttpRequest()
   request.open('POST', '/api/editor', true)
@@ -70,18 +70,14 @@ export const uploadCode = compiledCode => (dispatch) => {
     return
   }
 
-  // TODO: Refactor and divide this to smaller functions.
-
-  // Hardcoded for testing purposes
-  const board = 'uno'
-
   // Robotkodarn's Chrome App ID
   const extensionid = 'jomlgkaocbaopggjhhapblbfbfleedgd'
   const port = chrome.runtime.connect(extensionid)
 
+
   // Payload to be sent to Chrome App
   const message = {
-    board,
+    board: 'uno', // Hardcoded 'uno' for testing purposes
     file: compiledCode
   }
 
@@ -96,7 +92,7 @@ export const uploadCode = compiledCode => (dispatch) => {
         payload: {
           type: 'success',
           heading: 'Lyckad uppladdning',
-          message: 'Bra jobbat, du har nu laddad upp koden till din robot.'
+          message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
         }
       })
     } else {
@@ -108,7 +104,7 @@ export const uploadCode = compiledCode => (dispatch) => {
           // Inform user if there is no robot connected.
           message: uploadMessage.error.includes('no Arduino') ?
             'Du har inte kopplat in någon robot.' :
-            'Hhhmm, något gick fel vid uppladdningen.'
+            uploadMessage.error // Will be in English
         }
       })
     }
@@ -139,18 +135,18 @@ export const setConsoleOutput = output => (dispatch) => {
   })
 }
 
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 // clearConsole, clears console
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 export const clearConsole = () => (dispatch) => {
   dispatch({
     type: 'CLEAR_CONSOLE'
   })
 }
 
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 // setActivePartIndex, sets clicked part to state
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
 export const setActivePartIndex = index => (dispatch) => {
   dispatch({
     type: 'SET_ACTIVE_PART_INDEX',
