@@ -10,7 +10,6 @@ import workshops from './api/workshops'
 import users from './api/users'
 import links from './api/links'
 import parts from './api/parts'
-import usb from './api/usb'
 import editor from './api/editor'
 
 mongoose.connect(config.get('database.host'))
@@ -74,9 +73,6 @@ server.register([{
 },
 {
   register: parts
-},
-{
-  register: usb
 },
 {
   register: editor

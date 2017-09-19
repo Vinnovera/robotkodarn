@@ -24,5 +24,8 @@ module.exports = {
     "arrow-body-style": "off",
     "consistent-return": "off",
     "class-methods-use-this": "off" // Skip forcing static until further investigation
+  },
+  "globals": {
+    "chrome": false
   }
 };

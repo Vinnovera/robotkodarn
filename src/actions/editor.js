@@ -44,23 +44,59 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
   request.send(JSON.stringify(codeToCompile))
 }
 
-// -----------------------------------------------------------------------------§
-// uploadCode, uploads compiled code to Arduino unit
-// -----------------------------------------------------------------------------§
-export const uploadCode = compiledCode => (dispatch) => {
-  const request = new XMLHttpRequest()
-  request.open('POST', '/api/usb', true)
-  request.setRequestHeader('Content-Type', 'application/json')
+// -----------------------------------------------------------------------------
+// uploadCode – Uploads compiled code via Chrome App to Arduino unit.
+// -----------------------------------------------------------------------------
 
-  request.onload = () => {
-    console.log(request)
-    if (request.status >= 200 && request.status < 400) {
+/**
+ * Takes the compiled code and sends it to Robotkodarn Chrome App,
+ * which takes care of the uploading code (app is based on avrgirl).
+ *
+ * @param {string} compiledCode The code compiled through avrpizza
+ */
+export const uploadCode = compiledCode => (dispatch) => {
+  /* If error occurs during compilation,
+   * exit early and inform user.
+   */
+  if (compiledCode.compileError) {
+    dispatch({
+      type: 'SET_CONSOLE_OUTPUT',
+      payload: {
+        type: 'error',
+        heading: 'Fel vid kompilering',
+        message: 'Hhhmm, något ser inte rätt ut i koden.'
+      }
+    })
+    return
+  }
+
+  // TODO: Refactor and divide this to smaller functions.
+
+  // Hardcoded for testing purposes
+  const board = 'uno'
+
+  // Robotkodarn's Chrome App ID
+  const extensionid = 'jomlgkaocbaopggjhhapblbfbfleedgd'
+  const port = chrome.runtime.connect(extensionid)
+
+  // Payload to be sent to Chrome App
+  const message = {
+    board,
+    file: compiledCode
+  }
+
+  // Send the message to Chrome App
+  port.postMessage(message)
+
+  // Give user feedback
+  port.onMessage.addListener((uploadMessage) => {
+    if (uploadMessage.success) {
       dispatch({
         type: 'SET_CONSOLE_OUTPUT',
         payload: {
           type: 'success',
-          heading: 'Lyckat',
-          message: 'Kod uppladdad till robot'
+          heading: 'Lyckad uppladdning',
+          message: 'Bra jobbat, du har nu laddad upp koden till din robot.'
         }
       })
     } else {
@@ -68,18 +104,30 @@ export const uploadCode = compiledCode => (dispatch) => {
         type: 'SET_CONSOLE_OUTPUT',
         payload: {
           type: 'error',
-          heading: 'Fel från kompilator',
-          message: JSON.parse(request.response).error
+          heading: 'Fel vid uppladdningen',
+          // Inform user if there is no robot connected.
+          message: uploadMessage.error.includes('no Arduino') ?
+            'Du har inte kopplat in någon robot.' :
+            'Hhhmm, något gick fel vid uppladdningen.'
         }
       })
     }
-  }
-  request.send(JSON.stringify(compiledCode))
+  })
 }
 
-// -----------------------------------------------------------------------------§
-// setConsoleOutput, sets output message shown in console
-// -----------------------------------------------------------------------------§
+// -----------------------------------------------------------------------------
+// setConsoleOutput
+// -----------------------------------------------------------------------------
+/**
+ * Sets output message shown in console. Takes an object with three props.
+ * Type can be:
+ *
+ * 1. Info (blue heading)
+ * 2. Success (green heading)
+ * 3. Warning (red heading)
+ *
+ * If no type provided, heading will be black.
+ */
 export const setConsoleOutput = output => (dispatch) => {
   dispatch({
     type: 'SET_CONSOLE_OUTPUT',
@@ -98,30 +146,6 @@ export const clearConsole = () => (dispatch) => {
   dispatch({
     type: 'CLEAR_CONSOLE'
   })
-}
-
-// -----------------------------------------------------------------------------§
-// pingForUSBConnection, watches computer connection ports
-// -----------------------------------------------------------------------------§
-export const pingForUSBConnection = () => (dispatch) => {
-  const request = new XMLHttpRequest()
-  request.open('GET', '/api/usb', true)
-  request.setRequestHeader('Content-Type', 'application/json')
-
-  request.onload = () => {
-    if (request.status >= 200 && request.status < 400) {
-      dispatch({
-        type: 'SET_CONNECTED_ROBOT',
-        payload: request.response
-      })
-    } else {
-      dispatch({
-        type: 'SET_CONNECTED_ROBOT',
-        payload: null
-      })
-    }
-  }
-  request.send()
 }
 
 // -----------------------------------------------------------------------------§
