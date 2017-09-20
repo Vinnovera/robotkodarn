@@ -14,6 +14,7 @@ import Student from './components/Student'
 import Login from './components/Login'
 import Admin from './components/Admin'
 import AdminPage from './components/AdminPage'
+import Invite from './components/Invite'
 
 import './index.css'
 
@@ -42,6 +43,7 @@ render((
         <Route path="/login" component={Login} />
         <Route path="/admin" component={Admin} />
         <Route path="/adminpage" component={AdminPage} />
+        <Route path="/invite" component={Invite} />
       </Route>
     </Router>
   </Provider>

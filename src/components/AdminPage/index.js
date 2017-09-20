@@ -16,7 +16,7 @@ import {
 } from '../../actions/workshops'
 import styles from './adminpage.css'
 
-export class AdminPage extends Component {
+class AdminPage extends Component {
   constructor(props) {
     super(props)
 
