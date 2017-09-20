@@ -10,7 +10,7 @@ export class ActionButtons extends Component {
    * code that is about to be compiled. If upload is set to true, code will also
    * be uploaded to Arduino.
    *
-   * @param {boolean} upload    If set to true, code will be uploaded to Arduino.
+   * @param {boolean} upload true = code will be uploaded to Arduino
    */
   handleClick = (upload = false) => {
     this.props.dispatch(setConsoleOutput({
@@ -24,25 +24,15 @@ export class ActionButtons extends Component {
     )
   }
 
-  /* Currently not used.
-   * Do we want to use it? If yes, maybe based
-   * on consoleOutput?
-   */
-  renderUploadButtonClassNames = () => {
-    return (this.state.consoleOutput)
-      ? 'button success'
-      : 'button success disabled'
-  }
-
   render() {
     return (
       <div className={styles.actionButtonWrapper} >
-        <a onClick={() => this.handleClick()} className="button success" href="#">
+        <button onClick={() => this.handleClick()} className="button success">
           <FA className={styles.icons} name="cogs" />Testa min kod
-        </a>
-        <a onClick={() => this.handleClick(true)} className="button success" href="#">
+        </button>
+        <button onClick={() => this.handleClick(true)} className="button success" href="#">
           <FA className={styles.icons} name="usb" />Ladda över kod
-        </a>
+        </button>
       </div>
     )
   }
@@ -50,11 +40,8 @@ export class ActionButtons extends Component {
 
 function mapStateToProps(state) {
   return {
-    connectedArduino: state.editor.connectedArduino,
     currentParts: state.student.currentParts,
-    activePartIndex: state.editor.activePartIndex,
-    // Could we use consoleOutput to see if "Ladda över" should be activated?
-    consoleOutput: state.editor.consoleOutput
+    activePartIndex: state.editor.activePartIndex
   }
 }
 

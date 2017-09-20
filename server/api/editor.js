@@ -27,7 +27,7 @@ const compileCode = (request, reply) => {
      */
     const pkg = {
       sketch: path,
-      board: 'uno'
+      board: 'uno' // Hardcoded during development
     }
 
     /*

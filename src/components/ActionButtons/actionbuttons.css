@@ -1,12 +1,12 @@
 :local .actionButtonWrapper {
+  display: flex;
   float: right;
   margin-top: -37px;
 }
 
-:local .actionButtonWrapper a:first-of-type {
+:local .actionButtonWrapper button:first-of-type {
   margin-right: 10px;
 }
-
 
 /* FontAwesome */
 :local .icons {

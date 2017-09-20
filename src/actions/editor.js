@@ -71,9 +71,8 @@ export const uploadCode = compiledCode => (dispatch) => {
   }
 
   // Robotkodarn's Chrome App ID
-  const extensionid = 'jomlgkaocbaopggjhhapblbfbfleedgd'
+  const extensionid = 'aemhpfbekflgehjcjgdoljofdcglmmmg'
   const port = chrome.runtime.connect(extensionid)
-
 
   // Payload to be sent to Chrome App
   const message = {
@@ -81,7 +80,7 @@ export const uploadCode = compiledCode => (dispatch) => {
     file: compiledCode
   }
 
-  // Send the message to Chrome App
+  // Send message to Chrome App
   port.postMessage(message)
 
   // Give user feedback
@@ -101,10 +100,10 @@ export const uploadCode = compiledCode => (dispatch) => {
         payload: {
           type: 'error',
           heading: 'Fel vid uppladdningen',
-          // Inform user if there is no robot connected.
+          // Inform user if no robot is connected.
           message: uploadMessage.error.includes('no Arduino') ?
             'Du har inte kopplat in någon robot.' :
-            uploadMessage.error // Will be in English
+            uploadMessage.error // FYI: will be in English
         }
       })
     }
