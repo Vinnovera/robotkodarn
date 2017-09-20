@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import uuidv4 from 'uuid/v4'
+
 import { isLoggedIn, signOut } from '../../actions/authentication'
+import addInvitationID from '../../actions/invites'
 import styles from './invite.css'
 import Logo from '../Logo'
 
@@ -23,7 +26,8 @@ class Invite extends Component {
    * collection "invites".
    */
   createInviteLink = () => {
-    console.log('du klickade')
+    const invitationID = uuidv4()
+    this.props.dispatch(addInvitationID(invitationID))
   }
 
   render() {

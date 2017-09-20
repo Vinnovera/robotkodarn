@@ -8,6 +8,7 @@ import auth from './api/auth'
 import isLoggedIn from './api/isLoggedIn'
 import workshops from './api/workshops'
 import users from './api/users'
+import invites from './api/invites'
 import links from './api/links'
 import parts from './api/parts'
 import usb from './api/usb'
@@ -65,6 +66,9 @@ server.register([{
 },
 {
   register: workshops
+},
+{
+  register: invites
 },
 {
   register: users

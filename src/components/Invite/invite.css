@@ -38,7 +38,7 @@
   font-smoothing: antialiased;
 }
 
-:local button {
+:local .invite button {
   background: #62BCFA;
   border: none;
   border-radius: 3px;
