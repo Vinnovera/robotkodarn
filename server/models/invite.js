@@ -1,10 +1,12 @@
 import mongoose, { Schema } from 'mongoose'
 import Joi from 'joi'
+import uuidv4 from 'uuid/v4'
 
 const inviteSchema = Schema({
   inviteID: {
     type: String,
-    required: true
+    required: true,
+    default: uuidv4
   }
 })
 

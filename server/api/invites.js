@@ -2,7 +2,7 @@ import Joi from 'joi'
 import { Invite, inviteValidation } from '../models/invite'
 
 const addInvite = (request, reply) => {
-  const invite = new Invite(request.payload)
+  const invite = new Invite()
 
   Joi.validate(invite, inviteValidation, (validationError, /* value */) => {
     if (validationError) {

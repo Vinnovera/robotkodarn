@@ -4,7 +4,7 @@ export default handleActions({
   ADD_INVITE_ID: (state, action) => {
     return ({
       ...state,
-      items: action.payload
+      items: [...state.items, action.payload]
     })
   }
 }, {

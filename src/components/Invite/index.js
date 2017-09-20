@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import uuidv4 from 'uuid/v4'
 
 import { isLoggedIn, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
@@ -26,8 +25,7 @@ class Invite extends Component {
    * collection "invites".
    */
   createInviteLink = () => {
-    const invitationID = uuidv4()
-    this.props.dispatch(addInvitationID(invitationID))
+    this.props.dispatch(addInvitationID())
   }
 
   render() {
