@@ -1,51 +1,65 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import FA from 'react-fontawesome'
 import { isLoggedIn, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
-import styles from './invite.css'
 import Logo from '../Logo'
+import styles from './invite.css'
 
 class Invite extends Component {
   componentWillMount() {
     this.props.dispatch(isLoggedIn('/invite'))
   }
 
-  /**
-   * Connect to a logout button
-   */
   logOut = () => {
     this.props.dispatch(signOut('/admin'))
   }
 
   /**
-   * TODO: Create an invite link with a unique URL. On Register page,
-   * check if link exists in collection "invites". If yes, let user register
-   * an account. When account is saved in database, remove the invitation link from
-   * collection "invites".
+   * Creates a unique invitation ID
    */
   createInviteLink = () => {
     this.props.dispatch(addInvitationID())
   }
 
+  /**
+   * Copies the unique URL to clipboard
+   *
+   * @param {string} url The unique invitation URL
+   */
+  copyToClipboard = (url) => {
+    // TODO: Copy link to clipboard
+    console.log(url)
+  }
+
   render() {
-    // This should probably be a component of it's own.
     const invitationLink = this.props.invite.length > 0 ?
-      this.props.invite.map(invitation => (
-        <a
-          href={`http://localhost:8000/register?id=${invitation}`}
-          className={styles.invitation}
-          key={invitation}
-        >{`localhost:8000/register?id=${invitation}`}</a>
-      )) :
+      this.props.invite.map((invitation) => {
+        const uniqueURL = `http://localhost:8000/register?id=${invitation}`
+
+        return (
+          <div key={invitation} className={styles.invitationWrapper}>
+            <p className={styles.invitationURL} >{uniqueURL}</p>
+            <button className={styles.shortCuts} onClick={() => this.copyToClipboard(uniqueURL)} title="Kopiera länken" >
+              <FA name="clipboard" />
+            </button>
+            <a className={styles.shortCuts} href={`mailto:?body=Registrera dig här: ${uniqueURL}&subject=Inbjudan till Robotkodarn`} title="Skicka mejl">
+              <FA className={styles.envelope} name="envelope" />
+            </a>
+          </div>
+        )
+      })
+      :
       ''
 
     return (
       <div>
         <nav className={styles.navigation}>
           <ul>
-            <li>Skapa nya workshops</li>
-            <li>Logga ut</li>
+            <li><a className={styles.navigationLink} href="./admin">Skapa workshops</a></li>
+            <li>
+              <button onClick={this.logOut} className={styles.navigationLink}>Logga ut</button>
+            </li>
           </ul>
         </nav>
         <div className={styles.invite}>
@@ -53,9 +67,9 @@ class Invite extends Component {
             <Logo />
           </div>
           <h1>Bjud in nya användare</h1>
-          <p>Generera en unik registreringslänk genom att klicka på knappen.</p>
+          <p>Generera en unik inbjudningslänk genom att klicka på knappen.</p>
           <button className={styles.button} onClick={this.createInviteLink} >
-            Skapa registreringslänk
+            Skapa inbjudningslänk
           </button>
           {invitationLink}
         </div>

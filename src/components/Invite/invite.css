@@ -1,5 +1,15 @@
 :local body {
-  background-color: #F2F2F2;
+  /* local variables */
+  --blue: #3FA9F5;
+  --blueLighter: #5BBAFD;
+  --egg: #F1F1F1;
+  --ash: #323232;
+  --ashLighter: #424242;
+  --white: #FFFFFF;
+  --lightgrey: #CECECE;
+  --salmon: #F67A8A;
+
+  background-color: var(--egg);
   height: 100vh;
   width: 100%;
 }
@@ -13,12 +23,12 @@
 
 :local .invite {
   align-items: center;
-  background-color: white;
+  background-color: var(--white);
   border-radius: 2px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 5rem auto 0;
+  margin: 10rem auto 0;
   max-width: 750px;
   padding: 5rem 0.5rem 3rem;
   position: relative;
@@ -26,20 +36,20 @@
 }
 
 :local .invite h1 {
-  color: #323232;
+  color: var(--ash);
   margin: 0;
 }
 
 :local .invite p {
-  color: #CBCBCB;
+  color: var(--ashLighter);
   font-size: 1.2rem;
   margin: 0.5rem;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
 
-:local .invite button {
-  background: #62BCFA;
+:local .invite .button {
+  background: var(--blue);
   border: none;
   border-radius: 3px;
   color: white;
@@ -47,133 +57,115 @@
   display: block;
   font-size: 1.2rem;
   margin: 2rem auto;
-  max-width: 18rem;
   padding: 0.8rem 0;
   transition: 300ms;
   text-align: center;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
+  max-width: 18rem;
 }
 
-:local button:hover {
-  background: #57ADE6;
+:local .invite .button:hover {
+  background: var(--blueLighter);
 }
 
-:local button:focus {
+:local .invite .button:focus {
   outline: none;
 }
 
 /* -----------------------------------------------------------------------------
   NAVIGATION BAR
------------------------------------------------------------------------------*/
-
-.navigation {
-  align-items: center;
-  background-color: var(--white);
-  box-sizing: border-box;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
-  color: var(--cotton);
+------------------------------------------------------------------------------*/
+:local .navigation {
+  align-content: center;
+  border-bottom: 1px solid var(--lightgrey);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 200px;
-  padding-top: 1.5rem;
-  position: fixed;
-  right: 0;
-  top: -200px;
-  transition: top 300ms ease-in-out 75ms;
-  width: 100vw;
-  z-index: 2;
-}
-
-@media screen and (min-width: 600px) {
-  .navigation {
-    height: 190px;
-    top: -190px;
-  }
-}
-
-.navigation.navigation--visible {
-  top: 0;
-}
-
-.navigation__headline {
-  color: var(--cotton);
-  font-size: 1.3rem;
-  left: 1.3rem;
+  justify-content: flex-end;
   position: absolute;
-  top: 1.25rem;
+  padding: 1.5rem 2rem;
+  top: 0;
+  left: 0;
+  width: 100vw;
 }
 
-@media screen and (min-width: 600px) {
-  .navigation__headline {
-    font-size: 1.8rem;
-    top: 0.3rem;
-  }
+:local .navigation ul {
+  display: flex;
+  padding: 0;
 }
 
+:local .navigation li:not(:last-of-type) {
+  margin-right: 4rem;
+}
+
+/*
+ * 1. To remove button default styling
+ */
+:local .navigationLink,
+:local .invitationLink {
+  background: none; /* 1. */
+  border: none; /* 1. */
+  border-bottom: 2px solid transparent;
+  color: var(--ash);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0 0 0.3em;
+  text-decoration: none;
+  transition: color 250ms ease, border 250ms ease;
+}
+
+:local .navigationLink:hover,
+:local .invitationLink:hover {
+  border-bottom: 2px solid var(--salmon);
+  color: var(--salmon);
+  text-decoration: none;
+}
 
 /* -----------------------------------------------------------------------------
-  NAVIGATION ICON
------------------------------------------------------------------------------*/
-.nav-icon {
-  cursor: pointer;
-  height: 30px;
-  position: absolute;
-  top: 1.2rem;
-  right: 1.7rem;
-  transform: rotate(0deg);
-  transition: 500ms ease-in-out;
-  width: 42px;
-  z-index: 3;
-}
+  INVITATION LINK
+------------------------------------------------------------------------------*/
 
-.nav-icon span {
-  background: #323232;
-  border-radius: 8px;
-  display: block;
-  height: 8px;
-  left: 0;
-  opacity: 1;
-  position: absolute;
-  transform: rotate(0deg);
-  transition: 250ms ease-in-out;
+:local .invite .invitationWrapper {
+  align-content: center;
+  color: var(--blue);
+  display: flex;
+  font-size: 0.9rem;
+  justify-content: center;
+  margin: 0.5rem 0;
   width: 100%;
 }
 
-.nav-icon span:nth-child(1) {
-  top: 0;
+:local .invite .invitationURL {
+  border-bottom: 1px solid var(--blue);
+  color: inherit;
+  font-size: inherit;
+  margin: 0 1rem 0 0;
+  padding-bottom: 0.3em;
 }
 
-.nav-icon span:nth-child(2),.nav-icon span:nth-child(3) {
-  top: 13px;
+:local .invite .shortCuts {
+  background: none;
+  border: 1px solid var(--blue);
+  border-radius: 2px;
+  color: var(--blue);
+  cursor: pointer;
+  font-size: 0.8rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  width: 2rem;
+  transition: 300ms;
 }
 
-.nav-icon span:nth-child(4) {
-  top: 26px;
+:local .invite .shortCuts:hover {
+  background: var(--blueLighter);
+  color: white;
+  outline: none;
 }
 
-.nav-icon.open span {
-  background: #323232;
+:local .invite .shortCuts:focus {
+  outline: none;
 }
 
-.nav-icon.open span:nth-child(1) {
-  left: 50%;
-  top: 13px;
-  width: 0%;
+:local .invite .envelope {
+  padding-top: 0.28rem;
 }
-
-.nav-icon.open span:nth-child(2) {
-  transform: rotate(45deg);
-}
-
-.nav-icon.open span:nth-child(3) {
-  transform: rotate(-45deg);
-}
-
-.nav-icon.open span:nth-child(4) {
-  left: 50%;
-  top: 13px;
-  width: 0;
-}
-
