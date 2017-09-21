@@ -4,14 +4,15 @@ import Inert from 'inert'
 import mongoose from 'mongoose'
 import config from 'config'
 import base from './base'
+
 import auth from './api/auth'
 import isLoggedIn from './api/isLoggedIn'
 import workshops from './api/workshops'
 import users from './api/users'
 import links from './api/links'
 import parts from './api/parts'
-import usb from './api/usb'
 import editor from './api/editor'
+import extensionid from './api/chrome'
 
 mongoose.connect(config.get('database.host'))
 mongoose.connection.on('error', console.error.bind(console, 'db error:'))
@@ -76,10 +77,10 @@ server.register([{
   register: parts
 },
 {
-  register: usb
+  register: editor
 },
 {
-  register: editor
+  register: extensionid
 }
 ], (error) => {
   if (error) {
