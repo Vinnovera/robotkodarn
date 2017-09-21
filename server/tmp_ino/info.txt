@@ -1,1 +1,0 @@
-This is a temp folder for the .ino files to be saved in (they will be removed when compiling is done)

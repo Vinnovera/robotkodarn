@@ -6,5 +6,8 @@
   },
   "database": {
     "host": "mongodb://localhost/robotkodarn"
+  },
+  "chrome": {
+    "extensionid": "aemhpfbekflgehjcjgdoljofdcglmmmg"
   }
 }
