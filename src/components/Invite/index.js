@@ -29,19 +29,36 @@ class Invite extends Component {
   }
 
   render() {
+    // This should probably be a component of it's own.
+    const invitationLink = this.props.invite.length > 0 ?
+      this.props.invite.map(invitation => (
+        <a
+          href={`http://localhost:8000/register?id=${invitation}`}
+          className={styles.invitation}
+          key={invitation}
+        >{`localhost:8000/register?id=${invitation}`}</a>
+      )) :
+      ''
+
     return (
-      <div className={styles.invite}>
-        <div className={styles.logo}>
-          <Logo />
+      <div>
+        <nav className={styles.navigation}>
+          <ul>
+            <li>Skapa nya workshops</li>
+            <li>Logga ut</li>
+          </ul>
+        </nav>
+        <div className={styles.invite}>
+          <div className={styles.logo}>
+            <Logo />
+          </div>
+          <h1>Bjud in nya användare</h1>
+          <p>Generera en unik registreringslänk genom att klicka på knappen.</p>
+          <button className={styles.button} onClick={this.createInviteLink} >
+            Skapa registreringslänk
+          </button>
+          {invitationLink}
         </div>
-        <h1>Bjud in nya användare</h1>
-        <p>Generera en unik registreringslänk genom att klicka på knappen.</p>
-        <button
-          className={styles.button}
-          onClick={this.createInviteLink}
-        >
-          Skapa registreringslänk
-        </button>
       </div>
     )
   }
@@ -49,6 +66,7 @@ class Invite extends Component {
 
 function mapStateToProps(state) {
   return {
+    invite: state.invite.items,
     message: state.adminpage.message
   }
 }
