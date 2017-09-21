@@ -77,17 +77,22 @@ export const uploadCode = compiledCode => (dispatch) => {
     return
   }
 
+
   /*
    * Get the Chrome App ID from server
    */
-  const request = new XMLHttpRequest()
-  request.open('GET', '/api/extensionid', true)
-  request.setRequestHeader('Content-Type', 'application/json')
+  fetch('/api/extensionid', {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error('Could not get config.')
+    }
 
-  request.onload = () => {
-    if (request.status === 200) {
+    return response.json().then((config) => {
       // Robotkodarn's Chrome App ID
-      const extensionid = request.response
+      const extensionid = config.extensionId
       const port = chrome.runtime.connect(extensionid)
 
       // Payload to be sent to Chrome App
@@ -124,18 +129,17 @@ export const uploadCode = compiledCode => (dispatch) => {
           })
         }
       })
-    } else {
-      dispatch({
-        type: SET_CONSOLE_OUTPUT,
-        payload: {
-          type: 'error',
-          heading: 'Något gick snett',
-          message: 'Det verkar som att något gått snett vid hämtning av Robotkodarns Chrome App Id.'
-        }
-      })
-    }
-  }
-  request.send()
+    })
+  }).catch(() => {
+    dispatch({
+      type: SET_CONSOLE_OUTPUT,
+      payload: {
+        type: 'error',
+        heading: 'Något gick snett',
+        message: 'Det verkar som att något gått snett vid hämtning av Robotkodarns Chrome App Id.'
+      }
+    })
+  })
 }
 
 // -----------------------------------------------------------------------------

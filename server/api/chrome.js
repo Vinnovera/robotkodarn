@@ -10,7 +10,7 @@ import config from 'config'
 const getExtensionId = (request, reply) => {
   const extensionId = config.get('chrome.extensionid')
   if (extensionId) {
-    reply(extensionId).code(200)
+    reply({ extensionId }).code(200)
   } else {
     reply().code(500)
   }
