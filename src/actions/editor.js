@@ -1,9 +1,15 @@
+const CLEAR_CONSOLE = 'CLEAR_CONSOLE'
+const SET_EDITOR_TAB = 'SET_EDITOR_TAB'
+const SET_ACTIVE_PART_INDEX = 'SET_ACTIVE_PART_INDEX'
+const SET_COMPILER_RESPONSE = 'SET_COMPILER_RESPONSE'
+const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
+
 // -----------------------------------------------------------------------------
 // changeEditorTab, sets state to pressed tab
 // -----------------------------------------------------------------------------
 export const changeEditorTab = userOrOriginal => (dispatch) => {
   dispatch({
-    type: 'SET_EDITOR_TAB',
+    type: SET_EDITOR_TAB,
     payload: userOrOriginal
   })
 }
@@ -19,7 +25,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
   request.onload = () => {
     if (request.status >= 200 && request.status < 400) {
       dispatch({
-        type: 'SET_COMPILER_RESPONSE',
+        type: SET_COMPILER_RESPONSE,
         payload: {
           compilerResponse: {
             response: request.response,
@@ -30,7 +36,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
       })
     } else {
       dispatch({
-        type: 'SET_COMPILER_RESPONSE',
+        type: SET_COMPILER_RESPONSE,
         payload: {
           compilerResponse: {
             response: JSON.parse(request.response),
@@ -51,6 +57,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
 /**
  * Takes the compiled code and sends it to Robotkodarn Chrome App,
  * which takes care of the uploading code (app is based on avrgirl).
+ * The Chrome App ID is retrieved from server.
  *
  * @param {string} compiledCode The code compiled through avrpizza
  */
@@ -60,7 +67,7 @@ export const uploadCode = compiledCode => (dispatch) => {
    */
   if (compiledCode.compileError) {
     dispatch({
-      type: 'SET_CONSOLE_OUTPUT',
+      type: SET_CONSOLE_OUTPUT,
       payload: {
         type: 'error',
         heading: 'Fel vid kompilering',
@@ -70,44 +77,65 @@ export const uploadCode = compiledCode => (dispatch) => {
     return
   }
 
-  // Robotkodarn's Chrome App ID
-  const extensionid = 'aemhpfbekflgehjcjgdoljofdcglmmmg'
-  const port = chrome.runtime.connect(extensionid)
+  /*
+   * Get the Chrome App ID from server
+   */
+  const request = new XMLHttpRequest()
+  request.open('GET', '/api/extensionid', true)
+  request.setRequestHeader('Content-Type', 'application/json')
 
-  // Payload to be sent to Chrome App
-  const message = {
-    board: 'uno', // Hardcoded 'uno' for testing purposes
-    file: compiledCode
-  }
+  request.onload = () => {
+    if (request.status === 200) {
+      // Robotkodarn's Chrome App ID
+      const extensionid = request.response
+      const port = chrome.runtime.connect(extensionid)
 
-  // Send message to Chrome App
-  port.postMessage(message)
+      // Payload to be sent to Chrome App
+      const message = {
+        board: 'uno', // Hardcoded 'uno' for testing purposes
+        file: compiledCode
+      }
 
-  // Give user feedback
-  port.onMessage.addListener((uploadMessage) => {
-    if (uploadMessage.success) {
-      dispatch({
-        type: 'SET_CONSOLE_OUTPUT',
-        payload: {
-          type: 'success',
-          heading: 'Lyckad uppladdning',
-          message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
+      // Send message to Chrome App
+      port.postMessage(message)
+
+      // Give user feedback
+      port.onMessage.addListener((uploadMessage) => {
+        if (uploadMessage.success) {
+          dispatch({
+            type: 'SET_CONSOLE_OUTPUT',
+            payload: {
+              type: 'success',
+              heading: 'Lyckad uppladdning',
+              message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
+            }
+          })
+        } else {
+          dispatch({
+            type: 'SET_CONSOLE_OUTPUT',
+            payload: {
+              type: 'error',
+              heading: 'Fel vid uppladdningen',
+              // Inform user if no robot is connected.
+              message: uploadMessage.error.includes('no Arduino') ?
+                'Du har inte kopplat in någon robot.' :
+                uploadMessage.error // FYI: will be in English
+            }
+          })
         }
       })
     } else {
       dispatch({
-        type: 'SET_CONSOLE_OUTPUT',
+        type: SET_CONSOLE_OUTPUT,
         payload: {
           type: 'error',
-          heading: 'Fel vid uppladdningen',
-          // Inform user if no robot is connected.
-          message: uploadMessage.error.includes('no Arduino') ?
-            'Du har inte kopplat in någon robot.' :
-            uploadMessage.error // FYI: will be in English
+          heading: 'Något gick snett',
+          message: 'Det verkar som att något gått snett vid hämtning av Robotkodarns Chrome App Id.'
         }
       })
     }
-  })
+  }
+  request.send()
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +153,7 @@ export const uploadCode = compiledCode => (dispatch) => {
  */
 export const setConsoleOutput = output => (dispatch) => {
   dispatch({
-    type: 'SET_CONSOLE_OUTPUT',
+    type: SET_CONSOLE_OUTPUT,
     payload: {
       type: output.type,
       heading: output.heading,
@@ -139,7 +167,7 @@ export const setConsoleOutput = output => (dispatch) => {
 // -----------------------------------------------------------------------------
 export const clearConsole = () => (dispatch) => {
   dispatch({
-    type: 'CLEAR_CONSOLE'
+    type: CLEAR_CONSOLE
   })
 }
 
@@ -148,7 +176,7 @@ export const clearConsole = () => (dispatch) => {
 // -----------------------------------------------------------------------------
 export const setActivePartIndex = index => (dispatch) => {
   dispatch({
-    type: 'SET_ACTIVE_PART_INDEX',
+    type: SET_ACTIVE_PART_INDEX,
     payload: index
   })
 }

@@ -1,6 +1,6 @@
 :local .actionButtonWrapper {
   display: flex;
-  float: right;
+  justify-content: flex-end;
   margin-top: -37px;
 }
 
