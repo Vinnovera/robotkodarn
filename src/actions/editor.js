@@ -101,10 +101,7 @@ export const uploadCode = compiledCode => (dispatch) => {
         file: compiledCode
       }
 
-      // Send message to Chrome App
-      port.postMessage(message)
-
-      // Give user feedback
+      // Give user feedback when recieving message from Chrome App
       port.onMessage.addListener((uploadMessage) => {
         if (uploadMessage.success) {
           dispatch({
@@ -129,6 +126,9 @@ export const uploadCode = compiledCode => (dispatch) => {
           })
         }
       })
+
+      // Send message to Chrome App
+      port.postMessage(message)
     })
   }).catch(() => {
     dispatch({
