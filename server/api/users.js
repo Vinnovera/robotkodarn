@@ -1,4 +1,5 @@
-import User from '../models/user'
+import Joi from 'joi'
+import { User, userValidation } from '../models/user'
 
 // -----------------------------------------------------------------------------
 // Get all the users [GET]
@@ -26,30 +27,55 @@ const getUser = (request, reply) => {
   })
 }
 
+const addInvite = (request, reply) => {
+  const invite = new Invite()
+
+  Joi.validate(invite, inviteValidation, (validationError, /* value */) => {
+    if (validationError) {
+      return reply({ error: validationError }).code(400)
+    }
+
+    invite.save((error) => {
+      if (error) {
+        return reply({ error: error.message }).code(400)
+      }
+
+      return reply(invite).code(200)
+    })
+  })
+}
+
 // -----------------------------------------------------------------------------
 // Register a new user [POST]
 // -----------------------------------------------------------------------------
 const addUser = (request, reply) => {
+  // First, check if user with the same email address already exists
   User.findOne({
     email: request.payload.email
-  }, (error, user) => {
+  }, (error, existingUser) => {
     if (error) {
       return reply(error).code(500)
     }
 
-    if (user) {
+    if (existingUser) {
       return reply({ error: 'User already exists' }).code(400)
     }
 
-    let newUser = user
-    newUser = new User(request.payload)
+    // If no user with that email address exists, create a new user
+    const user = new User(request.payload)
 
-    newUser.save((userError) => {
-      if (userError) {
-        return reply({ userError: error.message }).code(400)
+    Joi.validate(user, userValidation, (validationError, /* value */) => {
+      if (validationError) {
+        return reply({ error: validationError }).code(400)
       }
 
-      return reply(newUser).code(200)
+      user.save((saveError) => {
+        if (saveError) {
+          return reply({ error: saveError }).code(400)
+        }
+
+        return reply(user).code(200)
+      })
     })
   })
 }
@@ -112,8 +138,7 @@ exports.register = (server, options, next) => {
       method: 'POST',
       path: '/api/user',
       config: {
-        handler: addUser,
-        auth: 'session'
+        handler: addUser
       }
     },
     {

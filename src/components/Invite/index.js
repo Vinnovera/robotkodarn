@@ -22,27 +22,14 @@ class Invite extends Component {
     this.props.dispatch(addInvitationID())
   }
 
-  /**
-   * Copies the unique URL to clipboard
-   *
-   * @param {string} url The unique invitation URL
-   */
-  copyToClipboard = (url) => {
-    // TODO: Copy link to clipboard
-    console.log(url)
-  }
-
   render() {
-    const invitationLink = this.props.invite.length > 0 ?
+    const invitationLinks = this.props.invite.length > 0 ?
       this.props.invite.map((invitation) => {
-        const uniqueURL = `http://localhost:8000/register?id=${invitation}`
+        const uniqueURL = `${window.location.origin}/register?id=${invitation}`
 
         return (
           <div key={invitation} className={styles.invitationWrapper}>
             <p className={styles.invitationURL} >{uniqueURL}</p>
-            <button className={styles.shortCuts} onClick={() => this.copyToClipboard(uniqueURL)} title="Kopiera länken" >
-              <FA name="clipboard" />
-            </button>
             <a className={styles.shortCuts} href={`mailto:?body=Registrera dig här: ${uniqueURL}&subject=Inbjudan till Robotkodarn`} title="Skicka mejl">
               <FA className={styles.envelope} name="envelope" />
             </a>
@@ -63,15 +50,13 @@ class Invite extends Component {
           </ul>
         </nav>
         <div className={styles.invite}>
-          <div className={styles.logo}>
-            <Logo />
-          </div>
+          <div className={styles.logo}><Logo /></div>
           <h1>Bjud in nya användare</h1>
           <p>Generera en unik inbjudningslänk genom att klicka på knappen.</p>
           <button className={styles.button} onClick={this.createInviteLink} >
             Skapa inbjudningslänk
           </button>
-          {invitationLink}
+          {invitationLinks}
         </div>
       </div>
     )
@@ -80,8 +65,7 @@ class Invite extends Component {
 
 function mapStateToProps(state) {
   return {
-    invite: state.invite.items,
-    message: state.adminpage.message
+    invite: state.invite.items
   }
 }
 

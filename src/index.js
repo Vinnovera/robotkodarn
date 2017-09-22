@@ -15,6 +15,7 @@ import Login from './components/Login'
 import Admin from './components/Admin'
 import AdminPage from './components/AdminPage'
 import Invite from './components/Invite'
+import RegisterForm from './components/RegisterForm'
 
 import './index.css'
 
@@ -44,6 +45,7 @@ render((
         <Route path="/admin" component={Admin} />
         <Route path="/adminpage" component={AdminPage} />
         <Route path="/invite" component={Invite} />
+        <Route path="/register" component={RegisterForm} />
       </Route>
     </Router>
   </Provider>

@@ -63,16 +63,14 @@ export const toggleUserRegister = loginOrRegister => (dispatch) => {
 // and posts this to the server
 // -----------------------------------------------------------------------------
 export const registerUser = credentials => (dispatch) => {
-  const data = JSON.stringify(Object.assign({}, credentials, { admin: false }))
-
-  axios.post('/api/user', data, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
-    .then(() => window.alert('User is registered'))
+  axios
+    .post('/api/user', credentials, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(() => dispatch(routeActions.push('/admin'))) // TODO: Print message to user / redirect to logged in.
     .catch((error) => {
-      console.log(error)
-      dispatch(routeActions.push('/admin'))
+      console.log(error) // TODO: Should dispatch an error to user
     })
 }

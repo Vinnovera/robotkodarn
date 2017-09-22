@@ -2,23 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import forge from 'node-forge'
 
-import { toggleUserRegister, registerUser, signIn, isLoggedIn } from '../../actions/authentication'
-
+import { signIn, isLoggedIn } from '../../actions/authentication'
 import styles from './admin.css'
 
 export class Admin extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      email: null,
-      password: null,
-      nameRegister: null,
-      emailRegister: null,
-      passwordRegister: null
-    }
-  }
-
   componentWillMount() {
     this.props.dispatch(isLoggedIn('/adminpage'))
   }
@@ -42,27 +29,7 @@ export class Admin extends Component {
     this.props.dispatch(signIn(credentials, '/adminpage'))
   }
 
-  handleRegisterSubmit = (e) => {
-    e.preventDefault()
-
-    const md = forge.md.sha256.create()
-    md.update(this.state.registerPassword)
-    const hash = md.digest().toHex()
-
-    const credentials = {
-      name: this.state.registerName,
-      password: hash,
-      email: this.state.registerEmail
-    }
-
-    this.props.dispatch(registerUser(credentials))
-  }
-
-  handleLoginOrRegisterClick(loginOrRegister) {
-    this.props.dispatch(toggleUserRegister(loginOrRegister))
-  }
-
-  renderContent() {
+  render() {
     if (this.props.loginOrRegister === 'login') {
       return (
         <div className={styles.login}>
@@ -77,31 +44,6 @@ export class Admin extends Component {
         </div>
       )
     }
-
-    return (
-      <div className={styles.login}>
-        <h1>Registrera ny användare</h1>
-        <form onSubmit={this.handleRegisterSubmit}>
-          <label htmlFor="name">För och efternamn</label>
-          <input onChange={e => this.setState({ registerName: e.target.value })} id="name" type="text" />
-
-          <label htmlFor="email">Email</label>
-          <input onChange={e => this.setState({ registerEmail: e.target.value })} id="email" type="text" />
-
-          <label htmlFor="password">Lösenord</label>
-          <input onChange={e => this.setState({ registerPassword: e.target.value })} id="password" type="text" />
-          <input type="submit" value="Registrera" />
-        </form>
-        {/* TODO: Replace anchor with button */}
-        <a href="#" onClick={() => this.handleLoginOrRegisterClick('login')}>Tillbaka till inloggning...</a>
-      </div>
-    )
-  }
-
-  render() {
-    return (
-      <div>{ this.renderContent() }</div>
-    )
   }
 }
 

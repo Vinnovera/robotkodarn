@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import Joi from 'joi'
 
 const userSchema = Schema({
   name: {
@@ -16,8 +17,17 @@ const userSchema = Schema({
   },
   role: {
     type: String,
-    required: true
+    required: true,
+    default: 'editor' // When register through register form, default role is editor
   }
 })
 
-export default mongoose.model('User', userSchema)
+export const userValidation = Joi.object().keys({
+  _id: Joi.object().required(),
+  name: Joi.string().required(),
+  password: Joi.string().required(),
+  email: Joi.string().required(),
+  role: Joi.string().required()
+}).unknown()
+
+export const User = mongoose.model('User', userSchema)
