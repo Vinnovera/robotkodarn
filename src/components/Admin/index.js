@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import forge from 'node-forge'
-
 import { signIn, isLoggedIn } from '../../actions/authentication'
 import styles from './admin.css'
 
 export class Admin extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      email: null,
+      password: null
+    }
+  }
+
   componentWillMount() {
     this.props.dispatch(isLoggedIn('/adminpage'))
   }

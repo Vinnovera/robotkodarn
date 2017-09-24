@@ -16,6 +16,7 @@ const getRegistrationFormByID = (request, reply) => {
   })
 }
 
+// TODO: Handle registration with cookie when visiting page without an invitation link.
 exports.register = (server, options, next) => {
   server.route([
     {

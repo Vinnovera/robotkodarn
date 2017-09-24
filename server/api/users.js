@@ -27,24 +27,6 @@ const getUser = (request, reply) => {
   })
 }
 
-const addInvite = (request, reply) => {
-  const invite = new Invite()
-
-  Joi.validate(invite, inviteValidation, (validationError, /* value */) => {
-    if (validationError) {
-      return reply({ error: validationError }).code(400)
-    }
-
-    invite.save((error) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
-      }
-
-      return reply(invite).code(200)
-    })
-  })
-}
-
 // -----------------------------------------------------------------------------
 // Register a new user [POST]
 // -----------------------------------------------------------------------------
