@@ -29,6 +29,7 @@ export const signOut = path => (dispatch) => {
 // -----------------------------------------------------------------------------
 // isLoggedIn, checks session cookie
 // -----------------------------------------------------------------------------
+// TODO: Needs to check if user is completed. Right now, uncompleted users can access admin.
 export const isLoggedIn = path => (dispatch) => {
   axios.get('/api/isLoggedIn')
     .then((response) => {
@@ -41,36 +42,7 @@ export const isLoggedIn = path => (dispatch) => {
         dispatch(routeActions.push(path))
       }
     })
-    .catch((/* error */) => {
+    .catch(() => {
       dispatch(routeActions.push('/admin'))
-    })
-}
-
-// -----------------------------------------------------------------------------
-// toggleUserRegister, toggle the form
-// betweet login or registration
-// -----------------------------------------------------------------------------
-export const toggleUserRegister = loginOrRegister => (dispatch) => {
-  dispatch({
-    type: 'SET_LOGIN_OR_REGISTER',
-    payload: loginOrRegister
-  })
-}
-
-// -----------------------------------------------------------------------------
-// registerUser, takes the credentials
-// from the component (hashed pass, name and email)
-// and posts this to the server
-// -----------------------------------------------------------------------------
-export const registerUser = credentials => (dispatch) => {
-  axios
-    .post('/api/user', credentials, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(() => dispatch(routeActions.push('/admin'))) // TODO: Print message to user / redirect to logged in.
-    .catch((error) => {
-      console.log(error) // TODO: Should dispatch an error to user
     })
 }

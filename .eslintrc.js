@@ -18,6 +18,7 @@ module.exports = {
       "never"
     ],
     "import/no-named-as-default": "off",
+    "import/prefer-default-export": "off",
     "react/prop-types": "off",
     "no-underscore-dangle": "off",
     "react/jsx-filename-extension": "off",

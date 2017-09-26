@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import forge from 'node-forge'
 import { connect } from 'react-redux'
 
-import { registerUser } from '../../actions/authentication'
+import { isInvited, completeRegistration } from '../../actions/registration'
 import styles from './registerform.css'
 
 export class Register extends Component {
@@ -14,6 +14,11 @@ export class Register extends Component {
       email: null,
       password: null
     }
+  }
+
+  // Check if there is a session cookie available
+  componentWillMount() {
+    this.props.dispatch(isInvited('/register'))
   }
 
   handleRegisterSubmit = (e) => {
@@ -29,7 +34,7 @@ export class Register extends Component {
       email: this.state.email
     }
 
-    this.props.dispatch(registerUser(credentials))
+    this.props.dispatch(completeRegistration(credentials))
   }
 
   render() {

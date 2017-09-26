@@ -16,6 +16,7 @@ import editor from './api/editor'
 import extensionid from './api/chrome'
 import registration from './api/registration'
 
+mongoose.Promise = Promise
 mongoose.connect(config.get('database.host'))
 mongoose.connection.on('error', console.error.bind(console, 'db error:'))
 
@@ -37,8 +38,9 @@ server.connection({
 const webpack = require('webpack')
 const WebpackPlugin = require('hapi-webpack-plugin')
 const wpconfig = require('../webpack/config.dev')
+const asyncHandler = require('hapi-es7-async-handler')
 
-server.register({
+server.register([{
   register: WebpackPlugin,
   options: {
     compiler: webpack(wpconfig),
@@ -48,7 +50,9 @@ server.register({
       quiet: true
     }
   }
-}, (error) => {
+}, {
+  register: asyncHandler
+}], (error) => {
   if (error) {
     throw error
   }
