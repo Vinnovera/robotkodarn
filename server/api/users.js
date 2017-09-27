@@ -30,6 +30,58 @@ const getUser = (request, reply) => {
     return reply(user).code(200)
   })
 }
+
+// -----------------------------------------------------------------------------
+// Register a new user [POST]
+// -----------------------------------------------------------------------------
+const addUser = (request, reply) => {
+  User.findOne({
+    email: request.payload.email
+  }, (error, user) => {
+    if (error) {
+      return reply(error).code(500)
+    }
+
+    if (user) {
+      return reply({ error: 'User already exists' }).code(400)
+    }
+
+    let newUser = user
+    newUser = new User(request.payload)
+
+    newUser.save((userError) => {
+      if (userError) {
+        return reply({ userError: error.message }).code(400)
+      }
+
+      return reply(newUser).code(200)
+    })
+  })
+}
+
+// -----------------------------------------------------------------------------
+// Update a user [PUT]
+// -----------------------------------------------------------------------------
+const updateUser = (request, reply) => {
+  User.findOne({
+    _id: request.params.id
+  }, (error, foundUser) => {
+    if (error) {
+      return reply(error).code(500)
+    }
+
+    const i = Object.assign(foundUser, request.payload)
+
+    i.save((updateError, doc) => {
+      if (updateError) {
+        return reply({ updateError: error.message }).code(400)
+      }
+
+      return reply(doc).code(200)
+    })
+  })
+}
+
 // -----------------------------------------------------------------------------
 // Delete a user [DELETE]
 // -----------------------------------------------------------------------------
@@ -58,6 +110,22 @@ exports.register = (server, options, next) => {
       path: '/api/user/{id}',
       config: {
         handler: getUser,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/api/user',
+      config: {
+        handler: addUser,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'PUT',
+      path: '/api/user/{id}',
+      config: {
+        handler: updateUser,
         auth: 'session'
       }
     },
