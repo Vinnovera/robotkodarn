@@ -1,24 +1,25 @@
 import Joi from 'joi'
 import { Invite, inviteValidation } from '../models/invite'
 
-const addInvite = (request, reply) => {
-  const invite = new Invite()
+const addInvite = async (request, reply) => {
+  try {
+    const invite = await new Invite()
 
-  Joi.validate(invite, inviteValidation, (validationError, /* value */) => {
-    if (validationError) {
-      return reply({ error: validationError }).code(400)
+    // Validate invitation
+    const validation = await Joi.validate(invite, inviteValidation)
+    if (validation.error) {
+      const error = new Error('Did not pass validation.')
+      error.code = 400
+      throw error
     }
 
-    invite.save((error) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
-      }
+    await invite.save()
 
-      return reply(invite).code(200)
-    })
-  })
+    return reply(invite).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
-
 
 exports.register = (server, options, next) => {
   server.route([

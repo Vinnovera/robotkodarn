@@ -19,26 +19,43 @@ export const signIn = (credentials, path) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // signOut, clears cookies
 // -----------------------------------------------------------------------------
+const IS_LOGGED_IN = 'IS_LOGGED_IN'
+
 export const signOut = path => (dispatch) => {
   axios.get('/auth/logout')
-
-    .then(() => dispatch(routeActions.push(path)))
+    .then(() => {
+      // Remove user from Redux State.
+      dispatch({
+        type: IS_LOGGED_IN,
+        payload: null
+      })
+      dispatch(routeActions.push(path))
+    })
     .catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
 // isLoggedIn, checks session cookie
 // -----------------------------------------------------------------------------
-// TODO: Needs to check if user is completed. Right now, uncompleted users can access admin.
-export const isLoggedIn = path => (dispatch) => {
+/**
+ * Checks session cookie and role of user
+ *
+ * @param {string} path The path requested if session cookie exists.
+ * @param {*} role The user role required for getting access to path.
+ * If role is set to 'superadmin', check that the user has the required role,
+ * else, redirect to adminpage.
+ */
+export const isLoggedIn = (path, role = 'editor') => (dispatch) => {
   axios.get('/api/isLoggedIn')
     .then((response) => {
       dispatch({
-        type: 'IS_LOGGED_IN',
-        payload: response.data.credentials.email
+        type: IS_LOGGED_IN,
+        payload: response.data
       })
 
-      if (path !== null) {
+      if (role === 'superadmin' && response.data !== 'superadmin') {
+        return dispatch(routeActions.push('/adminpage'))
+      } else if (path !== null) {
         dispatch(routeActions.push(path))
       }
     })

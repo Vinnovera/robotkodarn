@@ -122,7 +122,7 @@ exports.register = (server, options, next) => {
         handler: completeRegistration,
         auth: 'session'
       }
-    },
+    }
   ])
   next()
 }

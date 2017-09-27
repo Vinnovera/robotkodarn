@@ -320,6 +320,7 @@ class AdminPage extends Component {
       <div className={styles.login}>
         <header className={styles.header}>
           <h5>{this.props.message}</h5>
+          { this.props.role === 'superadmin' ? <a href="./invite">Bjud in användare</a> : '' }
           <button onClick={this.logOut}>Logga ut</button>
         </header>
         <div className={styles.list}>
@@ -365,7 +366,8 @@ function mapStateToProps(state) {
     selectedWorkshopIndex: state.adminpage.selectedWorkshopIndex,
     selectedPartIndex: state.adminpage.selectedPartIndex,
     selectedLinkIndex: state.adminpage.selectedLinkIndex,
-    message: state.adminpage.message
+    message: state.adminpage.message,
+    role: state.teacher.loggedInUser
   }
 }
 

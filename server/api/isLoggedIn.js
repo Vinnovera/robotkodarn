@@ -9,7 +9,7 @@ const isLoggedIn = async (request, reply) => {
   try {
     const existingUser = await User.findOne({ _id })
     if (existingUser.complete) {
-      reply(request.auth).code(200)
+      reply(existingUser.role).code(200)
     } else {
       const error = new Error('Registration not completed')
       error.code = 401
