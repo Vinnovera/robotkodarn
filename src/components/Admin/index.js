@@ -38,27 +38,19 @@ export class Admin extends Component {
   }
 
   render() {
-    if (this.props.loginOrRegister === 'login') {
-      return (
-        <div className={styles.login}>
-          <h1>Logga in</h1>
-          <form onSubmit={this.handleLoginSubmit}>
-            <label htmlFor="email">Email</label>
-            <input onChange={e => this.setState({ email: e.target.value })} id="email" type="email" />
-            <label htmlFor="password">Lösenord</label>
-            <input onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
-            <input type="submit" value="Logga in" />
-          </form>
-        </div>
-      )
-    }
+    return (
+      <div className={styles.login}>
+        <h1>Logga in</h1>
+        <form onSubmit={this.handleLoginSubmit}>
+          <label htmlFor="email">Email</label>
+          <input onChange={e => this.setState({ email: e.target.value })} id="email" type="email" />
+          <label htmlFor="password">Lösenord</label>
+          <input onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
+          <input type="submit" value="Logga in" />
+        </form>
+      </div>
+    )
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    loginOrRegister: state.admin.loginOrRegister
-  }
-}
-
-export default connect(mapStateToProps)(Admin)
+export default connect()(Admin)

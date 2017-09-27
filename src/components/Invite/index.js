@@ -4,6 +4,7 @@ import FA from 'react-fontawesome'
 import { isLoggedIn, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
 import Logo from '../Logo'
+import AdminHeader from './../AdminHeader'
 import styles from './invite.css'
 
 class Invite extends Component {
@@ -43,14 +44,7 @@ class Invite extends Component {
 
       return (
         <div>
-          <nav className={styles.navigation}>
-            <ul>
-              <li><a className={styles.navigationLink} href="./admin">Skapa workshops</a></li>
-              <li>
-                <button onClick={this.logOut} className={styles.navigationLink}>Logga ut</button>
-              </li>
-            </ul>
-          </nav>
+          <AdminHeader />
           <div className={styles.invite}>
             <div className={styles.logo}><Logo /></div>
             <h1>Bjud in nya användare</h1>
