@@ -16,20 +16,20 @@ const createUserFromInvitation = async (request, reply) => {
       const newUser = new User({ invitationID: inviteID })
       await newUser.save()
       request.cookieAuth.set({ _id: newUser._id })
+      reply().redirect('/register')
 
       // Remove the invite since it is now stored on user
       await Invite.remove({ inviteID })
     } else {
       const incompleteUser = await User.findOne({ invitationID: inviteID, complete: false })
-      request.cookieAuth.set({ _id: incompleteUser._id })
 
-      if (!incompleteUser) {
+      if (incompleteUser) {
+        request.cookieAuth.set({ _id: incompleteUser._id })
+        reply().redirect('/register')
+      } else {
         return reply.redirect('/admin')
       }
     }
-
-    // If invite exists or if user is incomplete, redirect to register
-    reply().redirect('/register')
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
   }
@@ -49,15 +49,15 @@ const checkRegistrationStatus = async (request, reply) => {
     if (!user) {
       const error = new Error('User does not exist.')
       error.code = 401
-      throw error
+      return reply({ error: error.message }).code(error.code)
     } else if (user && user.complete) {
       const error = new Error('User is already registered.')
       error.code = 403
-      throw error
+      return reply({ error: error.message }).code(error.code)
     }
     reply().code(200)
   } catch (error) {
-    return reply({ error: error.message }).code(error.code || 500)
+    return reply({ error: error.message }).code(500)
   }
 }
 
@@ -89,11 +89,7 @@ const completeRegistration = async (request, reply) => {
     validatedUser.complete = true
     await validatedUser.save()
 
-    /* Once user is saved, remove cookie. This will redirect user to '/admin',
-     * where they can log in.
-     */
-    request.cookieAuth.clear()
-
+    // Once replied is sent, user will automatically be redirected to /adminpage
     return reply().code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
