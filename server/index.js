@@ -31,7 +31,7 @@ const server = new Hapi.Server({
 
 server.connection({
   host: 'localhost',
-  port: process.env.PORT || 8000
+  port: process.env.PORT
 })
 
 const webpack = require('webpack')

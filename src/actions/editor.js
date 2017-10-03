@@ -92,6 +92,7 @@ export const uploadCode = compiledCode => (dispatch) => {
 
     return response.json().then((config) => {
       // Robotkodarn's Chrome App ID
+      console.log(process.env.CHROME_EXTENSION_ID)
       const extensionid = config.extensionId
       const port = chrome.runtime.connect(extensionid)
 
