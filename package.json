@@ -7,7 +7,10 @@
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "build:clean": "rimraf dist/client/static",
-    "dev": "npm run build:clean && nodemon --inspect index.js"
+    "dev": "check-node-version --package && npm run build:clean && nodemon --inspect index.js"
+  },
+  "engines": {
+    "node": ">8.0.0"
   },
   "dependencies": {
     "avr-pizza": "^0.3.5",
@@ -47,6 +50,7 @@
   },
   "devDependencies": {
     "css-loader": "^0.28.0",
+    "check-node-version": "^2.1.0",
     "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
