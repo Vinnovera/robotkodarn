@@ -19,60 +19,47 @@ export const signIn = (credentials, path) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // signOut, clears cookies
 // -----------------------------------------------------------------------------
+const IS_AUHTORIZED = 'IS_AUHTORIZED'
+
 export const signOut = path => (dispatch) => {
   axios.get('/auth/logout')
-
-    .then(() => dispatch(routeActions.push(path)))
+    .then(() => {
+      // Remove user from Redux State.
+      dispatch({
+        type: IS_AUHTORIZED,
+        payload: null
+      })
+      dispatch(routeActions.push(path))
+    })
     .catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
-// isLoggedIn, checks session cookie
+// checkAuthorization, checks session cookie and authorization level
 // -----------------------------------------------------------------------------
-export const isLoggedIn = path => (dispatch) => {
-  axios.get('/api/isLoggedIn')
+/**
+ * Checks session cookie and role of user
+ *
+ * @param {string} path The path requested if session cookie exists.
+ * @param {*} role The user role required for getting access to path.
+ * If role is set to 'superadmin', check that the user has the required role,
+ * else, redirect to adminpage.
+ */
+export const checkAuthorization = (path, role = 'editor') => (dispatch) => {
+  axios.get('/auth/checkAuthorization')
     .then((response) => {
       dispatch({
-        type: 'IS_LOGGED_IN',
-        payload: response.data.credentials.email
+        type: IS_AUHTORIZED,
+        payload: response.data
       })
 
-      if (path !== null) {
+      if (role === 'superadmin' && response.data !== 'superadmin') {
+        return dispatch(routeActions.push('/adminpage'))
+      } else if (path !== null) {
         dispatch(routeActions.push(path))
       }
     })
-    .catch((/* error */) => {
-      dispatch(routeActions.push('/admin'))
-    })
-}
-
-// -----------------------------------------------------------------------------
-// toggleUserRegister, toggle the form
-// betweet login or registration
-// -----------------------------------------------------------------------------
-export const toggleUserRegister = loginOrRegister => (dispatch) => {
-  dispatch({
-    type: 'SET_LOGIN_OR_REGISTER',
-    payload: loginOrRegister
-  })
-}
-
-// -----------------------------------------------------------------------------
-// registerUser, takes the credentials
-// from the component (hashed pass, name and email)
-// and posts this to the server
-// -----------------------------------------------------------------------------
-export const registerUser = credentials => (dispatch) => {
-  const data = JSON.stringify(Object.assign({}, credentials, { admin: false }))
-
-  axios.post('/api/user', data, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
-    .then(() => window.alert('User is registered'))
-    .catch((error) => {
-      console.log(error)
+    .catch(() => {
       dispatch(routeActions.push('/admin'))
     })
 }

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import forge from 'node-forge'
-
-import { toggleUserRegister, registerUser, signIn, isLoggedIn } from '../../actions/authentication'
-
+import { signIn, checkAuthorization } from '../../actions/authentication'
 import styles from './admin.css'
 
 export class Admin extends Component {
@@ -12,15 +10,12 @@ export class Admin extends Component {
 
     this.state = {
       email: null,
-      password: null,
-      nameRegister: null,
-      emailRegister: null,
-      passwordRegister: null
+      password: null
     }
   }
 
   componentWillMount() {
-    this.props.dispatch(isLoggedIn('/adminpage'))
+    this.props.dispatch(checkAuthorization('/adminpage'))
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,73 +37,20 @@ export class Admin extends Component {
     this.props.dispatch(signIn(credentials, '/adminpage'))
   }
 
-  handleRegisterSubmit = (e) => {
-    e.preventDefault()
-
-    const md = forge.md.sha256.create()
-    md.update(this.state.registerPassword)
-    const hash = md.digest().toHex()
-
-    const credentials = {
-      name: this.state.registerName,
-      password: hash,
-      email: this.state.registerEmail
-    }
-
-    this.props.dispatch(registerUser(credentials))
-  }
-
-  handleLoginOrRegisterClick(loginOrRegister) {
-    this.props.dispatch(toggleUserRegister(loginOrRegister))
-  }
-
-  renderContent() {
-    if (this.props.loginOrRegister === 'login') {
-      return (
-        <div className={styles.login}>
-          <h1>Logga in</h1>
-          <form onSubmit={this.handleLoginSubmit}>
-            <label htmlFor="email">Email</label>
-            <input onChange={e => this.setState({ email: e.target.value })} id="email" type="email" />
-            <label htmlFor="password">Lösenord</label>
-            <input onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
-            <input type="submit" value="Logga in" />
-          </form>
-        </div>
-      )
-    }
-
+  render() {
     return (
       <div className={styles.login}>
-        <h1>Registrera ny användare</h1>
-        <form onSubmit={this.handleRegisterSubmit}>
-          <label htmlFor="name">För och efternamn</label>
-          <input onChange={e => this.setState({ registerName: e.target.value })} id="name" type="text" />
-
+        <h1>Logga in</h1>
+        <form onSubmit={this.handleLoginSubmit}>
           <label htmlFor="email">Email</label>
-          <input onChange={e => this.setState({ registerEmail: e.target.value })} id="email" type="text" />
-
+          <input onChange={e => this.setState({ email: e.target.value })} id="email" type="email" />
           <label htmlFor="password">Lösenord</label>
-          <input onChange={e => this.setState({ registerPassword: e.target.value })} id="password" type="text" />
-          <input type="submit" value="Registrera" />
+          <input onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
+          <input type="submit" value="Logga in" />
         </form>
-        {/* TODO: Replace anchor with button */}
-        <a href="#" onClick={() => this.handleLoginOrRegisterClick('login')}>Tillbaka till inloggning...</a>
       </div>
     )
   }
-
-  render() {
-    return (
-      <div>{ this.renderContent() }</div>
-    )
-  }
 }
 
-function mapStateToProps(state) {
-  return {
-    loginOrRegister: state.admin.loginOrRegister
-  }
-}
-
-export default connect(mapStateToProps)(Admin)
+export default connect()(Admin)

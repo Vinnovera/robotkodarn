@@ -8,6 +8,10 @@
   margin-right: 10px;
 }
 
+:local button {
+  max-width: 12rem;
+}
+
 /* FontAwesome */
 :local .icons {
   margin-right: 10px;

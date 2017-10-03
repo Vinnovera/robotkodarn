@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { isLoggedIn, signOut } from '../../actions/authentication'
+
+import { checkAuthorization } from '../../actions/authentication'
 import {
   createWorkshop,
   getWorkshopsByUserId,
@@ -14,27 +15,13 @@ import {
   addLink,
   changeTitle
 } from '../../actions/workshops'
+
+import AdminHeader from '../AdminHeader'
 import styles from './adminpage.css'
 
-export class AdminPage extends Component {
+class AdminPage extends Component {
   constructor(props) {
     super(props)
-
-    this.renderListWithWorkshops = this.renderListWithWorkshops.bind(this)
-    this.renderListWithParts = this.renderListWithParts.bind(this)
-    this.handleRemoveWorkshop = this.handleRemoveWorkshop.bind(this)
-    this.handleSelectWorkshop = this.handleSelectWorkshop.bind(this)
-    this.handleCreateWorkshop = this.handleCreateWorkshop.bind(this)
-    this.getSelectedWorkshopTitle = this.getSelectedWorkshopTitle.bind(this)
-    this.getSelectedWorkshopPin = this.getSelectedWorkshopPin.bind(this)
-    this.handleCreateLink = this.handleCreateLink.bind(this)
-    this.logOut = this.logOut.bind(this)
-    this.handleChangeWorkshopTitle = this.handleChangeWorkshopTitle.bind(this)
-    this.renderListWithLinks = this.renderListWithLinks.bind(this)
-    this.handleSelectWorkshopPart = this.handleSelectWorkshopPart.bind(this)
-    this.handleSelectWorkshopLink = this.handleSelectWorkshopLink.bind(this)
-    this.handleRemovePart = this.handleRemovePart.bind(this)
-    this.handleRemoveLink = this.handleRemoveLink.bind(this)
 
     this.state = {
       title: null,
@@ -54,11 +41,11 @@ export class AdminPage extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(isLoggedIn('/adminpage'))
+    this.props.dispatch(checkAuthorization('/adminpage'))
     this.props.dispatch(getWorkshopsByUserId())
   }
 
-  getSelectedWorkshopTitle() {
+  getSelectedWorkshopTitle = () => {
     if (this.props.selectedWorkshopIndex != null) {
       const index = this.props.selectedWorkshopIndex
       const selectedWorkshop = this.props.userWorkshops[index]
@@ -67,7 +54,7 @@ export class AdminPage extends Component {
     }
   }
 
-  getSelectedWorkshopPin() {
+  getSelectedWorkshopPin = () => {
     if (this.props.selectedWorkshopIndex != null) {
       const index = this.props.selectedWorkshopIndex
       const selectedWorkshop = this.props.userWorkshops[index]
@@ -76,17 +63,17 @@ export class AdminPage extends Component {
     }
   }
 
-  handleSelectWorkshopLink(e) {
+  handleSelectWorkshopLink = (e) => {
     const index = e.target.selectedIndex
     this.props.dispatch(setSelectedLink(index))
   }
 
-  handleSelectWorkshop(e) {
+  handleSelectWorkshop = (e) => {
     const index = e.target.selectedIndex
     this.props.dispatch(setSelectedWorkshop(index))
   }
 
-  handleCreateWorkshop(e) {
+  handleCreateWorkshop = (e) => {
     e.preventDefault()
     // Generate a 4-pin code (i.e 4576)
     const newRandomPin = Math.floor(1000 + (Math.random() * 9000))
@@ -101,7 +88,7 @@ export class AdminPage extends Component {
     })
   }
 
-  handleRemoveWorkshop() {
+  handleRemoveWorkshop = () => {
     const index = this.props.selectedWorkshopIndex
     const selectedWorkshop = this.props.userWorkshops[index]
 
@@ -128,7 +115,7 @@ export class AdminPage extends Component {
     this.setState({ addPart: false })
   }
 
-  handleRemovePart() {
+  handleRemovePart = () => {
     const index = this.props.selectedWorkshopIndex
     const partIndex = this.props.selectedPartIndex
     const selectedWorkshop = this.props.userWorkshops[index]
@@ -141,7 +128,7 @@ export class AdminPage extends Component {
     }
   }
 
-  handleRemoveLink() {
+  handleRemoveLink = () => {
     const index = this.props.selectedWorkshopIndex
     const linkIndex = this.props.selectedLinkIndex
     const selectedWorkshop = this.props.userWorkshops[index]
@@ -154,7 +141,7 @@ export class AdminPage extends Component {
     }
   }
 
-  handleCreateLink(e) {
+  handleCreateLink = (e) => {
     e.preventDefault()
 
     const index = this.props.selectedWorkshopIndex
@@ -170,16 +157,12 @@ export class AdminPage extends Component {
     this.setState({ addLink: false })
   }
 
-  handleSelectWorkshopPart(e) {
+  handleSelectWorkshopPart = (e) => {
     const index = e.target.selectedIndex
     this.props.dispatch(setSelectedPart(index))
   }
 
-  logOut() {
-    this.props.dispatch(signOut('/admin'))
-  }
-
-  handleChangeWorkshopTitle(e) {
+  handleChangeWorkshopTitle = (e) => {
     e.preventDefault()
 
     const index = this.props.selectedWorkshopIndex
@@ -192,7 +175,7 @@ export class AdminPage extends Component {
     setTimeout(this.props.dispatch(getWorkshopsByUserId()), 300) // Update workshop list
   }
 
-  renderListWithWorkshops() {
+  renderListWithWorkshops = () => {
     const workshops = this.props.userWorkshops
 
     return (
@@ -252,9 +235,11 @@ export class AdminPage extends Component {
               className="button primary"
               type="button"
               onClick={() => {
-                this.state.addPart === false ?
-                  this.setState({ addPart: true }) :
-                  null
+                return (
+                  this.state.addPart === false ?
+                    this.setState({ addPart: true }) :
+                    null
+                )
               }}
               value="Lägg till"
             />
@@ -318,41 +303,40 @@ export class AdminPage extends Component {
   render() {
     return (
       <div className={styles.login}>
-        <header className={styles.header}>
-          <h5>{this.props.message}</h5>
-          <button onClick={this.logOut}>Logga ut</button>
-        </header>
-        <div className={styles.list}>
-          {this.renderListWithWorkshops()}
-          {this.props.selectedWorkshopIndex != null ?
-            <input className="button danger" type="button" onClick={() => this.handleRemoveWorkshop()}value="Ta bort" />
-            :
-            ''
-          }
-          {this.renderListWithParts()}
-          {this.renderListWithLinks()}
-        </div>
-        <div className={styles.input}>
-          <h3>Ändra {this.getSelectedWorkshopTitle()}</h3>
-          {this.getSelectedWorkshopTitle() != null ?
-            <div>
-              <form onSubmit={this.handleChangeWorkshopTitle}>
-                <a href={`/id/${this.getSelectedWorkshopPin()}`}>Gå till workshop</a>
-                <label htmlFor="pin">Pinkod</label>
-                <input id="pin" type="text" value={this.getSelectedWorkshopPin()} disabled />
-                <label htmlFor="title">Titel</label>
-                <input
-                  id="title"
-                  type="text"
-                  placeholder={this.getSelectedWorkshopTitle()}
-                  onChange={e => this.setState({ newTitle: e.target.value })}
-                />
-                <input className="button primary" type="submit" value="Uppdatera" />
-              </form>
-            </div>
-            :
-            <h5>Välj en workshop för att ändra</h5>
-          }
+        <AdminHeader />
+        <div>
+          <div className={styles.list}>
+            {this.renderListWithWorkshops()}
+            {this.props.selectedWorkshopIndex != null ?
+              <input className="button danger" type="button" onClick={() => this.handleRemoveWorkshop()}value="Ta bort" />
+              :
+              ''
+            }
+            {this.renderListWithParts()}
+            {this.renderListWithLinks()}
+          </div>
+          <div className={styles.input}>
+            <h3>Ändra {this.getSelectedWorkshopTitle()}</h3>
+            {this.getSelectedWorkshopTitle() != null ?
+              <div>
+                <form onSubmit={this.handleChangeWorkshopTitle}>
+                  <a href={`/id/${this.getSelectedWorkshopPin()}`}>Gå till workshop</a>
+                  <label htmlFor="pin">Pinkod</label>
+                  <input id="pin" type="text" value={this.getSelectedWorkshopPin()} disabled />
+                  <label htmlFor="title">Titel</label>
+                  <input
+                    id="title"
+                    type="text"
+                    placeholder={this.getSelectedWorkshopTitle()}
+                    onChange={e => this.setState({ newTitle: e.target.value })}
+                  />
+                  <input className="button primary" type="submit" value="Uppdatera" />
+                </form>
+              </div>
+              :
+              <h5>Välj en workshop för att ändra</h5>
+            }
+          </div>
         </div>
       </div>
     )
@@ -365,7 +349,9 @@ function mapStateToProps(state) {
     selectedWorkshopIndex: state.adminpage.selectedWorkshopIndex,
     selectedPartIndex: state.adminpage.selectedPartIndex,
     selectedLinkIndex: state.adminpage.selectedLinkIndex,
-    message: state.adminpage.message
+    message: state.adminpage.message,
+    role: state.user.loggedInUser,
+    view: state.admin.view
   }
 }
 

@@ -1,5 +1,4 @@
 import Joi from 'joi'
-import CookieAuth from 'hapi-auth-cookie' // TODO: Not needed?
 import { Workshop, workshopValidation } from '../models/workshop'
 
 // -----------------------------------------------------------------------------

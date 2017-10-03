@@ -6,14 +6,16 @@ import config from 'config'
 import base from './base'
 
 import auth from './api/auth'
-import isLoggedIn from './api/isLoggedIn'
 import workshops from './api/workshops'
 import users from './api/users'
+import invites from './api/invites'
 import links from './api/links'
 import parts from './api/parts'
 import editor from './api/editor'
 import extensionid from './api/chrome'
+import registration from './api/registration'
 
+mongoose.Promise = Promise
 mongoose.connect(config.get('database.host'))
 mongoose.connection.on('error', console.error.bind(console, 'db error:'))
 
@@ -35,8 +37,9 @@ server.connection({
 const webpack = require('webpack')
 const WebpackPlugin = require('hapi-webpack-plugin')
 const wpconfig = require('../webpack/config.dev')
+const asyncHandler = require('hapi-es7-async-handler')
 
-server.register({
+server.register([{
   register: WebpackPlugin,
   options: {
     compiler: webpack(wpconfig),
@@ -46,7 +49,9 @@ server.register({
       quiet: true
     }
   }
-}, (error) => {
+}, {
+  register: asyncHandler
+}], (error) => {
   if (error) {
     throw error
   }
@@ -62,10 +67,13 @@ server.register([{
   register: auth
 },
 {
-  register: isLoggedIn
+  register: registration
 },
 {
   register: workshops
+},
+{
+  register: invites
 },
 {
   register: users
