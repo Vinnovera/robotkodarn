@@ -6,7 +6,6 @@ import config from 'config'
 import base from './base'
 
 import auth from './api/auth'
-import isLoggedIn from './api/isLoggedIn'
 import workshops from './api/workshops'
 import users from './api/users'
 import invites from './api/invites'
@@ -66,9 +65,6 @@ server.register([{
 },
 {
   register: auth
-},
-{
-  register: isLoggedIn
 },
 {
   register: registration

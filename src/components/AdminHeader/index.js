@@ -43,7 +43,7 @@ class AdminHeader extends Component {
 function mapStateToProps(state) {
   return {
     message: state.adminpage.message,
-    role: state.teacher.loggedInUser
+    role: state.user.loggedInUser
   }
 }
 

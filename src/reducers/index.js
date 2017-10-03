@@ -3,7 +3,7 @@ import { routeReducer } from 'redux-simple-router'
 import sidebar from './sidebar'
 import editor from './editor'
 import admin from './admin'
-import teacher from './teacher'
+import user from './user'
 import student from './student'
 import login from './login'
 import adminpage from './adminpage'
@@ -14,7 +14,7 @@ export default combineReducers({
   sidebar,
   editor,
   admin,
-  teacher,
+  user,
   student,
   login,
   adminpage,

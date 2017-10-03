@@ -3,13 +3,20 @@ import Joi from 'joi'
 
 const userSchema = Schema({
   name: {
-    type: String
+    type: String,
+    required: false,
+    unique: false
   },
   password: {
-    type: String
+    type: String,
+    required: false,
+    unique: false
   },
   email: {
-    type: String
+    type: String,
+    required: false,
+    unique: true,
+    sparse: true // Skip checking for uniqueness if the field is missing
   },
   role: {
     type: String,
@@ -18,7 +25,9 @@ const userSchema = Schema({
   },
   invitationID: {
     type: String,
-    required: true
+    required: false, // Since superadmins does not need an invitation
+    sparse: true,
+    unique: true
   },
   complete: {
     type: Boolean,

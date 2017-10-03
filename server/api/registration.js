@@ -12,25 +12,23 @@ const createUserFromInvitation = async (request, reply) => {
   try {
     const existingInvitation = await Invite.findOne({ inviteID })
 
-    let user
     if (existingInvitation) {
-      // FIXME: Error when email is null (duplicate entries) needs to be fixed.
-      user = new User({ invitationID: inviteID, email: inviteID })
+      const newUser = new User({ invitationID: inviteID })
+      await newUser.save()
+      request.cookieAuth.set({ _id: newUser._id })
 
-      await user.save()
-
-      // Remove invitationID from list
+      // Remove the invite since it is now stored on user
       await Invite.remove({ inviteID })
     } else {
-      user = await User.findOne({ invitationID: inviteID, complete: false })
+      const incompleteUser = await User.findOne({ invitationID: inviteID, complete: false })
+      request.cookieAuth.set({ _id: incompleteUser._id })
 
-      if (!user) {
+      if (!incompleteUser) {
         return reply.redirect('/admin')
       }
     }
 
-    request.cookieAuth.set({ _id: user._id })
-
+    // If invite exists or if user is incomplete, redirect to register
     reply().redirect('/register')
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
@@ -52,7 +50,7 @@ const checkRegistrationStatus = async (request, reply) => {
       const error = new Error('User does not exist.')
       error.code = 401
       throw error
-    } else if (user.complete) {
+    } else if (user && user.complete) {
       const error = new Error('User is already registered.')
       error.code = 403
       throw error
@@ -65,26 +63,31 @@ const checkRegistrationStatus = async (request, reply) => {
 
 /**
  * Takes the payload from registration form and updates user.
- * Also sets user.complete = true.
+ * Also marks the user as complete.
  */
 const completeRegistration = async (request, reply) => {
   const { _id } = request.auth.artifacts
 
   try {
+    // Find user in database
     const currentUser = await User.findOne({ _id })
-    const user = Object.assign(currentUser, request.payload)
 
-    // Validate user
-    const validation = await Joi.validate(user, userValidation)
-    if (validation.error) {
-      const error = new Error('Did not pass validation.')
-      error.code = 400
-      throw error
-    }
+    // Take information from payload and assign it to the current user
+    const updatedUser = Object.assign(currentUser, request.payload)
+
+    const validatedUser = Joi.validate(updatedUser, userValidation, (validationError, value) => {
+      if (validationError) {
+        const error = new Error('Did not pass validation.')
+        error.code = 400
+        throw error
+      }
+
+      return value
+    })
 
     // Mark user as complete and save to database
-    user.complete = true
-    await user.save()
+    validatedUser.complete = true
+    await validatedUser.save()
 
     /* Once user is saved, remove cookie. This will redirect user to '/admin',
      * where they can log in.
@@ -97,13 +100,17 @@ const completeRegistration = async (request, reply) => {
   }
 }
 
-
 exports.register = (server, options, next) => {
   server.route([
     {
       method: 'GET',
       path: '/register/{id}',
       config: {
+        validate: {
+          params: {
+            id: Joi.string().required() // Make sure that id is a string
+          }
+        },
         handler: createUserFromInvitation
       }
     },

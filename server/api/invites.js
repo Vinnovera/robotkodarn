@@ -1,18 +1,8 @@
-import Joi from 'joi'
-import { Invite, inviteValidation } from '../models/invite'
+import { Invite } from '../models/invite'
 
 const addInvite = async (request, reply) => {
   try {
-    const invite = await new Invite()
-
-    // Validate invitation
-    const validation = await Joi.validate(invite, inviteValidation)
-    if (validation.error) {
-      const error = new Error('Did not pass validation.')
-      error.code = 400
-      throw error
-    }
-
+    const invite = new Invite()
     await invite.save()
 
     return reply(invite).code(200)

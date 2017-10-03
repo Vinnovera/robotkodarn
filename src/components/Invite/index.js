@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { isLoggedIn, signOut } from '../../actions/authentication'
+import { checkAuthorization, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
 import Logo from '../Logo'
 import AdminHeader from './../AdminHeader'
@@ -10,7 +10,7 @@ import styles from './invite.css'
 class Invite extends Component {
   componentWillMount() {
     // Pass in superadmin – the required role for viewing component
-    this.props.dispatch(isLoggedIn('/invite', 'superadmin'))
+    this.props.dispatch(checkAuthorization('/invite', 'superadmin'))
   }
 
   logOut = () => {
@@ -28,7 +28,7 @@ class Invite extends Component {
     if (this.props.role === 'superadmin') {
       const invitationLinks = this.props.invite.length > 0 ?
         this.props.invite.map((invitation) => {
-          const uniqueURL = `${window.location.origin}/register?id=${invitation}`
+          const uniqueURL = `${window.location.origin}/register/${invitation}`
 
           return (
             <div key={invitation} className={styles.invitationWrapper}>
@@ -67,7 +67,7 @@ class Invite extends Component {
 function mapStateToProps(state) {
   return {
     invite: state.invite.items,
-    role: state.teacher.loggedInUser
+    role: state.user.loggedInUser
   }
 }
 

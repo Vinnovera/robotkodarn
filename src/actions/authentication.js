@@ -19,14 +19,14 @@ export const signIn = (credentials, path) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // signOut, clears cookies
 // -----------------------------------------------------------------------------
-const IS_LOGGED_IN = 'IS_LOGGED_IN'
+const IS_AUHTORIZED = 'IS_AUHTORIZED'
 
 export const signOut = path => (dispatch) => {
   axios.get('/auth/logout')
     .then(() => {
       // Remove user from Redux State.
       dispatch({
-        type: IS_LOGGED_IN,
+        type: IS_AUHTORIZED,
         payload: null
       })
       dispatch(routeActions.push(path))
@@ -35,7 +35,7 @@ export const signOut = path => (dispatch) => {
 }
 
 // -----------------------------------------------------------------------------
-// isLoggedIn, checks session cookie
+// checkAuthorization, checks session cookie and authorization level
 // -----------------------------------------------------------------------------
 /**
  * Checks session cookie and role of user
@@ -45,11 +45,11 @@ export const signOut = path => (dispatch) => {
  * If role is set to 'superadmin', check that the user has the required role,
  * else, redirect to adminpage.
  */
-export const isLoggedIn = (path, role = 'editor') => (dispatch) => {
-  axios.get('/api/isLoggedIn')
+export const checkAuthorization = (path, role = 'editor') => (dispatch) => {
+  axios.get('/auth/checkAuthorization')
     .then((response) => {
       dispatch({
-        type: IS_LOGGED_IN,
+        type: IS_AUHTORIZED,
         payload: response.data
       })
 

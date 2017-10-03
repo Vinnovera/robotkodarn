@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import forge from 'node-forge'
-import { signIn, isLoggedIn } from '../../actions/authentication'
+import { signIn, checkAuthorization } from '../../actions/authentication'
 import styles from './admin.css'
 
 export class Admin extends Component {
@@ -15,7 +15,7 @@ export class Admin extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(isLoggedIn('/adminpage'))
+    this.props.dispatch(checkAuthorization('/adminpage'))
   }
 
   componentWillReceiveProps(nextProps) {

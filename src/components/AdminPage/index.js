@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { isLoggedIn } from '../../actions/authentication'
+import { checkAuthorization } from '../../actions/authentication'
 import {
   createWorkshop,
   getWorkshopsByUserId,
@@ -41,7 +41,7 @@ class AdminPage extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(isLoggedIn('/adminpage'))
+    this.props.dispatch(checkAuthorization('/adminpage'))
     this.props.dispatch(getWorkshopsByUserId())
   }
 
@@ -350,7 +350,7 @@ function mapStateToProps(state) {
     selectedPartIndex: state.adminpage.selectedPartIndex,
     selectedLinkIndex: state.adminpage.selectedLinkIndex,
     message: state.adminpage.message,
-    role: state.teacher.loggedInUser,
+    role: state.user.loggedInUser,
     view: state.admin.view
   }
 }
