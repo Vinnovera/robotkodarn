@@ -7,7 +7,10 @@
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "build:clean": "rimraf dist/client/static",
-    "dev": "npm run build:clean && nodemon --inspect index.js"
+    "dev": "check-node-version --package && npm run build:clean && nodemon --inspect index.js"
+  },
+  "engines": {
+    "node": ">8.0.0"
   },
   "dependencies": {
     "avr-pizza": "^0.3.5",
@@ -21,6 +24,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.11.0",
     "babel-register": "^6.9.0",
+    "check-node-version": "^2.1.0",
     "config": "^1.21.0",
     "hapi": "^13.4.1",
     "hapi-auth-cookie": "^6.1.1",
