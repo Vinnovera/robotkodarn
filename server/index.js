@@ -34,22 +34,30 @@ server.connection({
   port: process.env.PORT
 })
 
-const webpack = require('webpack')
-const WebpackPlugin = require('hapi-webpack-plugin')
-const wpconfig = require('../webpack/config.dev')
+if (process.env.NODE_ENV === 'development') {
+  /* eslint-disable global-require */
+  const webpack = require('webpack')
+  const WebpackPlugin = require('hapi-webpack-plugin')
+  const wpconfig = require('../webpack/config.dev')
+  /* eslint-enable global-require */
+
+  server.register([{
+    register: WebpackPlugin,
+    options: {
+      compiler: webpack(wpconfig),
+      assets: {
+        noInfo: true,
+        publicPath: wpconfig.output.publicPath,
+        quiet: true
+      }
+    }
+  }], (error) => { throw error })
+}
+
 const asyncHandler = require('hapi-es7-async-handler')
 
+// TODO: Move to other register
 server.register([{
-  register: WebpackPlugin,
-  options: {
-    compiler: webpack(wpconfig),
-    assets: {
-      noInfo: true,
-      publicPath: wpconfig.output.publicPath,
-      quiet: true
-    }
-  }
-}, {
   register: asyncHandler
 }], (error) => {
   if (error) {

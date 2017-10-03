@@ -6,6 +6,8 @@
   "scripts": {
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
+    "build": "webpack --config webpack/config.dev.js",
+    "start": "node index.js",
     "build:clean": "rimraf dist/client/static",
     "dev": "check-node-version --package && npm run build:clean && nodemon -r dotenv/config --inspect index.js"
   },
