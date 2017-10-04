@@ -24,7 +24,8 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "arrow-body-style": "off",
     "consistent-return": "off",
-    "class-methods-use-this": "off" // Skip forcing static until further investigation
+    "class-methods-use-this": "off", // Skip forcing static until further investigation
+    "func-names": "off" // Since we are using unnamed functions in webpack config
   },
   "globals": {
     "chrome": false

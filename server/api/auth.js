@@ -1,4 +1,3 @@
-import config from 'config'
 import CookieAuth from 'hapi-auth-cookie'
 import { User } from '../models/user'
 
@@ -64,7 +63,7 @@ exports.register = (server, options, next) => {
     if (error) throw error
 
     server.auth.strategy('session', 'cookie', {
-      password: config.get('auth.key'),
+      password: process.env.AUTH_KEY,
       isSecure: process.env.NODE_ENV === 'production',
       cookie: 'robotkodarn',
       isHttpOnly: true

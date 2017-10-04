@@ -2,7 +2,7 @@ import Path from 'path'
 import Hapi from 'hapi'
 import Inert from 'inert'
 import mongoose from 'mongoose'
-import config from 'config'
+import dotenv from 'dotenv'
 import base from './base'
 
 import auth from './api/auth'
@@ -12,11 +12,21 @@ import invites from './api/invites'
 import links from './api/links'
 import parts from './api/parts'
 import editor from './api/editor'
-import extensionid from './api/chrome'
 import registration from './api/registration'
 
+/*
+ * Make environment variables available during development (found in .env)
+ * Once uploaded to now, NODE_ENV will be set to production
+ * through ".env.production"
+ */
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({
+    path: Path.join(__dirname, '../.env.development')
+  })
+}
+
 mongoose.Promise = Promise
-mongoose.connect(config.get('database.host'))
+mongoose.connect(process.env.DATABASE_HOST)
 mongoose.connection.on('error', console.error.bind(console, 'db error:'))
 
 const server = new Hapi.Server({
@@ -34,38 +44,26 @@ server.connection({
   port: process.env.PORT
 })
 
-if (process.env.NODE_ENV === 'development') {
-  /* eslint-disable global-require */
-  const webpack = require('webpack')
-  const WebpackPlugin = require('hapi-webpack-plugin')
-  const wpconfig = require('../webpack/config.dev')
-  /* eslint-enable global-require */
-
-  server.register([{
-    register: WebpackPlugin,
-    options: {
-      compiler: webpack(wpconfig),
-      assets: {
-        noInfo: true,
-        publicPath: wpconfig.output.publicPath,
-        quiet: true
-      }
-    }
-  }], (error) => { throw error })
-}
-
+const webpack = require('webpack')
+const WebpackPlugin = require('hapi-webpack-plugin')
+const wpconfig = require('../webpack/config.dev')
 const asyncHandler = require('hapi-es7-async-handler')
 
-// TODO: Move to other register
 server.register([{
-  register: asyncHandler
-}], (error) => {
-  if (error) {
-    throw error
+  register: WebpackPlugin,
+  options: {
+    compiler: webpack(wpconfig),
+    assets: {
+      noInfo: true,
+      publicPath: wpconfig.output.publicPath,
+      quiet: true
+    }
   }
-})
-
-server.register([{
+},
+{
+  register: asyncHandler
+},
+{
   register: Inert
 },
 {
@@ -94,9 +92,6 @@ server.register([{
 },
 {
   register: editor
-},
-{
-  register: extensionid
 }
 ], (error) => {
   if (error) {
@@ -104,6 +99,6 @@ server.register([{
   }
 
   server.start(() => {
-    console.info('Server listening at:', server.info.uri)
+    console.info(`Server listening at: ${server.info.uri} 🚀`)
   })
 })

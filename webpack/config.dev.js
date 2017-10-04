@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   devtool: 'source-map',
@@ -15,13 +16,20 @@ module.exports = {
   plugins: [
     new webpack.NoErrorsPlugin(),
     function () {
-      this.plugin('done', function (stats) {
+      this.plugin('done', (stats) => {
         if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') === -1) {
           console.log(stats.compilation.errors)
           process.exit(1)
         }
       })
-    }
+    },
+    new Dotenv({
+      path: '.env.development',
+      safe: true // load .env.example
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    })
   ],
   resolve: {
     alias: {}
