@@ -6,8 +6,13 @@
   "scripts": {
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
+    "build": "webpack --config webpack/config.prod.js",
     "build:clean": "rimraf dist/client/static",
-    "dev": "check-node-version --package && npm run build:clean && nodemon --inspect index.js"
+    "dev": "check-node-version --package && npm run build:clean && nodemon -r dotenv/config --inspect index.js",
+    "start": "node index.js"
+  },
+  "now": {
+    "dotenv": ".env.production"
   },
   "engines": {
     "node": ">8.0.0"
@@ -30,6 +35,7 @@
     "hapi-auth-cookie": "^6.1.1",
     "hapi-es7-async-handler": "^1.0.11",
     "hapi-webpack-plugin": "^1.3.0",
+    "inline-environment-variables-webpack-plugin": "^1.2.1",
     "inert": "^4.0.0",
     "joi": "^10.5.0",
     "mongoose": "^4.5.3",

@@ -16,9 +16,8 @@ const signIn = (request, reply) => {
     if (user) {
       const { _id } = user
 
-      request.cookieAuth.set({ _id })
-
       if (user.password === request.payload.password) {
+        request.cookieAuth.set({ _id })
         reply({ message: 'Logged in' }).code(200)
       } else {
         reply({ message: 'Wrong username and/or password' }).code(401)

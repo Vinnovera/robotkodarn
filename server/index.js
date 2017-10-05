@@ -2,7 +2,6 @@ import Path from 'path'
 import Hapi from 'hapi'
 import Inert from 'inert'
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
 import base from './base'
 
 import auth from './api/auth'
@@ -13,17 +12,6 @@ import links from './api/links'
 import parts from './api/parts'
 import editor from './api/editor'
 import registration from './api/registration'
-
-/*
- * Make environment variables available during development (found in .env)
- * Once uploaded to now, NODE_ENV will be set to production
- * through ".env.production"
- */
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({
-    path: Path.join(__dirname, '../.env.development')
-  })
-}
 
 mongoose.Promise = Promise
 mongoose.connect(process.env.DATABASE_HOST)
@@ -44,23 +32,14 @@ server.connection({
   port: process.env.PORT
 })
 
-const webpack = require('webpack')
-const WebpackPlugin = require('hapi-webpack-plugin')
-const wpconfig = require('../webpack/config.dev')
+// Register webpack plugin (only if NODE_ENV is not production)
+if (process.env.NODE_ENV === 'development') {
+  require('./webpackRegistration').default(server) // eslint-disable-line global-require
+}
+
 const asyncHandler = require('hapi-es7-async-handler')
 
 server.register([{
-  register: WebpackPlugin,
-  options: {
-    compiler: webpack(wpconfig),
-    assets: {
-      noInfo: true,
-      publicPath: wpconfig.output.publicPath,
-      quiet: true
-    }
-  }
-},
-{
   register: asyncHandler
 },
 {
