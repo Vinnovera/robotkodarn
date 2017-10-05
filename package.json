@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "main": "index.js",
   "author": "Jonas Stattin",
+  "contributors": [
+    "Christian Alares",
+    "Elin Hammarstedt",
+    "Katarina Ljungdahl <katarina@folkungagatan54.se>",
+    "Mattias Söderström"
+  ],
   "scripts": {
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
