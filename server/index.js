@@ -28,12 +28,15 @@ const server = new Hapi.Server({
 })
 
 server.connection({
-  host: 'localhost',
+  host: 'localhost', // Defaults to the operating system hostname when available
   port: process.env.PORT
 })
 
-// Register webpack plugin (only if NODE_ENV is not production)
+/* Register webpack plugin
+ * Only in development, since build is handled by build script in production.
+ */
 if (process.env.NODE_ENV === 'development') {
+  // Locally disable rule since this is an exception
   require('./webpackRegistration').default(server) // eslint-disable-line global-require
 }
 
