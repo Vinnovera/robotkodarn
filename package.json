@@ -49,8 +49,8 @@
     "webpack": "^1.13.1"
   },
   "devDependencies": {
-    "css-loader": "^0.28.0",
     "check-node-version": "^2.1.0",
+    "css-loader": "^0.28.0",
     "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",

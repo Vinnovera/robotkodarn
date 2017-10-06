@@ -11,9 +11,10 @@ import reducers from './reducers'
 import App from './components/App'
 import Editor from './components/Editor'
 import Student from './components/Student'
-import Login from './components/Login'
-import Admin from './components/Admin'
+import LoginWithPin from './components/LoginWithPin'
+import LoginAdmin from './components/LoginAdmin'
 import AdminPage from './components/AdminPage'
+import Workshops from './components/Workshops'
 import Invite from './components/Invite'
 import RegisterForm from './components/RegisterForm'
 
@@ -41,9 +42,10 @@ render((
         <Route path="/pin" component={Student} />
         <Route path="/editor" component={Editor} />
         <Route path="/id/:pin" component={Student} />
-        <Route path="/login" component={Login} />
-        <Route path="/admin" component={Admin} />
+        <Route path="/login" component={LoginWithPin} />
+        <Route path="/admin" component={LoginAdmin} />
         <Route path="/adminpage" component={AdminPage} />
+        <Route path="/workshops" component={Workshops} />
         <Route path="/invite" component={Invite} />
         <Route path="/register" component={RegisterForm} />
       </Route>

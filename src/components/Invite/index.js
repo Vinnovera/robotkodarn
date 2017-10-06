@@ -4,7 +4,7 @@ import FA from 'react-fontawesome'
 import { checkAuthorization, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
 import Logo from '../Logo'
-import AdminHeader from './../AdminHeader'
+import Header from './../Header'
 import styles from './invite.css'
 
 class Invite extends Component {
@@ -44,7 +44,7 @@ class Invite extends Component {
 
       return (
         <div>
-          <AdminHeader />
+          <Header />
           <div className={styles.invite}>
             <div className={styles.logo}><Logo /></div>
             <h1>Bjud in nya användare</h1>

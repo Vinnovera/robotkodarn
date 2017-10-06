@@ -1,6 +1,10 @@
 import { routeActions } from 'redux-simple-router'
 import axios from 'axios'
 
+const SET_MESSAGE = 'SET_MESSAGE'
+const SET_WORKSHOPS = 'SET_WORKSHOPS'
+const SET_WORKSHOP = 'SET_WORKSHOP'
+
 // -----------------------------------------------------------------------------
 // createWorkshop, creates empty workshop with a title and a PIN
 // -----------------------------------------------------------------------------
@@ -14,9 +18,22 @@ export const createWorkshop = credentials => (dispatch) => {
     // 'response' is not used but kept for documentation purposes.
     .then((/* response */) => {
       dispatch({
-        type: 'SET_MESSAGE',
+        type: SET_MESSAGE,
         payload: `Workshopen ${credentials.title} är nu tillagd med pinkoden: ${credentials.pincode}.`
       })
+    })
+    .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// Copy an existing workshop
+// -----------------------------------------------------------------------------
+export const copyWorkshop = workshopID => () => {
+  axios
+    .post(`/api/copyWorkshop/${workshopID}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
     })
     .catch(error => console.log(error))
 }
@@ -33,7 +50,7 @@ export const changeTitle = (credentials, workshop) => (dispatch) => {
     })
     .then((/* response */) => {
       dispatch({
-        type: 'SET_MESSAGE',
+        type: SET_MESSAGE,
         payload: `Workshopen ${workshop.title} har nu titeln ${credentials.title}.`
       })
     })
@@ -54,7 +71,7 @@ export const addPart = (credentials, workshop) => (dispatch) => {
       dispatch({ type: 'SET_PARTS', payload: response.data })
 
       dispatch({
-        type: 'SET_MESSAGE',
+        type: SET_MESSAGE,
         payload: `Workshopen ${workshop.title} har nu delmomentet ${credentials.title}.`
       })
     })
@@ -73,27 +90,8 @@ export const addLink = (credentials, workshop) => (dispatch) => {
     })
     .then((/* response */) => {
       dispatch({
-        type: 'SET_MESSAGE',
+        type: SET_MESSAGE,
         payload: `Workshopen ${workshop.title} har nu referenslänken ${credentials.title}.`
-      })
-    })
-    .catch(error => console.log(error))
-}
-
-// -----------------------------------------------------------------------------
-// removeSelectedWorkshop, removes workshop from database
-// -----------------------------------------------------------------------------
-export const removeSelectedWorkshop = workshop => (dispatch) => {
-  axios
-    .delete(`/api/workshop/${workshop._id}`, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then((/* response */) => {
-      dispatch({
-        type: 'SET_MESSAGE',
-        payload: `Workshopen ${workshop.title} är nu borttagen.`
       })
     })
     .catch(error => console.log(error))
@@ -111,7 +109,7 @@ export const removeSelectedPart = (part, workshop) => (dispatch) => {
     })
     .then((/* response */) => {
       dispatch({
-        type: 'SET_MESSAGE',
+        type: SET_MESSAGE,
         payload: `Delmomentet ${part.title} är nu borttaget.`
       })
     })
@@ -130,7 +128,7 @@ export const removeSelectedLink = (link, workshop) => (dispatch) => {
     })
     .then((/* response */) => {
       dispatch({
-        type: 'SET_MESSAGE',
+        type: SET_MESSAGE,
         payload: `Delmomentet ${link.title} är nu borttaget.`
       })
     })
@@ -146,7 +144,7 @@ export const findWorkshopByPin = pin => (dispatch) => {
 
   request.onload = () => {
     if (request.status >= 200 && request.status < 400) {
-      dispatch({ type: 'SET_WORKSHOP', payload: request.response })
+      dispatch({ type: SET_WORKSHOP, payload: request.response })
     } else {
       dispatch(routeActions.push('/login'))
     }
@@ -166,7 +164,20 @@ export const getWorkshopsByUserId = () => (dispatch) => {
       }
     })
     .then((response) => {
-      dispatch({ type: 'SET_WORKSHOPS', payload: response.data })
+      dispatch({ type: SET_WORKSHOPS, payload: response.data })
+    })
+    .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// removeWorkshop, removes workshop from database
+// -----------------------------------------------------------------------------
+export const removeWorkshop = workshopID => () => {
+  axios
+    .delete(`/api/workshop/${workshopID}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
     })
     .catch(error => console.log(error))
 }

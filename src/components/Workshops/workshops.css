@@ -1,0 +1,107 @@
+/* Background */
+:local .workshops {
+  background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
+  background-size: cover;
+  color: #3E3748;
+  height: 100vh;
+  width: 100vw;
+}
+
+:local .form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+:local .workshopHeadline {
+  color: inherit;
+  text-align: center;
+}
+
+:local .workshopTable {
+  border-spacing: 0 1rem;
+  text-align: left;
+  width: 100%;
+}
+
+:local th:last-of-type {
+  text-align: center;
+}
+
+:local .workshopItem {
+  border-radius: 2px;
+  background-color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 2;
+  color: inherit;
+  margin: 0.5rem 0;
+  padding: 0.7rem 1rem 0.5rem;
+}
+
+/*
+ * FIX TO ADD BORDER RADIUS ON TR
+ * 1. Fix to improve spacing
+ */
+:local td {
+  border: 3px solid #fff;
+}
+
+:local td:first-of-type {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+:local td:last-of-type {
+  text-align: center; /* 1 */
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+/*
+ * END OF FIX TO ADD BORDER RADIUS ON TR
+ */
+
+
+/* -----------------------------------------------------------------------------
+  TABLE ICONS
+------------------------------------------------------------------------------*/
+
+:local .tableIcon,
+:local .tableIconDanger {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  height: 2rem;
+  width: 2rem;
+}
+
+:local .tableIcon:focus,
+:local .tableIcon:active,
+:local .tableIconDanger:focus,
+:local .tableIconDanger:active {
+  outline: none;
+}
+
+:local .tableIcon {
+  color: #332C3D;
+}
+
+:local .tableIcon:hover {
+  color: #503F69;
+}
+
+:local .tableIconDanger {
+  color: #C52522;
+}
+
+:local .tableIconDanger:hover {
+  color: #FE5D4B;
+}
+
+
+@media screen and (min-width: 600px) {
+  :local .buttonContainer {
+    float: right;
+    width: 12rem;
+  }
+}
