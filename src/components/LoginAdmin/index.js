@@ -5,7 +5,7 @@ import { signIn, checkAuthorization } from '../../actions/authentication'
 import Button from '../Button'
 import styles from './loginadmin.css'
 
-export class Admin extends Component {
+export class LoginAdmin extends Component {
   constructor(props) {
     super(props)
 
@@ -59,4 +59,4 @@ export class Admin extends Component {
   }
 }
 
-export default connect()(Admin)
+export default connect()(LoginAdmin)
