@@ -1,28 +1,12 @@
-:local body {
-  /* local variables */
-  --blue: #3FA9F5;
-  --blueLighter: #5BBAFD;
-  --egg: #F1F1F1;
-  --ash: #323232;
-  --ashLighter: #424242;
-  --white: #FFFFFF;
-  --lightgrey: #CECECE;
-  --salmon: #F67A8A;
-}
-
 /* -----------------------------------------------------------------------------
   NAVIGATION
 ------------------------------------------------------------------------------*/
-:local .navigation {
-  align-items: center;
+:local .navigation,
+:local .navigationOpen {
   background-color: #fff;
   box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.1);
   color: #3E3748;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   height: 100vh;
-  padding: 1.1rem;
   position: fixed;
   right: -300px;
   top: 0;
@@ -32,73 +16,67 @@
 }
 
 :local .navigationOpen {
-  align-items: center;
-  background-color: #fff;
-  box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.1);
-  color: #3E3748;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh;
-  padding-top: 1.5rem;
-  position: fixed;
   right: 0;
-  top: 0;
-  transition: right 300ms ease-in-out 75ms;
-  width: 300px;
-  z-index: 2;
-}
-
-:local .navigation ul {
-  display: flex;
-  justify-content: center;
-  padding: 0.2rem 0 0;
-}
-
-:local .navigation li:not(:last-of-type) {
-  margin-right: 4rem;
-}
-
-/*
- * 1. To remove button default styling
- */
-:local .navigationButton,
-:local .invitationLink {
-  background: none; /* 1. */
-  border: none; /* 1. */
-  border-bottom: 2px solid transparent;
-  color: var(--ash);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.9rem;
-  padding: 0 0 0.3em;
-  text-decoration: none;
-  transition: color 250ms ease, border 250ms ease;
-}
-
-:local .navigationButton:hover,
-:local .invitationLink:hover {
-  border-bottom: 2px solid var(--salmon);
-  color: var(--salmon);
-  text-decoration: none;
-}
-
-:local .navigationButton:active,
-:local .navigationButton:focus {
-  outline: none;
 }
 
 /* -----------------------------------------------------------------------------
-  BUTTON WRAPPER
+  USER INFO
+------------------------------------------------------------------------------*/
+
+:local .userInfo {
+  border-bottom: 5px solid #F6F7F9;
+  padding: 5rem 1rem 1rem;
+  width: 100%;
+}
+
+:local .userName {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+:local .userRole {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+/* -----------------------------------------------------------------------------
+  NAVIGATION LINKS
+------------------------------------------------------------------------------*/
+
+:local .navigationLink {
+  background-color: #fff;
+  border-bottom: 2px solid transparent;
+  color: #3E3748;
+  cursor: pointer;
+  display: block;
+  font-family: inherit;
+  font-size: 1.4rem;
+  padding: 1rem 0 0.8rem;
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 250ms ease, color 250ms ease;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .navigationLink:hover {
+  background-color: #FE5D4B;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* -----------------------------------------------------------------------------
+  LOGOUT BUTTON WRAPPER
 ------------------------------------------------------------------------------*/
 
 :local .buttonWrapper {
   bottom: 0;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
   left: 0;
   right: 0;
   position: absolute;
-  width: calc(100% - 2.2rem); /* To match padding on parent container */
+  width: calc(100% - 2.2rem);
 }
 
 /* -----------------------------------------------------------------------------

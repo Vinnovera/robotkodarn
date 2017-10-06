@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'redux-simple-router'
+import { Link } from 'react-router'
 import { toggleTools } from '../../actions/tools'
 import { signOut } from '../../actions/authentication'
 import styles from './tools.css'
@@ -30,15 +31,17 @@ class Tools extends Component {
     return (
       <nav className={navigationStyles}>
         <button onClick={this.toggleTools} className={styles.exit} >Stäng</button>
-        <ul>
-          <li><button onClick={this.changeView} className={styles.navigationButton} value="adminpage">Växla till elev-vy</button></li>
-          <li><button onClick={this.changeView} className={styles.navigationButton} value="adminpage">Skapa workshops</button></li>
-          {this.props.role === 'superadmin' ?
-            <li><button onClick={this.changeView} className={styles.navigationButton} value="invite">Bjud in nya användare</button></li>
-            :
-            ''
-          }
-        </ul>
+        <div className={styles.userInfo}>
+          <p className={styles.userName}>Inloggad som: Katarina Ljungdahl</p>
+          <p className={styles.userRole}>Roll: Superadmin</p>
+        </div>
+        <Link className={styles.navigationLink} to="/adminpage" onClick={this.toggleTools}>Växla till elev-vy</Link>
+        <Link className={styles.navigationLink} to="/workshops" onClick={this.toggleTools}>Skapa workshops</Link>
+        {this.props.role === 'superadmin' ?
+          <Link className={styles.navigationLink} to="/invite" onClick={this.toggleTools}>Bjud in nya användare</Link>
+          :
+          ''
+        }
         <div className={styles.buttonWrapper}>
           <Button handleClick={this.signout}>Logga ut</Button>
         </div>
