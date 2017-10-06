@@ -16,7 +16,7 @@ import {
   changeTitle
 } from '../../actions/workshops'
 
-import AdminHeader from '../AdminHeader'
+import Header from '../Header'
 import styles from './adminpage.css'
 
 class AdminPage extends Component {
@@ -86,17 +86,6 @@ class AdminPage extends Component {
       // Update workshop list
       setTimeout(() => this.props.dispatch(getWorkshopsByUserId()), 300)
     })
-  }
-
-  handleRemoveWorkshop = () => {
-    const index = this.props.selectedWorkshopIndex
-    const selectedWorkshop = this.props.userWorkshops[index]
-
-    if (confirm(`Vill du verkligen ta bort ${this.getSelectedWorkshopTitle()}?`)) {
-      this.props.dispatch(removeSelectedWorkshop(selectedWorkshop))
-      this.props.dispatch(setSelectedWorkshop(null))
-      setTimeout(() => this.props.dispatch(getWorkshopsByUserId()), 300) // Update workshop list
-    }
   }
 
   handleAddPart = (e) => {
@@ -303,15 +292,10 @@ class AdminPage extends Component {
   render() {
     return (
       <div className={styles.login}>
-        <AdminHeader />
+        <Header />
         <div>
           <div className={styles.list}>
             {this.renderListWithWorkshops()}
-            {this.props.selectedWorkshopIndex != null ?
-              <input className="button danger" type="button" onClick={() => this.handleRemoveWorkshop()}value="Ta bort" />
-              :
-              ''
-            }
             {this.renderListWithParts()}
             {this.renderListWithLinks()}
           </div>

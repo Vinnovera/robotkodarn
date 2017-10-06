@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import mongoose from 'mongoose'
 import { Workshop, workshopValidation } from '../models/workshop'
 
 // -----------------------------------------------------------------------------
@@ -99,6 +100,28 @@ const updateWorkshop = (request, reply) => {
 }
 
 // -----------------------------------------------------------------------------
+// Copy a workshop by existing workshop with ID [POST]
+// -----------------------------------------------------------------------------
+const copyWorkshop = async (request, reply) => {
+  try {
+    const existingWorkshop = await Workshop.findOne({ _id: request.params.id })
+
+    const newWorkshop = new Workshop(existingWorkshop)
+    newWorkshop.title = `${existingWorkshop.title} – kopia`
+    newWorkshop._id = mongoose.Types.ObjectId()
+    newWorkshop.isNew = true
+    // Generate a new random pin
+    newWorkshop.pincode = Math.floor(1000 + (Math.random() * 9000))
+
+    await newWorkshop.save()
+
+    return reply().code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Delete a workshop with {id} [DELETE]
 // -----------------------------------------------------------------------------
 const deleteWorkshop = (request, reply) => {
@@ -162,6 +185,14 @@ exports.register = (server, options, next) => {
       path: '/api/workshop',
       config: {
         handler: addWorkshop,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/api/copyWorkshop/{id}',
+      config: {
+        handler: copyWorkshop,
         auth: 'session'
       }
     },

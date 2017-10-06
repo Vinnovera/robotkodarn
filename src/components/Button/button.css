@@ -1,0 +1,35 @@
+:local .button,
+:local .buttonSuccess,
+:local .buttonDanger {
+  border-radius: 2px;
+  background-color: #3E3748;
+  border: none;
+  color: #fff;
+  display: block;
+  font: inherit;
+  font-size: 1rem;
+  padding: 1rem 0 0.9rem;
+  cursor: pointer;
+  transition: 300ms;
+  text-transform: uppercase;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .buttonSuccess {
+  background-color: #3DA099;
+}
+
+:local .buttonDanger {
+  background-color: #C52522;
+}
+
+:local .button:hover,
+:local .button:focus {
+  outline: none;
+}
+
+:local .button:hover {
+  background-color: #332C3D;
+}

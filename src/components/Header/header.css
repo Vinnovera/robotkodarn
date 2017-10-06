@@ -1,0 +1,42 @@
+:local .header {
+  background-color: #fff;
+  color: #3E3748;
+  align-items: center;
+  border-bottom: 4px solid #EDEBE6;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  position: static;
+  top: 0;
+  padding: 1.5rem 2rem 1.3rem;
+  width: 100vw;
+}
+
+:local .headerTitle {
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  margin: 0;
+}
+
+:local .toolsIcon {
+  background: url('./../../icons/tools.svg') no-repeat center right;
+  background-size: 2rem;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  height: 2rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  width: 6.5rem;
+}
+
+:local .toolsIcon:focus,
+:local .toolsIcon:hover {
+  outline: none;
+}
