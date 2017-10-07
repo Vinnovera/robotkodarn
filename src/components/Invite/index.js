@@ -5,6 +5,7 @@ import { checkAuthorization, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
 import Logo from '../Logo'
 import Header from './../Header'
+import View from './../View'
 import styles from './invite.css'
 
 class Invite extends Component {
@@ -43,8 +44,7 @@ class Invite extends Component {
         ''
 
       return (
-        <div>
-          <Header />
+        <View>
           <div className={styles.invite}>
             <div className={styles.logo}><Logo /></div>
             <h1>Bjud in nya användare</h1>
@@ -54,7 +54,7 @@ class Invite extends Component {
             </button>
             {invitationLinks}
           </div>
-        </div>
+        </View>
       )
     }
     return (
