@@ -63,7 +63,7 @@ class Invite extends Component {
 function mapStateToProps(state) {
   return {
     invite: state.invite.items,
-    role: state.user.isLoggedIn
+    role: state.user.role
   }
 }
 
