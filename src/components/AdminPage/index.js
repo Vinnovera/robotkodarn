@@ -16,7 +16,7 @@ import {
   changeTitle
 } from '../../actions/workshops'
 
-import Header from '../Header'
+import Navbar from '../Navbar'
 import styles from './adminpage.css'
 
 class AdminPage extends Component {
@@ -292,7 +292,7 @@ class AdminPage extends Component {
   render() {
     return (
       <div className={styles.login}>
-        <Header />
+        <Navbar />
         <div>
           <div className={styles.list}>
             {this.renderListWithWorkshops()}

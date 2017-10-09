@@ -1,34 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { routeActions } from 'redux-simple-router'
-import WorkshopPincode from './WorkshopPincode'
-import styles from './navbar.css'
+import { toggleTools } from '../../actions/tools'
+import styles from './header.css'
+import Menu from '../Menu/'
 
-class Navbar extends Component {
-  constructor(props) {
-    super(props)
-
-    this.goToLogin = this
-      .goToLogin
-      .bind(this)
-  }
-
-  goToLogin() {
-    this
-      .props
-      .dispatch(routeActions.push('/login'))
+class Header extends Component {
+  toggleTools = () => {
+    this.props.dispatch(toggleTools())
   }
 
   render() {
     return (
-      <nav className={styles.mainNavbar}>
-        {/* FIXME: No static element interactions */}
-        <div onClick={this.goToLogin} className={styles.logoRobot} />
-        <h3 className={styles.logo}>Robotkodarn</h3>
-        <WorkshopPincode pincode={this.props.pincode} />
-      </nav>
+      <header className={styles.header}>
+        <h1 className={styles.headerTitle}>Robotkodarn</h1>
+        <button onClick={this.toggleTools} className={styles.toolsIcon} >Verktyg</button>
+        <Menu />
+      </header>
     )
   }
 }
 
-export default connect()(Navbar)
+function mapStateToProps(state) {
+  return {
+    role: state.user.loggedInUser
+  }
+}
+
+export default connect(mapStateToProps)(Header)

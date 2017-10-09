@@ -1,7 +1,7 @@
-const TOGGLE_TOOLS = 'TOGGLE_TOOLS'
+const TOGGLE_MENU = 'TOGGLE_MENU'
 
 export const toggleTools = () => (dispatch) => {
   dispatch({
-    type: TOGGLE_TOOLS
+    type: TOGGLE_MENU
   })
 }

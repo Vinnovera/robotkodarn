@@ -54,10 +54,9 @@ class Workshops extends Component {
             <table className={styles.workshopTable}>
               <thead>
                 <tr>
-                  <th>Redigera</th>
-                  <th>Kopiera</th>
                   <th>Namn</th>
                   <th>Pinkod</th>
+                  <th>Kopiera</th>
                   <th>Radera</th>
                 </tr>
               </thead>
@@ -65,18 +64,13 @@ class Workshops extends Component {
                 {workshops.map((workshop) => {
                   return (
                     <tr className={styles.workshopItem} key={workshop._id}>
-                      <td>
-                        <button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop.pincode} name="edit">
-                          <FA name="edit" value="edit" />
-                        </button>
-                      </td>
+                      <td>{workshop.title}</td>
+                      <td>{workshop.pincode}</td>
                       <td>
                         <button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
                           <FA name="clone" />
                         </button>
                       </td>
-                      <td>{workshop.title}</td>
-                      <td>{workshop.pincode}</td>
                       <td>
                         <button onClick={this.handleWorkshop} type="submit" className={styles.tableIconDanger} value={workshop._id} name="delete">
                           <FA name="times" />
