@@ -58,7 +58,7 @@ export const checkAuthorization = (path, role = 'editor') => (dispatch) => {
         }
       })
 
-      if (role === 'superadmin' && response.data !== 'superadmin') {
+      if (role === 'superadmin' && response.data.role !== 'superadmin') {
         return dispatch(routeActions.push('/adminpage'))
       } else if (path !== null) {
         dispatch(routeActions.push(path))
