@@ -13,8 +13,14 @@ class Header extends Component {
     return (
       <header className={styles.header}>
         <h1 className={styles.headerTitle}>Robotkodarn</h1>
-        <button onClick={this.toggleTools} className={styles.toolsIcon} >Verktyg</button>
-        <Menu />
+        { this.props.isLoggedIn ?
+          <div>
+            <button onClick={this.toggleTools} className={styles.toolsIcon} >Verktyg</button>
+            <Menu />
+          </div>
+          :
+          ''
+        }
       </header>
     )
   }
@@ -22,7 +28,7 @@ class Header extends Component {
 
 function mapStateToProps(state) {
   return {
-    role: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn
   }
 }
 

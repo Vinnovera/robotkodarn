@@ -8,7 +8,7 @@ import styles from './tools.css'
 
 import Button from './../Button'
 
-class Tools extends Component {
+class Menu extends Component {
   signout = () => {
     this.props.dispatch(toggleTools())
     this.props.dispatch(signOut('/admin'))
@@ -58,4 +58,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Tools)
+export default connect(mapStateToProps)(Menu)
