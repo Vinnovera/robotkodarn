@@ -4,7 +4,7 @@ import FA from 'react-fontawesome'
 import { checkAuthorization, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
 import Logo from '../Logo'
-import Header from './../Header'
+import Navbar from './../Navbar'
 import View from './../View'
 import styles from './invite.css'
 

@@ -23,6 +23,10 @@
   width: 100%;
 }
 
+:local th:first-of-type {
+  padding-left: 1.5rem;
+}
+
 :local th:last-of-type {
   text-align: center;
 }
@@ -49,6 +53,7 @@
 :local td:first-of-type {
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
+  padding-left: 1.5rem;
 }
 
 :local td:last-of-type {

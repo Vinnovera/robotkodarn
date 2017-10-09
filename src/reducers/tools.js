@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
-  TOGGLE_TOOLS: (state) => {
+  TOGGLE_MENU: (state) => {
     return ({
       open: !state.open
     })

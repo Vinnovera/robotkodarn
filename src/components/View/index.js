@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Header from './../Header'
+import Navbar from './../Navbar'
 import styles from './view.css'
 
 class View extends Component {
@@ -11,7 +11,7 @@ class View extends Component {
   render() {
     return (
       <div className={styles.View}>
-        <Header />
+        <Navbar />
         { this.props.children }
       </div>
     )
