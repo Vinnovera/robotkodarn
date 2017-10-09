@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { checkAuthorization, signOut } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
-import Logo from '../Logo'
-import Navbar from './../Navbar'
-import View from './../View'
+import View from '../View'
+import Button from '../Button'
 import styles from './invite.css'
 
 class Invite extends Component {
@@ -46,12 +45,9 @@ class Invite extends Component {
       return (
         <View>
           <div className={styles.invite}>
-            <div className={styles.logo}><Logo /></div>
             <h1>Bjud in nya användare</h1>
             <p>Generera en unik inbjudningslänk genom att klicka på knappen.</p>
-            <button className={styles.button} onClick={this.createInviteLink} >
-              Skapa inbjudningslänk
-            </button>
+            <Button handleClick={this.createInviteLink}>Skapa inbjudningslänk</Button>
             {invitationLinks}
           </div>
         </View>

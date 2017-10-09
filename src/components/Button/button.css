@@ -5,13 +5,14 @@
   background-color: #3E3748;
   border: none;
   color: #fff;
+  cursor: pointer;
   display: block;
   font: inherit;
   font-size: 1rem;
-  padding: 1rem 0 0.9rem;
-  cursor: pointer;
+  max-width: 18rem;
   transition: 300ms;
   text-transform: uppercase;
+  padding: 1rem 0 0.9rem;
   width: 100%;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
