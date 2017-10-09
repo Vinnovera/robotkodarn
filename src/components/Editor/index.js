@@ -3,16 +3,7 @@ import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
 import FA from 'react-fontawesome'
 
-/* TODO: Right now, this weird brace import is just commented out.
-* Everything seems to be working without
-* the following imports, but leave code a little while just in case.
-
-import 'brace/mode/c_cpp'
-import brace from 'brace';
-import 'brace/theme/textmate'
-
-*/
-
+import { checkAuthorization } from '../../actions/authentication'
 import { changeEditorTab, uploadCode, setConsoleOutput } from '../../actions/editor'
 import { setCurrentParts } from '../../actions/student'
 import styles from './editor.css'
@@ -21,10 +12,9 @@ export class Editor extends Component {
   constructor(props) {
     super(props)
 
-    this.handleTabClick = this.handleTabClick.bind(this)
-    this.onChange = this.onChange.bind(this)
-
-    // Use local state to force react to update DOM by itself more easily when changed
+    /* Use local state to force react to update DOM by itself
+     * more easily when changed
+     */
     this.state = {
       workshop: null,
       currentParts: null
@@ -32,6 +22,7 @@ export class Editor extends Component {
   }
 
   componentWillMount() {
+    // TODO: Check if user is authorized when mounting.
     this.setState({
       workshop: this.props.workshop
     })
@@ -71,7 +62,7 @@ export class Editor extends Component {
     }
   }
 
-  onChange(newValue) {
+  onChange = (newValue) => {
     const copyOfParts = this.state.currentParts
     copyOfParts[this.props.activePartIndex].code = newValue
 
@@ -80,15 +71,9 @@ export class Editor extends Component {
     })
 
     this.props.dispatch(setCurrentParts(copyOfParts))
-
-    // saving code to localStorage on every new key stroke
-    // at the time it never loads anything from localStorage so this function
-    // is kind of useless atm...
-    // TODO: If it useless, why keep?
-    this.saveToLocalStorage()
   }
 
-  handleTabClick(userOrOriginal) {
+  handleTabClick = (userOrOriginal) => {
     this.props.dispatch(changeEditorTab(userOrOriginal))
   }
 
