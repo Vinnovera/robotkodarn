@@ -334,7 +334,7 @@ function mapStateToProps(state) {
     selectedPartIndex: state.adminpage.selectedPartIndex,
     selectedLinkIndex: state.adminpage.selectedLinkIndex,
     message: state.adminpage.message,
-    role: state.user.loggedInUser,
+    role: state.user.isLoggedIn,
     view: state.admin.view
   }
 }

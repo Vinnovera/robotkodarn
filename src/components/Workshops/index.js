@@ -97,7 +97,7 @@ function mapStateToProps(state) {
     userWorkshops: state.adminpage.userWorkshops,
     selectedWorkshopIndex: state.adminpage.selectedWorkshopIndex,
     message: state.adminpage.message,
-    role: state.user.loggedInUser,
+    role: state.user.isLoggedIn,
     view: state.admin.view
   }
 }

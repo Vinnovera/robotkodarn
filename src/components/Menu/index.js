@@ -32,11 +32,11 @@ class Tools extends Component {
       <nav className={navigationStyles}>
         <button onClick={this.toggleTools} className={styles.exit} >Stäng</button>
         <div className={styles.userInfo}>
-          <p className={styles.userName}>Inloggad som: Katarina Ljungdahl</p>
-          <p className={styles.userRole}>Roll: Superadmin</p>
+          <p className={styles.userName}>Inloggad som: {this.props.name}</p>
+          <p className={styles.userRole}>Roll: {this.props.role}</p>
         </div>
         <Link className={styles.navigationLink} to="/adminpage" onClick={this.toggleTools}>Växla till elev-vy</Link>
-        <Link className={styles.navigationLink} to="/workshops" onClick={this.toggleTools}>Skapa workshops</Link>
+        <Link className={styles.navigationLink} to="/workshops" onClick={this.toggleTools}>Hantera workshops</Link>
         {this.props.role === 'superadmin' ?
           <Link className={styles.navigationLink} to="/invite" onClick={this.toggleTools}>Bjud in nya användare</Link>
           :
@@ -52,7 +52,8 @@ class Tools extends Component {
 
 function mapStateToProps(state) {
   return {
-    role: state.user.loggedInUser,
+    role: state.user.role,
+    name: state.user.name,
     tools: state.tools.open
   }
 }

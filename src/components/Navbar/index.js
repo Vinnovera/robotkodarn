@@ -22,7 +22,7 @@ class Header extends Component {
 
 function mapStateToProps(state) {
   return {
-    role: state.user.loggedInUser
+    role: state.user.isLoggedIn
   }
 }
 

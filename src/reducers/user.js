@@ -4,9 +4,11 @@ export default handleActions({
   IS_AUHTORIZED: (state, action) => {
     return ({
       ...state,
-      loggedInUser: action.payload
+      isLoggedIn: action.payload.isLoggedIn,
+      role: action.payload.role,
+      name: action.payload.name
     })
   }
 }, {
-  loggedInUser: null
+  isLoggedIn: false
 })

@@ -27,7 +27,9 @@ export const signOut = path => (dispatch) => {
       // Remove user from Redux State.
       dispatch({
         type: IS_AUHTORIZED,
-        payload: null
+        payload: {
+          isLoggedIn: false
+        }
       })
       dispatch(routeActions.push(path))
     })
@@ -50,7 +52,10 @@ export const checkAuthorization = (path, role = 'editor') => (dispatch) => {
     .then((response) => {
       dispatch({
         type: IS_AUHTORIZED,
-        payload: response.data
+        payload: {
+          ...response.data,
+          isLoggedIn: true
+        }
       })
 
       if (role === 'superadmin' && response.data !== 'superadmin') {
