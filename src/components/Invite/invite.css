@@ -1,29 +1,15 @@
 :local body {
-  /* local variables */
-  --blue: #3FA9F5;
-  --blueLighter: #5BBAFD;
-  --egg: #F1F1F1;
-  --ash: #323232;
-  --ashLighter: #424242;
-  --white: #FFFFFF;
-  --lightgrey: #CECECE;
-  --salmon: #F67A8A;
-
-  background-color: #F6F7F9;
+  background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
+  background-size: cover;
+  color: #3E3748;
   height: 100vh;
-  width: 100%;
-}
-
-:local .logo {
-  position: absolute;
-  height: 5rem;
-  top: -20px;
-  width: 5rem;
+  width: 100vw;
 }
 
 :local .invite {
   align-items: center;
-  background-color: var(--white);
+  color: #3E3748;
+  background-color: #fff;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
@@ -36,89 +22,16 @@
 }
 
 :local .invite h1 {
-  color: var(--ash);
+  color: inherit;
   margin: 0;
 }
 
 :local .invite p {
-  color: var(--ashLighter);
+  color: inherit;
   font-size: 1.2rem;
-  margin: 0.5rem;
+  margin: 1.5rem;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
-}
-
-:local .invite .button {
-  background: var(--blue);
-  border: none;
-  border-radius: 3px;
-  color: white;
-  cursor: pointer;
-  display: block;
-  font-size: 1.2rem;
-  margin: 2rem auto;
-  padding: 0.8rem 0;
-  transition: 300ms;
-  text-align: center;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  max-width: 18rem;
-}
-
-:local .invite .button:hover {
-  background: var(--blueLighter);
-}
-
-:local .invite .button:focus {
-  outline: none;
-}
-
-/* -----------------------------------------------------------------------------
-  NAVIGATION BAR
-------------------------------------------------------------------------------*/
-:local .navigation {
-  align-content: center;
-  border-bottom: 1px solid var(--lightgrey);
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  padding: 1.5rem 2rem;
-  top: 0;
-  left: 0;
-  width: 100vw;
-}
-
-:local .navigation ul {
-  display: flex;
-  padding: 0;
-}
-
-:local .navigation li:not(:last-of-type) {
-  margin-right: 4rem;
-}
-
-/*
- * 1. To remove button default styling
- */
-:local .navigationLink,
-:local .invitationLink {
-  background: none; /* 1. */
-  border: none; /* 1. */
-  border-bottom: 2px solid transparent;
-  color: var(--ash);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.9rem;
-  padding: 0 0 0.3em;
-  text-decoration: none;
-  transition: color 250ms ease, border 250ms ease;
-}
-
-:local .navigationLink:hover,
-:local .invitationLink:hover {
-  border-bottom: 2px solid var(--salmon);
-  color: var(--salmon);
-  text-decoration: none;
 }
 
 /* -----------------------------------------------------------------------------
@@ -127,16 +40,16 @@
 
 :local .invite .invitationWrapper {
   align-content: center;
-  color: var(--blue);
+  color: #3E3748;
   display: flex;
   font-size: 0.9rem;
   justify-content: center;
-  margin: 0.5rem 0;
+  margin: 1.5rem 0;
   width: 100%;
 }
 
 :local .invite .invitationURL {
-  border-bottom: 1px solid var(--blue);
+  border-bottom: 1px solid #3E3748;
   color: inherit;
   font-size: inherit;
   margin: 0 1rem 0 0;
@@ -145,9 +58,9 @@
 
 :local .invite .shortCuts {
   background: none;
-  border: 1px solid var(--blue);
+  border: 1px solid #3E3748;
   border-radius: 2px;
-  color: var(--blue);
+  color: #3E3748;
   cursor: pointer;
   font-size: 0.8rem;
   height: 1.5rem;
@@ -157,7 +70,7 @@
 }
 
 :local .invite .shortCuts:hover {
-  background: var(--blueLighter);
+  background: #332C3D;
   color: white;
   outline: none;
 }
