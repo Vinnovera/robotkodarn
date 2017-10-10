@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { checkAuthorization } from '../../actions/authentication'
 import {
   createWorkshop,
   getWorkshopsByUserId,
@@ -41,7 +40,6 @@ class AdminPage extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(checkAuthorization('/adminpage'))
     this.props.dispatch(getWorkshopsByUserId())
   }
 

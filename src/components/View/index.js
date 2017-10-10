@@ -4,10 +4,6 @@ import Navbar from './../Navbar'
 import styles from './view.css'
 
 class View extends Component {
-  componentWillReceiveProps() {
-    console.log('Nu kommer nya!')
-  }
-
   render() {
     return (
       <div className={styles.View}>

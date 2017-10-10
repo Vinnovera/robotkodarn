@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
-import { checkAuthorization } from '../../actions/authentication'
 import {
   getWorkshopsByUserId,
   copyWorkshop,
@@ -15,7 +14,6 @@ import styles from './workshops.css'
 
 class Workshops extends Component {
   componentWillMount() {
-    this.props.dispatch(checkAuthorization('/workshops'))
     this.props.dispatch(getWorkshopsByUserId())
   }
 
