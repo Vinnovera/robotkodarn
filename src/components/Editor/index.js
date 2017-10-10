@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
 import FA from 'react-fontawesome'
 
-import { checkAuthorization } from '../../actions/authentication'
 import { changeEditorTab, uploadCode, setConsoleOutput } from '../../actions/editor'
 import { setCurrentParts } from '../../actions/student'
 import styles from './editor.css'

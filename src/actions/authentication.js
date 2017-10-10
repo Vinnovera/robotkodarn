@@ -68,3 +68,61 @@ export const checkAuthorization = (path, role = 'editor') => (dispatch) => {
       dispatch(routeActions.push('/admin'))
     })
 }
+
+// -----------------------------------------------------------------------------
+// checkAuthorization, checks session cookie and authorization level
+// -----------------------------------------------------------------------------
+/**
+ * Checks session cookie and role of user
+ *
+ * @param {string} redirect
+ * @param {*} role The user role required for getting access to path.
+ * If role is set to 'superadmin', check that the user has the required role,
+ * else, redirect to adminpage.
+ */
+export const requireAuth = (redirect = null, role = 'editor', callback) => (dispatch) => {
+  axios.get('/auth/checkAuthorization')
+    .then((response) => {
+      dispatch({
+        type: IS_AUHTORIZED,
+        payload: {
+          ...response.data,
+          isLoggedIn: true
+        }
+      })
+
+      if (role === 'superadmin' && response.data.role !== 'superadmin') {
+        return dispatch(routeActions.push('/adminpage'))
+      } else if (redirect !== null) {
+        dispatch(routeActions.push(redirect))
+      }
+    })
+    .catch(() => {
+      dispatch(routeActions.push('/admin'))
+    })
+    .then(callback)
+}
+
+
+// export const requireAuthOld = (nextState, replace, callback) => {
+//   request
+//     .get('/auth/ping')
+//     .then(({ data }) => {
+//       const userScope = data.scope;
+//       const allowedScopes = _.flattenDeep(nextState.routes.filter(route => route.scope).map(route => route.scope))
+//       if (!allowedScopes.includes(userScope)) {
+//         replace('/admin/401')
+//       }
+//       store.dispatch({
+//         type: 'AUTH_INFO',
+//         payload: data
+//       });
+//     })
+//     .catch((error) => {
+//       if (error.response && error.response.status === 401) {
+//         store.dispatch(logout());
+//         replace('/admin/logout')
+//       }
+//     })
+//     .then(callback);
+// };

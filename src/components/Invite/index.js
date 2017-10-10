@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { checkAuthorization } from '../../actions/authentication'
 import addInvitationID from '../../actions/invites'
 import View from '../View'
 import Button from '../Button'
 import styles from './invite.css'
 
 class Invite extends Component {
-  componentWillMount() {
-    // Pass in superadmin – the required role for viewing component
-    this.props.dispatch(checkAuthorization('/invite', 'superadmin'))
-  }
 
   /**
    * Creates a unique invitation ID

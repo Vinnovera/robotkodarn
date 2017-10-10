@@ -2,11 +2,12 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
-import { Router, Link, Route, IndexRedirect, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { syncHistory } from 'redux-simple-router'
 import thunkMiddleware from 'redux-thunk'
 
 import reducers from './reducers'
+import { requireAuth } from './actions/authentication'
 
 import App from './components/App'
 import Editor from './components/Editor'
@@ -46,7 +47,7 @@ render((
         <Route path="/admin" component={LoginAdmin} />
         <Route path="/adminpage" component={AdminPage} />
         <Route path="/workshops" component={Workshops} />
-        <Route path="/invite" component={Invite} />
+        <Route path="/invite" component={Invite} onEnter={requireAuth} />
         <Route path="/register" component={RegisterForm} />
       </Route>
     </Router>
