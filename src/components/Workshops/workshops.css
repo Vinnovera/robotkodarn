@@ -1,11 +1,7 @@
-/* Background */
 :local .workshops {
-  background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
-  background-size: cover;
-  color: #3E3748;
-  height: 100vh;
-  width: 100vw;
+  margin-top: 3rem;
 }
+
 
 :local .form {
   max-width: 800px;
@@ -101,12 +97,4 @@
 
 :local .tableIconDanger:hover {
   color: #FE5D4B;
-}
-
-
-@media screen and (min-width: 600px) {
-  :local .buttonContainer {
-    float: right;
-    width: 12rem;
-  }
 }

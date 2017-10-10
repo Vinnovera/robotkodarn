@@ -1,22 +1,14 @@
-:local body {
-  background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
-  background-size: cover;
-  color: #3E3748;
-  height: 100vh;
-  width: 100vw;
-}
-
 :local .invite {
   align-items: center;
   color: #3E3748;
   background-color: #fff;
-  border-radius: 2px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 10rem auto 0;
+  margin: 7rem auto 0;
   max-width: 750px;
-  padding: 5rem 0.5rem 3rem;
+  padding: 4rem 0.5rem 4rem;
   position: relative;
   text-align: center;
 }
@@ -32,6 +24,11 @@
   margin: 1.5rem;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
+}
+
+:local .buttonContainer {
+  max-width: 18rem;
+  width: 100%;
 }
 
 /* -----------------------------------------------------------------------------
