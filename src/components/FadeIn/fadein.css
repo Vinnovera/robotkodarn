@@ -1,0 +1,16 @@
+:local .fadeIn {
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  animation-duration: 750ms;
+  animation-delay: 250ms;
+  opacity: 0;
+}
+
+@keyframes :local(fadeIn) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

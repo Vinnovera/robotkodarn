@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import forge from 'node-forge'
-import { signIn, checkAuthorization } from '../../actions/authentication'
+import { signIn } from '../../actions/authentication'
 import Button from '../Button'
 import styles from './loginadmin.css'
 
@@ -13,10 +13,6 @@ export class LoginAdmin extends Component {
       email: null,
       password: null
     }
-  }
-
-  componentWillMount() {
-    this.props.dispatch(checkAuthorization('/workshops'))
   }
 
   componentWillReceiveProps(nextProps) {

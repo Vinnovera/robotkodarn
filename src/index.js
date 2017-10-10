@@ -7,7 +7,7 @@ import { syncHistory } from 'redux-simple-router'
 import thunkMiddleware from 'redux-thunk'
 
 import reducers from './reducers'
-import { requireAuth } from './actions/authentication'
+import { authorize } from './routes'
 
 import App from './components/App'
 import Editor from './components/Editor'
@@ -33,8 +33,12 @@ const createStoreWithMiddleware = compose(applyMiddleware(
   reduxRouterMiddleware,
   thunkMiddleware
 ), enhancers)(createStore)
-const store = createStoreWithMiddleware(reducers)
+export const store = createStoreWithMiddleware(reducers)
 
+/**
+ * If we where to upgrade to react-router-4, onEnter needs to be exchanged
+ * since react-router has changed a lot from the version we are currently using.
+ */
 render((
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -44,10 +48,10 @@ render((
         <Route path="/editor" component={Editor} />
         <Route path="/id/:pin" component={Student} />
         <Route path="/login" component={LoginWithPin} />
-        <Route path="/admin" component={LoginAdmin} />
-        <Route path="/adminpage" component={AdminPage} />
-        <Route path="/workshops" component={Workshops} />
-        <Route path="/invite" component={Invite} onEnter={requireAuth} />
+        <Route path="/admin" component={LoginAdmin} onEnter={authorize} forward="/workshops" />
+        <Route path="/adminpage" component={AdminPage} onEnter={authorize} permissions={['superadmin', 'editor']} />
+        <Route path="/workshops" component={Workshops} onEnter={authorize} permissions={['superadmin', 'editor']} />
+        <Route path="/invite" component={Invite} onEnter={authorize} permissions={['superadmin']} />
         <Route path="/register" component={RegisterForm} />
       </Route>
     </Router>
