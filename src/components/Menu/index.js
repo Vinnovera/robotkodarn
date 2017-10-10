@@ -4,7 +4,7 @@ import { routeActions } from 'redux-simple-router'
 import { Link } from 'react-router'
 import { toggleTools } from '../../actions/tools'
 import { signOut } from '../../actions/authentication'
-import styles from './tools.css'
+import styles from './menu.css'
 
 import Button from './../Button'
 
@@ -54,7 +54,8 @@ function mapStateToProps(state) {
   return {
     role: state.user.role,
     name: state.user.name,
-    tools: state.tools.open
+    tools: state.tools.open,
+    currentPage: state.routeReducer.location.pathname
   }
 }
 
