@@ -33,12 +33,14 @@ class Invite extends Component {
       ''
 
     return (
-      <View>
+      <View background="beige">
         <FadeIn>
           <div className={styles.invite}>
             <h1>Bjud in nya användare</h1>
             <p>Generera en unik inbjudningslänk genom att klicka på knappen.</p>
-            <Button handleClick={this.createInviteLink}>Skapa inbjudningslänk</Button>
+            <div className={styles.buttonContainer}>
+              <Button handleClick={this.createInviteLink}>Skapa inbjudningslänk</Button>
+            </div>
             {invitationLinks}
           </div>
         </FadeIn>

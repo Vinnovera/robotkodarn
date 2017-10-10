@@ -1,17 +1,22 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import Navbar from './../Navbar'
 import styles from './view.css'
 
-class View extends Component {
-  render() {
-    return (
-      <div className={styles.View}>
-        <Navbar />
-        { this.props.children }
-      </div>
-    )
+const View = ({ children, background = 'beige' }) => {
+  let componentStyle
+
+  if (background === 'beige') {
+    componentStyle = styles.beigeView
+  } else if (background === 'red') {
+    componentStyle = styles.redView
   }
+
+  return (
+    <div className={componentStyle}>
+      <Navbar />
+      { children }
+    </div>
+  )
 }
 
-export default connect()(View)
+export default View

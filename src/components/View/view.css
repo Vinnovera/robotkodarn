@@ -1,0 +1,12 @@
+:local .beigeView,
+:local .redView {
+  background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
+  background-size: cover;
+  color: #3E3748;
+  height: 100vh;
+  width: 100vw;
+}
+
+:local .redView {
+  background: #FF9078 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
+}
