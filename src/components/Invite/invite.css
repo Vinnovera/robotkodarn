@@ -27,6 +27,7 @@
 }
 
 :local .buttonContainer {
+  margin-bottom: 1rem;
   max-width: 18rem;
   width: 100%;
 }
@@ -41,7 +42,7 @@
   display: flex;
   font-size: 0.9rem;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 0.5rem 0;
   width: 100%;
 }
 

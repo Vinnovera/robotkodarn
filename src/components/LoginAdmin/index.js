@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import forge from 'node-forge'
 import { signIn } from '../../actions/authentication'
+
 import Button from '../Button'
+import FadeIn from '../FadeIn'
+
 import styles from './loginadmin.css'
 
 export class LoginAdmin extends Component {
@@ -37,19 +40,21 @@ export class LoginAdmin extends Component {
   render() {
     return (
       <div className={styles.background}>
-        <div className={styles.login}>
-          <h1 className={styles.headline}>Logga in</h1>
-          <form onSubmit={this.handleLoginSubmit}>
-            <label htmlFor="email">E-postadress</label>
-            <input className={styles.input} onChange={e => this.setState({ email: e.target.value })} id="email" type="email" placeholder="Din e-postadress" />
-            <label htmlFor="password">Lösenord</label>
-            <input className={styles.input} onChange={e => this.setState({ password: e.target.value })} id="password" type="password" placeholder="Ditt lösenord" />
-            <div className={styles.buttonContainer}>
-              <Button type="submit">Logga in</Button>
-            </div>
-            <p className={styles.info}>Har du ännu inget konto? Kontakta <a href="mailto:oskar@vinnovera.se?subject=Robotkodarn" >Oskar Andersson</a> på Vinnovera.</p>
-          </form>
-        </div>
+        <FadeIn>
+          <div className={styles.login}>
+            <h1 className={styles.headline}>Logga in</h1>
+            <form onSubmit={this.handleLoginSubmit}>
+              <label htmlFor="email">E-postadress</label>
+              <input className={styles.input} onChange={e => this.setState({ email: e.target.value })} id="email" type="email" placeholder="Din e-postadress" />
+              <label htmlFor="password">Lösenord</label>
+              <input className={styles.input} onChange={e => this.setState({ password: e.target.value })} id="password" type="password" placeholder="Ditt lösenord" />
+              <div className={styles.buttonContainer}>
+                <Button type="submit">Logga in</Button>
+              </div>
+              <p className={styles.info}>Har du ännu inget konto? Kontakta <a href="mailto:oskar@vinnovera.se?subject=Robotkodarn" >Oskar Andersson</a> på Vinnovera.</p>
+            </form>
+          </div>
+        </FadeIn>
       </div>
     )
   }

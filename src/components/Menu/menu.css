@@ -43,7 +43,8 @@
   NAVIGATION LINKS
 ------------------------------------------------------------------------------*/
 
-:local .navigationLink {
+:local .navigationLink,
+:local .navigationLinkActive {
   background-color: #fff;
   border-bottom: 2px solid transparent;
   color: #3E3748;
@@ -60,7 +61,12 @@
   font-smoothing: antialiased;
 }
 
-:local .navigationLink:hover {
+:local .navigationLinkActive {
+  background-color: red;
+}
+
+:local .navigationLink:hover,
+:local .navigationLinkActive:hover {
   background-color: #FE5D4B;
   color: #fff;
   text-decoration: none;
