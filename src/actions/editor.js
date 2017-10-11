@@ -3,6 +3,7 @@ const SET_EDITOR_TAB = 'SET_EDITOR_TAB'
 const SET_ACTIVE_PART_INDEX = 'SET_ACTIVE_PART_INDEX'
 const SET_COMPILER_RESPONSE = 'SET_COMPILER_RESPONSE'
 const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
+const TOGGLE_EDITING = 'TOGGLE_EDITING'
 
 // -----------------------------------------------------------------------------
 // changeEditorTab, sets state to pressed tab
@@ -11,6 +12,16 @@ export const changeEditorTab = userOrOriginal => (dispatch) => {
   dispatch({
     type: SET_EDITOR_TAB,
     payload: userOrOriginal
+  })
+}
+// -----------------------------------------------------------------------------
+// toggleEditing, used if editor/superadmin is logged in and wants
+// to start editing currentWorkshop
+// -----------------------------------------------------------------------------
+
+export const toggleEditing = () => (dispatch) => {
+  dispatch({
+    type: TOGGLE_EDITING
   })
 }
 

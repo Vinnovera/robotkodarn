@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="1360px" height="1000px" viewBox="0 0 1360 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-    <title>Pattern-minimal</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Style-Tiles" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.333956069">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.433956069">
         <g id="Editor-(editing)" transform="translate(0.000000, -24.000000)" fill="#EDEBE6">
             <g id="Pattern-minimal" transform="translate(-158.000000, 24.000000)">
                 <ellipse id="Oval-4" cx="1313.19569" cy="177.637124" rx="177.606965" ry="177.637124"></ellipse>

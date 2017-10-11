@@ -53,6 +53,7 @@ class Sidebar extends Component {
 function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
+    editing: state.editor.editing,
     workshop: JSON.parse(state.login.currentWorkshop)
   }
 }

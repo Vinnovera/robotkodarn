@@ -45,23 +45,24 @@ export default handleActions({
     })
   },
 
-  SET_CONNECTED_ROBOT: (state, action) => {
-    return ({
-      ...state,
-      connectedArduino: action.payload
-    })
-  },
-
   SET_ACTIVE_PART_INDEX: (state, action) => {
     return ({
       ...state,
       activePartIndex: action.payload
     })
+  },
+
+  TOGGLE_EDITING: (state) => {
+    return ({
+      ...state,
+      editing: !state.editing
+    })
   }
+
 }, {
   activeTab: 'user',
   compilerResponse: null,
   consoleOutput: [],
-  connectedArduino: null,
-  activePartIndex: 0
+  activePartIndex: 0,
+  editing: false
 })

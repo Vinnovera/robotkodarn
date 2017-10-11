@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { findWorkshopByPin } from '../../actions/workshops'
+import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
 import { setCurrentParts } from '../../actions/student'
-
-import Navbar from './../Navbar'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
 import Console from './../Console'
 import ActionButtons from './../ActionButtons'
 import View from './../View'
-
 import styles from './student.css'
 
 export class Student extends Component {
@@ -23,6 +19,7 @@ export class Student extends Component {
       workshop: null
     }
   }
+
   componentWillMount() {
     this.props.dispatch(findWorkshopByPin(this.props.params.pin))
 
@@ -45,6 +42,11 @@ export class Student extends Component {
         this.props.dispatch(setCurrentParts(currentParts))
       })
     }
+  }
+
+  componentWillUnmount() {
+    console.log('nu lämnar vi!')
+    this.props.dispatch(clearWorkshop())
   }
 
   getMainPaneClassName() {

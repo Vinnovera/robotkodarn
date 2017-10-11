@@ -4,6 +4,7 @@ import { routeActions } from 'redux-simple-router'
 import { Link } from 'react-router'
 import { toggleTools } from '../../actions/tools'
 import { signOut } from '../../actions/authentication'
+import { toggleEditing } from '../../actions/editor'
 import styles from './menu.css'
 
 import Button from './../Button'
@@ -25,8 +26,14 @@ class Menu extends Component {
     this.props.dispatch(routeActions.push(event.target.value))
   }
 
+  startEditing = () => {
+    this.props.dispatch(toggleTools())
+    this.props.dispatch(toggleEditing())
+  }
+
   render() {
     const navigationStyles = this.props.tools ? styles.navigationOpen : styles.navigation
+    const pin = this.props.currentWorkshop.pincode
 
     return (
       <nav className={navigationStyles}>
@@ -35,7 +42,11 @@ class Menu extends Component {
           <p className={styles.userName}>Inloggad som: {this.props.name}</p>
           <p className={styles.userRole}>Roll: {this.props.role}</p>
         </div>
-        <Link className={styles.navigationLink} to="/adminpage" onClick={this.toggleTools}>Växla till elev-vy</Link>
+        { this.props.currentWorkshop ?
+          <Link className={styles.navigationLink} onClick={this.startEditing}>{ this.props.editing ? `Sluta redigera ${pin}` : `Redigera ${pin}`}</Link>
+          :
+          ''
+        }
         <Link className={styles.navigationLink} to="/workshops" onClick={this.toggleTools}>Hantera workshops</Link>
         {this.props.role === 'superadmin' ?
           <Link className={styles.navigationLink} to="/invite" onClick={this.toggleTools}>Bjud in nya användare</Link>
@@ -55,7 +66,9 @@ function mapStateToProps(state) {
     role: state.user.role,
     name: state.user.name,
     tools: state.tools.open,
-    currentPage: state.routeReducer.location.pathname
+    currentPage: state.routeReducer.location.pathname,
+    currentWorkshop: JSON.parse(state.login.currentWorkshop),
+    editing: state.editor.editing
   }
 }
 

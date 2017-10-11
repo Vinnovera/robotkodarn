@@ -153,6 +153,14 @@ export const findWorkshopByPin = pin => (dispatch) => {
   request.send()
 }
 
+//------------------------------------------------------------------------------
+// clearWorkshop, resets state to null when leaving student component.
+// -----------------------------------------------------------------------------
+
+export const clearWorkshop = () => (dispatch) => {
+  dispatch({ type: SET_WORKSHOP, payload: null })
+}
+
 // -----------------------------------------------------------------------------
 // getWorkshopsByUserId, get logged in users' workshops
 // -----------------------------------------------------------------------------
