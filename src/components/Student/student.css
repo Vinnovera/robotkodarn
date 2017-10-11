@@ -41,5 +41,5 @@
 }
 
 :local .mainPaneExpanded {
-  width: calc(100vw - 80px);
+  width: calc(100vw - 28px);
 }

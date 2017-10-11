@@ -29,8 +29,9 @@ class Sidebar extends Component {
     return (
       <div className={this.getSidebarClassName()}>
         <div className={styles.content}>
-          <p>{this.props.workshop.pincode}</p>
-          <h2>{this.props.workshop.title}</h2>
+          <p className={styles.pinCode}>{this.props.workshop.pincode}</p>
+          <h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>
+          <div className={styles.wave} />
           <PartList parts={this.props.workshop.parts} />
           <hr />
           <h2>Referenslänkar</h2>
