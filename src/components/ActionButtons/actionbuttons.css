@@ -4,8 +4,18 @@
   margin-top: -37px;
 }
 
+:local .actionButtonWrapper button {
+  display: inline;
+}
+
 :local .actionButtonWrapper button:first-of-type {
   margin-right: 10px;
+}
+
+:local .maxWidth {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 20rem;
 }
 
 /* FontAwesome */
