@@ -9,6 +9,7 @@ import Sidebar from './../Sidebar'
 import Editor from './../Editor'
 import Console from './../Console'
 import ActionButtons from './../ActionButtons'
+import View from './../View'
 
 import styles from './student.css'
 
@@ -57,8 +58,7 @@ export class Student extends Component {
   renderWorkshop() {
     if (this.state.workshop) {
       return (
-        <div>
-          <Navbar />
+        <View>
           <Sidebar />
           <div className={this.getMainPaneClassName()}>
             <h2>{this.state.workshop.parts[this.props.activePartIndex].title}</h2>
@@ -66,7 +66,7 @@ export class Student extends Component {
             <Editor />
             <Console />
           </div>
-        </div>
+        </View>
       )
     }
 

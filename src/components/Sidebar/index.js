@@ -1,21 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-
 import { toggleSidebar } from '../../actions/student'
-
 import PartList from './PartList'
 import ReferenceList from './ReferenceList'
 import styles from './sidebar.css'
 
 class Sidebar extends Component {
-  constructor() {
-    super()
-    this.handleSidebarClick = this.handleSidebarClick.bind(this)
-    this.getSidebarClassName = this.getSidebarClassName.bind(this)
-  }
-
-  getSidebarClassName() {
+  getSidebarClassName = () => {
     if (this.props.isSidebarOpen) {
       return styles.mainSidebar
     }
@@ -23,31 +15,30 @@ class Sidebar extends Component {
     return `${styles.mainSidebar} ${styles.mainSidebarClosed}`
   }
 
-  getCloseBtnClassName() {
+  getCloseBtnClassName = () => {
     if (!this.props.isSidebarOpen) {
       return styles.rotated
     }
   }
 
-  handleSidebarClick() {
+  handleSidebarClick = () => {
     this.props.dispatch(toggleSidebar(!this.props.isSidebarOpen))
   }
-
 
   render() {
     return (
       <div className={this.getSidebarClassName()}>
-        <div className="content">
+        <div className={styles.content}>
+          <p>{this.props.workshop.pincode}</p>
           <h2>{this.props.workshop.title}</h2>
           <PartList parts={this.props.workshop.parts} />
           <hr />
           <h2>Referenslänkar</h2>
           <ReferenceList links={this.props.workshop.links} />
         </div>
-        {/* TODO: Replace with button asap. See rule 'jsx-a11y/href-no-hash */}
-        <a className={styles.closeBtn} href="#" onClick={this.handleSidebarClick}>
+        <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />
-        </a>
+        </button>
       </div>
     )
   }

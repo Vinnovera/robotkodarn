@@ -16,9 +16,9 @@
   color: inherit;
   font-size: 1rem;
   font-weight: 400;
+  margin: 0;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
-  margin: 0;
 }
 
 :local .toolsIcon {

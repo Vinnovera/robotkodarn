@@ -26,15 +26,20 @@
   }
 }
 
+/*
+ * 1. 280px === width of sidebar
+ * 2. 81px === height of navigation bar
+ */
 :local .mainPane {
-  float: right;
-  width: calc(100% - 350px);
-  height: calc(100vh - 50px);
-  padding: 0 20px;
-  background-color: #f9f9f9;
-  transition: width .5s;
+  bottom: 0;
+  height: calc(100vh - 81px); /* 2 */
+  transition: width 300ms ease-in-out 75ms;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  width: calc(100vw - 280px); /* 1 */
 }
 
 :local .mainPaneExpanded {
-  width: calc(100% - 34px);
+  width: calc(100vw - 80px);
 }
