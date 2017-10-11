@@ -27,12 +27,14 @@ export class ActionButtons extends Component {
   render() {
     return (
       <div className={styles.actionButtonWrapper} >
-        <button onClick={() => this.handleClick()} className="button success">
-          <FA className={styles.icons} name="cogs" />Testa min kod
-        </button>
-        <button onClick={() => this.handleClick(true)} className="button success" href="#">
-          <FA className={styles.icons} name="usb" />Ladda över kod
-        </button>
+        <div className={styles.maxWidth} >
+          <button onClick={this.handleClick} className="button success">
+            <FA className={styles.icons} name="cogs" />Testa min kod
+          </button>
+          <button onClick={() => this.handleClick(true)} className="button success" href="#">
+            <FA className={styles.icons} name="usb" />Ladda över kod
+          </button>
+        </div>
       </div>
     )
   }
