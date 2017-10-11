@@ -9,10 +9,10 @@ import styles from './sidebar.css'
 class Sidebar extends Component {
   getSidebarClassName = () => {
     if (this.props.isSidebarOpen) {
-      return styles.mainSidebar
+      return styles.sidebar
     }
 
-    return `${styles.mainSidebar} ${styles.mainSidebarClosed}`
+    return `${styles.sidebar} ${styles.sidebarClosed}`
   }
 
   getCloseBtnClassName = () => {
@@ -40,7 +40,7 @@ class Sidebar extends Component {
         <section className={styles.section}>
           <div className={styles.wave} />
           <h3 className={styles.sidebarSub}>Referenslänkar</h3>
-          <ReferenceList links={this.props.workshop.links} />
+          <ReferenceList />
         </section>
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />

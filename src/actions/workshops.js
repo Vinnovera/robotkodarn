@@ -121,7 +121,7 @@ export const removeSelectedPart = (part, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 export const removeSelectedLink = (link, workshop) => (dispatch) => {
   axios
-    .delete(`/api/workshop/${workshop._id}/link/${link._id}`, {
+    .delete(`/api/workshop/${workshop}/link/${link}`, {
       headers: {
         'content-type': 'application/json'
       }

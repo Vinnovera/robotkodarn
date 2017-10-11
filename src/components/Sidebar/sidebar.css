@@ -1,7 +1,7 @@
 /*
 * 1. 81px is the height of the navigation bar.
 */
-:local .mainSidebar {
+:local .sidebar {
   background-color: #fff;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
   color: #3E3748;
@@ -15,7 +15,7 @@
   text-align: center;
 }
 
-:local .mainSidebarClosed {
+:local .sidebarClosed {
   left: -252px;
 }
 
@@ -104,21 +104,60 @@
   margin-top: 20px;
 }
 
-:local .mainSidebar .partList li,
-:local .mainSidebar .referenceList li {
-  margin: 5px 0 0 40px;
+:local .sidebarList {
+  margin-top: 20px;
+}
+
+:local .listItem {
+  color: inherit;
   font-size: 1.2rem;
 }
 
-:local .mainSidebar .partList li a,
-:local .mainSidebar .referenceList li a {
-  margin-left: 5px;
+:local .listLink {
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.9rem;
+  border: none;
+  background: none;
 }
 
-:local .mainSidebar .partList li.active a {
-  font-weight: bold;
+:local .listLink:hover {
+  text-decoration: none;
 }
 
-:local .mainSidebar .referenceList {
-  margin-top: 20px;
+
+/* -----------------------------------------------------------------------------
+  REMOVE ICON
+------------------------------------------------------------------------------*/
+
+:local .removeIcon,
+:local .addIcon {
+  background-color: transparent;
+  border: none;
+  color: #59B2AC;
+  cursor: pointer;
+  font-size: 1.5rem;
+  height: 2rem;
+  width: 2rem;
+  transition: color 250ms ease;
 }
+
+:local .removeIcon {
+  color: #C52522;
+}
+
+:local .addIcon:hover {
+  color: #3DA099;
+}
+
+:local .removeIcon:hover {
+  color: #FE5D4B;
+}
+
+:local .removeIcon:focus,
+:local .removeIcon:active {
+  outline: none;
+}
+
+

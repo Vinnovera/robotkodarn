@@ -12,9 +12,9 @@ class PartList extends Component {
   renderParts() {
     return this.props.parts.map((part, index) => {
       return (
-        <li key={part._id}>
+        <li className={styles.listItem} key={part._id}>
           <FA name="file-code-o" />
-          <a onClick={() => this.changePart(index)} href="#">
+          <a className={styles.listLink} onClick={() => this.changePart(index)} href="#">
             {part.title}
           </a>
         </li>
@@ -24,7 +24,7 @@ class PartList extends Component {
 
   render() {
     return (
-      <ul className={styles.partList}>
+      <ul className={styles.sidebarList}>
         {this.renderParts()}
       </ul>
     )
