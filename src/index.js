@@ -44,15 +44,15 @@ render((
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRedirect to="/login" />
-        <Route path="/pin" component={Student} />
-        <Route path="/editor" component={Editor} />
-        <Route path="/id/:pin" component={Student} />
-        <Route path="/login" component={LoginWithPin} />
+        <Route path="/pin" component={Student} onEnter={authorize} forward="onlyAuthCheck" />
+        <Route path="/editor" component={Editor} onEnter={authorize} forward="onlyAuthCheck" />
+        <Route path="/id/:pin" component={Student} onEnter={authorize} forward="onlyAuthCheck" />
+        <Route path="/login" component={LoginWithPin} onEnter={authorize} forward="onlyAuthCheck" />
         <Route path="/admin" component={LoginAdmin} onEnter={authorize} forward="/workshops" />
         <Route path="/adminpage" component={AdminPage} onEnter={authorize} permissions={['superadmin', 'editor']} />
         <Route path="/workshops" component={Workshops} onEnter={authorize} permissions={['superadmin', 'editor']} />
         <Route path="/invite" component={Invite} onEnter={authorize} permissions={['superadmin']} />
-        <Route path="/register" component={RegisterForm} />
+        <Route path="/register" component={RegisterForm} onEnter={authorize} forward="/workshops" />
       </Route>
     </Router>
   </Provider>
