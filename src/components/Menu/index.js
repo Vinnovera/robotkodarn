@@ -33,7 +33,6 @@ class Menu extends Component {
 
   render() {
     const navigationStyles = this.props.tools ? styles.navigationOpen : styles.navigation
-    const pin = this.props.currentWorkshop.pincode
 
     return (
       <nav className={navigationStyles}>
@@ -43,7 +42,7 @@ class Menu extends Component {
           <p className={styles.userRole}>Roll: {this.props.role}</p>
         </div>
         { this.props.currentWorkshop ?
-          <Link className={styles.navigationLink} onClick={this.startEditing}>{ this.props.editing ? `Sluta redigera ${pin}` : `Redigera ${pin}`}</Link>
+          <Link className={styles.navigationLink} onClick={this.startEditing}>{ this.props.editing ? `Sluta redigera ${this.props.currentWorkshop.pincode}` : `Redigera ${this.props.currentWorkshop.pincode}`}</Link>
           :
           ''
         }
