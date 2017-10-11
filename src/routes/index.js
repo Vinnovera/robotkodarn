@@ -7,39 +7,47 @@ import { IS_AUHTORIZED, signOut } from '../actions/authentication'
  * also check if user has the required role.
  * If logged in, dispatch to state with credentials.
  *
- * @param {object} nextState An object with
+ * @param {object} nextState
  * @param {function} replace Takes a string, and redirect to that path
- * @param {function} callback Is called when function is complete
+ * @param {function} callback Called when function is complete
  */
 export const authorize = (nextState, replace, callback) => {
-
   // The second one in the array is the route we are requesting
   const route = nextState.routes[1]
 
   axios.get('/auth/checkAuthorization')
     .then(({ data }) => {
-      const userRole = data.role
+      // If data is returned, dispatch information about user
+      if (data) {
+        store.dispatch({
+          type: IS_AUHTORIZED,
+          payload: {
+            ...data,
+            isLoggedIn: true
+          }
+        })
+      }
 
-      if (route.forward) {
+      /* If route.forward === 'onlyAuthCheck',
+       * return straight after dispatching (no redirect).
+       */
+      if (route.forward === 'onlyAuthCheck') {
+        return
+      } else if (route.forward) {
         return replace(route.forward)
       }
 
+      /* If route requires specific user role for accessing,
+       * make sure user has the right permissions.
+       */
       if (route.permissions.length > 0) {
-        const isAuthorized = route.permissions.indexOf(userRole) !== -1
+        const isAuthorized = route.permissions.indexOf(data.role) !== -1
 
         if (!isAuthorized) {
           store.dispatch(signOut('/admin'))
           return replace('/admin')
         }
       }
-
-      store.dispatch({
-        type: IS_AUHTORIZED,
-        payload: {
-          ...data,
-          isLoggedIn: true
-        }
-      })
     })
     .catch((error) => {
       if (error.response && error.response.status === 401) {
