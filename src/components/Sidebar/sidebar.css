@@ -8,7 +8,7 @@
   height: calc(100vh - 81px); /* 1 */
   left: 0;
   position: fixed;
-  padding: 2rem 0 0.5rem;
+  padding: 2rem 1rem 0.5rem 0.5rem;
   width: 280px;
   transition: left 300ms ease-in-out 75ms;
   top: 81px; /* 1 */
@@ -19,14 +19,19 @@
   left: -252px;
 }
 
-:local .mainSidebar .content {
-  width: 90%;
-  display: inline-block;
-}
+/* -----------------------------------------------------------------------------
+  HEADLINES
+------------------------------------------------------------------------------*/
 
 :local .sidebarTitle {
   color: inherit;
   font-size: 1.5rem;
+}
+
+:local .sidebarSub {
+  color: inherit;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
 /* -----------------------------------------------------------------------------
@@ -87,17 +92,17 @@
   top: 50%;
 }
 
-:local .mainSidebar .toggleSidebarButton span.rotated {
+:local .toggleSidebarButton span.rotated {
   transform: translate(-50%, -50%) rotateY(180deg);
 }
 
 /* -----------------------------------------------------------------------------
-  PARTSLIST
+  SECTION AND LISTS OF PARTS AND LINKS
 ------------------------------------------------------------------------------*/
 
-:local .mainSidebar .partList {
+:local .section {
+  border: 1px solid red;
   margin-top: 20px;
-  height: 50vh;
 }
 
 :local .mainSidebar .partList li,

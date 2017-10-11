@@ -27,20 +27,25 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <div className={this.getSidebarClassName()}>
-        <div className={styles.content}>
+      <aside className={this.getSidebarClassName()}>
+        <section>
           <p className={styles.pinCode}>{this.props.workshop.pincode}</p>
           <h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>
+        </section>
+        <section className={styles.section}>
           <div className={styles.wave} />
+          <h3 className={styles.sidebarSub}>Delmoment</h3>
           <PartList parts={this.props.workshop.parts} />
-          <hr />
-          <h2>Referenslänkar</h2>
+        </section>
+        <section className={styles.section}>
+          <div className={styles.wave} />
+          <h3 className={styles.sidebarSub}>Referenslänkar</h3>
           <ReferenceList links={this.props.workshop.links} />
-        </div>
+        </section>
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />
         </button>
-      </div>
+      </aside>
     )
   }
 }
