@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const Dotenv = require('dotenv-webpack')
 const InlineEnvironmentVariablesPlugin = require('inline-environment-variables-webpack-plugin')
 
 module.exports = {
@@ -15,22 +14,13 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.NoErrorsPlugin(),
-    function () {
-      this.plugin('done', (stats) => {
-        if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') === -1) {
-          console.log(stats.compilation.errors)
-          process.exit(1)
-        }
-      })
-    },
-    new Dotenv({
-      path: '.env',
-      safe: true // load .env.example
-    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new InlineEnvironmentVariablesPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
     })
   ],
   resolve: {

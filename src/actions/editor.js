@@ -77,69 +77,44 @@ export const uploadCode = compiledCode => (dispatch) => {
     return
   }
 
+  // Robotkodarn's Chrome App ID
+  const CHROME_EXTENSION_ID = process.env.CHROME_EXTENSION_ID
+  const port = chrome.runtime.connect(CHROME_EXTENSION_ID)
 
-  /*
-   * Get the Chrome App ID from server
-   */
-  fetch('/api/extensionid', {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error('Could not get config.')
-    }
+  // Payload to be sent to Chrome App
+  const message = {
+    board: 'uno', // Hardcoded 'uno' for testing purposes
+    file: compiledCode
+  }
 
-    return response.json().then((config) => {
-      // Robotkodarn's Chrome App ID
-      const extensionid = config.extensionId
-      const port = chrome.runtime.connect(extensionid)
-
-      // Payload to be sent to Chrome App
-      const message = {
-        board: 'uno', // Hardcoded 'uno' for testing purposes
-        file: compiledCode
-      }
-
-      // Give user feedback when recieving message from Chrome App
-      port.onMessage.addListener((uploadMessage) => {
-        if (uploadMessage.success) {
-          dispatch({
-            type: 'SET_CONSOLE_OUTPUT',
-            payload: {
-              type: 'success',
-              heading: 'Lyckad uppladdning',
-              message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
-            }
-          })
-        } else {
-          dispatch({
-            type: 'SET_CONSOLE_OUTPUT',
-            payload: {
-              type: 'error',
-              heading: 'Fel vid uppladdningen',
-              // Inform user if no robot is connected.
-              message: uploadMessage.error.includes('no Arduino') ?
-                'Du har inte kopplat in någon robot.' :
-                uploadMessage.error // FYI: will be in English
-            }
-          })
+  // Give user feedback when recieving message from Chrome App
+  port.onMessage.addListener((uploadMessage) => {
+    if (uploadMessage.success) {
+      dispatch({
+        type: 'SET_CONSOLE_OUTPUT',
+        payload: {
+          type: 'success',
+          heading: 'Lyckad uppladdning',
+          message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
         }
       })
-
-      // Send message to Chrome App
-      port.postMessage(message)
-    })
-  }).catch(() => {
-    dispatch({
-      type: SET_CONSOLE_OUTPUT,
-      payload: {
-        type: 'error',
-        heading: 'Något gick snett',
-        message: 'Det verkar som att något gått snett vid hämtning av Robotkodarns Chrome App Id.'
-      }
-    })
+    } else {
+      dispatch({
+        type: 'SET_CONSOLE_OUTPUT',
+        payload: {
+          type: 'error',
+          heading: 'Fel vid uppladdningen',
+          // Inform user if no robot is connected.
+          message: uploadMessage.error.includes('no Arduino') ?
+            'Du har inte kopplat in någon robot.' :
+            uploadMessage.error // FYI: will be in English
+        }
+      })
+    }
   })
+
+  // Send message to Chrome App
+  port.postMessage(message)
 }
 
 // -----------------------------------------------------------------------------

@@ -95,8 +95,8 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
-
+.env*
+!.env.example
 
 ### SublimeText ###
 # cache files for sublime text

@@ -1,25 +1,70 @@
 # Robotkodarn
-## A project made by students at KYH together with Vinnovera
 
-Based on https://github.com/primavera133/sample-stack
+## Description
 
----
+Robotkodarn is a project made by students at [KYH](http://kyh.se/) and [Medieinstitutet](http://medieinstitutet.se/) together with Vinnovera. It is based on [primavera133/sample-stack](https://github.com/primavera133/sample-stack).
 
-## If running MongoDB locally:
-1. Start mongo - `mongod` (do this in a separete terminal since it have to idle)
-2. Start the app `yarn run dev` (or `npm run dev` if you prefer)
-3. The app should now be running at localhost:8000
+## Setup
+To start project if you are running MongoDB from the cloud:
 
-Note: If step 1 doesn't work, make sure you have a folder in the root directory /data/db with the correct permissions.
+```bash
+# Install dependencies
+$ npm install
 
-Do this by:
+# Start project under development
+$ npm run dev
 
-`sudo mkdir -p /data/db && sudo chmod 777 /data/db`
+```
 
-## If you want to run MongoDB from the cloud:
-The config file is already set up for connecting to the cloud based db so just skip step 1
+If you are running MongoDB locally:
 
-### Connecting ot the mongo shell from the terminal:
+```bash
+# Install dependencies
+$ npm install
+
+# Start mongo in a seperate window
+$ npm run mongo:start
+
+# Start project under development
+$ npm run dev
+
+```
+
+If you prefer `yarn`, the app of course also work with that. Running everything locally, the app should be runnning at `localhost:8000`.
+
+### Is `npm run mongo:start` not working? 🤔
+If `npm run mongo:start` doesn't work, make sure you have a folder in the root directory /data/db with the correct permissions. Do this by:
+
+```bash
+# Create a directory with the correct permission
+$ sudo mkdir -p /data/db && sudo chmod 777 /data/db
+```
+
+### Connecting to mongo shell from the terminal:
 First make sure to download the mongo shell, see [mongodb.org](http://mongodb.org) for more info, or just install mong using [homebrew](https://brew.sh/index_se.html):
 
 `brew install mongodb`
+
+## Build
+```bash
+# Run build script to make project ready for production
+$ npm run build
+```
+
+## Deploy
+
+In this project, Robotkodarn is deployed using [Now](https://zeit.co/now). To deploy, make sure you have installed `now`. To install the latest version globally, run:
+
+```bash
+# Install the latest version of now
+$ npm install -g now
+```
+
+When deploying, it's important to include the file  `.env.production`. This will make sure that the environment variables are available in the production environment. To include the file, first make sure it exists in the root level of your project. Then run:
+
+```bash
+# Include the .env.production file when deploying
+$ now -E .env.production
+```
+
+That's it. Your project is now deployed! 🎉

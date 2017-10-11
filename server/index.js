@@ -2,7 +2,6 @@ import Path from 'path'
 import Hapi from 'hapi'
 import Inert from 'inert'
 import mongoose from 'mongoose'
-import config from 'config'
 import base from './base'
 
 import auth from './api/auth'
@@ -12,11 +11,10 @@ import invites from './api/invites'
 import links from './api/links'
 import parts from './api/parts'
 import editor from './api/editor'
-import extensionid from './api/chrome'
 import registration from './api/registration'
 
 mongoose.Promise = Promise
-mongoose.connect(config.get('database.host'))
+mongoose.connect(process.env.DATABASE_HOST)
 mongoose.connection.on('error', console.error.bind(console, 'db error:'))
 
 const server = new Hapi.Server({
@@ -30,34 +28,24 @@ const server = new Hapi.Server({
 })
 
 server.connection({
-  host: 'localhost',
-  port: process.env.PORT || 8000
+  host: 'localhost', // Defaults to the operating system hostname when available
+  port: process.env.PORT
 })
 
-const webpack = require('webpack')
-const WebpackPlugin = require('hapi-webpack-plugin')
-const wpconfig = require('../webpack/config.dev')
+/* Register webpack plugin
+ * Only in development, since build is handled by build script in production.
+ */
+if (process.env.NODE_ENV === 'development') {
+  // Locally disable rule since this is an exception
+  require('./webpackRegistration').default(server) // eslint-disable-line global-require
+}
+
 const asyncHandler = require('hapi-es7-async-handler')
 
 server.register([{
-  register: WebpackPlugin,
-  options: {
-    compiler: webpack(wpconfig),
-    assets: {
-      noInfo: true,
-      publicPath: wpconfig.output.publicPath,
-      quiet: true
-    }
-  }
-}, {
   register: asyncHandler
-}], (error) => {
-  if (error) {
-    throw error
-  }
-})
-
-server.register([{
+},
+{
   register: Inert
 },
 {
@@ -86,9 +74,6 @@ server.register([{
 },
 {
   register: editor
-},
-{
-  register: extensionid
 }
 ], (error) => {
   if (error) {
@@ -96,6 +81,6 @@ server.register([{
   }
 
   server.start(() => {
-    console.info('Server listening at:', server.info.uri)
+    console.info(`Server listening at: ${server.info.uri} 🚀`)
   })
 })
