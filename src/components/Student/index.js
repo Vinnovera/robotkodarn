@@ -4,6 +4,7 @@ import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
 import { setCurrentParts } from '../../actions/student'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
+import EditorForm from './../EditorForm'
 import Console from './../Console'
 import ActionButtons from './../ActionButtons'
 import View from './../View'
@@ -12,9 +13,6 @@ import styles from './student.css'
 export class Student extends Component {
   constructor(props) {
     super(props)
-
-    this.getMainPaneClassName = this.getMainPaneClassName.bind(this)
-
     this.state = {
       workshop: null
     }
@@ -34,6 +32,18 @@ export class Student extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // When leaving editor view, make sure to update local state with currentWorkshop
+    if (this.props.editing === true && nextProps.editing === false) {
+      if (this.props.currentWorkshop) {
+        this.setState({
+          workshop: JSON.parse(this.props.currentWorkshop)
+        }, () => {
+          const currentParts = JSON.parse(this.props.currentWorkshop).parts
+          this.props.dispatch(setCurrentParts(currentParts))
+        })
+      }
+    }
+
     if (this.props.currentWorkshop !== nextProps.currentWorkshop) {
       this.setState({
         workshop: JSON.parse(nextProps.currentWorkshop)
@@ -45,11 +55,10 @@ export class Student extends Component {
   }
 
   componentWillUnmount() {
-    console.log('nu lämnar vi!')
     this.props.dispatch(clearWorkshop())
   }
 
-  getMainPaneClassName() {
+  getMainPaneClassName = () => {
     if (this.props.isSidebarOpen) {
       return styles.mainPane
     }
@@ -57,17 +66,28 @@ export class Student extends Component {
     return `${styles.mainPane} ${styles.mainPaneExpanded}`
   }
 
-  renderWorkshop() {
+  save = (event) => {
+    event.preventDefault()
+    console.log('du vill spara!')
+  }
+
+  renderMainContent() {
     if (this.state.workshop) {
       return (
         <View>
           <Sidebar />
-          <div className={this.getMainPaneClassName()}>
-            <h2>{this.state.workshop.parts[this.props.activePartIndex].title}</h2>
-            <ActionButtons />
-            <Editor />
-            <Console />
-          </div>
+          { this.props.editing ?
+            <main className={this.getMainPaneClassName()}>
+              <EditorForm type={this.props.editingType} />
+            </main>
+            :
+            <main className={this.getMainPaneClassName()}>
+              <h2>{this.state.workshop.parts[this.props.activePartIndex].title}</h2>
+              <ActionButtons />
+              <Editor />
+              <Console />
+            </main>
+          }
         </View>
       )
     }
@@ -78,7 +98,7 @@ export class Student extends Component {
   }
 
   render() {
-    return this.renderWorkshop()
+    return this.renderMainContent()
   }
 }
 
@@ -86,7 +106,9 @@ function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
     currentWorkshop: state.login.currentWorkshop,
-    activePartIndex: state.editor.activePartIndex
+    activePartIndex: state.editor.activePartIndex,
+    editing: state.editor.editing,
+    editingType: state.editor.editingType
   }
 }
 

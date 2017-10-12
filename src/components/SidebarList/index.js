@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { removeSelectedLink, removeSelectedPart } from '../../actions/workshops'
-import { setActivePartIndex } from '../../actions/editor'
+import { setActivePartIndex, setEditingType } from '../../actions/editor'
 import styles from './sidebarlist.css'
 
 class SidebarList extends Component {
@@ -20,11 +20,20 @@ class SidebarList extends Component {
     const workshop = this.props.workshop._id
 
     if (this.props.type === 'reference') {
-      console.log(item)
       this.props.dispatch(removeSelectedLink(item, workshop))
     } else if (this.props.type === 'parts') {
-      console.log(item)
       this.props.dispatch(removeSelectedPart(item, workshop))
+    }
+  }
+
+  add = (event) => {
+    event.preventDefault()
+    this.props.dispatch(setEditingType(this.props.type))
+
+    if (this.props.type === 'reference') {
+      console.log('du vill lägga till en ny länk')
+    } else if (this.props.type === 'parts') {
+      console.log('du vill lägga till ett nytt delmoment')
     }
   }
 
@@ -76,7 +85,8 @@ class SidebarList extends Component {
         {parts ? this.renderParts() : ''}
         <li className={styles.listItem}>
           { this.props.editing ?
-            <button className={styles.listLink}><FA className={styles.addIcon} name="plus" />     {parts ? 'Lägg till nytt delmoment' : ''}
+            <button onClick={this.add}className={styles.listLink}><FA className={styles.addIcon} name="plus" />
+              {parts ? 'Lägg till nytt delmoment' : ''}
               {reference ? 'Lägg till ny referenslänk' : ''}
             </button>
             :

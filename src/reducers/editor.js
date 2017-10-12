@@ -57,6 +57,13 @@ export default handleActions({
       ...state,
       editing: !state.editing
     })
+  },
+
+  SET_EDITING_TYPE: (state, action) => {
+    return ({
+      ...state,
+      editingType: action.payload
+    })
   }
 
 }, {
@@ -64,5 +71,6 @@ export default handleActions({
   compilerResponse: null,
   consoleOutput: [],
   activePartIndex: 0,
-  editing: false
+  editing: false,
+  editingType: 'parts'
 })

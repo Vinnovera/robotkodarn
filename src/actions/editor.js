@@ -4,6 +4,7 @@ const SET_ACTIVE_PART_INDEX = 'SET_ACTIVE_PART_INDEX'
 const SET_COMPILER_RESPONSE = 'SET_COMPILER_RESPONSE'
 const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
 const TOGGLE_EDITING = 'TOGGLE_EDITING'
+const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
 
 // -----------------------------------------------------------------------------
 // changeEditorTab, sets state to pressed tab
@@ -168,5 +169,15 @@ export const setActivePartIndex = index => (dispatch) => {
   dispatch({
     type: SET_ACTIVE_PART_INDEX,
     payload: index
+  })
+}
+
+// -----------------------------------------------------------------------------
+// setEditingType, sets the type of content to be edited.
+// -----------------------------------------------------------------------------
+export const setEditingType = type => (dispatch) => {
+  dispatch({
+    type: SET_EDITING_TYPE,
+    payload: type
   })
 }

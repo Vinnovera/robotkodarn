@@ -1,0 +1,40 @@
+:local .editorForm {
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 6rem;
+  width: 100%;
+}
+
+:local .workshopPin {
+  color: #3DA099;
+  font-size: 1rem;
+  margin: 0;
+}
+
+:local .editorFormHeadline {
+  font-size: 2rem;
+  margin: 0 0 1rem;
+}
+
+:local .label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .input {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+:local .buttonContainer {
+  width: 12rem;
+}
+
+:local .flex {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
