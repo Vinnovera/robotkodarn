@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { toggleSidebar } from '../../actions/student'
-import PartList from './PartList'
-import ReferenceList from './ReferenceList'
+import SidebarList from './../SidebarList'
 import styles from './sidebar.css'
 
 class Sidebar extends Component {
@@ -35,12 +34,12 @@ class Sidebar extends Component {
         <section className={styles.section}>
           <div className={styles.wave} />
           <h3 className={styles.sidebarSub}>Delmoment</h3>
-          <PartList parts={this.props.workshop.parts} />
+          <SidebarList type="parts" />
         </section>
         <section className={styles.section}>
           <div className={styles.wave} />
           <h3 className={styles.sidebarSub}>Referenslänkar</h3>
-          <ReferenceList />
+          <SidebarList type="reference" />
         </section>
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />

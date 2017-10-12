@@ -94,24 +94,27 @@ const updatePart = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Delete a part with {id} [DELETE]
 // -----------------------------------------------------------------------------
-const deletePart = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const deletePart = async (request, reply) => {
+  try {
+    const currentWorkshop = await Workshop.findOne({ _id: request.params.wid })
 
-    const partToDelete = foundWorkshop.parts.filter(part => part._id === request.params.pid)[0]
-
-    foundWorkshop.parts.splice(foundWorkshop.parts.indexOf(partToDelete), 1)
-
-    foundWorkshop.save((partError) => {
-      if (partError) {
-        return reply({ partError: error.message }).code(400)
-      }
-
-      return reply(foundWorkshop).code(200)
+    /*
+     * Remove all parts with the id that we want to delete.
+     * Since part._id is an object, we first need to convert it to a string.
+     */
+    const updatedPartsList = currentWorkshop.parts.filter((part) => {
+      return part._id.toString() !== request.params.pid
     })
-  })
+
+    // Save updatedPartsList as list of parts.
+    currentWorkshop.parts = updatedPartsList
+
+    await currentWorkshop.save()
+
+    return reply(currentWorkshop).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 exports.register = (server, options, next) => {

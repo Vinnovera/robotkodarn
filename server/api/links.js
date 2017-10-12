@@ -90,24 +90,27 @@ const updateLink = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Delete a link with {id} [DELETE]
 // -----------------------------------------------------------------------------
-const deleteLink = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const deleteLink = async (request, reply) => {
+  try {
+    const currentWorkshop = await Workshop.findOne({ _id: request.params.wid })
 
-    const linkToDelete = foundWorkshop.links.filter(link => link._id === request.params.lid)[0]
-
-    foundWorkshop.links.splice(foundWorkshop.links.indexOf(linkToDelete), 1)
-
-    foundWorkshop.save((linkError) => {
-      if (linkError) {
-        return reply({ linkError: error.message }).code(400)
-      }
-
-      return reply(foundWorkshop).code(200)
+    /*
+     * Remove all links with the id of link to be deleted.
+     * Since link._id is an object, we first need to convert it to a string.
+     */
+    const updatedLinkList = currentWorkshop.links.filter((link) => {
+      return link._id.toString() !== request.params.lid
     })
-  })
+
+    // Save updatedLinkList as list of links.
+    currentWorkshop.links = updatedLinkList
+
+    await currentWorkshop.save()
+
+    return reply(currentWorkshop).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 exports.register = (server, options, next) => {
