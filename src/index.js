@@ -11,7 +11,7 @@ import { authorize } from './routes'
 
 import App from './components/App'
 import Editor from './components/Editor'
-import Student from './components/Student'
+import Workspace from './components/Workspace'
 import LoginWithPin from './components/LoginWithPin'
 import LoginAdmin from './components/LoginAdmin'
 import AdminPage from './components/AdminPage'
@@ -44,9 +44,9 @@ render((
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRedirect to="/login" />
-        <Route path="/pin" component={Student} onEnter={authorize} forward="onlyAuthCheck" />
+        <Route path="/pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
         <Route path="/editor" component={Editor} onEnter={authorize} forward="onlyAuthCheck" />
-        <Route path="/id/:pin" component={Student} onEnter={authorize} forward="onlyAuthCheck" />
+        <Route path="/id/:pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
         <Route path="/login" component={LoginWithPin} onEnter={authorize} forward="onlyAuthCheck" />
         <Route path="/admin" component={LoginAdmin} onEnter={authorize} forward="/workshops" />
         <Route path="/adminpage" component={AdminPage} onEnter={authorize} permissions={['superadmin', 'editor']} />

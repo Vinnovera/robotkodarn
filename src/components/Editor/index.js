@@ -4,7 +4,7 @@ import AceEditor from 'react-ace'
 import FA from 'react-fontawesome'
 
 import { changeEditorTab, uploadCode, setConsoleOutput } from '../../actions/editor'
-import { setCurrentParts } from '../../actions/student'
+import { setCurrentParts } from '../../actions/workspace'
 import styles from './editor.css'
 
 export class Editor extends Component {
@@ -21,7 +21,6 @@ export class Editor extends Component {
   }
 
   componentWillMount() {
-    // TODO: Check if user is authorized when mounting.
     this.setState({
       workshop: this.props.workshop
     })
@@ -164,7 +163,7 @@ function mapStateToProps(state) {
     compilerResponse: state.editor.compilerResponse,
     willUpload: state.editor.willUpload,
     activePartIndex: state.editor.activePartIndex,
-    currentParts: state.student.currentParts,
+    currentParts: state.workspace.currentParts,
     workshop: JSON.parse(state.login.currentWorkshop)
   }
 }

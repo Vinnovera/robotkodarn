@@ -154,7 +154,7 @@ export const findWorkshopByPin = pin => (dispatch) => {
 }
 
 //------------------------------------------------------------------------------
-// clearWorkshop, resets state to null when leaving student component.
+// clearWorkshop, resets state to null when leaving workspace component.
 // -----------------------------------------------------------------------------
 
 export const clearWorkshop = () => (dispatch) => {

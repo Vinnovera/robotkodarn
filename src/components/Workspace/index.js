@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
-import { setCurrentParts } from '../../actions/student'
+import { setCurrentParts } from '../../actions/workspace'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
 import EditorForm from './../EditorForm'
 import Console from './../Console'
 import ActionButtons from './../ActionButtons'
 import View from './../View'
-import styles from './student.css'
+import styles from './workspace.css'
 
-export class Student extends Component {
+export class Workspace extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -112,4 +112,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Student)
+export default connect(mapStateToProps)(Workspace)

@@ -42,7 +42,7 @@ export class ActionButtons extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentParts: state.student.currentParts,
+    currentParts: state.workspace.currentParts,
     activePartIndex: state.editor.activePartIndex
   }
 }
