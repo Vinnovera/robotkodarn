@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 
 import {
   addLink,
-  addPart
+  addPart,
+  changeTitle
 } from '../../actions/workshops'
 import Button from './../Button'
 import styles from './workspaceform.css'
@@ -13,22 +14,32 @@ export class WorkspaceForm extends Component {
     super(props)
 
     this.state = {
-      title: null,
-      content: null
+      title: undefined,
+      content: undefined
     }
   }
 
   save = (event) => {
     event.preventDefault()
-    if (this.props.editingType === 'reference') {
-      this.props.dispatch(addLink(this.state, this.props.workshop))
-    } else if (this.props.editingType === 'parts') {
-      this.props.dispatch(addPart(this.state, this.props.workshop))
+
+    switch (this.props.editingType) {
+      case 'reference':
+        this.props.dispatch(addLink(this.state, this.props.workshop))
+        break
+      case 'parts':
+        this.props.dispatch(addPart(this.state, this.props.workshop))
+        break
+      case 'title':
+        this.props.dispatch(changeTitle(this.state, this.props.workshop))
+        break
+      default:
+        console.log('Du har inte valt någon editing type.')
     }
   }
 
   render() {
     const reference = this.props.editingType === 'reference'
+    const title = this.props.editingType === 'title'
     const part = this.props.editingType === 'parts'
 
     return (
@@ -42,6 +53,25 @@ export class WorkspaceForm extends Component {
               <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" />
               <label className={styles.label} htmlFor="url">Referenslänkens webbadress</label>
               <input onChange={event => this.setState({ content: event.target.value })} className={styles.input} type="url" placeholder="Webbadress till referenslänk" name="url" />
+              <div className={styles.flex}>
+                <div className={styles.buttonContainer}>
+                  <Button handleClick={this.save}>Spara länk</Button>
+                </div>
+              </div>
+            </div>
+            :
+            ''
+          }
+          { title ?
+            <div>
+              <h1 className={styles.formHeadline}>Uppdatera titel</h1>
+              <label className={styles.label} htmlFor="title">Titel</label>
+              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title === undefined ? this.props.workshop.title : this.state.title} />
+              <div className={styles.flex}>
+                <div className={styles.buttonContainer}>
+                  <Button handleClick={this.save}>Uppdatera</Button>
+                </div>
+              </div>
             </div>
             :
             ''
@@ -53,13 +83,15 @@ export class WorkspaceForm extends Component {
               <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" />
               <label className={styles.label} htmlFor="code">Delmomentets kod</label>
               <input onChange={event => this.setState({ content: event.target.value })} className={styles.input} type="text" placeholder="Delmomentets kod" name="code" />
+              <div className={styles.flex}>
+                <div className={styles.buttonContainer}>
+                  <Button handleClick={this.save}>Skapa delmoment</Button>
+                </div>
+              </div>
             </div>
             :
             ''
           }
-          <div className={styles.flex}>
-            <div className={styles.buttonContainer}><Button handleClick={this.save}>Skapa länk</Button></div>
-          </div>
         </div>
       </form>
     )

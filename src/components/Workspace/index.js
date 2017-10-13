@@ -77,7 +77,11 @@ export class Workspace extends Component {
             </main>
             :
             <main className={this.getMainPaneClassName()}>
-              <h2>{this.state.workshop.parts[this.props.activePartIndex].title}</h2>
+              { this.state.workshop.parts.length > 0 ?
+                <h2>{this.state.workshop.parts[this.props.activePartIndex].title}</h2>
+                :
+                ''
+              }
               <ActionButtons />
               <Editor />
               <Console />

@@ -69,30 +69,18 @@ const addWorkshop = async (request, reply) => {
 // -----------------------------------------------------------------------------
 // Update a workshop with {id} [PUT]
 // -----------------------------------------------------------------------------
-const updateWorkshop = (request, reply) => {
-  Workshop.findOne({
-    _id: request.params.id
-  }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const updateWorkshop = async (request, reply) => {
+  try {
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const updatedWorkshop = Object.assign(workshop, request.payload)
+    const validatedWorkshop = Joi.validate(updatedWorkshop, workshopValidation).value
 
-    const workshop = Object.assign(foundWorkshop, request.payload)
+    await validatedWorkshop.save()
 
-    Joi.validate(workshop, workshopValidation, (validationError, value) => {
-      if (validationError) {
-        return reply({ error: validationError }).code(400)
-      }
-
-      workshop.save((error, doc) => {
-        if (error) {
-          return reply({ error: error.message }).code(400)
-        }
-
-        return reply(doc).code(200)
-      })
-    })
-  })
+    return reply(validatedWorkshop).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------

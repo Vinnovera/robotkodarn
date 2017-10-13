@@ -41,17 +41,18 @@ export const copyWorkshop = workshopID => () => {
 // -----------------------------------------------------------------------------
 // changeTitle, edits the title of the workshop object
 // -----------------------------------------------------------------------------
-export const changeTitle = (credentials, workshop) => (dispatch) => {
+export const changeTitle = (title, workshop) => (dispatch) => {
+  console.log(title)
   axios
-    .put(`/api/workshop/${workshop._id}`, credentials, {
+    .put(`/api/workshop/${workshop._id}`, title, {
       headers: {
         'content-type': 'application/json'
       }
     })
-    .then((/* response */) => {
+    .then(({ data }) => {
       dispatch({
         type: SET_MESSAGE,
-        payload: `Workshopen ${workshop.title} har nu titeln ${credentials.title}.`
+        payload: `Workshopen har nu titeln ${data.title}.`
       })
     })
     .catch(error => console.log(error))

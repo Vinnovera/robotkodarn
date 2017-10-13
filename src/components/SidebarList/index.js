@@ -29,12 +29,6 @@ class SidebarList extends Component {
   add = (event) => {
     event.preventDefault()
     this.props.dispatch(setEditingType(this.props.type))
-
-    if (this.props.type === 'reference') {
-      console.log('du vill lägga till en ny länk')
-    } else if (this.props.type === 'parts') {
-      console.log('du vill lägga till ett nytt delmoment')
-    }
   }
 
   renderParts() {

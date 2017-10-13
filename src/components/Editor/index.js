@@ -96,7 +96,11 @@ export class Editor extends Component {
           width="auto"
           height="90%"
           editorProps={{ $blockScrolling: true }}
-          value={this.state.currentParts[this.props.activePartIndex].code || 'Laddar...'}
+          value={
+            this.state.currentParts.length > 0 ?
+              this.state.currentParts[this.props.activePartIndex].content :
+              ''
+          }
           showPrintMargin={false}
         />
       )

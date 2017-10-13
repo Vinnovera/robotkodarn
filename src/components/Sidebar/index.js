@@ -4,6 +4,7 @@ import FA from 'react-fontawesome'
 import { toggleSidebar } from '../../actions/workspace'
 import SidebarList from './../SidebarList'
 import styles from './sidebar.css'
+import { setEditingType } from '../../actions/editor'
 
 class Sidebar extends Component {
   getSidebarClassName = () => {
@@ -24,12 +25,27 @@ class Sidebar extends Component {
     this.props.dispatch(toggleSidebar(!this.props.isSidebarOpen))
   }
 
+  editTitle = (event) => {
+    event.preventDefault()
+    const type = event.currentTarget.value
+    this.props.dispatch(setEditingType(type))
+  }
+
   render() {
     return (
       <aside className={this.getSidebarClassName()}>
         <section>
           <p className={styles.pinCode}>{this.props.workshop.pincode}</p>
-          <h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>
+          { this.props.editing ?
+            <button onClick={this.editTitle} className={styles.sidebarTitleEdit} value="title">
+              <h2 className={styles.sidebarTitleEdit}>
+                <FA className={styles.addIcon} name="pencil" />
+                {this.props.workshop.title}
+              </h2>
+            </button>
+            :
+            <h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>
+          }
         </section>
         <section className={styles.section}>
           <div className={styles.wave} />

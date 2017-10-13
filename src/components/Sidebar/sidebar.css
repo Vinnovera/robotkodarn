@@ -23,10 +23,26 @@
   HEADLINES
 ------------------------------------------------------------------------------*/
 
-:local .sidebarTitle {
+:local .sidebarTitle,
+:local .sidebarTitleEdit {
   color: inherit;
-  font-size: 1.5rem;
+  font-family: inherit;
+  font-size: 1.4rem;
 }
+
+/* Remove default styling on buttons */
+:local .sidebarTitleEdit {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+:local .sidebarTitleEdit:focus,
+:local .sidebarTitleEdit:active {
+  outline: none;
+}
+
 
 :local .sidebarSub {
   color: inherit;
