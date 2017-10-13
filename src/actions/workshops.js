@@ -8,18 +8,18 @@ const SET_WORKSHOP = 'SET_WORKSHOP'
 // -----------------------------------------------------------------------------
 // createWorkshop, creates empty workshop with a title and a PIN
 // -----------------------------------------------------------------------------
-export const createWorkshop = credentials => (dispatch) => {
+export const createWorkshop = workshop => (dispatch) => {
   axios
-    .post('/api/workshop', credentials, {
+    .post('/api/workshop', workshop, {
       headers: {
         'content-type': 'application/json'
       }
     })
     // 'response' is not used but kept for documentation purposes.
-    .then((/* response */) => {
+    .then(({ data }) => {
       dispatch({
         type: SET_MESSAGE,
-        payload: `Workshopen ${credentials.title} är nu tillagd med pinkoden: ${credentials.pincode}.`
+        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`
       })
     })
     .catch(error => console.log(error))
@@ -60,9 +60,9 @@ export const changeTitle = (credentials, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // addPart, adds part to workshop
 // -----------------------------------------------------------------------------
-export const addPart = (credentials, workshop) => (dispatch) => {
+export const addPart = (content, workshop) => (dispatch) => {
   axios
-    .post(`/api/workshop/${workshop._id}/part`, credentials, {
+    .post(`/api/workshop/${workshop._id}/part`, content, {
       headers: {
         'content-type': 'application/json'
       }
@@ -72,7 +72,7 @@ export const addPart = (credentials, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: `Workshopen ${workshop.title} har nu delmomentet ${credentials.title}.`
+        payload: `Workshopen ${workshop.title} har nu delmomentet ${content.title}.`
       })
     })
     .catch(error => console.log(error))
@@ -81,9 +81,9 @@ export const addPart = (credentials, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // addLink, adds link to workshop
 // -----------------------------------------------------------------------------
-export const addLink = (credentials, workshop) => (dispatch) => {
+export const addLink = (link, workshop) => (dispatch) => {
   axios
-    .post(`/api/workshop/${workshop._id}/link`, credentials, {
+    .post(`/api/workshop/${workshop._id}/link`, link, {
       headers: {
         'content-type': 'application/json'
       }
@@ -91,7 +91,7 @@ export const addLink = (credentials, workshop) => (dispatch) => {
     .then((/* response */) => {
       dispatch({
         type: SET_MESSAGE,
-        payload: `Workshopen ${workshop.title} har nu referenslänken ${credentials.title}.`
+        payload: `Workshopen ${workshop.title} har nu referenslänken ${link.title}.`
       })
     })
     .catch(error => console.log(error))

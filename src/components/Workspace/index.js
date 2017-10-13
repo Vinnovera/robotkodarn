@@ -4,7 +4,7 @@ import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
 import { setCurrentParts } from '../../actions/workspace'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
-import EditorForm from './../EditorForm'
+import WorkspaceForm from './../WorkspaceForm'
 import Console from './../Console'
 import ActionButtons from './../ActionButtons'
 import View from './../View'
@@ -66,11 +66,6 @@ export class Workspace extends Component {
     return `${styles.mainPane} ${styles.mainPaneExpanded}`
   }
 
-  save = (event) => {
-    event.preventDefault()
-    console.log('du vill spara!')
-  }
-
   renderMainContent() {
     if (this.state.workshop) {
       return (
@@ -78,7 +73,7 @@ export class Workspace extends Component {
           <Sidebar />
           { this.props.editing ?
             <main className={this.getMainPaneClassName()}>
-              <EditorForm type={this.props.editingType} />
+              <WorkspaceForm type={this.props.editingType} />
             </main>
             :
             <main className={this.getMainPaneClassName()}>

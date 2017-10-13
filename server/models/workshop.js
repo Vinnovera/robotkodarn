@@ -4,19 +4,25 @@ import Joi from 'joi'
 const workshopSchema = Schema({
   title: {
     type: String,
-    required: true
+    default: 'Namnlös workshop'
   },
   pincode: {
     type: String,
     unique: true,
-    required: true
+    default: Math.floor(1000 + (Math.random() * 9000))
   },
   userId: {
     type: String,
     required: true
   },
-  parts: [],
-  links: []
+  parts: {
+    type: Array,
+    default: []
+  },
+  links: {
+    type: Array,
+    default: []
+  }
 })
 
 export const workshopValidation = Joi.object().keys({

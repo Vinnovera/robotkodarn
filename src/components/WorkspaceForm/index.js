@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Button from './../Button'
-import styles from './editorform.css'
 
-export class EditorForm extends Component {
+import {
+  addLink,
+  addPart
+} from '../../actions/workshops'
+import Button from './../Button'
+import styles from './workspaceform.css'
+
+export class WorkspaceForm extends Component {
   constructor(props) {
     super(props)
 
@@ -16,9 +21,9 @@ export class EditorForm extends Component {
   save = (event) => {
     event.preventDefault()
     if (this.props.editingType === 'reference') {
-      // TODO: kalla addLink med [this.props.workshop._id] och [this.state]
+      this.props.dispatch(addLink(this.state, this.props.workshop))
     } else if (this.props.editingType === 'parts') {
-      // TODO: kalla addPart med [this.props.workshop._id] och [this.state]
+      this.props.dispatch(addPart(this.state, this.props.workshop))
     }
   }
 
@@ -27,12 +32,12 @@ export class EditorForm extends Component {
     const part = this.props.editingType === 'parts'
 
     return (
-      <form className={styles.editorForm} action="post">
+      <form className={styles.workspaceForm} action="post">
         <div>
           <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
           { reference ?
             <div>
-              <h1 className={styles.editorFormHeadline}>Lägg till ny referenslänk</h1>
+              <h1 className={styles.formHeadline}>Lägg till ny referenslänk</h1>
               <label className={styles.label} htmlFor="title">Referenslänkens titel</label>
               <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" />
               <label className={styles.label} htmlFor="url">Referenslänkens webbadress</label>
@@ -43,7 +48,7 @@ export class EditorForm extends Component {
           }
           { part ?
             <div>
-              <h1 className={styles.editorFormHeadline}>Lägg till nytt delmoment</h1>
+              <h1 className={styles.formHeadline}>Lägg till nytt delmoment</h1>
               <label className={styles.label} htmlFor="title">Delmomentets titel</label>
               <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" />
               <label className={styles.label} htmlFor="code">Delmomentets kod</label>
@@ -68,4 +73,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(EditorForm)
+export default connect(mapStateToProps)(WorkspaceForm)

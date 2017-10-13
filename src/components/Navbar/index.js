@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { toggleTools } from '../../actions/tools'
+import { toggleMenu } from '../../actions/menu'
 import styles from './header.css'
 import Menu from '../Menu/'
 
 class Header extends Component {
-  toggleTools = () => {
-    this.props.dispatch(toggleTools())
+  handleMenu = () => {
+    this.props.dispatch(toggleMenu())
   }
 
   render() {
@@ -15,7 +15,7 @@ class Header extends Component {
         <h1 className={styles.headerTitle}>Robotkodarn</h1>
         { this.props.isLoggedIn ?
           <div>
-            <button onClick={this.toggleTools} className={styles.toolsIcon} >Verktyg</button>
+            <button onClick={this.handleMenu} className={styles.toolsIcon} >Verktyg</button>
             <Menu />
           </div>
           :

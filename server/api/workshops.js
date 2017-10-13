@@ -50,24 +50,20 @@ const getWorkshopsByUserId = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Add a workshop [POST]
 // -----------------------------------------------------------------------------
-const addWorkshop = (request, reply) => {
-  const name = request.auth.artifacts
-  const workshop = new Workshop(request.payload)
-  workshop.userId = name._id
 
-  Joi.validate(workshop, workshopValidation, (validationError, value) => {
-    if (validationError) {
-      return reply({ error: validationError }).code(400)
-    }
+const addWorkshop = async (request, reply) => {
+  try {
+    const user = request.auth.artifacts
+    const workshop = new Workshop(request.payload)
+    workshop.userId = user._id
 
-    workshop.save((error) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
-      }
+    const validatedWorkshop = Joi.validate(workshop, workshopValidation).value
+    await validatedWorkshop.save()
 
-      return reply(workshop).code(200)
-    })
-  })
+    return reply(validatedWorkshop).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------

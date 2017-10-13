@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
+import { Link } from 'react-router'
 
 import {
   getWorkshopsByUserId,
+  createWorkshop,
   copyWorkshop,
   removeWorkshop
 } from '../../actions/workshops'
@@ -12,6 +14,9 @@ import View from '../View'
 import FadeIn from '../FadeIn'
 import Button from '../Button'
 import styles from './workshops.css'
+
+// TODO: Add styling and possibility to click on all area of workshop.
+// TODO: Dispatch action about setting in editing mode on current workshop.
 
 class Workshops extends Component {
   componentWillMount() {
@@ -37,9 +42,10 @@ class Workshops extends Component {
     }
   }
 
-  createWorkshop = async (event) => {
+  handleCreateNew = (event) => {
     event.preventDefault()
     console.log('du vill skapa en ny workshop!')
+    this.props.dispatch(createWorkshop())
   }
 
   render() {
@@ -63,7 +69,7 @@ class Workshops extends Component {
                   {workshops.map((workshop) => {
                     return (
                       <tr className={styles.workshopItem} key={workshop._id}>
-                        <td>{workshop.title}</td>
+                        <td><Link to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
                         <td>{workshop.pincode}</td>
                         <td>
                           <button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
@@ -82,7 +88,7 @@ class Workshops extends Component {
                 </tbody>
               </table>
               <div className={styles.buttonContainer}>
-                <Button handleClick={this.createWorkshop}>Skapa ny</Button>
+                <Button handleClick={this.handleCreateNew}>Skapa ny</Button>
               </div>
             </form>
           </div>
@@ -97,8 +103,7 @@ function mapStateToProps(state) {
     userWorkshops: state.adminpage.userWorkshops,
     selectedWorkshopIndex: state.adminpage.selectedWorkshopIndex,
     message: state.adminpage.message,
-    role: state.user.isLoggedIn,
-    view: state.admin.view
+    role: state.user.isLoggedIn
   }
 }
 

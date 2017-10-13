@@ -80,6 +80,8 @@ class AdminPage extends Component {
       pincode: newRandomPin,
       addWorkshop: false
     }, () => {
+
+      console.log('Det här skickar vi med när vi skapar en workshop', this.state)
       this.props.dispatch(createWorkshop(this.state))
       // Update workshop list
       setTimeout(() => this.props.dispatch(getWorkshopsByUserId()), 300)
@@ -97,6 +99,7 @@ class AdminPage extends Component {
     const index = this.props.selectedWorkshopIndex
     const selectedWorkshop = this.props.userWorkshops[index]
 
+      console.log('Det som parts behöver', credentials)
     this.props.dispatch(addPart(credentials, selectedWorkshop))
     setTimeout(() => this.props.dispatch(getWorkshopsByUserId()), 300) // Update workshop list
     this.setState({ addPart: false })
@@ -139,6 +142,7 @@ class AdminPage extends Component {
       url: this.state.url
     }
 
+    console.log('här är vi', credentials, selectedWorkshop)
     this.props.dispatch(addLink(credentials, selectedWorkshop))
     setTimeout(() => this.props.dispatch(getWorkshopsByUserId()), 300) // Update workshop list
     this.setState({ addLink: false })
@@ -332,8 +336,7 @@ function mapStateToProps(state) {
     selectedPartIndex: state.adminpage.selectedPartIndex,
     selectedLinkIndex: state.adminpage.selectedLinkIndex,
     message: state.adminpage.message,
-    role: state.user.isLoggedIn,
-    view: state.admin.view
+    role: state.user.isLoggedIn
   }
 }
 
