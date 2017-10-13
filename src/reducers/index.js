@@ -6,7 +6,7 @@ import editor from './editor'
 import invite from './invite'
 import login from './login'
 import sidebar from './sidebar'
-import student from './student'
+import workspace from './workspace'
 import tools from './tools'
 import user from './user'
 
@@ -18,7 +18,7 @@ export default combineReducers({
   invite,
   login,
   sidebar,
-  student,
+  workspace,
   tools,
   user
 })
