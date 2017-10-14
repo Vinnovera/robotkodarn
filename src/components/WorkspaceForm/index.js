@@ -101,7 +101,7 @@ export class WorkspaceForm extends Component {
 function mapStateToProps(state) {
   return {
     editingType: state.editor.editingType,
-    workshop: state.login.currentWorkshop
+    workshop: state.currentWorkshop.item
   }
 }
 

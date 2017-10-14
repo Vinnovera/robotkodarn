@@ -94,7 +94,7 @@ class SidebarList extends Component {
 
 function mapStateToProps(state) {
   return {
-    workshop: state.login.currentWorkshop,
+    workshop: state.currentWorkshop.item,
     editing: state.editor.editing
   }
 }

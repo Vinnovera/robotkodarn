@@ -168,7 +168,7 @@ function mapStateToProps(state) {
     willUpload: state.editor.willUpload,
     activePartIndex: state.editor.activePartIndex,
     currentParts: state.workspace.currentParts,
-    workshop: state.login.currentWorkshop
+    workshop: state.currentWorkshop.item
   }
 }
 

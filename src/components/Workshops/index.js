@@ -7,7 +7,7 @@ import {
   getWorkshopsByUserId,
   createWorkshop,
   copyWorkshop,
-  removeWorkshop
+  deleteWorkshop
 } from '../../actions/workshops'
 
 import View from '../View'
@@ -15,36 +15,26 @@ import FadeIn from '../FadeIn'
 import Button from '../Button'
 import styles from './workshops.css'
 
-// TODO: Add styling and possibility to click on all area of workshop.
-// TODO: Dispatch action about setting in editing mode on current workshop.
-
 class Workshops extends Component {
   componentWillMount() {
     this.props.dispatch(getWorkshopsByUserId())
   }
 
-  handleWorkshop = async (event) => {
+  handleWorkshop = (event) => {
     event.preventDefault()
     const { value, name } = event.currentTarget
 
-    try {
-      if (name === 'edit') {
-        console.log('du vill editera workshop med pin', value)
-      } else if (name === 'copy') {
-        await this.props.dispatch(copyWorkshop(value))
-        this.props.dispatch(getWorkshopsByUserId())
-      } else if (name === 'delete') {
-        await this.props.dispatch(removeWorkshop(value))
-        this.props.dispatch(getWorkshopsByUserId())
-      }
-    } catch (error) {
-      console.log(error)
+    if (name === 'edit') {
+      console.log('du vill editera workshop med pin', value)
+    } else if (name === 'copy') {
+      this.props.dispatch(copyWorkshop(value))
+    } else if (name === 'delete') {
+      this.props.dispatch(deleteWorkshop(value))
     }
   }
 
   handleCreateNew = (event) => {
     event.preventDefault()
-    console.log('du vill skapa en ny workshop!')
     this.props.dispatch(createWorkshop())
   }
 

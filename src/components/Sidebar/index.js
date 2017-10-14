@@ -69,7 +69,7 @@ function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
     editing: state.editor.editing,
-    workshop: state.login.currentWorkshop
+    workshop: state.currentWorkshop.item
   }
 }
 

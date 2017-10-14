@@ -104,7 +104,7 @@ export class Workspace extends Component {
 function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
-    currentWorkshop: state.login.currentWorkshop,
+    currentWorkshop: state.currentWorkshop.item,
     activePartIndex: state.editor.activePartIndex,
     editing: state.editor.editing,
     editingType: state.editor.editingType

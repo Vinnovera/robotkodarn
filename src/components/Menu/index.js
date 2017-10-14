@@ -66,7 +66,7 @@ function mapStateToProps(state) {
     name: state.user.name,
     menu: state.menu.open,
     currentPage: state.routeReducer.location.pathname,
-    currentWorkshop: state.login.currentWorkshop,
+    currentWorkshop: state.currentWorkshop.item,
     editing: state.editor.editing
   }
 }

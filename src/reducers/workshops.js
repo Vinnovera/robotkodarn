@@ -8,6 +8,22 @@ export default handleActions({
     })
   },
 
+  ADD_USER_WORKSHOP: (state, action) => {
+    return ({
+      ...state,
+      userWorkshops: [...state.userWorkshops, action.payload]
+    })
+  },
+
+  REMOVE_USER_WORKSHOP: (state, action) => {
+    return ({
+      ...state,
+      userWorkshops: state.userWorkshops.filter((workshop) => {
+        return workshop._id !== action.payload
+      })
+    })
+  },
+
   SET_PARTS: (state, action) => {
     return ({
       ...state,

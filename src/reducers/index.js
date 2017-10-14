@@ -3,7 +3,7 @@ import { routeReducer } from 'redux-simple-router'
 import workshops from './workshops'
 import editor from './editor'
 import invite from './invite'
-import login from './login'
+import currentWorkshop from './currentWorkshop'
 import sidebar from './sidebar'
 import workspace from './workspace'
 import menu from './menu'
@@ -13,7 +13,7 @@ export default combineReducers({
   routeReducer,
   editor,
   invite,
-  login,
+  currentWorkshop,
   sidebar,
   workshops,
   workspace,

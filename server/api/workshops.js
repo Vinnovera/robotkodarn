@@ -56,6 +56,7 @@ const addWorkshop = async (request, reply) => {
     const user = request.auth.artifacts
     const workshop = new Workshop(request.payload)
     workshop.userId = user._id
+    workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
 
     const validatedWorkshop = Joi.validate(workshop, workshopValidation).value
     await validatedWorkshop.save()
@@ -90,16 +91,16 @@ const copyWorkshop = async (request, reply) => {
   try {
     const existingWorkshop = await Workshop.findOne({ _id: request.params.id })
 
-    const newWorkshop = new Workshop(existingWorkshop)
-    newWorkshop.title = `${existingWorkshop.title} – kopia`
-    newWorkshop._id = mongoose.Types.ObjectId()
-    newWorkshop.isNew = true
-    // Generate a new random pin
-    newWorkshop.pincode = Math.floor(1000 + (Math.random() * 9000))
+    const copy = Object.assign(existingWorkshop, {
+      title: `${existingWorkshop.title} – kopia`,
+      _id: mongoose.Types.ObjectId(),
+      isNew: true,
+      pincode: Math.floor(1000 + (Math.random() * 9000))
+    })
 
-    await newWorkshop.save()
+    await copy.save()
 
-    return reply().code(200)
+    return reply(copy).code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
   }
@@ -108,16 +109,15 @@ const copyWorkshop = async (request, reply) => {
 // -----------------------------------------------------------------------------
 // Delete a workshop with {id} [DELETE]
 // -----------------------------------------------------------------------------
-const deleteWorkshop = (request, reply) => {
-  Workshop.remove({
-    _id: request.params.id
-  }, (error, workshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const deleteWorkshop = async (request, reply) => {
+  try {
+    const workshop = request.params
+    await Workshop.remove({ _id: workshop.id })
 
     return reply(workshop).code(200)
-  })
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------

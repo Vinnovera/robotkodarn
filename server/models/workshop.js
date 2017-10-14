@@ -8,8 +8,7 @@ const workshopSchema = Schema({
   },
   pincode: {
     type: String,
-    unique: true,
-    default: Math.floor(1000 + (Math.random() * 9000))
+    unique: true
   },
   userId: {
     type: String,

@@ -2,12 +2,26 @@ import { routeActions } from 'redux-simple-router'
 import axios from 'axios'
 
 const SET_MESSAGE = 'SET_MESSAGE'
+const ADD_USER_WORKSHOP = 'ADD_USER_WORKSHOP'
+const REMOVE_USER_WORKSHOP = 'REMOVE_USER_WORKSHOP'
 const SET_USER_WORKSHOPS = 'SET_USER_WORKSHOPS'
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 
 // -----------------------------------------------------------------------------
 // createWorkshop, creates empty workshop with a title and a PIN
 // -----------------------------------------------------------------------------
+export const addUserWorkshop = workshop => (dispatch) => {
+  dispatch({
+    type: ADD_USER_WORKSHOP,
+    payload: workshop
+  })
+
+  dispatch({
+    type: SET_MESSAGE,
+    payload: `Workshopen ${workshop.title} är nu tillagd med pinkoden: ${workshop.pincode}.`
+  })
+}
+
 export const createWorkshop = workshop => (dispatch) => {
   axios
     .post('/api/workshop', workshop, {
@@ -15,29 +29,52 @@ export const createWorkshop = workshop => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    // 'response' is not used but kept for documentation purposes.
-    .then(({ data }) => {
-      dispatch({
-        type: SET_MESSAGE,
-        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`
-      })
-    })
+    .then(({ data }) => dispatch(addUserWorkshop(data)))
     .catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
 // Copy an existing workshop
 // -----------------------------------------------------------------------------
-export const copyWorkshop = workshopID => () => {
+export const copyWorkshop = workshopID => (dispatch) => {
   axios
     .post(`/api/copyWorkshop/${workshopID}`, {
       headers: {
         'content-type': 'application/json'
       }
     })
+    .then(({ data }) => dispatch(addUserWorkshop(data)))
     .catch(error => console.log(error))
 }
 
+// -----------------------------------------------------------------------------
+// removeWorkshop, removes workshop from state and set user message
+// -----------------------------------------------------------------------------
+export const removeUserWorkshop = id => (dispatch) => {
+  dispatch({
+    type: REMOVE_USER_WORKSHOP,
+    payload: id
+  })
+
+  dispatch({
+    type: SET_MESSAGE,
+    payload: 'Workshopen är nu borttagen.'
+  })
+}
+
+// -----------------------------------------------------------------------------
+// deleteWorkshop, removes workshop from database
+// -----------------------------------------------------------------------------
+export const deleteWorkshop = workshopID => (dispatch) => {
+  axios
+    .delete(`/api/workshop/${workshopID}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => dispatch(removeUserWorkshop(data.id)))
+    .catch(error => console.log(error))
+}
 // -----------------------------------------------------------------------------
 // changeTitle, edits the title of the workshop object
 // -----------------------------------------------------------------------------
@@ -181,15 +218,3 @@ export const getWorkshopsByUserId = () => (dispatch) => {
     .catch(error => console.log(error))
 }
 
-// -----------------------------------------------------------------------------
-// removeWorkshop, removes workshop from database
-// -----------------------------------------------------------------------------
-export const removeWorkshop = workshopID => () => {
-  axios
-    .delete(`/api/workshop/${workshopID}`, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .catch(error => console.log(error))
-}
