@@ -30,14 +30,12 @@ export const toggleEditing = () => (dispatch) => {
 // compileCode, sends code to compiler
 // -----------------------------------------------------------------------------
 export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
-  console.log('I action:', codeToCompile, willUpload)
-
   const request = new XMLHttpRequest()
   request.open('POST', '/api/editor', true)
   request.setRequestHeader('Content-Type', 'application/json')
 
   request.onload = () => {
-    if (request.status >= 200 && request.status < 400) {
+    if (request.status === 200) {
       dispatch({
         type: SET_COMPILER_RESPONSE,
         payload: {
@@ -48,7 +46,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
           willUpload
         }
       })
-    } else {
+    } else if (request.status === 400) {
       dispatch({
         type: SET_COMPILER_RESPONSE,
         payload: {
@@ -56,7 +54,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
             response: JSON.parse(request.response),
             timestamp: +new Date()
           },
-          willUpload
+          willUpload: false
         }
       })
     }
@@ -79,7 +77,7 @@ export const uploadCode = compiledCode => (dispatch) => {
   /* If error occurs during compilation,
    * exit early and inform user.
    */
-  if (compiledCode.compileError) {
+  if (compiledCode.error) {
     dispatch({
       type: SET_CONSOLE_OUTPUT,
       payload: {
