@@ -62,7 +62,7 @@ export class Editor extends Component {
 
   onChange = (newValue) => {
     const copyOfParts = this.state.currentParts
-    copyOfParts[this.props.activePartIndex].code = newValue
+    copyOfParts[this.props.activePartIndex].content = newValue
 
     this.setState({
       currentParts: copyOfParts
@@ -93,7 +93,7 @@ export class Editor extends Component {
           mode="c_cpp"
           onChange={this.onChange}
           name="codeEditor"
-          width="auto"
+          width="100%"
           height="90%"
           editorProps={{ $blockScrolling: true }}
           value={
@@ -114,10 +114,10 @@ export class Editor extends Component {
         fontSize="16px"
         mode="c_cpp"
         name="codeEditor"
-        width="auto"
+        width="100%"
         height="90%"
         editorProps={{ $blockScrolling: true }}
-        value={this.state.workshop.parts[this.props.activePartIndex].code}
+        value={this.state.workshop.parts[this.props.activePartIndex].content}
         showPrintMargin={false}
       />
     )
@@ -168,7 +168,7 @@ function mapStateToProps(state) {
     willUpload: state.editor.willUpload,
     activePartIndex: state.editor.activePartIndex,
     currentParts: state.workspace.currentParts,
-    workshop: JSON.parse(state.login.currentWorkshop)
+    workshop: state.login.currentWorkshop
   }
 }
 

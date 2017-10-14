@@ -20,7 +20,7 @@
 
 :local .headline {
   color: inherit;
-  font-size: 700;
+  font-size: 2rem;
   margin-bottom: 3rem;
   text-align: center;
 }

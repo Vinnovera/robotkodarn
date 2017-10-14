@@ -13,6 +13,7 @@ export class ActionButtons extends Component {
    * @param {boolean} upload true = code will be uploaded to Arduino
    */
   handleClick = (upload = false) => {
+    console.log('Du har klickat!')
     this.props.dispatch(setConsoleOutput({
       type: 'info',
       heading: 'Testar kod',
@@ -20,7 +21,7 @@ export class ActionButtons extends Component {
     }))
 
     this.props.dispatch(
-      compileCode(this.props.currentParts[this.props.activePartIndex].code, upload)
+      compileCode(this.props.currentParts[this.props.activePartIndex].content, upload)
     )
   }
 
@@ -28,7 +29,7 @@ export class ActionButtons extends Component {
     return (
       <div className={styles.actionButtonWrapper} >
         <div className={styles.maxWidth} >
-          <button onClick={() => this.handleClick} className="button success">
+          <button onClick={() => this.handleClick()} className="button success">
             <FA className={styles.icons} name="cogs" />Testa min kod
           </button>
           <button onClick={() => this.handleClick(true)} className="button success" href="#">

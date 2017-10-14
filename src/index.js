@@ -14,7 +14,6 @@ import Editor from './components/Editor'
 import Workspace from './components/Workspace'
 import LoginWithPin from './components/LoginWithPin'
 import LoginAdmin from './components/LoginAdmin'
-import AdminPage from './components/AdminPage'
 import Workshops from './components/Workshops'
 import Invite from './components/Invite'
 import RegisterForm from './components/RegisterForm'
@@ -49,7 +48,6 @@ render((
         <Route path="/id/:pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
         <Route path="/login" component={LoginWithPin} onEnter={authorize} forward="onlyAuthCheck" />
         <Route path="/admin" component={LoginAdmin} onEnter={authorize} forward="/workshops" />
-        <Route path="/adminpage" component={AdminPage} onEnter={authorize} permissions={['superadmin', 'editor']} />
         <Route path="/workshops" component={Workshops} onEnter={authorize} permissions={['superadmin', 'editor']} />
         <Route path="/invite" component={Invite} onEnter={authorize} permissions={['superadmin']} />
         <Route path="/register" component={RegisterForm} onEnter={authorize} forward="/workshops" />

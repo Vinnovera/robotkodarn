@@ -2,8 +2,8 @@ import { routeActions } from 'redux-simple-router'
 import axios from 'axios'
 
 const SET_MESSAGE = 'SET_MESSAGE'
-const SET_WORKSHOPS = 'SET_WORKSHOPS'
-const SET_WORKSHOP = 'SET_WORKSHOP'
+const SET_USER_WORKSHOPS = 'SET_USER_WORKSHOPS'
+const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 
 // -----------------------------------------------------------------------------
 // createWorkshop, creates empty workshop with a title and a PIN
@@ -108,10 +108,11 @@ export const removeSelectedPart = (part, workshop) => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((/* response */) => {
+    .then(({ data }) => {
+      // TODO: Ta ut vilket delmoment som är borttaget.
       dispatch({
         type: SET_MESSAGE,
-        payload: `Delmomentet ${part.title} är nu borttaget.`
+        payload: 'Delmomentet är nu borttaget.'
       })
     })
     .catch(error => console.log(error))
@@ -140,18 +141,20 @@ export const removeSelectedLink = (link, workshop) => (dispatch) => {
 // findWorkshopByPin, gets workshop by typed in PIN in the login page
 // -----------------------------------------------------------------------------
 export const findWorkshopByPin = pin => (dispatch) => {
-  const request = new XMLHttpRequest()
-  request.open('GET', `/api/workshop/pin/${pin}`, true)
-
-  request.onload = () => {
-    if (request.status >= 200 && request.status < 400) {
-      dispatch({ type: SET_WORKSHOP, payload: request.response })
-    } else {
+  axios
+    .get(`/api/workshop/pin/${pin}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch({ type: SET_WORKSHOP_BY_PIN, payload: response.data })
+      }
+    })
+    .catch(() => {
       dispatch(routeActions.push('/login'))
-    }
-  }
-
-  request.send()
+    })
 }
 
 //------------------------------------------------------------------------------
@@ -159,7 +162,7 @@ export const findWorkshopByPin = pin => (dispatch) => {
 // -----------------------------------------------------------------------------
 
 export const clearWorkshop = () => (dispatch) => {
-  dispatch({ type: SET_WORKSHOP, payload: null })
+  dispatch({ type: SET_WORKSHOP_BY_PIN, payload: null })
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +176,7 @@ export const getWorkshopsByUserId = () => (dispatch) => {
       }
     })
     .then((response) => {
-      dispatch({ type: SET_WORKSHOPS, payload: response.data })
+      dispatch({ type: SET_USER_WORKSHOPS, payload: response.data })
     })
     .catch(error => console.log(error))
 }
@@ -189,25 +192,4 @@ export const removeWorkshop = workshopID => () => {
       }
     })
     .catch(error => console.log(error))
-}
-
-// -----------------------------------------------------------------------------
-// setSelectedWorkshop, sets index of selected workshop to state
-// -----------------------------------------------------------------------------
-export const setSelectedWorkshop = index => (dispatch) => {
-  dispatch({ type: 'SET_SELECTED_WORKSHOP_INDEX', payload: index })
-}
-
-// -----------------------------------------------------------------------------
-// setSelectedPart, sets index of selected part to state
-// -----------------------------------------------------------------------------
-export const setSelectedPart = index => (dispatch) => {
-  dispatch({ type: 'SET_SELECTED_PART_INDEX', payload: index })
-}
-
-// -----------------------------------------------------------------------------
-// setSelectedLink, sets index of selected link to state
-// -----------------------------------------------------------------------------
-export const setSelectedLink = index => (dispatch) => {
-  dispatch({ type: 'SET_SELECTED_LINK_INDEX', payload: index })
 }

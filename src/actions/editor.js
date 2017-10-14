@@ -30,6 +30,8 @@ export const toggleEditing = () => (dispatch) => {
 // compileCode, sends code to compiler
 // -----------------------------------------------------------------------------
 export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
+  console.log('I action:', codeToCompile, willUpload)
+
   const request = new XMLHttpRequest()
   request.open('POST', '/api/editor', true)
   request.setRequestHeader('Content-Type', 'application/json')

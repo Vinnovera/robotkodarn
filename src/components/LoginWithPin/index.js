@@ -19,17 +19,20 @@ export class Login extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // Input has changed and new response came
-    // TODO: Check every time you press?
+    // First check if new login attempt is made
     if (newProps.loginAttemptTimestamp !== this.props.loginAttemptTimestamp) {
       if (newProps.currentWorkshop === 'notfound') {
-        this.setState({ workshopNotFound: true, inputClassName: 'animated shake' })
-        // TODO: This is strange... return the whole HTML file?!
-      } else if (newProps.currentWorkshop.substr(0, 1) !== '<') {
-        this.setState({ workshopNotFound: false })
-        const parsedWorkshop = JSON.parse(newProps.currentWorkshop)
-        this.props.dispatch(routeActions.push(`/id/${parsedWorkshop.pincode}`))
+        this.setState({
+          workshopNotFound: true,
+          inputClassName: 'animated shake'
+        })
       }
+
+      // Make sure workshopNotFound is set to false
+      this.setState({ workshopNotFound: false })
+
+      const workshop = newProps.currentWorkshop
+      this.props.dispatch(routeActions.push(`/id/${workshop.pincode}`))
     }
   }
 
@@ -48,6 +51,8 @@ export class Login extends Component {
     } else {
       pinToSend = this.state.pinInputValue
     }
+
+    console.log(pinToSend)
 
     this.props.dispatch(findWorkshopByPin(pinToSend))
   }

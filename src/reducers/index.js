@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { routeReducer } from 'redux-simple-router'
-import adminpage from './adminpage'
+import workshops from './workshops'
 import editor from './editor'
 import invite from './invite'
 import login from './login'
@@ -11,11 +11,11 @@ import user from './user'
 
 export default combineReducers({
   routeReducer,
-  adminpage,
   editor,
   invite,
   login,
   sidebar,
+  workshops,
   workspace,
   menu,
   user

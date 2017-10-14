@@ -100,9 +100,8 @@ class Workshops extends Component {
 
 function mapStateToProps(state) {
   return {
-    userWorkshops: state.adminpage.userWorkshops,
-    selectedWorkshopIndex: state.adminpage.selectedWorkshopIndex,
-    message: state.adminpage.message,
+    userWorkshops: state.workshops.userWorkshops,
+    message: state.workshops.message,
     role: state.user.isLoggedIn
   }
 }

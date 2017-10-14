@@ -23,9 +23,10 @@ export class Console extends Component {
     }
 
     // Fix to make console scroll to bottom on new messages
-    setTimeout(() => {
-      this.scrollToBottom()
-    }, 50)
+    // TODO: Add after testing
+    // setTimeout(() => {
+    //   this.scrollToBottom()
+    // }, 50)
   }
 
   handleClearConsoleClick() {

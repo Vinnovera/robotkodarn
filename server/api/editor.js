@@ -30,6 +30,8 @@ const compileCode = (request, reply) => {
       board: 'uno' // Hardcoded during development
     }
 
+    console.log('I API:et', request.payload)
+
     /*
      * Takes the temporary path and stores the payload so that
      * avrpizza can compile the code.

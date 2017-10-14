@@ -23,9 +23,9 @@ export class Workspace extends Component {
 
     if (this.props.currentWorkshop) {
       this.setState({
-        workshop: JSON.parse(this.props.currentWorkshop)
+        workshop: this.props.currentWorkshop
       }, () => {
-        const currentParts = JSON.parse(this.props.currentWorkshop).parts
+        const currentParts = this.props.currentWorkshop.parts
         this.props.dispatch(setCurrentParts(currentParts))
       })
     }
@@ -36,9 +36,9 @@ export class Workspace extends Component {
     if (this.props.editing === true && nextProps.editing === false) {
       if (this.props.currentWorkshop) {
         this.setState({
-          workshop: JSON.parse(this.props.currentWorkshop)
+          workshop: this.props.currentWorkshop
         }, () => {
-          const currentParts = JSON.parse(this.props.currentWorkshop).parts
+          const currentParts = this.props.currentWorkshop.parts
           this.props.dispatch(setCurrentParts(currentParts))
         })
       }
@@ -46,9 +46,9 @@ export class Workspace extends Component {
 
     if (this.props.currentWorkshop !== nextProps.currentWorkshop) {
       this.setState({
-        workshop: JSON.parse(nextProps.currentWorkshop)
+        workshop: nextProps.currentWorkshop
       }, () => {
-        const currentParts = JSON.parse(nextProps.currentWorkshop).parts
+        const currentParts = nextProps.currentWorkshop.parts
         this.props.dispatch(setCurrentParts(currentParts))
       })
     }
