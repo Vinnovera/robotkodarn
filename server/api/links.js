@@ -33,30 +33,19 @@ const getLink = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Add a link [POST]
 // -----------------------------------------------------------------------------
-const addLink = (request, reply) => {
-  Workshop.findOne({ _id: request.params.id }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
-
+const addLink = async (request, reply) => {
+  try {
+    const workshop = await Workshop.findOne({ _id: request.params.id })
     const link = new Link(request.payload)
+    const validatedLink = Joi.validate(link, linkValidation).value
 
-    // 'value' exists, but is not used (and is therefore commented out)
-    Joi.validate(link, linkValidation, (validationError, /* value */) => {
-      if (validationError) {
-        return reply({ error: validationError }).code(400)
-      }
+    workshop.links.push(validatedLink)
+    await workshop.save()
 
-      foundWorkshop.links.push(link)
-
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-        return reply(foundWorkshop).code(200)
-      })
-    })
-  })
+    return reply(link).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------

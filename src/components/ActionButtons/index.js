@@ -21,7 +21,7 @@ export class ActionButtons extends Component {
     }))
 
     this.props.dispatch(
-      compileCode(this.props.currentParts[this.props.activePartIndex].content, upload)
+      compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
     )
   }
 
@@ -43,7 +43,7 @@ export class ActionButtons extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentParts: state.workspace.currentParts,
+    partsToEdit: state.editor.partsToEdit,
     activePartIndex: state.editor.activePartIndex
   }
 }

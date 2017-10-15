@@ -1,6 +1,13 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
+  SET_PARTS_TO_EDIT: (state, action) => {
+    return ({
+      ...state,
+      partsToEdit: action.payload
+    })
+  },
+
   SET_EDITOR_TAB: (state, action) => {
     return ({
       ...state,
@@ -72,5 +79,6 @@ export default handleActions({
   consoleOutput: [],
   activePartIndex: 0,
   editing: false,
-  editingType: 'parts'
+  editingType: 'parts',
+  partsToEdit: []
 })

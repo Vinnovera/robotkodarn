@@ -5,7 +5,6 @@ import editor from './editor'
 import invite from './invite'
 import currentWorkshop from './currentWorkshop'
 import sidebar from './sidebar'
-import workspace from './workspace'
 import menu from './menu'
 import user from './user'
 
@@ -16,7 +15,6 @@ export default combineReducers({
   currentWorkshop,
   sidebar,
   workshops,
-  workspace,
   menu,
   user
 })

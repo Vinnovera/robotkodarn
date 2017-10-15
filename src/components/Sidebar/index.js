@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { toggleSidebar } from '../../actions/workspace'
+import { toggleSidebar } from '../../actions/sidebar'
 import SidebarList from './../SidebarList'
 import styles from './sidebar.css'
 import { setEditingType } from '../../actions/editor'

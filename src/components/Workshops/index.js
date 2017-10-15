@@ -24,12 +24,18 @@ class Workshops extends Component {
     event.preventDefault()
     const { value, name } = event.currentTarget
 
-    if (name === 'edit') {
-      console.log('du vill editera workshop med pin', value)
-    } else if (name === 'copy') {
-      this.props.dispatch(copyWorkshop(value))
-    } else if (name === 'delete') {
-      this.props.dispatch(deleteWorkshop(value))
+    switch (name) {
+      case 'edit':
+        console.log('du vill editera workshop med pin', value)
+        break
+      case 'copy':
+        this.props.dispatch(copyWorkshop(value))
+        break
+      case 'delete':
+        this.props.dispatch(deleteWorkshop(value))
+        break
+      default:
+        console.log(name)
     }
   }
 

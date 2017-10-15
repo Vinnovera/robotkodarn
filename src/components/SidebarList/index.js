@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { removeSelectedLink, removeSelectedPart } from '../../actions/workshops'
+import { removeLink, removePart } from '../../actions/currentWorkshop'
 import { setActivePartIndex, setEditingType } from '../../actions/editor'
 import styles from './sidebarlist.css'
 
@@ -20,9 +20,9 @@ class SidebarList extends Component {
     const workshop = this.props.workshop._id
 
     if (this.props.type === 'reference') {
-      this.props.dispatch(removeSelectedLink(item, workshop))
+      this.props.dispatch(removeLink(item, workshop))
     } else if (this.props.type === 'parts') {
-      this.props.dispatch(removeSelectedPart(item, workshop))
+      this.props.dispatch(removePart(item, workshop))
     }
   }
 

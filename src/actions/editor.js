@@ -5,6 +5,17 @@ const SET_COMPILER_RESPONSE = 'SET_COMPILER_RESPONSE'
 const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
 const TOGGLE_EDITING = 'TOGGLE_EDITING'
 const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
+const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
+
+// -----------------------------------------------------------------------------
+// setPartsToEdit, Sets the parts that user can edit in editor
+// -----------------------------------------------------------------------------
+export const setPartsToEdit = parts => (dispatch) => {
+  dispatch({
+    type: SET_PARTS_TO_EDIT,
+    payload: parts
+  })
+}
 
 // -----------------------------------------------------------------------------
 // changeEditorTab, sets state to pressed tab

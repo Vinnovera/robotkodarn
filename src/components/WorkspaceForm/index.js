@@ -5,7 +5,7 @@ import {
   addLink,
   addPart,
   changeTitle
-} from '../../actions/workshops'
+} from '../../actions/currentWorkshop'
 import Button from './../Button'
 import styles from './workspaceform.css'
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'redux-simple-router'
-import { findWorkshopByPin } from '../../actions/workshops'
+import { findWorkshopByPin } from '../../actions/currentWorkshop'
 import styles from './login.css'
 
 export class Login extends Component {
@@ -51,8 +51,6 @@ export class Login extends Component {
     } else {
       pinToSend = this.state.pinInputValue
     }
-
-    console.log(pinToSend)
 
     this.props.dispatch(findWorkshopByPin(pinToSend))
   }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
-import { setCurrentParts } from '../../actions/workspace'
+import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
 import WorkspaceForm from './../WorkspaceForm'
@@ -11,47 +10,8 @@ import View from './../View'
 import styles from './workspace.css'
 
 export class Workspace extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      workshop: null
-    }
-  }
-
   componentWillMount() {
     this.props.dispatch(findWorkshopByPin(this.props.params.pin))
-
-    if (this.props.currentWorkshop) {
-      this.setState({
-        workshop: this.props.currentWorkshop
-      }, () => {
-        const currentParts = this.props.currentWorkshop.parts
-        this.props.dispatch(setCurrentParts(currentParts))
-      })
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // When leaving editor view, make sure to update local state with currentWorkshop
-    if (this.props.editing === true && nextProps.editing === false) {
-      if (this.props.currentWorkshop) {
-        this.setState({
-          workshop: this.props.currentWorkshop
-        }, () => {
-          const currentParts = this.props.currentWorkshop.parts
-          this.props.dispatch(setCurrentParts(currentParts))
-        })
-      }
-    }
-
-    if (this.props.currentWorkshop !== nextProps.currentWorkshop) {
-      this.setState({
-        workshop: nextProps.currentWorkshop
-      }, () => {
-        const currentParts = nextProps.currentWorkshop.parts
-        this.props.dispatch(setCurrentParts(currentParts))
-      })
-    }
   }
 
   componentWillUnmount() {
@@ -67,7 +27,7 @@ export class Workspace extends Component {
   }
 
   renderMainContent() {
-    if (this.state.workshop) {
+    if (this.props.currentWorkshop) {
       return (
         <View>
           <Sidebar />
@@ -77,8 +37,8 @@ export class Workspace extends Component {
             </main>
             :
             <main className={this.getMainPaneClassName()}>
-              { this.state.workshop.parts.length > 0 ?
-                <h2>{this.state.workshop.parts[this.props.activePartIndex].title}</h2>
+              { this.props.currentWorkshop.parts.length > 0 ?
+                <h2>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h2>
                 :
                 ''
               }

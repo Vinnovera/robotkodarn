@@ -33,7 +33,7 @@ const getPart = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Add a part [POST]
 // -----------------------------------------------------------------------------
-const addPart = (request, reply) => {
+const createPart = (request, reply) => {
   Workshop.findOne({ _id: request.params.id }, (error, foundWorkshop) => {
     if (error) {
       return reply(error).code(500)
@@ -41,8 +41,7 @@ const addPart = (request, reply) => {
 
     const part = new Part(request.payload)
 
-    // 'value' exists but is not in use, hence: commented out.
-    Joi.validate(part, partValidation, (validationError, /* value */) => {
+    Joi.validate(part, partValidation, (validationError) => {
       if (validationError) {
         return reply({ error: validationError }).code(400)
       }
@@ -54,7 +53,7 @@ const addPart = (request, reply) => {
           return reply({ error: saveError.message }).code(400)
         }
 
-        return reply(foundWorkshop).code(200)
+        return reply(part).code(200)
       })
     })
   })
@@ -137,7 +136,7 @@ exports.register = (server, options, next) => {
       method: 'POST',
       path: '/api/workshop/{id}/part',
       config: {
-        handler: addPart,
+        handler: createPart,
         auth: 'session'
       }
     },
