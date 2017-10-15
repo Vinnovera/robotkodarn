@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { routeActions } from 'redux-simple-router'
 
-const SET_MESSAGE = 'SET_MESSAGE'
-const ADD_PART_TO_WORKSHOP = 'ADD_PART_TO_WORKSHOP'
-const ADD_LINK_TO_WORKSHOP = 'ADD_LINK_TO_WORKSHOP'
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
+const SET_MESSAGE = 'SET_MESSAGE'
+const ADD_PART = 'ADD_PART'
+const REMOVE_PART = 'REMOVE_PART'
+const ADD_LINK = 'ADD_LINK'
+const REMOVE_LINK = 'REMOVE_LINK'
 
 // -----------------------------------------------------------------------------
 // changeTitle, edits the title of the workshop object
@@ -37,7 +39,7 @@ export const addPart = (part, workshop) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_PART_TO_WORKSHOP,
+        type: ADD_PART,
         payload: data
       })
 
@@ -80,7 +82,7 @@ export const addLink = (link, workshop) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_LINK_TO_WORKSHOP,
+        type: ADD_LINK,
         payload: data
       })
 

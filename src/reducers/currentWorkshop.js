@@ -9,7 +9,7 @@ export default handleActions({
     })
   },
 
-  ADD_PART_TO_WORKSHOP: (state, action) => {
+  ADD_PART: (state, action) => {
     return ({
       ...state,
       item: {
@@ -19,7 +19,7 @@ export default handleActions({
     })
   },
 
-  ADD_LINK_TO_WORKSHOP: (state, action) => {
+  ADD_LINK: (state, action) => {
     return ({
       ...state,
       item: {

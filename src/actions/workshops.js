@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const SET_USER_WORKSHOPS = 'SET_USER_WORKSHOPS'
-const ADD_USER_WORKSHOP = 'ADD_USER_WORKSHOP'
-const REMOVE_USER_WORKSHOP = 'REMOVE_USER_WORKSHOP'
+const SET_WORKSHOPS = 'SET_WORKSHOPS'
+const ADD_WORKSHOP = 'ADD_WORKSHOP'
+const REMOVE_WORKSHOP = 'REMOVE_WORKSHOP'
 const SET_MESSAGE = 'SET_MESSAGE'
 
 // -----------------------------------------------------------------------------
@@ -16,7 +16,7 @@ export const getWorkshopsByUserId = () => (dispatch) => {
       }
     })
     .then((response) => {
-      dispatch({ type: SET_USER_WORKSHOPS, payload: response.data })
+      dispatch({ type: SET_WORKSHOPS, payload: response.data })
     })
     .catch(error => console.log(error))
 }
@@ -33,7 +33,7 @@ export const createWorkshop = workshop => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_USER_WORKSHOP,
+        type: ADD_WORKSHOP,
         payload: data
       })
 
@@ -57,7 +57,7 @@ export const copyWorkshop = workshopID => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_USER_WORKSHOP,
+        type: ADD_WORKSHOP,
         payload: data
       })
 
@@ -81,7 +81,7 @@ export const deleteWorkshop = workshopID => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: REMOVE_USER_WORKSHOP,
+        type: REMOVE_WORKSHOP,
         payload: data.id
       })
 

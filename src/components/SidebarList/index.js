@@ -58,7 +58,7 @@ class SidebarList extends Component {
       return (
         <li className={styles.listItem} key={link._id}>
           { !this.props.editing ? <FA name="external-link" /> : '' }
-          <a className={styles.listLink} href={link.url}>{link.title}</a>
+          <a className={styles.listLink} href={link.content}>{link.title}</a>
           { this.props.editing ?
             <button onClick={this.remove} type="submit" className={styles.removeIcon} value={link._id} name="delete"><FA name="times" /></button>
             :

@@ -1,21 +1,21 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
-  SET_USER_WORKSHOPS: (state, action) => {
+  SET_WORKSHOPS: (state, action) => {
     return ({
       ...state,
       userWorkshops: action.payload
     })
   },
 
-  ADD_USER_WORKSHOP: (state, action) => {
+  ADD_WORKSHOP: (state, action) => {
     return ({
       ...state,
       userWorkshops: [...state.userWorkshops, action.payload]
     })
   },
 
-  REMOVE_USER_WORKSHOP: (state, action) => {
+  REMOVE_WORKSHOP: (state, action) => {
     return ({
       ...state,
       userWorkshops: state.userWorkshops.filter((workshop) => {
