@@ -33,20 +33,25 @@ class SidebarList extends Component {
 
   renderParts() {
     return this.props.workshop.parts.map((part, index) => {
+      const active = index === this.props.activePart
+      const open = this.props.sidebarOpen
+
       return (
-        <li className={styles.listItem} key={part._id}>
-          { !this.props.editing ?
-            <button className={styles.listLink} onClick={() => this.changePart(index)}>
-              <FA name="file-code-o" />
-              {part.title}
-            </button>
-            :
-            <div>
-              <button className={styles.listLink} onClick={() => this.changePart(index)}>
+        <li className={active ? styles.activeListItem : styles.listItem} key={part._id}>
+          <div className={open ? styles.background : styles.closedBackground} />
+          { this.props.editing ?
+            <div className={styles.flexContainer}>
+              <button onClick={this.edit} className={styles.editItem}>
+                <FA className={styles.editIcon} name="pencil" />
                 {part.title}
               </button>
               <button onClick={this.remove} type="submit" className={styles.removeIcon} value={part._id} name="delete"><FA name="times" /></button>
             </div>
+            :
+            <button className={styles.listLink} onClick={() => this.changePart(index)}>
+              <FA className={styles.codeIcon} name="file-code-o" />
+              {part.title}
+            </button>
           }
         </li>
       )
@@ -57,12 +62,21 @@ class SidebarList extends Component {
     return this.props.workshop.links.map((link) => {
       return (
         <li className={styles.listItem} key={link._id}>
-          { !this.props.editing ? <FA name="external-link" /> : '' }
-          <a target="_blank" className={styles.listLink} href={link.content}>{link.title}</a>
           { this.props.editing ?
-            <button onClick={this.remove} type="submit" className={styles.removeIcon} value={link._id} name="delete"><FA name="times" /></button>
+            <div className={styles.flexContainer} >
+              <button onClick={this.edit} className={styles.editItem}>
+                <FA className={styles.editIcon} name="pencil" />
+                {link.title}
+              </button>
+              <button onClick={this.remove} type="submit" className={styles.removeIcon} value={link._id} name="delete"><FA name="times" /></button>
+            </div>
             :
-            ''
+            <div className={styles.flexContainer} >
+              <a target="_blank" className={styles.listLink} href={link.content}>
+                <FA className={styles.linkIcon} name="external-link" />
+                {link.title}
+              </a>
+            </div>
           }
         </li>
       )
@@ -79,9 +93,9 @@ class SidebarList extends Component {
         {parts ? this.renderParts() : ''}
         <li className={styles.listItem}>
           { this.props.editing ?
-            <button onClick={this.add}className={styles.listLink}><FA className={styles.addIcon} name="plus" />
-              {parts ? 'Lägg till nytt delmoment' : ''}
-              {reference ? 'Lägg till ny referenslänk' : ''}
+            <button onClick={this.add} className={styles.addItem}><FA className={styles.addIcon} name="plus" />
+              {parts ? 'Nytt delmoment' : ''}
+              {reference ? 'Ny referenslänk' : ''}
             </button>
             :
             ''
@@ -95,7 +109,9 @@ class SidebarList extends Component {
 function mapStateToProps(state) {
   return {
     workshop: state.currentWorkshop.item,
-    editing: state.editor.editing
+    editing: state.editor.editing,
+    activePart: state.editor.activePartIndex,
+    sidebarOpen: state.sidebar.open
   }
 }
 

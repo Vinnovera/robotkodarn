@@ -55,6 +55,11 @@ hr {
   width: 100%;
 }
 
+button:active,
+button:focus {
+  outline: none;
+}
+
 /* BUTTONS */
 .button {
   background-image: none;

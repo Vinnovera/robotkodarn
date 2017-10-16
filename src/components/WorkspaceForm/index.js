@@ -112,12 +112,13 @@ export class WorkspaceForm extends Component {
               <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" />
               <label className={styles.label} htmlFor="code">Delmomentets kod</label>
               <AceEditor
+                className={styles.aceEditor}
                 theme="textmate"
                 fontSize="16px"
                 mode="c_cpp"
                 name="code"
                 width="100%"
-                height="200px"
+                height="400px"
                 editorProps={{ $blockScrolling: true }}
                 showPrintMargin={false}
                 onChange={content => this.setState({ content })}

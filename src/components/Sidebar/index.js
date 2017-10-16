@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { toggleSidebar } from '../../actions/sidebar'
+import { setEditingType } from '../../actions/editor'
 import SidebarList from './../SidebarList'
 import styles from './sidebar.css'
-import { setEditingType } from '../../actions/editor'
 
 class Sidebar extends Component {
   getSidebarClassName = () => {
@@ -37,9 +37,9 @@ class Sidebar extends Component {
         <section>
           <p className={styles.pinCode}>{this.props.workshop.pincode}</p>
           { this.props.editing ?
-            <button onClick={this.editTitle} className={styles.sidebarTitleEdit} value="title">
+            <button onClick={this.editTitle} className={styles.sidebarTitleButton} value="title">
+              <FA className={styles.addIcon} name="pencil" />
               <h2 className={styles.sidebarTitleEdit}>
-                <FA className={styles.addIcon} name="pencil" />
                 {this.props.workshop.title}
               </h2>
             </button>

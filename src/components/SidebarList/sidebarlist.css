@@ -1,27 +1,82 @@
-/* -----------------------------------------------------------------------------
-  SECTION AND LISTS OF PARTS AND LINKS
-------------------------------------------------------------------------------*/
-
-:local .section {
-  margin-top: 20px;
-}
-
 :local .sidebarList {
   margin-top: 20px;
 }
 
-:local .listItem {
+:local .listItem,
+:local .activeListItem {
   color: inherit;
   font-size: 1.2rem;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 0.2rem;
+  position: relative;
 }
 
-:local .listLink {
+:local .activeListItem .background,
+:local .activeListItem .closedBackground {
+  content: "";
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: #EDEBE6;
+  z-index: -1;
+  transition: left 500ms ease-out;
+}
+
+:local .activeListItem .closedBackground {
+  left: -35px;
+}
+
+:local .flexContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* Remove some default styling and buttons and add general styling */
+:local .listLink,
+:local .addItem,
+:local .editItem {
+  background: none;
+  border: none;
   cursor: pointer;
   color: inherit;
   font-family: inherit;
   font-size: 0.9rem;
+  transition: color 250ms ease;
+  width: 80%;
+}
+
+/* Used for styling parts and reference links in sidebar when not editing */
+:local .listLink {
+  font-size: 1rem;
+  margin-bottom: 0.3em;
+  min-height: 1.6rem;
+  padding-left: 1.5rem;
+  text-align: left;
+}
+
+:local .listLink:hover {
+  color: #FE5D4B;
+}
+
+:local .addItem {
+  color: #3DA099;
   border: none;
-  background: none;
+  font-weight: 700;
+  margin: 0 auto;
+}
+
+:local .addItem:hover {
+  color: #2E8F89;
+}
+
+:local .editItem:hover {
+  color: #3DA099;
 }
 
 :local .listLink:hover {
@@ -30,27 +85,39 @@
 
 
 /* -----------------------------------------------------------------------------
-  REMOVE ICON
+  ICONS
 ------------------------------------------------------------------------------*/
 
+:local .codeIcon,
+:local .linkIcon {
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
 :local .removeIcon,
+:local .editIcon,
 :local .addIcon {
   background-color: transparent;
   border: none;
-  color: #59B2AC;
+  color: inherit;
   cursor: pointer;
   font-size: 1.5rem;
-  height: 2rem;
-  width: 2rem;
-  transition: color 250ms ease;
+  width: auto;
+}
+
+/* Compensate for weird placement */
+:local .addIcon,
+:local .editIcon {
+  float: left;
+  margin-top: -0.1em;
+}
+
+:local .editIcon {
+  font-size: 1.3rem;
 }
 
 :local .removeIcon {
   color: #C52522;
-}
-
-:local .addIcon:hover {
-  color: #3DA099;
 }
 
 :local .removeIcon:hover {
