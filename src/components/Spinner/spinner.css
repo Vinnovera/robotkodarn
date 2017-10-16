@@ -1,0 +1,75 @@
+:local .skFoldingCube {
+  margin: 20px auto;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  transform: rotateZ(45deg);
+}
+
+:local .skCube1,
+:local .skCube2,
+:local .skCube3,
+:local .skCube4 {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  transform: scale(1.1);
+}
+
+:local .skCube1:before,
+:local .skCube2:before,
+:local .skCube3:before,
+:local .skCube4:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3DA099;
+  animation: skFoldCubeAngle 2400ms infinite linear both;
+  transform-origin: 100% 100%;
+}
+
+:local .skCube2 {
+  transform: scale(1.1) rotateZ(90deg);
+}
+
+:local .skCube3 {
+  transform: scale(1.1) rotateZ(180deg);
+}
+
+:local .skCube4 {
+  transform: scale(1.1) rotateZ(270deg);
+}
+
+:local .skCube2:before {
+  animation-delay: 300ms;
+}
+
+:local .skCube3:before {
+  animation-delay: 600ms;
+}
+
+:local .skCube4:before {
+  animation-delay: 900ms;
+}
+
+
+@keyframes :local(skFoldCubeAngle) {
+  0%, 10% {
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+
+  25%, 75% {
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  90%, 100% {
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
