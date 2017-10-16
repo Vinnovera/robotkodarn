@@ -19,6 +19,10 @@
 
 :local .buttonSuccess {
   background-color: #3DA099;
+
+}
+:local .buttonSuccess:hover {
+  background-color: #238F88;
 }
 
 :local .buttonDanger {

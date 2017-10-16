@@ -29,6 +29,16 @@ export default handleActions({
     })
   },
 
+  UPDATE_PART: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: [...action.payload]
+      }
+    })
+  },
+
   REMOVE_PART: (state, action) => {
     return ({
       ...state,
@@ -45,6 +55,16 @@ export default handleActions({
       item: {
         ...state.item,
         links: [...state.item.links, action.payload]
+      }
+    })
+  },
+
+  UPDATE_LINK: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: [...action.payload]
       }
     })
   },

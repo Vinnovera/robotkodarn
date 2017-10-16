@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
-
-import {
-  addLink,
-  addPart,
-  changeTitle
-} from '../../actions/currentWorkshop'
+import { addLink, updateLink, addPart, updatePart, updateTitle } from '../../actions/currentWorkshop'
 import { setPartsToEdit, setEditingType } from '../../actions/editor'
 import Button from './../Button'
 import FadeIn from './../FadeIn'
@@ -22,7 +17,7 @@ export class WorkspaceForm extends Component {
     }
   }
 
-  // Display message once a new message is available.
+  // Display message whenever a new one is available.
   componentWillReceiveProps(nextProps) {
     if (nextProps.message !== this.props.message) {
       this.props.dispatch(setEditingType('message'))
@@ -34,30 +29,84 @@ export class WorkspaceForm extends Component {
     this.props.dispatch(setPartsToEdit(this.props.workshop.parts))
   }
 
-  save = (event) => {
-    event.preventDefault()
-
-    switch (this.props.editingType) {
-      case 'reference':
-        this.props.dispatch(addLink(this.state, this.props.workshop))
-        break
-      case 'parts':
-        this.props.dispatch(addPart(this.state, this.props.workshop))
-        break
-      case 'title':
-        this.props.dispatch(changeTitle(this.state, this.props.workshop))
-        break
-      default:
-        console.log('Du har inte valt någon editing type.')
-    }
-
-    // Reset internal state
+  /**
+   * Empty internal state after it's been used to temporarily
+   * store information about links, titles or parts that are being
+   * edited or created.
+   */
+  resetState = () => {
     this.setState({
       title: '',
       content: ''
     })
   }
 
+  /**
+   * Saves reference link or workshop part to database.
+   */
+  save = (event) => {
+    event.preventDefault()
+    const workshop = this.props.workshop
+
+    if (this.props.editingType === 'parts') {
+      this.props.dispatch(addPart(this.state, workshop))
+    } else if (this.props.editingType === 'reference') {
+      this.props.dispatch(addLink(this.state, workshop))
+    }
+
+    this.resetState()
+  }
+
+  /**
+   * Combines this.props.id and the values that are changed in
+   * the internal state and returns the object that will be saved
+   * in database. Used when updating parts and links.
+   */
+  updatedValues = () => {
+    const obj = { _id: this.props.id }
+
+    if (this.state.title !== '') {
+      obj.title = this.state.title
+    }
+
+    if (this.state.content !== '') {
+      obj.content = this.state.content
+    }
+
+    return obj
+  }
+
+  /**
+   * Checks if user has changed parts, reference link or title
+   * and then dispatch relevant action.
+   */
+  update = (event) => {
+    event.preventDefault()
+
+    console.log('nu är vi inne')
+
+    // First, check that user has changed something
+    if (this.state.title === '' && this.state.content === '') {
+      return
+    }
+
+    console.log('kom förbi första checken')
+
+    const workshop = this.props.workshop
+    const obj = this.updatedValues()
+
+    if (this.props.editingType === 'parts') {
+      this.props.dispatch(updatePart(obj, workshop._id))
+    } else if (this.props.editingType === 'reference') {
+      // TODO: Make sure it's possible to update reference links.
+    } else if (this.props.editingType === 'title') {
+      this.props.dispatch(updateTitle(this.state, this.props.workshop))
+    }
+
+    this.resetState()
+  }
+
+  // TODO: Figure out what user wants to do here.
   discardMessage = (event) => {
     event.preventDefault()
     console.log('Du klickade')
@@ -69,6 +118,25 @@ export class WorkspaceForm extends Component {
     const part = this.props.editingType === 'parts'
     const message = this.props.editingType === 'message' // Used for displaying feedback messages.
 
+    const update = this.props.id !== 'none'
+    let linkToEdit
+    let partToEdit
+
+    /**
+     * If user wants to update a part or a link,
+     * store the current item in a variable.
+     * This will be used to populate the input fields.
+     */
+    if (update) {
+      linkToEdit = this.props.workshop.links.filter((currentLink) => {
+        return currentLink._id === this.props.id
+      })[0]
+
+      partToEdit = this.props.workshop.parts.filter((currentPart) => {
+        return currentPart._id === this.props.id
+      })[0]
+    }
+
     return (
       <form className={styles.workspaceForm} action="post">
         <div>
@@ -77,14 +145,34 @@ export class WorkspaceForm extends Component {
           </FadeIn>
           { reference ?
             <FadeIn>
-              <h1 className={styles.formHeadline}>Lägg till ny referenslänk</h1>
+              <h1 className={styles.formHeadline}>
+                { update ? `Uppdatera referenslänk "${linkToEdit.title}"` : 'Lägg till ny referenslänk' }
+              </h1>
               <label className={styles.label} htmlFor="title">Referenslänkens titel</label>
-              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" />
+              <input
+                onChange={event => this.setState({ title: event.target.value })}
+                className={styles.input}
+                type="text"
+                placeholder="Den titel du vill ska synas"
+                name="title"
+                value={update && this.state.title === '' ? linkToEdit.title : this.state.title}
+              />
               <label className={styles.label} htmlFor="url">Referenslänkens webbadress</label>
-              <input onChange={event => this.setState({ content: event.target.value })} className={styles.input} type="url" placeholder="Webbadress till referenslänk" name="url" />
+              <input
+                onChange={event => this.setState({ content: event.target.value })}
+                className={styles.input}
+                type="url"
+                placeholder="Webbadress till referenslänk"
+                name="url"
+                value={update && this.state.content === '' ? linkToEdit.content : this.state.content}
+              />
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
-                  <Button handleClick={this.save}>Spara länk</Button>
+                  { update ?
+                    <Button type="success" handleClick={this.update}>Uppdatera länk</Button>
+                    :
+                    <Button type="success" handleClick={this.save}>Spara länk</Button>
+                  }
                 </div>
               </div>
             </FadeIn>
@@ -95,10 +183,10 @@ export class WorkspaceForm extends Component {
             <FadeIn>
               <h1 className={styles.formHeadline}>Uppdatera titel</h1>
               <label className={styles.label} htmlFor="title">Titel</label>
-              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title === undefined ? this.props.workshop.title : this.state.title} />
+              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title === '' ? this.props.workshop.title : this.state.title} />
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
-                  <Button handleClick={this.save}>Uppdatera</Button>
+                  <Button type="success" handleClick={this.update}>Uppdatera</Button>
                 </div>
               </div>
             </FadeIn>
@@ -107,9 +195,18 @@ export class WorkspaceForm extends Component {
           }
           { part ?
             <FadeIn>
-              <h1 className={styles.formHeadline}>Lägg till nytt delmoment</h1>
+              <h1 className={styles.formHeadline}>
+                { update ? `Uppdatera delmoment "${partToEdit.title}"` : 'Lägg till nytt delmoment' }
+              </h1>
               <label className={styles.label} htmlFor="title">Delmomentets titel</label>
-              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" />
+              <input
+                onChange={event => this.setState({ title: event.target.value })}
+                className={styles.input}
+                type="text"
+                placeholder="Den titel du vill ska synas"
+                name="title"
+                value={update && this.state.title === '' ? partToEdit.title : this.state.title}
+              />
               <label className={styles.label} htmlFor="code">Delmomentets kod</label>
               <AceEditor
                 className={styles.aceEditor}
@@ -123,11 +220,15 @@ export class WorkspaceForm extends Component {
                 showPrintMargin={false}
                 onChange={content => this.setState({ content })}
                 setOptions={{ readOnly: false }}
-                value={this.state.content}
+                value={update && this.state.content === '' ? partToEdit.content : this.state.content}
               />
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
-                  <Button handleClick={this.save}>Skapa delmoment</Button>
+                  { update ?
+                    <Button type="success" handleClick={this.update}>Uppdatera delmoment</Button>
+                    :
+                    <Button type="success" handleClick={this.save}>Spara delmoment</Button>
+                  }
                 </div>
               </div>
             </FadeIn>
@@ -150,7 +251,8 @@ export class WorkspaceForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    editingType: state.editor.editingType,
+    editingType: state.editor.editingType.type,
+    id: state.editor.editingType.id,
     workshop: state.currentWorkshop.item,
     message: state.workshops.message
   }

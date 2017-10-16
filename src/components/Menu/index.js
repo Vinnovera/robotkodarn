@@ -19,13 +19,6 @@ class Menu extends Component {
     this.props.dispatch(toggleMenu())
   }
 
-  /**
-   * Use event.target.value to navigate between views
-   */
-  changeView = (event) => {
-    this.props.dispatch(routeActions.push(event.target.value))
-  }
-
   startEditing = () => {
     this.props.dispatch(toggleMenu())
     this.props.dispatch(toggleEditing())
@@ -46,9 +39,9 @@ class Menu extends Component {
           :
           ''
         }
-        <Link className={styles.navigationLink} to="/workshops" onClick={this.toggleMenu}>Hantera workshops</Link>
+        <Link className={styles.navigationLink} to="/workshops" onClick={this.handleMenu}>Hantera workshops</Link>
         {this.props.role === 'superadmin' ?
-          <Link className={styles.navigationLink} to="/invite" onClick={this.toggleMenu}>Bjud in nya användare</Link>
+          <Link className={styles.navigationLink} to="/invite" onClick={this.handleMenu}>Bjud in nya användare</Link>
           :
           ''
         }

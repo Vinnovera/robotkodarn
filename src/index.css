@@ -100,13 +100,13 @@ button:focus {
 }
 
 .button.success {
-  background-color: #18bc9c;
-  border-color: #18bc9c;
+  background-color: #3DA099;
+  border-color: #3DA099;
 }
 
 .button.success:hover {
-  background-color: #128f76;
-  border-color: #11866f;
+  background-color: #238F88;
+  border-color: #238F88;
 }
 
 .button.info {

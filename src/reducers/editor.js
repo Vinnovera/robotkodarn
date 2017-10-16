@@ -79,6 +79,9 @@ export default handleActions({
   consoleOutput: [],
   activePartIndex: 0,
   editing: false,
-  editingType: 'parts',
+  editingType: {
+    type: 'parts',
+    id: 'none'
+  },
   partsToEdit: []
 })

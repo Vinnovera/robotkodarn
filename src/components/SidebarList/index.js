@@ -6,8 +6,25 @@ import { setActivePartIndex, setEditingType } from '../../actions/editor'
 import styles from './sidebarlist.css'
 
 class SidebarList extends Component {
+  /**
+   * Change between which partis showing.
+   */
   changePart = (index) => {
     this.props.dispatch(setActivePartIndex(index))
+  }
+
+  /**
+   * Sets editing type which is used in WorkspaceForm
+   * component to render relevant form.
+   */
+  add = () => {
+    event.preventDefault()
+    this.props.dispatch(setEditingType(this.props.type))
+  }
+
+  edit = (event) => {
+    event.preventDefault()
+    this.props.dispatch(setEditingType(this.props.type, event.currentTarget.value))
   }
 
   /**
@@ -26,11 +43,6 @@ class SidebarList extends Component {
     }
   }
 
-  add = (event) => {
-    event.preventDefault()
-    this.props.dispatch(setEditingType(this.props.type))
-  }
-
   renderParts() {
     return this.props.workshop.parts.map((part, index) => {
       const active = index === this.props.activePart
@@ -41,7 +53,7 @@ class SidebarList extends Component {
           <div className={open ? styles.background : styles.closedBackground} />
           { this.props.editing ?
             <div className={styles.flexContainer}>
-              <button onClick={this.edit} className={styles.editItem}>
+              <button onClick={this.edit} className={styles.editItem} value={part._id}>
                 <FA className={styles.editIcon} name="pencil" />
                 {part.title}
               </button>
@@ -64,7 +76,7 @@ class SidebarList extends Component {
         <li className={styles.listItem} key={link._id}>
           { this.props.editing ?
             <div className={styles.flexContainer} >
-              <button onClick={this.edit} className={styles.editItem}>
+              <button onClick={this.edit} className={styles.editItem} value={link._id}>
                 <FA className={styles.editIcon} name="pencil" />
                 {link.title}
               </button>

@@ -4,15 +4,19 @@ import { routeActions } from 'redux-simple-router'
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 const SET_MESSAGE = 'SET_MESSAGE'
 const UPDATE_TITLE = 'UPDATE_TITLE'
+
 const ADD_PART = 'ADD_PART'
+const UPDATE_PART = 'UPDATE_PART'
 const REMOVE_PART = 'REMOVE_PART'
+
 const ADD_LINK = 'ADD_LINK'
+const UPDATE_LINK = 'UPDATE_LINK'
 const REMOVE_LINK = 'REMOVE_LINK'
 
 // -----------------------------------------------------------------------------
-// changeTitle, edits the title of the workshop object
+// updateTitle, edits the title of the workshop object
 // -----------------------------------------------------------------------------
-export const changeTitle = (title, workshop) => (dispatch) => {
+export const updateTitle = (title, workshop) => (dispatch) => {
   axios
     .put(`/api/workshop/${workshop._id}`, title, {
       headers: {
@@ -56,6 +60,31 @@ export const addPart = (part, workshop) => (dispatch) => {
     })
     .catch(error => console.log(error))
 }
+
+// -----------------------------------------------------------------------------
+// updatePart, edits a specific part in a workshop
+// -----------------------------------------------------------------------------
+export const updatePart = (part, workshopID) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopID}/part/${part._id}`, part, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: UPDATE_PART,
+        payload: data
+      })
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: 'Delmomentet är nu uppdaterat.'
+      })
+    })
+    .catch(error => console.log(error))
+}
+
 
 // -----------------------------------------------------------------------------
 // removePart, removes part from database

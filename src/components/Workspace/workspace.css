@@ -12,6 +12,10 @@
   width: calc(100vw - 280px); /* 1 */
 }
 
+:local .workspaceHeadline {
+  font-size: 2rem;
+}
+
 :local .mainPaneExpanded {
   width: calc(100vw - 28px);
 }

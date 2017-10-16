@@ -13,7 +13,8 @@
   text-align: center;
 }
 
-:local .invite h1 {
+:local .inviteHeadline {
+  font-size: 2.5rem;
   color: inherit;
   margin: 0;
 }

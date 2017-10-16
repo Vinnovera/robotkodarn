@@ -39,7 +39,7 @@ export class Workspace extends Component {
             :
             <main className={this.getMainPaneClassName()}>
               { this.props.currentWorkshop.parts.length > 0 ?
-                <h2>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h2>
+                <h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
                 :
                 ''
               }
@@ -68,7 +68,7 @@ function mapStateToProps(state) {
     currentWorkshop: state.currentWorkshop.item,
     activePartIndex: state.editor.activePartIndex,
     editing: state.editor.editing,
-    editingType: state.editor.editingType
+    editingType: state.editor.editingType.type
   }
 }
 

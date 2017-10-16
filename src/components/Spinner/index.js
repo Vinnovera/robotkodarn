@@ -7,11 +7,13 @@ import styles from './spinner.css'
  */
 const Spinner = () => {
   return (
-    <div className={styles.skFoldingCube}>
-      <div className={styles.skCube1} />
-      <div className={styles.skCube2} />
-      <div className={styles.skCube4} />
-      <div className={styles.skCube3} />
+    <div className={styles.center}>
+      <div className={styles.skFoldingCube}>
+        <div className={styles.skCube1} />
+        <div className={styles.skCube2} />
+        <div className={styles.skCube4} />
+        <div className={styles.skCube3} />
+      </div>
     </div>
   )
 }

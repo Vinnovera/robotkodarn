@@ -185,10 +185,15 @@ export const setActivePartIndex = index => (dispatch) => {
 
 // -----------------------------------------------------------------------------
 // setEditingType, sets the type of content to be edited.
+// If ID is provided, part/link is to be be updated.
+// Else: create new.
 // -----------------------------------------------------------------------------
-export const setEditingType = type => (dispatch) => {
+export const setEditingType = (type, id = 'none') => (dispatch) => {
   dispatch({
     type: SET_EDITING_TYPE,
-    payload: type
+    payload: {
+      type,
+      id
+    }
   })
 }

@@ -62,32 +62,25 @@ const createPart = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Update a part with {id} [PUT]
 // -----------------------------------------------------------------------------
-const updatePart = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const updatePart = async (request, reply) => {
+  try {
+    const validatePart = Joi.validate(request.payload).value
+    const workshop = await Workshop.findOne({ _id: request.params.wid })
 
-    const partToUpdate = foundWorkshop.parts.filter(part => part._id === request.params.pid)[0]
-    const index = foundWorkshop.parts.indexOf(partToUpdate)
-    const newPart = Object.assign(partToUpdate, request.payload)
+    const partToUpdate = workshop.parts.filter((part) => {
+      return part._id.toString() === request.params.pid
+    })[0]
 
-    Joi.validate(newPart, partValidation, (validationError, /* value */) => {
-      if (validationError) {
-        return reply({ error: validationError }).code(400)
-      }
+    const updatedPart = Object.assign(partToUpdate, validatePart)
+    const index = workshop.parts.indexOf(partToUpdate)
+    const updatedPartsList = workshop.parts.splice(index, 1, updatedPart)
+    workshop.parts = updatedPartsList
 
-      foundWorkshop.parts.splice(index, 1, newPart)
-
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-
-        return reply(foundWorkshop).code(200)
-      })
-    })
-  })
+    await workshop.save()
+    return reply(updatedPartsList).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------

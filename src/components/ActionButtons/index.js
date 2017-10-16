@@ -13,7 +13,6 @@ export class ActionButtons extends Component {
    * @param {boolean} upload true = code will be uploaded to Arduino
    */
   handleClick = (upload = false) => {
-    console.log('Du har klickat!')
     this.props.dispatch(setConsoleOutput({
       type: 'info',
       heading: 'Testar kod',
