@@ -24,13 +24,6 @@ export default handleActions({
     })
   },
 
-  SET_PARTS: (state, action) => {
-    return ({
-      ...state,
-      workshopParts: action.payload
-    })
-  },
-
   SET_MESSAGE: (state, action) => {
     return ({
       ...state,

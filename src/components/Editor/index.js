@@ -126,18 +126,18 @@ export class Editor extends Component {
 
   render() {
     return (
-      <div className={styles.codeWrapper}>
-        {this.renderUndoRedo()}
-        <ul>
-          <li onClick={() => this.handleTabClick('user')} className={this.props.activeTab === 'user' && styles.active}>
-            <a href="#">Din kod</a>
-          </li>
-          <li onClick={() => this.handleTabClick('original')} className={this.props.activeTab === 'original' && styles.active}>
-            <a href="#">Original</a>
-          </li>
-        </ul>
-        {this.renderAceEditor()}
-      </div>
+        <div className={styles.codeWrapper}>
+          {this.renderUndoRedo()}
+          <ul>
+            <li onClick={() => this.handleTabClick('user')} className={this.props.activeTab === 'user' && styles.active}>
+              <a href="#">Din kod</a>
+            </li>
+            <li onClick={() => this.handleTabClick('original')} className={this.props.activeTab === 'original' && styles.active}>
+              <a href="#">Original</a>
+            </li>
+          </ul>
+          {this.renderAceEditor()}
+        </div>
     )
   }
 }

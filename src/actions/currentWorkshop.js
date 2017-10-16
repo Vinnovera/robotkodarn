@@ -3,6 +3,7 @@ import { routeActions } from 'redux-simple-router'
 
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 const SET_MESSAGE = 'SET_MESSAGE'
+const UPDATE_TITLE = 'UPDATE_TITLE'
 const ADD_PART = 'ADD_PART'
 const REMOVE_PART = 'REMOVE_PART'
 const ADD_LINK = 'ADD_LINK'
@@ -19,6 +20,11 @@ export const changeTitle = (title, workshop) => (dispatch) => {
       }
     })
     .then(({ data }) => {
+      dispatch({
+        type: UPDATE_TITLE,
+        payload: data.title
+      })
+
       dispatch({
         type: SET_MESSAGE,
         payload: `Workshopen har nu titeln ${data.title}.`
@@ -63,6 +69,11 @@ export const removePart = (part, workshop) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
+        type: REMOVE_PART,
+        payload: data
+      })
+
+      dispatch({
         type: SET_MESSAGE,
         payload: 'Delmomentet är nu borttaget.'
       })
@@ -104,10 +115,15 @@ export const removeLink = (link, workshop) => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then((/* response */) => {
+    .then(({ data }) => {
+      dispatch({
+        type: REMOVE_LINK,
+        payload: data
+      })
+
       dispatch({
         type: SET_MESSAGE,
-        payload: `Delmomentet ${link.title} är nu borttaget.`
+        payload: 'Länken är nu borttagen.'
       })
     })
     .catch(error => console.log(error))

@@ -6,6 +6,7 @@ import Editor from './../Editor'
 import WorkspaceForm from './../WorkspaceForm'
 import Console from './../Console'
 import ActionButtons from './../ActionButtons'
+import Spinner from './../Spinner'
 import View from './../View'
 import styles from './workspace.css'
 
@@ -52,7 +53,7 @@ export class Workspace extends Component {
     }
 
     return (
-      <i className={styles.spinner} />
+      <Spinner />
     )
   }
 

@@ -110,7 +110,7 @@ const deletePart = async (request, reply) => {
 
     await currentWorkshop.save()
 
-    return reply(currentWorkshop).code(200)
+    return reply(updatedPartsList).code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
   }
