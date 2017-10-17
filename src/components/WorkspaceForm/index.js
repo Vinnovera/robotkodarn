@@ -24,9 +24,10 @@ export class WorkspaceForm extends Component {
     }
   }
 
-  // Update parts to edit list when leaving.
+  // Update parts to edit list and reset editing type to parts when leaving.
   componentWillUnmount() {
     this.props.dispatch(setPartsToEdit(this.props.workshop.parts))
+    this.props.dispatch(setEditingType('parts'))
   }
 
   /**
@@ -58,12 +59,12 @@ export class WorkspaceForm extends Component {
   }
 
   /**
-   * Combines this.props.id and the values that are changed in
-   * the internal state and returns the object that will be saved
+   * Takes the values that are changed in the internal state
+   * and returns the object that will be saved
    * in database. Used when updating parts and links.
    */
   updatedValues = () => {
-    const obj = { _id: this.props.id }
+    const obj = {}
 
     if (this.state.title !== '') {
       obj.title = this.state.title
@@ -83,20 +84,17 @@ export class WorkspaceForm extends Component {
   update = (event) => {
     event.preventDefault()
 
-    console.log('nu är vi inne')
-
     // First, check that user has changed something
     if (this.state.title === '' && this.state.content === '') {
       return
     }
 
-    console.log('kom förbi första checken')
-
-    const workshop = this.props.workshop
-    const obj = this.updatedValues()
+    const workshopId = this.props.workshop._id
+    const currentId = this.props.id
+    const updatedContent = this.updatedValues()
 
     if (this.props.editingType === 'parts') {
-      this.props.dispatch(updatePart(obj, workshop._id))
+      this.props.dispatch(updatePart(updatedContent, workshopId, currentId))
     } else if (this.props.editingType === 'reference') {
       // TODO: Make sure it's possible to update reference links.
     } else if (this.props.editingType === 'title') {

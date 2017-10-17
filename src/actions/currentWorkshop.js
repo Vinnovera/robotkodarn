@@ -64,9 +64,9 @@ export const addPart = (part, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updatePart, edits a specific part in a workshop
 // -----------------------------------------------------------------------------
-export const updatePart = (part, workshopID) => (dispatch) => {
+export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshopID}/part/${part._id}`, part, {
+    .put(`/api/workshop/${workshopId}/part/${partId}`, updatedContent, {
       headers: {
         'content-type': 'application/json'
       }
@@ -84,7 +84,6 @@ export const updatePart = (part, workshopID) => (dispatch) => {
     })
     .catch(error => console.log(error))
 }
-
 
 // -----------------------------------------------------------------------------
 // removePart, removes part from database
@@ -129,6 +128,30 @@ export const addLink = (link, workshop) => (dispatch) => {
       dispatch({
         type: SET_MESSAGE,
         payload: `Länk med titeln ${data.title} är nu tillagd.`
+      })
+    })
+    .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// updateLink, edits a specific link in a workshop
+// -----------------------------------------------------------------------------
+export const updateLink = (content, workshopID, linkId) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopID}/link/${linkId}`, content, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: UPDATE_LINK,
+        payload: data
+      })
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: 'Länken är nu uppdaterad.'
       })
     })
     .catch(error => console.log(error))

@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { Part, partValidation } from '../models/part'
+import { Part, partValidation, contentValidation } from '../models/part'
 import { Workshop } from '../models/workshop'
 
 // -----------------------------------------------------------------------------
@@ -33,30 +33,34 @@ const getPart = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Add a part [POST]
 // -----------------------------------------------------------------------------
-const createPart = (request, reply) => {
-  Workshop.findOne({ _id: request.params.id }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const createPart = async (request, reply) => {
+  try {
+    let validatedContent
 
-    const part = new Part(request.payload)
-
-    Joi.validate(part, partValidation, (validationError) => {
+    /**
+     * First make sure that the content recieved is validated.
+     */
+    Joi.validate(request.payload, contentValidation, (validationError, value) => {
       if (validationError) {
-        return reply({ error: validationError }).code(400)
+        const error = validationError
+        error.code = 400
+        throw error
       }
-
-      foundWorkshop.parts.push(part)
-
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-
-        return reply(part).code(200)
-      })
+      validatedContent = value
     })
-  })
+
+    // If no workshop found, this will throw a 500 error
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+
+    const part = new Part(validatedContent)
+    workshop.parts.push(part)
+
+    await workshop.save()
+
+    return reply(part).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -64,19 +68,37 @@ const createPart = (request, reply) => {
 // -----------------------------------------------------------------------------
 const updatePart = async (request, reply) => {
   try {
-    const validatePart = Joi.validate(request.payload).value
+    // This will cast a 500 error if no workshop is found.
     const workshop = await Workshop.findOne({ _id: request.params.wid })
 
+    // Find the part that is to be updated
     const partToUpdate = workshop.parts.filter((part) => {
       return part._id.toString() === request.params.pid
     })[0]
 
-    const updatedPart = Object.assign(partToUpdate, validatePart)
+    // Update the fields with changes (can be title and/or content)
+    const updatedPart = Object.assign(partToUpdate, request.payload)
+
+    /* Validate the updated part.
+     * This can't be done until we have the id as well as full content.
+     */
+    let validatedPart
+
+    Joi.validate(updatedPart, partValidation, (validationError, value) => {
+      if (validationError) {
+        const error = validationError
+        error.code = 400
+        throw error
+      }
+      validatedPart = value
+    })
+
     const index = workshop.parts.indexOf(partToUpdate)
-    const updatedPartsList = workshop.parts.splice(index, 1, updatedPart)
+    const updatedPartsList = workshop.parts.splice(index, 1, validatedPart)
     workshop.parts = updatedPartsList
 
     await workshop.save()
+
     return reply(updatedPartsList).code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
