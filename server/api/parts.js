@@ -38,7 +38,7 @@ const createPart = async (request, reply) => {
     let validatedContent
 
     /**
-     * First make sure that the content recieved is validated.
+     * First make sure that the content received is valid
      */
     Joi.validate(request.payload, contentValidation, (validationError, value) => {
       if (validationError) {
@@ -78,6 +78,7 @@ const updatePart = async (request, reply) => {
 
     // Update the fields with changes (can be title and/or content)
     const updatedPart = Object.assign(partToUpdate, request.payload)
+    const index = workshop.parts.indexOf(partToUpdate)
 
     /* Validate the updated part.
      * This can't be done until we have the id as well as full content.
@@ -93,13 +94,13 @@ const updatePart = async (request, reply) => {
       validatedPart = value
     })
 
-    const index = workshop.parts.indexOf(partToUpdate)
-    const updatedPartsList = workshop.parts.splice(index, 1, validatedPart)
-    workshop.parts = updatedPartsList
+    // Replace the old part with the new
+    workshop.parts[index] = validatedPart
 
-    await workshop.save()
+    // Update and save to database
+    await Workshop.update({ _id: workshop._id }, { parts: workshop.parts })
 
-    return reply(updatedPartsList).code(200)
+    return reply(workshop.parts).code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
   }

@@ -31,7 +31,8 @@ export const updateTitle = (title, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: `Workshopen har nu titeln ${data.title}.`
+        payload: `Workshopen har nu titeln ${data.title}.`,
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -55,7 +56,8 @@ export const addPart = (part, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: `Delmomentet med titeln ${data.title} är nu tillagt.`
+        payload: `Delmomentet med titeln ${data.title} är nu tillagt.`,
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -79,7 +81,8 @@ export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => 
 
       dispatch({
         type: SET_MESSAGE,
-        payload: 'Delmomentet är nu uppdaterat.'
+        payload: 'Delmomentet är nu uppdaterat.',
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -103,7 +106,8 @@ export const removePart = (part, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: 'Delmomentet är nu borttaget.'
+        payload: 'Delmomentet är nu borttaget.',
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -127,7 +131,8 @@ export const addLink = (link, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: `Länk med titeln ${data.title} är nu tillagd.`
+        payload: `Länk med titeln ${data.title} är nu tillagd.`,
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -136,9 +141,9 @@ export const addLink = (link, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updateLink, edits a specific link in a workshop
 // -----------------------------------------------------------------------------
-export const updateLink = (content, workshopID, linkId) => (dispatch) => {
+export const updateLink = (updatedContent, workshopID, linkId) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshopID}/link/${linkId}`, content, {
+    .put(`/api/workshop/${workshopID}/link/${linkId}`, updatedContent, {
       headers: {
         'content-type': 'application/json'
       }
@@ -151,7 +156,8 @@ export const updateLink = (content, workshopID, linkId) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: 'Länken är nu uppdaterad.'
+        payload: 'Länken är nu uppdaterad.',
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -175,7 +181,8 @@ export const removeLink = (link, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: 'Länken är nu borttagen.'
+        payload: 'Länken är nu borttagen.',
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))

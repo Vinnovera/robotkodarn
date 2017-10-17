@@ -39,7 +39,8 @@ export const createWorkshop = workshop => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`
+        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -63,7 +64,8 @@ export const copyWorkshop = workshopID => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`
+        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -87,7 +89,8 @@ export const deleteWorkshop = workshopID => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: 'Workshopen är nu borttagen.'
+        payload: 'Workshopen är nu borttagen.',
+        time: +new Date()
       })
     })
     .catch(error => console.log(error))

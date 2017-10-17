@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { Link, linkValidation } from '../models/link'
+import { Link, linkValidation, contentValidation } from '../models/link'
 import { Workshop } from '../models/workshop'
 
 // -----------------------------------------------------------------------------
@@ -35,11 +35,24 @@ const getLink = (request, reply) => {
 // -----------------------------------------------------------------------------
 const addLink = async (request, reply) => {
   try {
-    const workshop = await Workshop.findOne({ _id: request.params.id })
-    const link = new Link(request.payload)
-    const validatedLink = Joi.validate(link, linkValidation).value
+    let validatedContent
 
-    workshop.links.push(validatedLink)
+    /**
+     * First make sure that the content received is valid
+     */
+    Joi.validate(request.payload, contentValidation, (validationError, value) => {
+      if (validationError) {
+        const error = validationError
+        error.code = 400
+        throw error
+      }
+      validatedContent = value
+    })
+
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const link = new Link(validatedContent)
+
+    workshop.links.push(link)
     await workshop.save()
 
     return reply(link).code(200)
@@ -51,29 +64,44 @@ const addLink = async (request, reply) => {
 // -----------------------------------------------------------------------------
 // Update a link with {id} [PUT]
 // -----------------------------------------------------------------------------
-const updateLink = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const updateLink = async (request, reply) => {
+  try {
+    // This will cast a 500 error if no workshop is found.
+    const workshop = await Workshop.findOne({ _id: request.params.wid })
 
-    const linkToUpdate = foundWorkshop.links.filter(link => link._id === request.params.lid)[0]
-    const index = foundWorkshop.links.indexOf(linkToUpdate)
-    const newLink = Object.assign(linkToUpdate, request.payload)
+    // Find the link that is to be updated
+    const linkToUpdate = workshop.links.filter((link) => {
+      return link._id.toString() === request.params.lid
+    })[0]
+    const index = workshop.links.indexOf(linkToUpdate)
 
-    Joi.validate(newLink, linkValidation, (validationError, /* value */) => {
-      if (validationError) return reply({ error: validationError }).code(400)
+    // Update the fields with changes (can be title and/or content)
+    const updatedLink = Object.assign(linkToUpdate, request.payload)
 
-      foundWorkshop.links.splice(index, 1, newLink)
+    /* Validate the updated link
+     * This can't be done until we have the id as well as full content.
+     */
+    let validatedLink
 
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-        return reply(foundWorkshop).code(200)
-      })
+    Joi.validate(updatedLink, linkValidation, (validationError, value) => {
+      if (validationError) {
+        const error = validationError
+        error.code = 400
+        throw error
+      }
+      validatedLink = value
     })
-  })
+
+    // Replace the old link with the new
+    workshop.links[index] = validatedLink
+
+    // Update and save to database
+    await Workshop.update({ _id: workshop._id }, { links: workshop.links })
+
+    return reply(workshop.links).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------

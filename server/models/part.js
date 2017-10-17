@@ -13,7 +13,7 @@ const partSchema = Schema({
 })
 
 export const partValidation = Joi.object().keys({
-  _id: Joi.string().required(),
+  _id: Joi.object().required(),
   title: Joi.string().required(),
   content: Joi.string().required()
 }).unknown()

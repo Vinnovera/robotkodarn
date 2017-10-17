@@ -19,7 +19,7 @@ export class WorkspaceForm extends Component {
 
   // Display message whenever a new one is available.
   componentWillReceiveProps(nextProps) {
-    if (nextProps.message !== this.props.message) {
+    if (nextProps.time !== this.props.time) {
       this.props.dispatch(setEditingType('message'))
     }
   }
@@ -91,12 +91,12 @@ export class WorkspaceForm extends Component {
 
     const workshopId = this.props.workshop._id
     const currentId = this.props.id
-    const updatedContent = this.updatedValues()
+    const content = this.updatedValues()
 
     if (this.props.editingType === 'parts') {
-      this.props.dispatch(updatePart(updatedContent, workshopId, currentId))
+      this.props.dispatch(updatePart(content, workshopId, currentId))
     } else if (this.props.editingType === 'reference') {
-      // TODO: Make sure it's possible to update reference links.
+      this.props.dispatch(updateLink(content, workshopId, currentId))
     } else if (this.props.editingType === 'title') {
       this.props.dispatch(updateTitle(this.state, this.props.workshop))
     }
@@ -252,6 +252,7 @@ function mapStateToProps(state) {
     editingType: state.editor.editingType.type,
     id: state.editor.editingType.id,
     workshop: state.currentWorkshop.item,
+    time: state.workshops.time,
     message: state.workshops.message
   }
 }

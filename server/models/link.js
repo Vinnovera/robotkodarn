@@ -18,4 +18,12 @@ export const linkValidation = Joi.object().keys({
   content: Joi.string().required()
 }).unknown()
 
+/* Used to validate content from user
+ * when a new link is created
+ */
+export const contentValidation = Joi.object().keys({
+  title: Joi.string().required(),
+  content: Joi.string().required()
+}).unknown()
+
 export const Link = mongoose.model('Link', linkSchema)

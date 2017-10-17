@@ -27,11 +27,13 @@ export default handleActions({
   SET_MESSAGE: (state, action) => {
     return ({
       ...state,
-      message: action.payload
+      message: action.payload,
+      time: +new Date()
     })
   }
 
 }, {
   userWorkshops: [],
-  message: null
+  message: null,
+  time: +new Date()
 })
