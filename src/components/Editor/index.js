@@ -64,6 +64,13 @@ export class Editor extends Component {
     this.props.dispatch(setPartsToEdit(updatedParts))
   }
 
+  /*
+   * Set ref on editor
+   */
+  setEditorRef = (node) => {
+    this.editorRef = node
+  }
+
   /**
    * Toggle between tabs (user or original)
    */
@@ -93,7 +100,7 @@ export class Editor extends Component {
 
     return (
       <AceEditor
-        ref="editor"
+        ref={this.setEditorRef}
         theme="textmate"
         fontSize="16px"
         mode="c_cpp"
@@ -117,8 +124,8 @@ export class Editor extends Component {
     if (this.props.activeTab === 'user') {
       return (
         <div>
-          <button className={styles.undo} onClick={() => { this.refs.editor.editor.undo() }}><FA name="undo" /></button>
-          <button className={styles.redo} onClick={() => { this.refs.editor.editor.redo() }}><FA name="repeat" /></button>
+          <button className={styles.undo} onClick={() => { this.editorRef.editor.undo() }}><FA name="undo" /></button>
+          <button className={styles.redo} onClick={() => { this.editorRef.editor.redo() }}><FA name="repeat" /></button>
         </div>
       )
     }
@@ -126,18 +133,18 @@ export class Editor extends Component {
 
   render() {
     return (
-        <div className={styles.codeWrapper}>
-          {this.renderUndoRedo()}
-          <ul>
-            <li onClick={() => this.handleTabClick('user')} className={this.props.activeTab === 'user' && styles.active}>
-              <a href="#">Din kod</a>
-            </li>
-            <li onClick={() => this.handleTabClick('original')} className={this.props.activeTab === 'original' && styles.active}>
-              <a href="#">Original</a>
-            </li>
-          </ul>
-          {this.renderAceEditor()}
-        </div>
+      <div className={styles.codeWrapper}>
+        {this.renderUndoRedo()}
+        <ul>
+          <li onClick={() => this.handleTabClick('user')} className={this.props.activeTab === 'user' && styles.active}>
+            <a href="#">Din kod</a>
+          </li>
+          <li onClick={() => this.handleTabClick('original')} className={this.props.activeTab === 'original' && styles.active}>
+            <a href="#">Original</a>
+          </li>
+        </ul>
+        {this.renderAceEditor()}
+      </div>
     )
   }
 }
