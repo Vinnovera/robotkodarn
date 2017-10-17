@@ -58,7 +58,20 @@ const addWorkshop = async (request, reply) => {
     workshop.userId = user._id
     workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
 
-    const validatedWorkshop = Joi.validate(workshop, workshopValidation).value
+    let validatedWorkshop
+
+    /**
+     * First make sure that the content received is valid
+     */
+    Joi.validate(workshop, workshopValidation, (validationError, value) => {
+      if (validationError) {
+        const error = validationError
+        error.code = 400
+        throw error
+      }
+      validatedWorkshop = value
+    })
+
     await validatedWorkshop.save()
 
     return reply(validatedWorkshop).code(200)
@@ -74,7 +87,17 @@ const updateWorkshop = async (request, reply) => {
   try {
     const workshop = await Workshop.findOne({ _id: request.params.id })
     const updatedWorkshop = Object.assign(workshop, request.payload)
-    const validatedWorkshop = Joi.validate(updatedWorkshop, workshopValidation).value
+
+    let validatedWorkshop
+
+    Joi.validate(updatedWorkshop, workshopValidation, (validationError, value) => {
+      if (validationError) {
+        const error = validationError
+        error.code = 400
+        throw error
+      }
+      validatedWorkshop = value
+    })
 
     await validatedWorkshop.save()
 
