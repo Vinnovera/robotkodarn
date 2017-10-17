@@ -2,7 +2,6 @@
   margin-top: 3rem;
 }
 
-
 :local .form {
   max-width: 800px;
   margin: 0 auto;
@@ -10,6 +9,7 @@
 
 :local .workshopHeadline {
   color: inherit;
+  font-size: 2rem;
   text-align: center;
 }
 
@@ -17,6 +17,19 @@
   border-spacing: 0 1rem;
   text-align: left;
   width: 100%;
+}
+
+:local .tableLink {
+  color: #332C3D;
+  font-weight: 700;
+  transition: color 250ms ease;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .tableLink:hover {
+  color: #503F69;
+  text-decoration: none;
 }
 
 :local th:first-of-type {

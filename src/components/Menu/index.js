@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { routeActions } from 'redux-simple-router'
 import { Link } from 'react-router'
 import { toggleMenu } from '../../actions/menu'
 import { signOut } from '../../actions/authentication'

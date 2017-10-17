@@ -65,7 +65,7 @@ class Workshops extends Component {
                   {workshops.map((workshop) => {
                     return (
                       <tr className={styles.workshopItem} key={workshop._id}>
-                        <td><Link to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
+                        <td><Link className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
                         <td>{workshop.pincode}</td>
                         <td>
                           <button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">

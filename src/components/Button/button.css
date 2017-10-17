@@ -26,6 +26,9 @@
 }
 
 :local .buttonDanger {
+  background-color: #FE5D4B;
+}
+:local .buttonDanger:hover {
   background-color: #C52522;
 }
 

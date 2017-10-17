@@ -4,6 +4,7 @@ import AceEditor from 'react-ace'
 import { addLink, updateLink, addPart, updatePart, updateTitle } from '../../actions/currentWorkshop'
 import { setPartsToEdit, setEditingType } from '../../actions/editor'
 import Button from './../Button'
+import UserMessage from './../UserMessage'
 import FadeIn from './../FadeIn'
 import styles from './workspaceform.css'
 
@@ -104,12 +105,6 @@ export class WorkspaceForm extends Component {
     this.resetState()
   }
 
-  // TODO: Figure out what user wants to do here.
-  discardMessage = (event) => {
-    event.preventDefault()
-    console.log('Du klickade')
-  }
-
   render() {
     const reference = this.props.editingType === 'reference'
     const title = this.props.editingType === 'title'
@@ -138,11 +133,9 @@ export class WorkspaceForm extends Component {
     return (
       <form className={styles.workspaceForm} action="post">
         <div>
-          <FadeIn>
-            <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
-          </FadeIn>
           { reference ?
             <FadeIn>
+              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
               <h1 className={styles.formHeadline}>
                 { update ? `Uppdatera referenslänk "${linkToEdit.title}"` : 'Lägg till ny referenslänk' }
               </h1>
@@ -179,6 +172,7 @@ export class WorkspaceForm extends Component {
           }
           { title ?
             <FadeIn>
+              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
               <h1 className={styles.formHeadline}>Uppdatera titel</h1>
               <label className={styles.label} htmlFor="title">Titel</label>
               <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title === '' ? this.props.workshop.title : this.state.title} />
@@ -193,6 +187,7 @@ export class WorkspaceForm extends Component {
           }
           { part ?
             <FadeIn>
+              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
               <h1 className={styles.formHeadline}>
                 { update ? `Uppdatera delmoment "${partToEdit.title}"` : 'Lägg till nytt delmoment' }
               </h1>
@@ -233,14 +228,7 @@ export class WorkspaceForm extends Component {
             :
             ''
           }
-          { message ?
-            <FadeIn>
-              <h1 className={styles.formHeadline}>{this.props.message}</h1>
-              <Button handleChange={this.discardMessage}>Okej</Button>
-            </FadeIn>
-            :
-            ''
-          }
+          { message ? <UserMessage /> : '' }
         </div>
       </form>
     )

@@ -8,6 +8,7 @@ import Console from './../Console'
 import ActionButtons from './../ActionButtons'
 import Spinner from './../Spinner'
 import View from './../View'
+import FadeIn from './../FadeIn'
 import styles from './workspace.css'
 
 export class Workspace extends Component {
@@ -33,20 +34,24 @@ export class Workspace extends Component {
         <View>
           <Sidebar />
           { this.props.editing ?
-            <main className={this.getMainPaneClassName()}>
-              <WorkspaceForm type={this.props.editingType} />
-            </main>
+            <FadeIn>
+              <main className={this.getMainPaneClassName()}>
+                <WorkspaceForm type={this.props.editingType} />
+              </main>
+            </FadeIn>
             :
-            <main className={this.getMainPaneClassName()}>
-              { this.props.currentWorkshop.parts.length > 0 ?
-                <h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
-                :
-                ''
-              }
-              <ActionButtons />
-              <Editor />
-              <Console />
-            </main>
+            <FadeIn>
+              <main className={this.getMainPaneClassName()}>
+                { this.props.currentWorkshop.parts.length > 0 ?
+                  <h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
+                  :
+                  ''
+                }
+                <ActionButtons />
+                <Editor />
+                <Console />
+              </main>
+            </FadeIn>
           }
         </View>
       )
