@@ -33,6 +33,32 @@ ul {
   list-style: none;
 }
 
+input {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border-radius: 2px;
+  padding: 10px 15px 5px;
+  line-height: 1.42857143;
+  color: #3E3748;
+  background-color: #fff;
+  background-image: none;
+  border: 2px solid #dce4ec;
+  outline: none;
+  transition: all 250ms ease-in-out;
+  font-size: 1rem;
+}
+
+/* To remove ugly yellow background on autofill */
+input:-webkit-autofill {
+  box-shadow: 0 0 0 30px #f2f2f2 inset;
+  color: #3E3748;
+}
+
+input:focus {
+  border: 2px solid #3E3748;
+}
+
 .container {
   background-color: rgba(0, 0, 0, .1);
   margin: 0 auto;
@@ -40,18 +66,24 @@ ul {
 }
 
 a {
-  color: #18bc9c;
+  color: #3DA099;
   text-decoration: none;
+  transition: color 250ms ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  color:#FE5D4B;
+  text-decoration: none;
 }
 
 hr {
   border: none;
   border-top: 1px dashed rgba(0, 0, 0, .1);
   border-bottom: 1px dashed rgba(255, 255, 255, .2);
+  width: 100%;
+}
+
+button {
   width: 100%;
 }
 

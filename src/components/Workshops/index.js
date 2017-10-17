@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
+import { toggleEditing } from '../../actions/editor'
 
 import {
   getWorkshopsByUserId,
@@ -24,18 +25,16 @@ class Workshops extends Component {
     event.preventDefault()
     const { value, name } = event.currentTarget
 
-    switch (name) {
-      case 'edit':
-        console.log('du vill editera workshop med pin', value)
-        break
-      case 'copy':
-        this.props.dispatch(copyWorkshop(value))
-        break
-      case 'delete':
-        this.props.dispatch(deleteWorkshop(value))
-        break
-      default:
-        console.log(name)
+    if (name === 'copy') {
+      this.props.dispatch(copyWorkshop(value))
+    } else if (name === 'delete') {
+      this.props.dispatch(deleteWorkshop(value))
+    }
+  }
+
+  startEditing = () => {
+    if (!this.props.editing) {
+      this.props.dispatch(toggleEditing())
     }
   }
 
@@ -50,7 +49,7 @@ class Workshops extends Component {
       <View background="beige">
         <FadeIn>
           <div className={styles.workshops}>
-            <h2 className={styles.workshopHeadline}>Dina workshops</h2>
+            <h2 className={styles.workshopHeadline}>Mina workshops</h2>
             <form className={styles.form} method="post">
               <table className={styles.workshopTable}>
                 <thead>
@@ -65,7 +64,7 @@ class Workshops extends Component {
                   {workshops.map((workshop) => {
                     return (
                       <tr className={styles.workshopItem} key={workshop._id}>
-                        <td><Link className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
+                        <td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
                         <td>{workshop.pincode}</td>
                         <td>
                           <button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
@@ -98,7 +97,8 @@ function mapStateToProps(state) {
   return {
     userWorkshops: state.workshops.userWorkshops,
     message: state.workshops.message,
-    role: state.user.isLoggedIn
+    role: state.user.isLoggedIn,
+    editing: state.editor.editing
   }
 }
 

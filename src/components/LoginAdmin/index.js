@@ -44,14 +44,14 @@ export class LoginAdmin extends Component {
           <div className={styles.login}>
             <h1 className={styles.headline}>Logga in</h1>
             <form onSubmit={this.handleLoginSubmit}>
-              <label htmlFor="email">E-postadress</label>
+              <label className={styles.label}htmlFor="email">E-postadress</label>
               <input className={styles.input} onChange={e => this.setState({ email: e.target.value })} id="email" type="email" placeholder="Din e-postadress" />
-              <label htmlFor="password">Lösenord</label>
+              <label className={styles.label} htmlFor="password">Lösenord</label>
               <input className={styles.input} onChange={e => this.setState({ password: e.target.value })} id="password" type="password" placeholder="Ditt lösenord" />
               <div className={styles.buttonContainer}>
                 <Button type="submit">Logga in</Button>
               </div>
-              <p className={styles.info}>Har du ännu inget konto? Kontakta <a href="mailto:oskar@vinnovera.se?subject=Robotkodarn" >Oskar Andersson</a> på Vinnovera.</p>
+              <p className={styles.info}>Har du inget konto? Kontakta <a href="mailto:oskar@vinnovera.se?subject=Robotkodarn" >Oskar Andersson</a> på Vinnovera.</p>
             </form>
           </div>
         </FadeIn>
