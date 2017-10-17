@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import FA from 'react-fontawesome'
+import { compileCode, setConsoleOutput } from '../../actions/editor'
 import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
 import WorkspaceForm from './../WorkspaceForm'
 import Console from './../Console'
-import ActionButtons from './../ActionButtons'
+import Button from './../Button'
 import Spinner from './../Spinner'
 import View from './../View'
 import FadeIn from './../FadeIn'
@@ -28,6 +30,25 @@ export class Workspace extends Component {
     return `${styles.mainPane} ${styles.mainPaneExpanded}`
   }
 
+  /**
+   * Gives user message about compiling is taking place, and also dispatch the
+   * code that is about to be compiled. If upload is set to true, code will also
+   * be uploaded to Arduino.
+   *
+   * @param {boolean} upload true = code will be uploaded to Arduino
+   */
+  handleClick = (upload = false) => {
+    this.props.dispatch(setConsoleOutput({
+      type: 'info',
+      heading: 'Testar kod',
+      message: 'Skickar kod till kompilator...'
+    }))
+
+    this.props.dispatch(
+      compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
+    )
+  }
+
   renderMainContent() {
     if (this.props.currentWorkshop) {
       return (
@@ -47,7 +68,14 @@ export class Workspace extends Component {
                   :
                   <h1 className={styles.workspaceHeadline}>Delmoment</h1>
                 }
-                <ActionButtons />
+                <div className={styles.codeButtonsWrapper} >
+                  <Button type="success" handleClick={() => this.handleClick()}>
+                    <FA className={styles.icons} name="cogs" />Testa min kod
+                  </Button>
+                  <Button type="success" handleClick={() => this.handleClick(true)}>
+                    <FA className={styles.icons} name="usb" />Ladda över kod
+                  </Button>
+                </div>
                 <Editor />
                 <Console />
               </main>
@@ -73,7 +101,8 @@ function mapStateToProps(state) {
     currentWorkshop: state.currentWorkshop.item,
     activePartIndex: state.editor.activePartIndex,
     editing: state.editor.editing,
-    editingType: state.editor.editingType.type
+    editingType: state.editor.editingType.type,
+    partsToEdit: state.editor.partsToEdit
   }
 }
 
