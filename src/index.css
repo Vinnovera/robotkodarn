@@ -34,19 +34,19 @@ ul {
 }
 
 input {
-  display: block;
-  width: 100%;
-  text-align: center;
-  border-radius: 2px;
-  padding: 10px 15px 5px;
-  line-height: 1.42857143;
-  color: #3E3748;
   background-color: #fff;
   background-image: none;
   border: 2px solid #dce4ec;
-  outline: none;
-  transition: all 250ms ease-in-out;
+  border-radius: 2px;
+  color: #3E3748;
+  display: block;
   font-size: 1rem;
+  line-height: 1.42857143;
+  outline: none;
+  padding: 10px 15px 5px;
+  text-align: center;
+  transition: all 250ms ease-in-out;
+  width: 100%;
 }
 
 /* To remove ugly yellow background on autofill */
@@ -76,13 +76,6 @@ a:hover {
   text-decoration: none;
 }
 
-hr {
-  border: none;
-  border-top: 1px dashed rgba(0, 0, 0, .1);
-  border-bottom: 1px dashed rgba(255, 255, 255, .2);
-  width: 100%;
-}
-
 button {
   width: 100%;
 }
@@ -90,99 +83,4 @@ button {
 button:active,
 button:focus {
   outline: none;
-}
-
-/* BUTTONS */
-.button {
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  cursor: pointer;
-  color: white;
-  display: inline-block;
-  font-size: 1rem;
-  padding: 10px 15px;
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
-.button:hover {
-  text-decoration: none;
-}
-
-.button.default {
-  background-color: #95a5a6;
-  border-color: #95a5a6;
-}
-
-.button.default:hover {
-  background-color: #798d8f;
-  border-color: #74898a;
-}
-
-.button.primary {
-  background-color: #2c3e50;
-  border-color: #2c3e50;
-}
-
-.button.primary:hover {
-  background-color: #1a242f;
-  border-color: #161f29;
-}
-
-.button.success {
-  background-color: #3DA099;
-  border-color: #3DA099;
-}
-
-.button.success:hover {
-  background-color: #238F88;
-  border-color: #238F88;
-}
-
-.button.info {
-  background-color: #3498db;
-  border-color: #3498db;
-}
-
-.button.info:hover {
-  background-color: #217dbb;
-  border-color: #2077b2;
-}
-
-.button.warning {
-  background-color: #f39c12;
-  border-color: #f39c12;
-}
-
-.button.warning:hover {
-  background-color: #c87f0a;
-  border-color: #be780a;
-}
-
-.button.danger {
-  background-color: #e74c3c;
-  border-color: #e74c3c;
-}
-
-.button.danger:hover {
-  background-color: #d62c1a;
-  border-color: #cd2a19;
-}
-
-.button.xs {
-  padding: 3px 5px;
-  border-radius: 3px;
-  font-size: .8rem;
-}
-
-.button.disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
-
-.button.disabled:hover {
-  background-color: #18bc9c;
-  border-color: #18bc9c;
 }
