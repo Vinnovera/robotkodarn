@@ -50,12 +50,12 @@ class Sidebar extends Component {
         <section className={styles.section}>
           <div className={styles.wave} />
           <h3 className={styles.sidebarSub}>Delmoment</h3>
-          <SidebarList type="parts" />
+          <SidebarList listType="parts" />
         </section>
         <section className={styles.section}>
           <div className={styles.wave} />
           <h3 className={styles.sidebarSub}>Referenslänkar</h3>
-          <SidebarList type="reference" />
+          <SidebarList listType="reference" />
         </section>
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />

@@ -113,7 +113,7 @@ export class WorkspaceForm extends Component {
     const part = this.props.editingType === 'parts'
     const message = this.props.editingType === 'message' // Used for displaying feedback messages.
 
-    const update = this.props.id !== 'none'
+    const update = this.props.id
     let linkToEdit
     let partToEdit
 

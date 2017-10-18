@@ -81,7 +81,7 @@ export default handleActions({
   editing: false,
   editingType: {
     type: 'parts',
-    id: 'none'
+    id: null
   },
   partsToEdit: []
 })

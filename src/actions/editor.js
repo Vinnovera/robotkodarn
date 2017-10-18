@@ -188,7 +188,7 @@ export const setActivePartIndex = index => (dispatch) => {
 // If ID is provided, part/link is to be be updated.
 // Else: create new.
 // -----------------------------------------------------------------------------
-export const setEditingType = (type, id = 'none') => (dispatch) => {
+export const setEditingType = (type, id = null) => (dispatch) => {
   dispatch({
     type: SET_EDITING_TYPE,
     payload: {

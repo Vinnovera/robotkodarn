@@ -25,6 +25,10 @@
   transition: left 500ms ease-out;
 }
 
+:local .red {
+  border: 1px solid red;
+}
+
 :local .activeListItem .closedBackground {
   left: -35px;
 }

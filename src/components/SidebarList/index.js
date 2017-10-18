@@ -19,12 +19,12 @@ class SidebarList extends Component {
    */
   add = () => {
     event.preventDefault()
-    this.props.dispatch(setEditingType(this.props.type))
+    this.props.dispatch(setEditingType(this.props.listType))
   }
 
   edit = (event) => {
     event.preventDefault()
-    this.props.dispatch(setEditingType(this.props.type, event.currentTarget.value))
+    this.props.dispatch(setEditingType(this.props.listType, event.currentTarget.value))
   }
 
   /**
@@ -36,9 +36,9 @@ class SidebarList extends Component {
     const item = event.currentTarget.value
     const workshop = this.props.workshop._id
 
-    if (this.props.type === 'reference') {
+    if (this.props.listType === 'reference') {
       this.props.dispatch(removeLink(item, workshop))
-    } else if (this.props.type === 'parts') {
+    } else if (this.props.listType === 'parts') {
       this.props.dispatch(removePart(item, workshop))
     }
   }
@@ -114,23 +114,32 @@ class SidebarList extends Component {
   }
 
   render() {
-    const reference = this.props.type === 'reference'
-    const parts = this.props.type === 'parts'
+    const reference = this.props.listType === 'reference'
+    const parts = this.props.listType === 'parts'
+    const open = this.props.sidebarOpen
+    const active = (this.props.listType === this.props.editingType) && !this.props.current
 
     return (
       <ul className={styles.sidebarList}>
         {reference ? this.renderLinks() : ''}
         {parts ? this.renderParts() : ''}
-        <li className={styles.listItem}>
-          { this.props.editing ?
-            <button onClick={this.add} className={styles.addItem}><FA className={styles.addIcon} name="plus" />
-              {parts ? 'Nytt delmoment' : ''}
-              {reference ? 'Ny referenslänk' : ''}
+
+        { this.props.editing ?
+          <li className={active ? styles.activeListItem : styles.listItem}>
+            { active ?
+              <div className={open ? styles.background : styles.closedBackground} />
+              :
+              ''
+            }
+            <button onClick={this.add} className={styles.addItem}>
+              <FA className={styles.addIcon} name="plus" />
+              { reference ? 'Ny referenslänk' : '' }
+              { parts ? 'Nytt delmoment' : '' }
             </button>
-            :
-            ''
-          }
-        </li>
+          </li>
+          :
+          ''
+        }
       </ul>
     )
   }
@@ -140,6 +149,7 @@ function mapStateToProps(state) {
   return {
     workshop: state.currentWorkshop.item,
     editing: state.editor.editing,
+    editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
     activePart: state.editor.activePartIndex,
     sidebarOpen: state.sidebar.open
