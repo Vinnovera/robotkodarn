@@ -1,4 +1,3 @@
-import Joi from 'joi'
 import mongoose from 'mongoose'
 import { Workshop, workshopValidation } from '../models/workshop'
 
@@ -58,23 +57,17 @@ const addWorkshop = async (request, reply) => {
     workshop.userId = user._id
     workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
 
-    let validatedWorkshop
-
     /**
      * First make sure that the content received is valid
-     */
-    Joi.validate(workshop, workshopValidation, (validationError, value) => {
-      if (validationError) {
-        const error = validationError
-        error.code = 400
-        throw error
-      }
-      validatedWorkshop = value
-    })
+    */
+    const validated = workshopValidation.validate(workshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
 
-    await validatedWorkshop.save()
+    await validated.value.save()
 
-    return reply(validatedWorkshop).code(200)
+    return reply(validated.value).code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
   }
@@ -88,20 +81,14 @@ const updateWorkshop = async (request, reply) => {
     const workshop = await Workshop.findOne({ _id: request.params.id })
     const updatedWorkshop = Object.assign(workshop, request.payload)
 
-    let validatedWorkshop
+    const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
 
-    Joi.validate(updatedWorkshop, workshopValidation, (validationError, value) => {
-      if (validationError) {
-        const error = validationError
-        error.code = 400
-        throw error
-      }
-      validatedWorkshop = value
-    })
+    await validated.value.save()
 
-    await validatedWorkshop.save()
-
-    return reply(validatedWorkshop).code(200)
+    return reply(validated.value).code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)
   }

@@ -1,4 +1,3 @@
-import Joi from 'joi'
 import { Part, partValidation, contentValidation } from '../models/part'
 import { Workshop } from '../models/workshop'
 
@@ -35,24 +34,18 @@ const getPart = (request, reply) => {
 // -----------------------------------------------------------------------------
 const createPart = async (request, reply) => {
   try {
-    let validatedContent
-
     /**
      * First make sure that the content received is valid
      */
-    Joi.validate(request.payload, contentValidation, (validationError, value) => {
-      if (validationError) {
-        const error = validationError
-        error.code = 400
-        throw error
-      }
-      validatedContent = value
-    })
+    const validated = contentValidation.validate(request.payload, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
 
     // If no workshop found, this will throw a 500 error
     const workshop = await Workshop.findOne({ _id: request.params.id })
 
-    const part = new Part(validatedContent)
+    const part = new Part(validated.value)
     workshop.parts.push(part)
 
     await workshop.save()
@@ -83,19 +76,13 @@ const updatePart = async (request, reply) => {
     /* Validate the updated part.
      * This can't be done until we have the id as well as full content.
      */
-    let validatedPart
-
-    Joi.validate(updatedPart, partValidation, (validationError, value) => {
-      if (validationError) {
-        const error = validationError
-        error.code = 400
-        throw error
-      }
-      validatedPart = value
-    })
+    const validated = partValidation.validate(updatedPart, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
 
     // Replace the old part with the new
-    workshop.parts[index] = validatedPart
+    workshop.parts[index] = validated.value
 
     // Update and save to database
     await Workshop.update({ _id: workshop._id }, { parts: workshop.parts })

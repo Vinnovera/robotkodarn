@@ -1,4 +1,3 @@
-import Joi from 'joi'
 import { Link, linkValidation, contentValidation } from '../models/link'
 import { Workshop } from '../models/workshop'
 
@@ -35,22 +34,16 @@ const getLink = (request, reply) => {
 // -----------------------------------------------------------------------------
 const addLink = async (request, reply) => {
   try {
-    let validatedContent
-
     /**
      * First make sure that the content received is valid
      */
-    Joi.validate(request.payload, contentValidation, (validationError, value) => {
-      if (validationError) {
-        const error = validationError
-        error.code = 400
-        throw error
-      }
-      validatedContent = value
-    })
+    const validated = contentValidation.validate(request.payload, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
 
     const workshop = await Workshop.findOne({ _id: request.params.id })
-    const link = new Link(validatedContent)
+    const link = new Link(validated.value)
 
     workshop.links.push(link)
     await workshop.save()
@@ -78,22 +71,16 @@ const updateLink = async (request, reply) => {
     // Update the fields with changes (can be title and/or content)
     const updatedLink = Object.assign(linkToUpdate, request.payload)
 
-    /* Validate the updated link
-     * This can't be done until we have the id as well as full content.
+    /**
+     * First make sure that the content received is valid
      */
-    let validatedLink
-
-    Joi.validate(updatedLink, linkValidation, (validationError, value) => {
-      if (validationError) {
-        const error = validationError
-        error.code = 400
-        throw error
-      }
-      validatedLink = value
-    })
+    const validated = linkValidation.validate(updatedLink, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
 
     // Replace the old link with the new
-    workshop.links[index] = validatedLink
+    workshop.links[index] = validated.value
 
     // Update and save to database
     await Workshop.update({ _id: workshop._id }, { links: workshop.links })
