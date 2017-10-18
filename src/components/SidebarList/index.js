@@ -43,13 +43,28 @@ class SidebarList extends Component {
     }
   }
 
+  setActiveStyle = (id, index) => {
+    let active
+
+    if (!this.props.editing) {
+      active = index === this.props.activePart && !this.props.editing
+    } else {
+      active = this.props.current === id
+    }
+
+    if (active) {
+      return styles.activeListItem
+    }
+
+    return styles.listItem
+  }
+
   renderParts() {
     return this.props.workshop.parts.map((part, index) => {
-      const active = index === this.props.activePart
       const open = this.props.sidebarOpen
 
       return (
-        <li className={active ? styles.activeListItem : styles.listItem} key={part._id}>
+        <li className={this.setActiveStyle(part._id, index)} key={part._id}>
           <div className={open ? styles.background : styles.closedBackground} />
           { this.props.editing ?
             <div className={styles.flexContainer}>
@@ -72,8 +87,11 @@ class SidebarList extends Component {
 
   renderLinks() {
     return this.props.workshop.links.map((link) => {
+      const open = this.props.sidebarOpen
+
       return (
-        <li className={styles.listItem} key={link._id}>
+        <li className={this.setActiveStyle(link._id)} key={link._id}>
+          <div className={open ? styles.background : styles.closedBackground} />
           { this.props.editing ?
             <div className={styles.flexContainer} >
               <button onClick={this.edit} className={styles.editItem} value={link._id}>
@@ -122,6 +140,7 @@ function mapStateToProps(state) {
   return {
     workshop: state.currentWorkshop.item,
     editing: state.editor.editing,
+    current: state.editor.editingType.id,
     activePart: state.editor.activePartIndex,
     sidebarOpen: state.sidebar.open
   }

@@ -1,52 +1,70 @@
-.screen {
-  position: absolute;
-  top: 0;
-  left: 0;
+
+:local .background {
+  background-color: #59B2AC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100vw;
-  animation: bgcolor 20s infinite;
-  animation-direction: alternate;
+  background: #59B2AC url('./../../patterns/minimal.svg') no-repeat center center fixed;
+  background-size: cover;
 }
 
-@keyframes bgcolor {
-  0% {
-    background: #18bc9c;
-  }
-  33% {
-    background: #3498db;
-  }
-  66% {
-    background: #f39c12;
-  }
-  100% {
-    background: #e74c3c;
-  }
+:local .login {
+  background-color: #fff;
+  border-radius: 7px;
+  color: #3E3748;
+  margin: auto;
+  height: 340px;
+  width: 400px;
+  padding: 0.8rem 1.5rem 3rem;
 }
 
-:local .wrapper {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
+:local .input[type=number]::-webkit-inner-spin-button,
+:local .input[type=number]::-webkit-outer-spin-button,
+:local .inputError[type=number]::-webkit-inner-spin-button,
+:local .inputError[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
-:local .loginField {
-  width: 20vw;
-  min-width: 250px;
-  margin: 0 auto;
-}
-
-:local .logo {
-  font-family: "Reenie Beanie";
-  font-size: 10rem;
-}
-
-:local .workshopNotFound {
-  font-family: "Reenie Beanie";
-  font-size: 2.5rem;
-  color: #333;
-  padding-top: 130px;
+:local .headline {
+  color: inherit;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
   text-align: center;
-  transform: rotate(-6deg);
+}
+
+:local .label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .input,
+:local .inputError {
+  margin: 0.3rem 0 1rem;
+  padding: 0.9rem 0.9rem 0.8rem;
+  text-align: left;
+  width: 100%;
+  transition: border-color 250ms ease 250ms, color 250ms ease 250ms;
+}
+
+:local .inputError {
+  border-color:#FE5D4B;
+  color: #FE5D4B;
+}
+
+:local .info {
+  font-size: 0.8rem;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .buttonContainer {
+  margin: 1.5rem 0 0.8rem;
 }

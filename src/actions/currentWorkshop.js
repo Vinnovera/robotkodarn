@@ -2,6 +2,7 @@ import axios from 'axios'
 import { routeActions } from 'redux-simple-router'
 
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
+const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP'
 const SET_MESSAGE = 'SET_MESSAGE'
 const UPDATE_TITLE = 'UPDATE_TITLE'
 
@@ -201,10 +202,18 @@ export const findWorkshopByPin = pin => (dispatch) => {
     })
     .then((response) => {
       if (response.status === 200) {
-        dispatch({ type: SET_WORKSHOP_BY_PIN, payload: response.data })
+        dispatch({
+          type: SET_WORKSHOP_BY_PIN,
+          payload: response.data
+        })
       }
     })
     .catch(() => {
+      dispatch({
+        type: UPDATE_TIMESTAMP,
+        payload: +new Date()
+      })
+
       dispatch(routeActions.push('/login'))
     })
 }

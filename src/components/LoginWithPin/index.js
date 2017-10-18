@@ -4,47 +4,43 @@ import { routeActions } from 'redux-simple-router'
 import { findWorkshopByPin } from '../../actions/currentWorkshop'
 import styles from './login.css'
 
+import Button from '../Button'
+import FadeIn from '../FadeIn'
+
 export class Login extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       pinInputValue: '',
-      workshopNotFound: false,
-      inputClassName: ''
+      workshopNotFound: false
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps(newProps) {
     // First check if new login attempt is made
     if (newProps.loginAttemptTimestamp !== this.props.loginAttemptTimestamp) {
-      if (newProps.currentWorkshop === 'notfound') {
-        this.setState({
-          workshopNotFound: true,
-          inputClassName: 'animated shake'
-        })
+      if (newProps.currentWorkshop === null) {
+        this.setState({ workshopNotFound: true })
+      } else {
+        // Make sure workshopNotFound is set to false
+        this.setState({ workshopNotFound: false })
+
+        const workshop = newProps.currentWorkshop
+        this.props.dispatch(routeActions.push(`/id/${workshop.pincode}`))
       }
-
-      // Make sure workshopNotFound is set to false
-      this.setState({ workshopNotFound: false })
-
-      const workshop = newProps.currentWorkshop
-      this.props.dispatch(routeActions.push(`/id/${workshop.pincode}`))
     }
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({ pinInputValue: e.target.value })
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault()
     let pinToSend
 
-    this.setState({ inputClassName: '' })
+    this.setState({ inputClassName: styles.input })
 
     if (this.state.pinInputValue.length === 0) {
       pinToSend = 'X'
@@ -57,30 +53,30 @@ export class Login extends Component {
 
   render() {
     return (
-      <div className="screen">
-        <div className={styles.wrapper}>
-          <h1 className={styles.logo}>Robotkodarn</h1>
-          <div className={styles.loginField}>
-            <form>
-              <input
-                type="text"
-                value={this.state.pinInputValue}
-                className={this.state.inputClassName}
-                onChange={this.handleChange}
-                placeholder="Workshop PIN"
-              />
-              <input
-                type="submit"
-                onClick={this.handleSubmit}
-                className="button primary"
-                value="Logga in"
-              />
-            </form>
+      <div className={styles.background}>
+        <FadeIn>
+          <div className={styles.login}>
+            <h1 className={styles.headline}>Robotkodarn</h1>
+            <div className={styles.loginField}>
+              <form>
+                <label className={styles.label} htmlFor="pin">Pinkod</label>
+                <input autoFocus name="pin" type="number" min="0000" max="9999" value={this.state.pinInputValue} className={this.state.workshopNotFound ? styles.inputError : styles.input } onChange={this.handleChange} placeholder="Workshopens pinkod" />
+                <div className={styles.buttonContainer}>
+                  <Button handleClick={this.handleSubmit} type="submit">Börja koda</Button>
+                </div>
+                {this.state.workshopNotFound ?
+                  <FadeIn>
+                    <p className={styles.info}>
+                      Kunde inte hitta någon workshop med denna pinkod. Försök igen!
+                    </p>
+                  </FadeIn>
+                  :
+                  ''
+                }
+              </form>
+            </div>
           </div>
-        </div>
-        {this.state.workshopNotFound && <p className={styles.workshopNotFound}>
-          Kunde inte hitta någon workshop med denna PIN-kod
-        </p>}
+        </FadeIn>
       </div>
     )
   }

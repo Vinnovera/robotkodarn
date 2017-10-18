@@ -9,6 +9,13 @@ export default handleActions({
     })
   },
 
+  UPDATE_TIMESTAMP: (state, action) => {
+    return ({
+      ...state,
+      loginAttemptTimestamp: action.payload
+    })
+  },
+
   UPDATE_TITLE: (state, action) => {
     return ({
       ...state,

@@ -12,14 +12,13 @@
   float: right;
 }
 
-
 :local .console {
   width: 100%;
   height: calc(100% - 34px);
   border: 1px solid #e5e5e5;
   background: white;
   font-size: 1rem;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 :local .console pre {
@@ -54,6 +53,7 @@
   color: #3498db;
 }
 
+
 @keyframes :local(fadeout) {
   0% {
     background-color: #FFFDD0;
@@ -62,3 +62,21 @@
     background-color: #fffef1;
   }
 }
+
+/* -----------------------------------------------------------------------------
+  CUSTOM SCROLL BAR
+------------------------------------------------------------------------------*/
+
+:local .console::-webkit-scrollbar-track {
+  background-color: #EDEBE6;
+}
+
+:local .console::-webkit-scrollbar {
+  background-color: #EDEBE6;
+  width: 6px;
+}
+
+:local .console::-webkit-scrollbar-thumb {
+  background-color: #FF9078;
+}
+

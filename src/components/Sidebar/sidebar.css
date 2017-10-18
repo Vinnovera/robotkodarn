@@ -158,7 +158,7 @@
 }
 
 :local .section:last-of-type {
-  margin-top: 6rem;
+  margin: 6rem 0 2rem;
 }
 
 :local .sidebarList {
