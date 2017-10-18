@@ -62,7 +62,7 @@
 }
 
 :local .navigationLinkActive {
-  background-color: red;
+  background-color: #EDEBE6;
 }
 
 :local .navigationLink:hover,

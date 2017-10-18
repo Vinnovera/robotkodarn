@@ -42,7 +42,7 @@ export class Console extends Component {
     return (
       <div className={styles.consoleWrapper}>
         {/* TODO: Replace anchor with button */}
-        <h4>Konsol <a onClick={this.handleClearConsoleClick} href="#">Rensa konsol</a></h4>
+        <h3 className={styles.headline}>Konsol <a onClick={this.handleClearConsoleClick} href="#">Rensa konsol</a></h3>
         <div className={styles.console} id="console">
           <pre>
             {

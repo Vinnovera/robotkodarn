@@ -10,6 +10,13 @@ import Button from './../Button'
 import OutsideAlerter from './../OutsideAlerter'
 
 class Menu extends Component {
+  getLinkStyle = (to) => {
+    if (to === this.props.path) {
+      return styles.navigationLinkActive
+    }
+    return styles.navigationLink
+  }
+
   signout = () => {
     this.props.dispatch(toggleMenu())
     this.props.dispatch(signOut('/admin'))
@@ -26,6 +33,7 @@ class Menu extends Component {
 
   render() {
     const navigationStyles = this.props.menu ? styles.navigationOpen : styles.navigation
+    const pin = this.props.currentWorkshop ? this.props.currentWorkshop.pincode : ''
 
     return (
       <OutsideAlerter>
@@ -36,13 +44,13 @@ class Menu extends Component {
             <p className={styles.userRole}>Roll: {this.props.role}</p>
           </div>
           { this.props.currentWorkshop ?
-            <Link className={styles.navigationLink} onClick={this.startEditing}>{ this.props.editing ? `Sluta redigera ${this.props.currentWorkshop.pincode}` : `Redigera ${this.props.currentWorkshop.pincode}`}</Link>
+            <Link className={this.getLinkStyle(`/id/${pin}`)} onClick={this.startEditing}>{ this.props.editing ? `Sluta redigera ${pin}` : `Redigera ${pin}`}</Link>
             :
             ''
           }
-          <Link className={styles.navigationLink} to="/workshops" onClick={this.handleMenu}>Mina workshops</Link>
+          <Link className={this.getLinkStyle('/workshops')} to="/workshops" onClick={this.handleMenu}>Mina workshops</Link>
           {this.props.role === 'superadmin' ?
-            <Link className={styles.navigationLink} to="/invite" onClick={this.handleMenu}>Bjud in nya användare</Link>
+            <Link className={this.getLinkStyle('/invite')} to="/invite" onClick={this.handleMenu}>Bjud in nya användare</Link>
             :
             ''
           }
@@ -61,7 +69,8 @@ function mapStateToProps(state) {
     name: state.user.name,
     menu: state.menu.open,
     currentWorkshop: state.currentWorkshop.item,
-    editing: state.editor.editing
+    editing: state.editor.editing,
+    path: state.routeReducer.location.pathname
   }
 }
 

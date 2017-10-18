@@ -87,6 +87,7 @@
   font-size: 1.5rem;
   height: 2rem;
   width: 2rem;
+  transition: color 250ms ease;
 }
 
 :local .tableIcon:focus,

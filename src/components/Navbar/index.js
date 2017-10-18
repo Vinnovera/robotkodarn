@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { toggleMenu } from '../../actions/menu'
-import styles from './header.css'
+import styles from './navbar.css'
 import Menu from '../Menu/'
 
 class Header extends Component {

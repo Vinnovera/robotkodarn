@@ -21,6 +21,11 @@
   font-smoothing: antialiased;
 }
 
+/* Icon is created by Aleksandr Vector
+ * and is published under CC license by
+ * the Noun project. Is is found here:
+ * https://thenounproject.com/term/tools/1017161
+ */
 :local .toolsIcon {
   background: url('./../../icons/tools.svg') no-repeat center right;
   background-size: 2rem;

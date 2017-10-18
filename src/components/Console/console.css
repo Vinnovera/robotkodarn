@@ -3,9 +3,15 @@
   height: 30%;
 }
 
-:local .consoleWrapper h4 a {
+:local .headline {
+  font-size: 1rem;
+  margin: 2rem 0 0.2rem;
+}
+
+:local .consoleWrapper .headline a {
   float: right;
 }
+
 
 :local .console {
   width: 100%;
@@ -37,11 +43,11 @@
 }
 
 :local .console .error {
-  color: #e6412f;
+  color: #C52522;
 }
 
 :local .console .success {
-  color: #00b491;
+  color: #238F88;
 }
 
 :local .console .info {

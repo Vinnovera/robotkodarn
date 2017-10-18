@@ -3,7 +3,6 @@
 */
 :local .sidebar {
   background-color: #fff;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
   color: #3E3748;
   height: calc(100vh - 81px); /* 1 */
   left: 0;
@@ -13,10 +12,28 @@
   transition: left 300ms ease-in-out 75ms;
   top: 81px; /* 1 */
   text-align: center;
+  overflow-y: scroll;
 }
 
 :local .sidebarClosed {
-  left: -252px;
+  left: -249px;
+}
+
+/* -----------------------------------------------------------------------------
+  CUSTOM SCROLL BAR
+------------------------------------------------------------------------------*/
+
+:local .sidebar::-webkit-scrollbar-track {
+  background-color: #EDEBE6;
+}
+
+:local .sidebar::-webkit-scrollbar {
+  background-color: #EDEBE6;
+  width: 4px;
+}
+
+:local .sidebar::-webkit-scrollbar-thumb {
+  background-color: #FF9078;
 }
 
 /* -----------------------------------------------------------------------------
@@ -44,10 +61,11 @@
   width: 80%;
   margin: 1rem auto 0;
   min-height: 3rem;
+  transition: color 250ms ease;
 }
 
 :local .sidebarTitleButton:hover {
-  color: #332C3D;
+  color: #FE5D4B;
 }
 
 /* 1. Remove default margin and give space to edit pencil */
@@ -71,6 +89,11 @@
 /* -----------------------------------------------------------------------------
   SEPERATING WAVE
 ------------------------------------------------------------------------------*/
+/*
+ * Wave is created by Omar Vargas and is published under CC license by
+ * the Noun project. Is is found here:
+ * https://thenounproject.com/term/waves/1258700
+ */
 :local .wave {
   background: url('./../../patterns/wave.svg') no-repeat center left;
   background-size: 100%;
@@ -99,7 +122,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  height: 100vh;
+  height: 100%;
   width: 10%;
   position: absolute;
   top: 0;

@@ -8,6 +8,8 @@ import UserMessage from './../UserMessage'
 import FadeIn from './../FadeIn'
 import styles from './workspaceform.css'
 
+//TODO: Använd vh och vw för att bestämma storlek på editor.
+
 export class WorkspaceForm extends Component {
   constructor(props) {
     super(props)
@@ -201,20 +203,22 @@ export class WorkspaceForm extends Component {
                 value={update && this.state.title === '' ? partToEdit.title : this.state.title}
               />
               <label className={styles.label} htmlFor="code">Delmomentets kod</label>
-              <AceEditor
-                className={styles.aceEditor}
-                theme="textmate"
-                fontSize="16px"
-                mode="c_cpp"
-                name="code"
-                width="100%"
-                height="400px"
-                editorProps={{ $blockScrolling: true }}
-                showPrintMargin={false}
-                onChange={content => this.setState({ content })}
-                setOptions={{ readOnly: false }}
-                value={update && this.state.content === '' ? partToEdit.content : this.state.content}
-              />
+              <div className={styles.editorWrapper}>
+                <AceEditor
+                  className={styles.aceEditor}
+                  theme="textmate"
+                  fontSize="16px"
+                  mode="c_cpp"
+                  name="code"
+                  width="100%"
+                  height="100%"
+                  editorProps={{ $blockScrolling: true }}
+                  showPrintMargin={false}
+                  onChange={content => this.setState({ content })}
+                  setOptions={{ readOnly: false }}
+                  value={update && this.state.content === '' ? partToEdit.content : this.state.content}
+                />
+              </div>
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
                   { update ?
