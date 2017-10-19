@@ -8,8 +8,6 @@ import UserMessage from './../UserMessage'
 import FadeIn from './../FadeIn'
 import styles from './workspaceform.css'
 
-//TODO: Använd vh och vw för att bestämma storlek på editor.
-
 export class WorkspaceForm extends Component {
   constructor(props) {
     super(props)
@@ -25,12 +23,59 @@ export class WorkspaceForm extends Component {
     if (nextProps.time !== this.props.time) {
       this.props.dispatch(setEditingType('message'))
     }
+
+    /* Reset state if it's not completely empty when user wants
+     * to add a new part or link
+     */
+    if (!nextProps.id && (this.state.title !== '' || this.state.content !== '')) {
+      this.setState({
+        title: '',
+        content: ''
+      })
+    }
+
+    /**
+     * Set internal state with link or part to edit. Used to
+     * populate input fields when editing existing parts or links.
+     */
+    if (nextProps.id) {
+      const type = nextProps.editingType === 'parts' ? 'parts' : 'reference'
+      const currentItem = this.getCurrent(type, nextProps.id)
+
+      this.setState({
+        title: currentItem.title,
+        content: currentItem.content
+      })
+    }
   }
 
   // Update parts to edit list and reset editing type to parts when leaving.
   componentWillUnmount() {
     this.props.dispatch(setPartsToEdit(this.props.workshop.parts))
     this.props.dispatch(setEditingType('parts'))
+  }
+
+  /**
+   * Takes a string and returns the full object chosen
+   *
+   * @param {string} type  The image source.
+   * @param {string} id    The id of the item
+   * @returns {object}     The current link or part chosen
+   */
+  getCurrent = (type, id) => {
+    let current
+
+    if (type === 'reference') {
+      current = this.props.workshop.links.filter((currentLink) => {
+        return currentLink._id === id
+      })[0]
+    } else if (type === 'parts') {
+      current = this.props.workshop.parts.filter((currentPart) => {
+        return currentPart._id === id
+      })[0]
+    }
+
+    return current
   }
 
   /**
@@ -123,13 +168,8 @@ export class WorkspaceForm extends Component {
      * This will be used to populate the input fields.
      */
     if (update) {
-      linkToEdit = this.props.workshop.links.filter((currentLink) => {
-        return currentLink._id === this.props.id
-      })[0]
-
-      partToEdit = this.props.workshop.parts.filter((currentPart) => {
-        return currentPart._id === this.props.id
-      })[0]
+      linkToEdit = this.getCurrent('reference', this.props.id)
+      partToEdit = this.getCurrent('parts', this.props.id)
     }
 
     return (
@@ -148,7 +188,7 @@ export class WorkspaceForm extends Component {
                 type="text"
                 placeholder="Den titel du vill ska synas"
                 name="title"
-                value={update && this.state.title === '' ? linkToEdit.title : this.state.title}
+                value={this.state.title}
               />
               <label className={styles.label} htmlFor="url">Referenslänkens webbadress</label>
               <input
@@ -157,7 +197,7 @@ export class WorkspaceForm extends Component {
                 type="url"
                 placeholder="Webbadress till referenslänk"
                 name="url"
-                value={update && this.state.content === '' ? linkToEdit.content : this.state.content}
+                value={this.state.content}
               />
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
@@ -200,7 +240,7 @@ export class WorkspaceForm extends Component {
                 type="text"
                 placeholder="Den titel du vill ska synas"
                 name="title"
-                value={update && this.state.title === '' ? partToEdit.title : this.state.title}
+                value={this.state.title}
               />
               <label className={styles.label} htmlFor="code">Delmomentets kod</label>
               <div className={styles.editorWrapper}>
@@ -216,7 +256,7 @@ export class WorkspaceForm extends Component {
                   showPrintMargin={false}
                   onChange={content => this.setState({ content })}
                   setOptions={{ readOnly: false }}
-                  value={update && this.state.content === '' ? partToEdit.content : this.state.content}
+                  value={this.state.content}
                 />
               </div>
               <div className={styles.flex}>

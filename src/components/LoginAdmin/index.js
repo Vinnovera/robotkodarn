@@ -5,7 +5,6 @@ import { signIn } from '../../actions/authentication'
 
 import Button from '../Button'
 import FadeIn from '../FadeIn'
-
 import styles from './loginadmin.css'
 
 export class LoginAdmin extends Component {
@@ -15,12 +14,6 @@ export class LoginAdmin extends Component {
     this.state = {
       email: null,
       password: null
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user !== this.props.user) {
-      this.checkPassword(nextProps.user[0])
     }
   }
 

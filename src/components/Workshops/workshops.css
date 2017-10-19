@@ -74,6 +74,16 @@
  * END OF FIX TO ADD BORDER RADIUS ON TR
  */
 
+:local .info {
+  background-color: #fff;
+  border-radius: 4px;
+  color: #238F88;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 2rem 3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
 /* -----------------------------------------------------------------------------
   TABLE ICONS

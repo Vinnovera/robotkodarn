@@ -51,37 +51,41 @@ class Workshops extends Component {
           <div className={styles.workshops}>
             <h2 className={styles.workshopHeadline}>Mina workshops</h2>
             <form className={styles.form} method="post">
-              <table className={styles.workshopTable}>
-                <thead>
-                  <tr>
-                    <th>Namn</th>
-                    <th>Pinkod</th>
-                    <th>Kopiera</th>
-                    <th>Radera</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {workshops.map((workshop) => {
-                    return (
-                      <tr className={styles.workshopItem} key={workshop._id}>
-                        <td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
-                        <td>{workshop.pincode}</td>
-                        <td>
-                          <button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
-                            <FA name="clone" />
-                          </button>
-                        </td>
-                        <td>
-                          <button onClick={this.handleWorkshop} type="submit" className={styles.tableIconDanger} value={workshop._id} name="delete">
-                            <FA name="times" />
-                          </button>
-                        </td>
-                      </tr>
-                    )
-                  }
-                  )}
-                </tbody>
-              </table>
+              { workshops.length > 0 ?
+                <table className={styles.workshopTable}>
+                  <thead>
+                    <tr>
+                      <th>Namn</th>
+                      <th>Pinkod</th>
+                      <th>Kopiera</th>
+                      <th>Radera</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {workshops.map((workshop) => {
+                      return (
+                        <tr className={styles.workshopItem} key={workshop._id}>
+                          <td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
+                          <td>{workshop.pincode}</td>
+                          <td>
+                            <button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
+                              <FA name="clone" />
+                            </button>
+                          </td>
+                          <td>
+                            <button onClick={this.handleWorkshop} type="submit" className={styles.tableIconDanger} value={workshop._id} name="delete">
+                              <FA name="times" />
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    }
+                    )}
+                  </tbody>
+                </table>
+                :
+                <p className={styles.info}>Du har inte skapat några workshops än.</p>
+              }
               <div className={styles.buttonContainer}>
                 <Button handleClick={this.handleCreateNew}>Skapa ny</Button>
               </div>
