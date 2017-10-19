@@ -43,7 +43,7 @@ const compileCode = (request, reply) => {
         }
 
         return reply({
-          compileError
+          error: compileError.message.match(/.+?error:\s(.+)/)[1]
         }).code(400)
       }))
   })

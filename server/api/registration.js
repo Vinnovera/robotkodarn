@@ -89,7 +89,7 @@ const completeRegistration = async (request, reply) => {
     validatedUser.complete = true
     await validatedUser.save()
 
-    // Once replied is sent, user will automatically be redirected to /adminpage
+    // Once replied is sent, user will automatically be redirected to /workshops
     return reply().code(200)
   } catch (error) {
     return reply({ error: error.message }).code(error.code || 500)

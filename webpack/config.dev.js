@@ -52,7 +52,7 @@ module.exports = {
         loader: 'style-loader!css-loader?localIdentName=[local]-[hash:base64:10]'
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|jpg|svg)$/,
         loader: 'url-loader'
       }
     ]

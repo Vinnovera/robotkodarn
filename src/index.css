@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700');
 *,
 *:before,
 *:after {
@@ -11,10 +11,8 @@ html {
 
 body {
   font-size: 62.5%;
-  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #2c3e50;
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
-  padding: 80px 0 0 0; /* Fixed navbar */
 }
 
 .hidden {
@@ -25,179 +23,64 @@ body {
   display: block;
 }
 
-h1 {
-  font-size: 3.9em;
-}
-
-h2 {
-  font-size: 3.2em;
-}
-
-h3 {
-  font-size: 2.6em;
-}
-
-h4 {
-  font-size: 1.9em;
-}
-
-h5 {
-  font-size: 1.5em;
-}
-
-h6 {
-  font-size: 1.3em;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 400;
-}
-
-h1,
-h2,
-h3 {
-  margin-top: 21px;
-  margin-bottom: 10.5px;
-}
-
-h4,
-h5,
-h6 {
-  margin-top: 10.5px;
-  margin-bottom: 10.5px;
-}
-
 p {
-  font-size: 1.5em;
   margin: 0;
 }
 
 ul {
-  font-size: 1.5em;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.container {
-  margin: 0 auto;
-  width: calc(100% - 40px);
-  background-color: rgba(0, 0, 0, .1);
-}
-
-a {
-  text-decoration: none;
-  color: #18bc9c;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-hr {
-  border: none;
-  border-top: 1px dashed rgba(0, 0, 0, .1);
-  border-bottom: 1px dashed rgba(255, 255, 255, .2);
+input {
+  background-color: #fff;
+  background-image: none;
+  border: 2px solid #dce4ec;
+  border-radius: 2px;
+  color: #3E3748;
+  display: block;
+  font-size: 1rem;
+  line-height: 1.42857143;
+  outline: none;
+  padding: 10px 15px 5px;
+  text-align: center;
+  transition: all 250ms ease-in-out;
   width: 100%;
 }
 
-
-/* BUTTONS */
-.button {
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  cursor: pointer;
-  color: white;
-  display: inline-block;
-  font-size: 1rem;
-  padding: 10px 15px;
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;
+/* To remove ugly yellow background on autofill */
+input:-webkit-autofill {
+  box-shadow: 0 0 0 30px #f2f2f2 inset;
+  color: #3E3748;
 }
 
-.button:hover {
+input:focus {
+  border: 2px solid #3E3748;
+}
+
+.container {
+  background-color: rgba(0, 0, 0, .1);
+  margin: 0 auto;
+  width: calc(100% - 40px);
+}
+
+a {
+  color: #3DA099;
+  text-decoration: none;
+  transition: color 250ms ease;
+}
+
+a:hover {
+  color:#FE5D4B;
   text-decoration: none;
 }
 
-.button.default {
-  background-color: #95a5a6;
-  border-color: #95a5a6;
+button {
+  width: 100%;
 }
 
-.button.default:hover {
-  background-color: #798d8f;
-  border-color: #74898a;
-}
-
-.button.primary {
-  background-color: #2c3e50;
-  border-color: #2c3e50;
-}
-
-.button.primary:hover {
-  background-color: #1a242f;
-  border-color: #161f29;
-}
-
-.button.success {
-  background-color: #18bc9c;
-  border-color: #18bc9c;
-}
-
-.button.success:hover {
-  background-color: #128f76;
-  border-color: #11866f;
-}
-
-.button.info {
-  background-color: #3498db;
-  border-color: #3498db;
-}
-
-.button.info:hover {
-  background-color: #217dbb;
-  border-color: #2077b2;
-}
-
-.button.warning {
-  background-color: #f39c12;
-  border-color: #f39c12;
-}
-
-.button.warning:hover {
-  background-color: #c87f0a;
-  border-color: #be780a;
-}
-
-.button.danger {
-  background-color: #e74c3c;
-  border-color: #e74c3c;
-}
-
-.button.danger:hover {
-  background-color: #d62c1a;
-  border-color: #cd2a19;
-}
-
-.button.xs {
-  padding: 3px 5px;
-  border-radius: 3px;
-  font-size: .8rem;
-}
-
-.button.disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
-
-.button.disabled:hover {
-  background-color: #18bc9c;
-  border-color: #18bc9c;
+button:active,
+button:focus {
+  outline: none;
 }

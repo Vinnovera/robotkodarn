@@ -6,7 +6,7 @@ const partSchema = Schema({
     type: String,
     required: true
   },
-  code: {
+  content: {
     type: String,
     required: true
   }
@@ -15,7 +15,15 @@ const partSchema = Schema({
 export const partValidation = Joi.object().keys({
   _id: Joi.object().required(),
   title: Joi.string().required(),
-  code: Joi.string().min(10).required()
+  content: Joi.string().required()
+}).unknown()
+
+/* Used to validate content from user
+ * when a new part is created
+ */
+export const contentValidation = Joi.object().keys({
+  title: Joi.string().required(),
+  content: Joi.string().required()
 }).unknown()
 
 export const Part = mongoose.model('Part', partSchema)

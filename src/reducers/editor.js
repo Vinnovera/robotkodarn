@@ -1,6 +1,13 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
+  SET_PARTS_TO_EDIT: (state, action) => {
+    return ({
+      ...state,
+      partsToEdit: action.payload
+    })
+  },
+
   SET_EDITOR_TAB: (state, action) => {
     return ({
       ...state,
@@ -45,23 +52,36 @@ export default handleActions({
     })
   },
 
-  SET_CONNECTED_ROBOT: (state, action) => {
-    return ({
-      ...state,
-      connectedArduino: action.payload
-    })
-  },
-
   SET_ACTIVE_PART_INDEX: (state, action) => {
     return ({
       ...state,
       activePartIndex: action.payload
     })
+  },
+
+  TOGGLE_EDITING: (state) => {
+    return ({
+      ...state,
+      editing: !state.editing
+    })
+  },
+
+  SET_EDITING_TYPE: (state, action) => {
+    return ({
+      ...state,
+      editingType: action.payload
+    })
   }
+
 }, {
   activeTab: 'user',
   compilerResponse: null,
   consoleOutput: [],
-  connectedArduino: null,
-  activePartIndex: 0
+  activePartIndex: 0,
+  editing: false,
+  editingType: {
+    type: 'parts',
+    id: null
+  },
+  partsToEdit: []
 })

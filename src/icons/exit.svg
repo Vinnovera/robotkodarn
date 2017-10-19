@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="166px" height="165px" viewBox="0 0 166 165" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Style-Tiles" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Editor" transform="translate(-308.000000, -134.000000)" fill="#3E3748">
+            <g id="Cross" transform="translate(305.000000, 131.000000)">
+                <rect id="Rectangle" transform="translate(86.113904, 85.811183) rotate(45.000000) translate(-86.113904, -85.811183) " x="65" y="-14" width="42.2278083" height="199.622366" rx="8"></rect>
+                <rect id="Rectangle" transform="translate(86.113904, 85.811183) rotate(-45.000000) translate(-86.113904, -85.811183) " x="65" y="-14" width="42.2278083" height="199.622366" rx="8"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

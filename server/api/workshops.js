@@ -1,4 +1,4 @@
-import Joi from 'joi'
+import mongoose from 'mongoose'
 import { Workshop, workshopValidation } from '../models/workshop'
 
 // -----------------------------------------------------------------------------
@@ -49,68 +49,85 @@ const getWorkshopsByUserId = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Add a workshop [POST]
 // -----------------------------------------------------------------------------
-const addWorkshop = (request, reply) => {
-  const name = request.auth.artifacts
-  const workshop = new Workshop(request.payload)
-  workshop.userId = name._id
 
-  Joi.validate(workshop, workshopValidation, (validationError, value) => {
-    if (validationError) {
-      return reply({ error: validationError }).code(400)
+const addWorkshop = async (request, reply) => {
+  try {
+    const user = request.auth.artifacts
+    const workshop = new Workshop(request.payload)
+    workshop.userId = user._id
+    workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
+
+    /**
+     * First make sure that the content received is valid
+    */
+    const validated = workshopValidation.validate(workshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
     }
 
-    workshop.save((error) => {
-      if (error) {
-        return reply({ error: error.message }).code(400)
-      }
+    await validated.value.save()
 
-      return reply(workshop).code(200)
-    })
-  })
+    return reply(validated.value).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
 // Update a workshop with {id} [PUT]
 // -----------------------------------------------------------------------------
-const updateWorkshop = (request, reply) => {
-  Workshop.findOne({
-    _id: request.params.id
-  }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
+const updateWorkshop = async (request, reply) => {
+  try {
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const updatedWorkshop = Object.assign(workshop, request.payload)
+
+    const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
     }
 
-    const workshop = Object.assign(foundWorkshop, request.payload)
+    await validated.value.save()
 
-    Joi.validate(workshop, workshopValidation, (validationError, value) => {
-      if (validationError) {
-        return reply({ error: validationError }).code(400)
-      }
+    return reply(validated.value).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
+}
 
-      workshop.save((error, doc) => {
-        if (error) {
-          return reply({ error: error.message }).code(400)
-        }
+// -----------------------------------------------------------------------------
+// Copy a workshop by existing workshop with ID [POST]
+// -----------------------------------------------------------------------------
+const copyWorkshop = async (request, reply) => {
+  try {
+    const existingWorkshop = await Workshop.findOne({ _id: request.params.id })
 
-        return reply(doc).code(200)
-      })
+    const copy = Object.assign(existingWorkshop, {
+      title: `${existingWorkshop.title} – kopia`,
+      _id: mongoose.Types.ObjectId(),
+      isNew: true,
+      pincode: Math.floor(1000 + (Math.random() * 9000))
     })
-  })
+
+    await copy.save()
+
+    return reply(copy).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
 // Delete a workshop with {id} [DELETE]
 // -----------------------------------------------------------------------------
-const deleteWorkshop = (request, reply) => {
-  Workshop.remove({
-    _id: request.params.id
-  }, (error, workshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const deleteWorkshop = async (request, reply) => {
+  try {
+    const workshop = request.params
+    await Workshop.remove({ _id: workshop.id })
 
     return reply(workshop).code(200)
-  })
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -162,6 +179,14 @@ exports.register = (server, options, next) => {
       path: '/api/workshop',
       config: {
         handler: addWorkshop,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/api/copyWorkshop/{id}',
+      config: {
+        handler: copyWorkshop,
         auth: 'session'
       }
     },

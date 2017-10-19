@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import forge from 'node-forge'
 import { connect } from 'react-redux'
+import Button from '../Button'
+import FadeIn from '../FadeIn'
 
 import { isInvited, completeRegistration } from '../../actions/registration'
 import styles from './registerform.css'
@@ -39,19 +41,25 @@ export class Register extends Component {
 
   render() {
     return (
-      <div className={styles.register}>
-        <h1>Registrera ny användare</h1>
-        <form onSubmit={this.handleRegisterSubmit}>
-          <label htmlFor="name">För- och efternamn</label>
-          <input onChange={e => this.setState({ name: e.target.value })} id="name" type="text" autoComplete="name" />
+      <div className={styles.background}>
+        <FadeIn>
+          <div className={styles.register}>
+            <h1 className={styles.headline}>Registrera ny användare</h1>
+            <form onSubmit={this.handleRegisterSubmit}>
+              <label className={styles.label} htmlFor="name">För- och efternamn</label>
+              <input className={styles.input} onChange={e => this.setState({ name: e.target.value })} id="name" type="text" autoComplete="name" />
 
-          <label htmlFor="email" >Email</label>
-          <input onChange={e => this.setState({ email: e.target.value })} id="email" type="email" autoComplete="email" />
+              <label className={styles.label} htmlFor="email" >Email</label>
+              <input className={styles.input} onChange={e => this.setState({ email: e.target.value })} id="email" type="email" autoComplete="email" />
 
-          <label htmlFor="password">Lösenord</label>
-          <input onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
-          <input type="submit" value="Registrera" />
-        </form>
+              <label className={styles.label} htmlFor="password">Lösenord</label>
+              <input className={styles.input} onChange={e => this.setState({ password: e.target.value })} id="password" type="password" />
+              <div className={styles.buttonContainer}>
+                <Button type="submit">Logga in</Button>
+              </div>
+            </form>
+          </div>
+        </FadeIn>
       </div>
     )
   }

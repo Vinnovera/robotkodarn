@@ -3,6 +3,19 @@ const SET_EDITOR_TAB = 'SET_EDITOR_TAB'
 const SET_ACTIVE_PART_INDEX = 'SET_ACTIVE_PART_INDEX'
 const SET_COMPILER_RESPONSE = 'SET_COMPILER_RESPONSE'
 const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
+const TOGGLE_EDITING = 'TOGGLE_EDITING'
+const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
+const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
+
+// -----------------------------------------------------------------------------
+// setPartsToEdit, Sets the parts that user can edit in editor
+// -----------------------------------------------------------------------------
+export const setPartsToEdit = parts => (dispatch) => {
+  dispatch({
+    type: SET_PARTS_TO_EDIT,
+    payload: parts
+  })
+}
 
 // -----------------------------------------------------------------------------
 // changeEditorTab, sets state to pressed tab
@@ -11,6 +24,16 @@ export const changeEditorTab = userOrOriginal => (dispatch) => {
   dispatch({
     type: SET_EDITOR_TAB,
     payload: userOrOriginal
+  })
+}
+// -----------------------------------------------------------------------------
+// toggleEditing, used if editor/superadmin is logged in and wants
+// to start editing currentWorkshop
+// -----------------------------------------------------------------------------
+
+export const toggleEditing = () => (dispatch) => {
+  dispatch({
+    type: TOGGLE_EDITING
   })
 }
 
@@ -23,7 +46,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
   request.setRequestHeader('Content-Type', 'application/json')
 
   request.onload = () => {
-    if (request.status >= 200 && request.status < 400) {
+    if (request.status === 200) {
       dispatch({
         type: SET_COMPILER_RESPONSE,
         payload: {
@@ -34,7 +57,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
           willUpload
         }
       })
-    } else {
+    } else if (request.status === 400) {
       dispatch({
         type: SET_COMPILER_RESPONSE,
         payload: {
@@ -42,7 +65,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
             response: JSON.parse(request.response),
             timestamp: +new Date()
           },
-          willUpload
+          willUpload: false
         }
       })
     }
@@ -65,7 +88,7 @@ export const uploadCode = compiledCode => (dispatch) => {
   /* If error occurs during compilation,
    * exit early and inform user.
    */
-  if (compiledCode.compileError) {
+  if (compiledCode.error) {
     dispatch({
       type: SET_CONSOLE_OUTPUT,
       payload: {
@@ -157,5 +180,20 @@ export const setActivePartIndex = index => (dispatch) => {
   dispatch({
     type: SET_ACTIVE_PART_INDEX,
     payload: index
+  })
+}
+
+// -----------------------------------------------------------------------------
+// setEditingType, sets the type of content to be edited.
+// If ID is provided, part/link is to be be updated.
+// Else: create new.
+// -----------------------------------------------------------------------------
+export const setEditingType = (type, id = null) => (dispatch) => {
+  dispatch({
+    type: SET_EDITING_TYPE,
+    payload: {
+      type,
+      id
+    }
   })
 }

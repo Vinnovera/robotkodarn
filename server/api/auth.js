@@ -38,7 +38,7 @@ const checkAuthorization = async (request, reply) => {
   try {
     const existingUser = await User.findOne({ _id })
     if (existingUser.complete) {
-      reply(existingUser.role).code(200)
+      reply({ role: existingUser.role, name: existingUser.name }).code(200)
     } else {
       const error = new Error('Registration not completed')
       error.code = 401
