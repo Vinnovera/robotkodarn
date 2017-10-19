@@ -35,6 +35,13 @@ export class WorkspaceForm extends Component {
     }
 
     /**
+     * Set internal state title with title of workshop
+     */
+    if (nextProps.editingType === 'title') {
+      this.setState({ title: nextProps.workshop.title })
+    }
+
+    /**
      * Set internal state with link or part to edit. Used to
      * populate input fields when editing existing parts or links.
      */
@@ -217,7 +224,7 @@ export class WorkspaceForm extends Component {
               <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
               <h1 className={styles.formHeadline}>Uppdatera titel</h1>
               <label className={styles.label} htmlFor="title">Titel</label>
-              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title === '' ? this.props.workshop.title : this.state.title} />
+              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title} />
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
                   <Button kind="success" handleClick={this.update}>Uppdatera</Button>
