@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './button.css'
 
-const Button = ({ children, handleClick, type = 'normal' }) => {
+const Button = ({ children, handleClick, kind = 'normal' }) => {
   let buttonStyle = styles.button
 
-  if (type === 'danger') {
+  if (kind === 'danger') {
     buttonStyle = styles.buttonDanger
-  } else if (type === 'success') {
+  } else if (kind === 'success') {
     buttonStyle = styles.buttonSuccess
   }
 

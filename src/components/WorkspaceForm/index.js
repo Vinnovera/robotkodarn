@@ -202,9 +202,9 @@ export class WorkspaceForm extends Component {
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
                   { update ?
-                    <Button type="success" handleClick={this.update}>Uppdatera länk</Button>
+                    <Button kind="success" handleClick={this.update}>Uppdatera länk</Button>
                     :
-                    <Button type="success" handleClick={this.save}>Spara länk</Button>
+                    <Button kind="success" handleClick={this.save}>Spara länk</Button>
                   }
                 </div>
               </div>
@@ -220,7 +220,7 @@ export class WorkspaceForm extends Component {
               <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title === '' ? this.props.workshop.title : this.state.title} />
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
-                  <Button type="success" handleClick={this.update}>Uppdatera</Button>
+                  <Button kind="success" handleClick={this.update}>Uppdatera</Button>
                 </div>
               </div>
             </FadeIn>
@@ -262,9 +262,9 @@ export class WorkspaceForm extends Component {
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
                   { update ?
-                    <Button type="success" handleClick={this.update}>Uppdatera delmoment</Button>
+                    <Button kind="success" handleClick={this.update}>Uppdatera delmoment</Button>
                     :
-                    <Button type="success" handleClick={this.save}>Spara delmoment</Button>
+                    <Button kind="success" handleClick={this.save}>Spara delmoment</Button>
                   }
                 </div>
               </div>

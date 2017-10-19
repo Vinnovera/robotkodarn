@@ -28,7 +28,7 @@ export const completeRegistration = credentials => (dispatch) => {
         'content-type': 'application/json'
       }
     })
-    .then(() => dispatch(routeActions.push('/admin'))) // TODO: Print message to user / redirect to logged in.
+    .then(() => dispatch(routeActions.push('/admin')))
     .catch((error) => {
       console.log(error) // TODO: Should dispatch an error to user
     })

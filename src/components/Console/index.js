@@ -21,28 +21,16 @@ export class Console extends Component {
         this.props.dispatch(setConsoleOutput(msg))
       }
     }
-
-    // Fix to make console scroll to bottom on new messages
-    // TODO: Add after testing
-    // setTimeout(() => {
-    //   this.scrollToBottom()
-    // }, 50)
   }
 
   handleClearConsoleClick() {
     this.props.dispatch(clearConsole())
   }
 
-  staticscrollToBottom() {
-    const consoleWrapper = document.getElementById('console')
-    consoleWrapper.scrollTop = consoleWrapper.scrollHeight - consoleWrapper.clientHeight
-  }
-
   render() {
     return (
       <div className={styles.consoleWrapper}>
-        {/* TODO: Replace anchor with button */}
-        <h3 className={styles.headline}>Konsol <a onClick={this.handleClearConsoleClick} href="#">Rensa konsol</a></h3>
+        <h3 className={styles.headline}>Konsol <button className={styles.consoleButton} onClick={this.handleClearConsoleClick}>Rensa konsol</button></h3>
         <div className={styles.console} id="console">
           <pre>
             {

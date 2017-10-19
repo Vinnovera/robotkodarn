@@ -69,10 +69,10 @@ export class Workspace extends Component {
                   <h1 className={styles.workspaceHeadline}>Delmoment</h1>
                 }
                 <div className={styles.codeButtonsWrapper} >
-                  <Button type="success" handleClick={() => this.handleClick()}>
+                  <Button kind="success" handleClick={() => this.handleClick()}>
                     <FA className={styles.icons} name="cogs" />Testa min kod
                   </Button>
-                  <Button type="success" handleClick={() => this.handleClick(true)}>
+                  <Button kind="success" handleClick={() => this.handleClick(true)}>
                     <FA className={styles.icons} name="usb" />Ladda över kod
                   </Button>
                 </div>

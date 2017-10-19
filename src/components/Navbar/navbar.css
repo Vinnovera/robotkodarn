@@ -5,6 +5,7 @@
   border-bottom: 4px solid #EDEBE6;
   display: flex;
   justify-content: space-between;
+  min-height: 81px;
   left: 0;
   position: static;
   top: 0;

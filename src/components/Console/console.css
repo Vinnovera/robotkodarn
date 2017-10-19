@@ -8,10 +8,6 @@
   margin: 2rem 0 0.2rem;
 }
 
-:local .consoleWrapper .headline a {
-  float: right;
-}
-
 :local .console {
   width: 100%;
   height: calc(100% - 34px);
@@ -50,7 +46,7 @@
 }
 
 :local .console .info {
-  color: #3498db;
+  color: #208FA0;
 }
 
 
@@ -61,6 +57,29 @@
   100% {
     background-color: #fffef1;
   }
+}
+
+/* -----------------------------------------------------------------------------
+  CONSOLE BUTTON
+------------------------------------------------------------------------------*/
+
+:local .consoleButton {
+  background: transparent;
+  border: none;
+  color: #238F88;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: inherit;
+  float: right;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  width: 7rem;
+  padding: 0;
+  transition: color 250ms ease;
+}
+
+:local .consoleButton:hover {
+  color: #214E50;
 }
 
 /* -----------------------------------------------------------------------------

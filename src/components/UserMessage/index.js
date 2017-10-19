@@ -23,8 +23,8 @@ export class UserMessage extends Component {
           <h2 className={styles.workshopPin}>Workshop: {this.props.pincode}</h2>
           <h1 className={styles.headline}>{this.props.message}</h1>
           <div className={styles.messageButtons}>
-            <Button type="success" handleClick={this.discardMessage}>Fortsätt redigera</Button>
-            <Button type="danger" handleClick={this.stopEditing}>Sluta redigera</Button>
+            <Button kind="success" handleClick={this.discardMessage}>Fortsätt redigera</Button>
+            <Button kind="danger" handleClick={this.stopEditing}>Sluta redigera</Button>
           </div>
         </div>
       </FadeIn>
