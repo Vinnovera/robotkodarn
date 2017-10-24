@@ -1,11 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import FA from 'react-fontawesome'
 import { removeLink, removePart } from '../../actions/currentWorkshop'
 import { setActivePartIndex, setEditingType } from '../../actions/editor'
 import styles from './sidebarlist.css'
 
 class SidebarList extends Component {
+  setActiveStyle = (id, index) => {
+    let active
+
+    if (!this.props.editing) {
+      active = index === this.props.activePart && !this.props.editing
+    } else {
+      active = this.props.current === id
+    }
+
+    if (active) {
+      return styles.activeListItem
+    }
+
+    return styles.listItem
+  }
+
   /**
    * Change between which partis showing.
    */
@@ -41,22 +58,6 @@ class SidebarList extends Component {
     } else if (this.props.listType === 'parts') {
       this.props.dispatch(removePart(item, workshop))
     }
-  }
-
-  setActiveStyle = (id, index) => {
-    let active
-
-    if (!this.props.editing) {
-      active = index === this.props.activePart && !this.props.editing
-    } else {
-      active = this.props.current === id
-    }
-
-    if (active) {
-      return styles.activeListItem
-    }
-
-    return styles.listItem
   }
 
   renderParts() {
@@ -101,12 +102,10 @@ class SidebarList extends Component {
               <button onClick={this.remove} type="submit" className={styles.removeIcon} value={link._id} name="delete"><FA name="times" /></button>
             </div>
             :
-            <div className={styles.flexContainer} >
-              <a target="_blank" className={styles.listLink} href={link.content}>
-                <FA className={styles.linkIcon} name="external-link" />
-                {link.title}
-              </a>
-            </div>
+            <Link className={styles.listLink} to={link.content} target="_blank">
+              <FA className={styles.linkIcon} name="external-link" />
+              {link.title}
+            </Link>
           }
         </li>
       )

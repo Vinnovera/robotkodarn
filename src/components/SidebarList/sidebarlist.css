@@ -17,16 +17,12 @@
   content: "";
   height: 100%;
   width: 100%;
-  top: 0;
+  top: 1px;
   left: 0;
   position: absolute;
   background-color: #EDEBE6;
   z-index: -1;
   transition: left 500ms ease-out;
-}
-
-:local .red {
-  border: 1px solid red;
 }
 
 :local .activeListItem .closedBackground {
@@ -49,19 +45,27 @@
   border: none;
   cursor: pointer;
   color: inherit;
+  display: inherit;
   font-family: inherit;
   font-size: 0.9rem;
   transition: color 250ms ease;
   width: 80%;
 }
 
+:local .editItem {
+  overflow: hidden;
+  width: 95%;
+}
+
 /* Used for styling parts and reference links in sidebar when not editing */
 :local .listLink {
+  display: block;
   font-size: 1rem;
-  margin-bottom: 0.3em;
+  margin: 0 auto;
   min-height: 1.6rem;
-  padding-left: 1.5rem;
   text-align: left;
+  width: 80%;
+  padding: 0.3em;
 }
 
 :local .listLink:hover {
@@ -95,7 +99,12 @@
 :local .codeIcon,
 :local .linkIcon {
   font-size: 1rem;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+}
+
+:local .linkIcon {
+  position: relative;
+  top: 1px;
 }
 
 :local .removeIcon,
@@ -122,6 +131,7 @@
 
 :local .editIcon {
   font-size: 1.3rem;
+  margin-right: 0.5rem;
 }
 
 :local .removeIcon {
