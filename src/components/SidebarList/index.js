@@ -132,8 +132,8 @@ class SidebarList extends Component {
             }
             <button onClick={this.add} className={styles.addItem}>
               <FA className={styles.addIcon} name="plus" />
-              { reference ? 'Ny referenslänk' : '' }
-              { parts ? 'Nytt delmoment' : '' }
+              { reference ? 'Ny länk' : '' }
+              { parts ? 'Ny övning' : '' }
             </button>
           </li>
           :

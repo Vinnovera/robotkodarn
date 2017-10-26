@@ -1,6 +1,6 @@
 :local .invite {
   align-items: center;
-  color: #3E3748;
+  color: #31283E;
   background-color: #fff;
   border-radius: 4px;
   display: flex;
@@ -39,7 +39,7 @@
 
 :local .invite .invitationWrapper {
   align-content: center;
-  color: #3E3748;
+  color: #31283E;
   display: flex;
   font-size: 0.9rem;
   justify-content: center;
@@ -48,7 +48,7 @@
 }
 
 :local .invite .invitationURL {
-  border-bottom: 1px solid #3E3748;
+  border-bottom: 1px solid #31283E;
   color: inherit;
   font-size: inherit;
   margin: 0 1rem 0 0;
@@ -57,9 +57,9 @@
 
 :local .invite .shortCuts {
   background: none;
-  border: 1px solid #3E3748;
+  border: 1px solid #31283E;
   border-radius: 2px;
-  color: #3E3748;
+  color: #31283E;
   cursor: pointer;
   font-size: 0.8rem;
   height: 1.5rem;

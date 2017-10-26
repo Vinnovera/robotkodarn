@@ -57,7 +57,7 @@ export const addPart = (part, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: `Delmomentet med titeln ${data.title} är nu tillagt.`,
+        payload: `Övningen med titeln ${data.title} är nu tillagt.`,
         time: +new Date()
       })
     })
@@ -82,7 +82,7 @@ export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => 
 
       dispatch({
         type: SET_MESSAGE,
-        payload: 'Delmomentet är nu uppdaterat.',
+        payload: 'Övningen är nu uppdaterat.',
         time: +new Date()
       })
     })
@@ -107,7 +107,7 @@ export const removePart = (part, workshop) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: 'Delmomentet är nu borttaget.',
+        payload: 'Övningen är nu borttaget.',
         time: +new Date()
       })
     })

@@ -9,6 +9,8 @@ const View = ({ children, background = 'beige' }) => {
     componentStyle = styles.beigeView
   } else if (background === 'red') {
     componentStyle = styles.redView
+  } else if (background === 'green') {
+    componentStyle = styles.greenView
   }
 
   return (

@@ -38,7 +38,7 @@ input {
   background-image: none;
   border: 2px solid #dce4ec;
   border-radius: 2px;
-  color: #3E3748;
+  color: #31283E;
   display: block;
   font-size: 1rem;
   line-height: 1.42857143;
@@ -52,11 +52,11 @@ input {
 /* To remove ugly yellow background on autofill */
 input:-webkit-autofill {
   box-shadow: 0 0 0 30px #f2f2f2 inset;
-  color: #3E3748;
+  color: #31283E;
 }
 
 input:focus {
-  border: 2px solid #3E3748;
+  border: 2px solid #31283E;
 }
 
 .container {

@@ -5,7 +5,7 @@
 :local .navigationOpen {
   background-color: #fff;
   box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.1);
-  color: #3E3748;
+  color: #31283E;
   height: 100vh;
   position: fixed;
   right: -300px;
@@ -47,7 +47,7 @@
 :local .navigationLinkActive {
   background-color: #fff;
   border-bottom: 2px solid transparent;
-  color: #3E3748;
+  color: #31283E;
   cursor: pointer;
   display: block;
   font-family: inherit;
