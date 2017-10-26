@@ -54,7 +54,7 @@ class Sidebar extends Component {
         </section>
         <section className={styles.section}>
           <div className={styles.wave} />
-          <h3 className={styles.sidebarSub}>Hur funkar det?</h3>
+          <h3 className={styles.sidebarSub}>Läs mer</h3>
           <SidebarList listType="reference" />
         </section>
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
