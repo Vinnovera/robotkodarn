@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
+
+/*
+ * Import needs to be done this way due to how `react-ace`
+ * imports it's modules. Code example:
+ * https://github.com/securingsincity/react-ace/blob/master/example/index.js
+ */
+
+/* eslint-disable import/no-extraneous-dependencies */
+import 'brace/mode/c_cpp'
+import 'brace/theme/github'
+/* eslint-enable import/no-extraneous-dependencies */
+
 import { addLink, updateLink, addPart, updatePart, updateTitle } from '../../actions/currentWorkshop'
 import { setPartsToEdit, setEditingType } from '../../actions/editor'
 import Button from './../Button'
@@ -253,7 +265,7 @@ export class WorkspaceForm extends Component {
               <div className={styles.editorWrapper}>
                 <AceEditor
                   className={styles.aceEditor}
-                  theme="textmate"
+                  theme="github"
                   fontSize="16px"
                   mode="c_cpp"
                   name="code"

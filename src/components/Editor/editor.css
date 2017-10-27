@@ -14,43 +14,36 @@
   background-color: #ecf0f1 !important;
 }
 
-:local .codeWrapper ul li {
-  display: inline-block;
-  margin-right: 2px;
-  padding: 10px 15px;
+:local .codeWrapper .activeButton,
+:local .codeWrapper .inactiveButton {
+  background-color: #fff;
+  border: none;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  border: 1px solid #f9f9f9;
-  border-bottom: none;
-}
-
-:local .codeWrapper ul li.active {
-  border: 1px solid #e6e6e6;
-  background: white;
-  border-bottom: none;
-  position: relative;
-  z-index: 100;
-}
-
-:local .codeWrapper ul li:hover {
-  background: #ecf0f1;
-  border: 1px solid #ecf0f1;
-  border-bottom: none;
   cursor: pointer;
+  color: #3E3748;
+  font-size: 0.8rem;
+  font-weight: 700;
+  height: 2.4rem;
+  margin-right: 4px;
+  width: 6rem;
 }
 
-:local .codeWrapper ul li.active a {
-  color: #2c3e50;
+:local .codeWrapper .inactiveButton {
+  background-color: #DADCDF;
+  color: rgba(62, 55, 72, 0.5);
+  transition: color 350ms ease, background-color 350ms ease;
 }
 
-:local .codeWrapper ul li a:hover {
-  text-decoration: none;
+:local .codeWrapper .inactiveButton:hover {
+  background-color: #FBFBFD;
+  color: #3E3748;
 }
 
 :local .undo,
 :local .redo {
   position: absolute;
-  top: 50px;
+  top: 43px;
   width: 30px;
   height: 30px;
   z-index: 100;
@@ -60,17 +53,26 @@
   border: none;
   cursor: pointer;
   outline: none;
+  font-weight: 700;
+  transition: color 250ms ease;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 
 :local .undo {
-  right: 50px;
+  color: #FE5D4B;
+  right: 45px;
+}
+
+:local .undo:hover {
+  color: #C52522;
 }
 
 :local .redo {
+  color: #3DA099;
   right: 15px;
 }
 
-:local .undo:hover,
 :local .redo:hover {
-  color: #b3b3b3;
+  color: #214E50
 }
