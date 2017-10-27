@@ -60,8 +60,9 @@ export class Login extends Component {
             <div className={styles.loginField}>
               <form>
                 <label className={styles.label} htmlFor="pin">Pinkod</label>
-                <input autoFocus name="pin" type="number" min="0000" max="9999" value={this.state.pinInputValue} className={this.state.workshopNotFound ? styles.inputError : styles.input } onChange={this.handleChange} placeholder="Workshopens pinkod" />
-                <div className={styles.buttonContainer}>
+                { /* eslint jsx-a11y/no-autofocus: 0 */ }
+                <input autoFocus name="pin" type="number" min="0000" max="9999" value={this.state.pinInputValue} className={this.state.workshopNotFound ? styles.inputError : styles.input} onChange={this.handleChange} placeholder="Workshopens pinkod" />
+                <div className={styles.buttonContainer} >
                   <Button handleClick={this.handleSubmit} type="submit">Börja koda</Button>
                 </div>
                 {this.state.workshopNotFound ?

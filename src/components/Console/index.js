@@ -30,7 +30,15 @@ export class Console extends Component {
   render() {
     return (
       <div className={styles.consoleWrapper}>
-        <h3 className={styles.headline}>Konsol <button className={styles.consoleButton} onClick={this.handleClearConsoleClick}>Rensa konsol</button></h3>
+        <h3 className={styles.headline}>
+          Konsol
+          <button
+            className={styles.consoleButton}
+            onClick={this.handleClearConsoleClick}
+          >
+            Rensa konsol
+          </button>
+        </h3>
         <div className={styles.console} id="console">
           <pre>
             {
