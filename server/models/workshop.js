@@ -4,7 +4,7 @@ import Joi from 'joi'
 const workshopSchema = Schema({
   title: {
     type: String,
-    default: 'Namnlös workshop'
+    default: 'Ny workshop'
   },
   pincode: {
     type: String,

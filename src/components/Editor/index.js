@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
+
+/*
+ * Import needs to be done this way due to how `react-ace`
+ * imports it's modules. Code example:
+ * https://github.com/securingsincity/react-ace/blob/master/example/index.js
+ */
+
+/* eslint-disable import/no-extraneous-dependencies */
+import 'brace/mode/c_cpp'
+import 'brace/theme/github'
+/* eslint-enable import/no-extraneous-dependencies */
+
 import FA from 'react-fontawesome'
 import {
   changeEditorTab,
@@ -101,12 +113,13 @@ export class Editor extends Component {
     return (
       <AceEditor
         ref={this.setEditorRef}
-        theme="textmate"
+        theme="github"
         fontSize="16px"
         mode="c_cpp"
         name="codeEditor"
         width="100%"
         height="90%"
+        highlightActiveLine={userTab}
         editorProps={{ $blockScrolling: true }}
         showPrintMargin={false}
         onChange={(...args) => userTab && this.onChange(...args)}
@@ -134,15 +147,9 @@ export class Editor extends Component {
   render() {
     return (
       <div className={styles.codeWrapper}>
+        <button onClick={() => this.handleTabClick('user')} className={(this.props.activeTab === 'user') ? styles.activeButton : styles.inactiveButton}>Din kod</button>
+        <button onClick={() => this.handleTabClick('original')} className={(this.props.activeTab === 'original') ? styles.activeButton : styles.inactiveButton}>Original</button>
         {this.renderUndoRedo()}
-        <ul>
-          <li onClick={() => this.handleTabClick('user')} className={this.props.activeTab === 'user' && styles.active}>
-            <a href="#">Din kod</a>
-          </li>
-          <li onClick={() => this.handleTabClick('original')} className={this.props.activeTab === 'original' && styles.active}>
-            <a href="#">Original</a>
-          </li>
-        </ul>
         {this.renderAceEditor()}
       </div>
     )

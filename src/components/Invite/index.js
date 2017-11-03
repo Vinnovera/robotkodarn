@@ -33,7 +33,7 @@ class Invite extends Component {
       ''
 
     return (
-      <View background="beige">
+      <View background="red">
         <FadeIn>
           <div className={styles.invite}>
             <h1 className={styles.inviteHeadline}>Bjud in nya användare</h1>

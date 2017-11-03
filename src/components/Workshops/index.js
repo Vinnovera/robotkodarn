@@ -46,10 +46,10 @@ class Workshops extends Component {
   render() {
     const workshops = this.props.userWorkshops
     return (
-      <View background="beige">
+      <View background="red">
         <FadeIn>
           <div className={styles.workshops}>
-            <h2 className={styles.workshopHeadline}>Mina workshops</h2>
+            <h1 className={styles.workshopHeadline}>Mina workshops</h1>
             <form className={styles.form} method="post">
               { workshops.length > 0 ?
                 <table className={styles.workshopTable}>
@@ -87,7 +87,7 @@ class Workshops extends Component {
                 <p className={styles.info}>Du har inte skapat några workshops än.</p>
               }
               <div className={styles.buttonContainer}>
-                <Button handleClick={this.handleCreateNew}>Skapa ny</Button>
+                <Button kind="success" handleClick={this.handleCreateNew}>Lägg till ny</Button>
               </div>
             </form>
           </div>

@@ -66,7 +66,7 @@ export class Workspace extends Component {
                 { this.props.currentWorkshop.parts.length > 0 ?
                   <h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
                   :
-                  <h1 className={styles.workspaceHeadline}>Delmoment</h1>
+                  <h1 className={styles.workspaceHeadline}>Övning</h1>
                 }
                 <div className={styles.codeButtonsWrapper} >
                   <Button kind="success" handleClick={() => this.handleClick()}>

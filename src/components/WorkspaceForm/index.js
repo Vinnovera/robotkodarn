@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
+
+/*
+ * Import needs to be done this way due to how `react-ace`
+ * imports it's modules. Code example:
+ * https://github.com/securingsincity/react-ace/blob/master/example/index.js
+ */
+
+/* eslint-disable import/no-extraneous-dependencies */
+import 'brace/mode/c_cpp'
+import 'brace/theme/github'
+/* eslint-enable import/no-extraneous-dependencies */
+
 import { addLink, updateLink, addPart, updatePart, updateTitle } from '../../actions/currentWorkshop'
 import { setPartsToEdit, setEditingType } from '../../actions/editor'
 import Button from './../Button'
@@ -184,25 +196,25 @@ export class WorkspaceForm extends Component {
         <div>
           { reference ?
             <FadeIn>
-              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
+              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.title} ({this.props.workshop.pincode})</h2>
               <h1 className={styles.formHeadline}>
-                { update ? `Uppdatera referenslänk "${linkToEdit.title}"` : 'Lägg till ny referenslänk' }
+                { update ? `Uppdatera länk "${linkToEdit.title}"` : 'Lägg till ny länk' }
               </h1>
-              <label className={styles.label} htmlFor="title">Referenslänkens titel</label>
+              <label className={styles.label} htmlFor="title">Länkens rubrik</label>
               <input
                 onChange={event => this.setState({ title: event.target.value })}
                 className={styles.input}
                 type="text"
-                placeholder="Den titel du vill ska synas"
+                placeholder="Den rubrik du vill ska synas"
                 name="title"
                 value={this.state.title}
               />
-              <label className={styles.label} htmlFor="url">Referenslänkens webbadress</label>
+              <label className={styles.label} htmlFor="url">Länkens webbadress</label>
               <input
                 onChange={event => this.setState({ content: event.target.value })}
                 className={styles.input}
                 type="url"
-                placeholder="Webbadress till referenslänk"
+                placeholder="Webbadress till länk"
                 name="url"
                 value={this.state.content}
               />
@@ -221,10 +233,10 @@ export class WorkspaceForm extends Component {
           }
           { title ?
             <FadeIn>
-              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
-              <h1 className={styles.formHeadline}>Uppdatera titel</h1>
-              <label className={styles.label} htmlFor="title">Titel</label>
-              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den titel du vill ska synas" name="title" value={this.state.title} />
+              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.title} ({this.props.workshop.pincode})</h2>
+              <h1 className={styles.formHeadline}>Uppdatera rubrik</h1>
+              <label className={styles.label} htmlFor="title">Rubrik</label>
+              <input onChange={event => this.setState({ title: event.target.value })} className={styles.input} type="text" placeholder="Den rubrik du vill ska synas" name="title" value={this.state.title} />
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
                   <Button kind="success" handleClick={this.update}>Uppdatera</Button>
@@ -236,24 +248,24 @@ export class WorkspaceForm extends Component {
           }
           { part ?
             <FadeIn>
-              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.pincode}</h2>
+              <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.title} ({this.props.workshop.pincode})</h2>
               <h1 className={styles.formHeadline}>
-                { update ? `Uppdatera delmoment "${partToEdit.title}"` : 'Lägg till nytt delmoment' }
+                { update ? `Uppdatera övning "${partToEdit.title}"` : 'Lägg till ny övning' }
               </h1>
-              <label className={styles.label} htmlFor="title">Delmomentets titel</label>
+              <label className={styles.label} htmlFor="title">Övningens rubrik</label>
               <input
                 onChange={event => this.setState({ title: event.target.value })}
                 className={styles.input}
                 type="text"
-                placeholder="Den titel du vill ska synas"
+                placeholder="Den rubrik du vill ska synas"
                 name="title"
                 value={this.state.title}
               />
-              <label className={styles.label} htmlFor="code">Delmomentets kod</label>
+              <label className={styles.label} htmlFor="code">Övningens kod</label>
               <div className={styles.editorWrapper}>
                 <AceEditor
                   className={styles.aceEditor}
-                  theme="textmate"
+                  theme="github"
                   fontSize="16px"
                   mode="c_cpp"
                   name="code"
@@ -269,9 +281,9 @@ export class WorkspaceForm extends Component {
               <div className={styles.flex}>
                 <div className={styles.buttonContainer}>
                   { update ?
-                    <Button kind="success" handleClick={this.update}>Uppdatera delmoment</Button>
+                    <Button kind="success" handleClick={this.update}>Uppdatera övning</Button>
                     :
-                    <Button kind="success" handleClick={this.save}>Spara delmoment</Button>
+                    <Button kind="success" handleClick={this.save}>Spara övning</Button>
                   }
                 </div>
               </div>

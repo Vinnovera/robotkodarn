@@ -1,5 +1,16 @@
 :local .workshops {
-  margin-top: 3rem;
+  background-color: #fff;
+  border-radius: 4px;
+  margin: 3rem auto;
+  max-width: 1000px;
+  padding: 1rem 0.5rem 4rem;
+  width: 95vw;
+}
+
+@media screen and (min-height: 900px) {
+  :local .workshops {
+    margin: 7rem auto;
+  }
 }
 
 :local .form {
@@ -8,8 +19,8 @@
 }
 
 :local .workshopHeadline {
-  color: inherit;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  margin: 1rem;
   text-align: center;
 }
 
@@ -17,14 +28,13 @@
   border-spacing: 0 1rem;
   text-align: left;
   width: 100%;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 
 :local .tableLink {
-  color: #332C3D;
-  font-weight: 700;
+  color: inherit;
   transition: color 250ms ease;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
 }
 
 :local .tableLink:hover {
@@ -42,11 +52,12 @@
 
 :local .workshopItem {
   border-radius: 2px;
-  background-color: #fff;
+  background-color: #f6f6f6;
+  color: #31283E;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+  font-weight: 700;
   line-height: 2;
-  color: inherit;
   margin: 0.5rem 0;
   padding: 0.7rem 1rem 0.5rem;
 }
@@ -56,7 +67,7 @@
  * 1. Fix to improve spacing
  */
 :local td {
-  border: 3px solid #fff;
+  border: 3px solid #f6f6f6;
 }
 
 :local td:first-of-type {
@@ -75,9 +86,8 @@
  */
 
 :local .info {
-  background-color: #fff;
+  background-color: #c3e9e6;
   border-radius: 4px;
-  color: #238F88;
   font-weight: 700;
   font-size: 1.1rem;
   padding: 2rem 3rem;
@@ -108,7 +118,7 @@
 }
 
 :local .tableIcon {
-  color: #332C3D;
+  color: #31283E;
 }
 
 :local .tableIcon:hover {
