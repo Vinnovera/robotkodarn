@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 npm-debug.log
-dist/client/static
+dist/client/static/*
+!dist/client/static/favicon.ico
 config/development.json
 
 .idea/
