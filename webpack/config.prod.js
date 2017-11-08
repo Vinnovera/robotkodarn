@@ -9,12 +9,11 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, '..', 'dist', 'client', 'static'),
+    path: path.resolve(__dirname, '../dist/client/static'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new InlineEnvironmentVariablesPlugin(),
     new webpack.optimize.UglifyJsPlugin({
@@ -30,7 +29,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        loaders: ['babel-loader'],
         include: path.join(__dirname, '..', 'src')
       },
       {
