@@ -13,8 +13,7 @@
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "build": "webpack --config webpack/config.prod.js",
-    "build:clean": "rimraf dist/client/static",
-    "dev": "check-node-version --package && npm run build:clean && nodemon -r dotenv/config --inspect index.js",
+    "dev": "check-node-version --package && nodemon -r dotenv/config --inspect index.js",
     "start": "node index.js"
   },
   "now": {
@@ -56,10 +55,9 @@
     "redux-actions": "^0.10.0",
     "redux-simple-router": "^2.0.4",
     "redux-thunk": "^2.1.0",
-    "rimraf": "^2.5.2",
     "tmp": "0.0.31",
     "uuid": "^3.1.0",
-    "webpack": "^1.13.1"
+    "webpack": "^3.8.1"
   },
   "devDependencies": {
     "check-node-version": "^2.1.0",
