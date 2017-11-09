@@ -1,5 +1,4 @@
-import Joi from 'joi'
-import { Part, partValidation } from '../models/part'
+import { Part, partValidation, contentValidation } from '../models/part'
 import { Workshop } from '../models/workshop'
 
 // -----------------------------------------------------------------------------
@@ -33,85 +32,91 @@ const getPart = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Add a part [POST]
 // -----------------------------------------------------------------------------
-const addPart = (request, reply) => {
-  Workshop.findOne({ _id: request.params.id }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
+const createPart = async (request, reply) => {
+  try {
+    /**
+     * First make sure that the content received is valid
+     */
+    const validated = contentValidation.validate(request.payload, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
     }
 
-    const part = new Part(request.payload)
+    // If no workshop found, this will throw a 500 error
+    const workshop = await Workshop.findOne({ _id: request.params.id })
 
-    // 'value' exists but is not in use, hence: commented out.
-    Joi.validate(part, partValidation, (validationError, /* value */) => {
-      if (validationError) {
-        return reply({ error: validationError }).code(400)
-      }
+    const part = new Part(validated.value)
+    workshop.parts.push(part)
 
-      foundWorkshop.parts.push(part)
+    await workshop.save()
 
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-
-        return reply(foundWorkshop).code(200)
-      })
-    })
-  })
+    return reply(part).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
 // Update a part with {id} [PUT]
 // -----------------------------------------------------------------------------
-const updatePart = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
+const updatePart = async (request, reply) => {
+  try {
+    // This will cast a 500 error if no workshop is found.
+    const workshop = await Workshop.findOne({ _id: request.params.wid })
+
+    // Find the part that is to be updated
+    const partToUpdate = workshop.parts.filter((part) => {
+      return part._id.toString() === request.params.pid
+    })[0]
+
+    // Update the fields with changes (can be title and/or content)
+    const updatedPart = Object.assign(partToUpdate, request.payload)
+    const index = workshop.parts.indexOf(partToUpdate)
+
+    /* Validate the updated part.
+     * This can't be done until we have the id as well as full content.
+     */
+    const validated = partValidation.validate(updatedPart, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
     }
 
-    const partToUpdate = foundWorkshop.parts.filter(part => part._id === request.params.pid)[0]
-    const index = foundWorkshop.parts.indexOf(partToUpdate)
-    const newPart = Object.assign(partToUpdate, request.payload)
+    // Replace the old part with the new
+    workshop.parts[index] = validated.value
 
-    Joi.validate(newPart, partValidation, (validationError, /* value */) => {
-      if (validationError) {
-        return reply({ error: validationError }).code(400)
-      }
+    // Update and save to database
+    await Workshop.update({ _id: workshop._id }, { parts: workshop.parts })
 
-      foundWorkshop.parts.splice(index, 1, newPart)
-
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-
-        return reply(foundWorkshop).code(200)
-      })
-    })
-  })
+    return reply(workshop.parts).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
 // Delete a part with {id} [DELETE]
 // -----------------------------------------------------------------------------
-const deletePart = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const deletePart = async (request, reply) => {
+  try {
+    const currentWorkshop = await Workshop.findOne({ _id: request.params.wid })
 
-    const partToDelete = foundWorkshop.parts.filter(part => part._id === request.params.pid)[0]
-
-    foundWorkshop.parts.splice(foundWorkshop.parts.indexOf(partToDelete), 1)
-
-    foundWorkshop.save((partError) => {
-      if (partError) {
-        return reply({ partError: error.message }).code(400)
-      }
-
-      return reply(foundWorkshop).code(200)
+    /*
+     * Remove all parts with the id that we want to delete.
+     * Since part._id is an object, we first need to convert it to a string.
+     */
+    const updatedPartsList = currentWorkshop.parts.filter((part) => {
+      return part._id.toString() !== request.params.pid
     })
-  })
+
+    // Save updatedPartsList as list of parts.
+    currentWorkshop.parts = updatedPartsList
+
+    await currentWorkshop.save()
+
+    return reply(updatedPartsList).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 exports.register = (server, options, next) => {
@@ -134,7 +139,7 @@ exports.register = (server, options, next) => {
       method: 'POST',
       path: '/api/workshop/{id}/part',
       config: {
-        handler: addPart,
+        handler: createPart,
         auth: 'session'
       }
     },

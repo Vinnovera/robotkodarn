@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
-  SET_SIDEBAR_OPEN: (state, action) => {
+  TOGGLE_SIDEBAR: (state, action) => {
     return ({
       ...state,
       open: action.payload

@@ -1,20 +1,20 @@
 import { combineReducers } from 'redux'
 import { routeReducer } from 'redux-simple-router'
-import sidebar from './sidebar'
+import workshops from './workshops'
 import editor from './editor'
-import admin from './admin'
-import teacher from './teacher'
-import student from './student'
-import login from './login'
-import adminpage from './adminpage'
+import invite from './invite'
+import currentWorkshop from './currentWorkshop'
+import sidebar from './sidebar'
+import menu from './menu'
+import user from './user'
 
 export default combineReducers({
   routeReducer,
-  sidebar,
   editor,
-  admin,
-  teacher,
-  student,
-  login,
-  adminpage
+  invite,
+  currentWorkshop,
+  sidebar,
+  workshops,
+  menu,
+  user
 })

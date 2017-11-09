@@ -1,40 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
-import FA from 'react-fontawesome'
 
-/* TODO: Right now, this weird brace import is just commented out.
-* Everything seems to be working without
-* the following imports, but leave code a little while just in case.
+/*
+ * Import needs to be done this way due to how `react-ace`
+ * imports it's modules. Code example:
+ * https://github.com/securingsincity/react-ace/blob/master/example/index.js
+ */
 
+/* eslint-disable import/no-extraneous-dependencies */
 import 'brace/mode/c_cpp'
-import brace from 'brace';
-import 'brace/theme/textmate'
+import 'brace/theme/github'
+/* eslint-enable import/no-extraneous-dependencies */
 
-*/
-
-import { changeEditorTab, uploadCode, setConsoleOutput } from '../../actions/editor'
-import { setCurrentParts } from '../../actions/student'
+import FA from 'react-fontawesome'
+import {
+  changeEditorTab,
+  uploadCode,
+  setConsoleOutput,
+  setPartsToEdit
+} from '../../actions/editor'
 import styles from './editor.css'
 
 export class Editor extends Component {
-  constructor(props) {
-    super(props)
-
-    this.handleTabClick = this.handleTabClick.bind(this)
-    this.onChange = this.onChange.bind(this)
-
-    // Use local state to force react to update DOM by itself more easily when changed
-    this.state = {
-      workshop: null,
-      currentParts: null
-    }
-  }
-
+  /*
+   * Make a copy of original parts and add the array in Redux state
+   * if it's not already there.
+   */
   componentWillMount() {
-    this.setState({
-      workshop: this.props.workshop
-    })
+    if (this.props.partsToEdit.length === 0) {
+      const copyOfParts = [...this.props.currentWorkshop.parts]
+      this.props.dispatch(setPartsToEdit(copyOfParts))
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,114 +59,99 @@ export class Editor extends Component {
         this.props.dispatch(setConsoleOutput(msg))
       }
     }
-
-    // Update currentParts if changed
-    if (this.props.currentParts !== nextProps.currentParts) {
-      this.setState({
-        currentParts: nextProps.currentParts
-      })
-    }
   }
 
-  onChange(newValue) {
-    const copyOfParts = this.state.currentParts
-    copyOfParts[this.props.activePartIndex].code = newValue
+  /*
+   * Update Redux state on the fly
+   * when user is editing a part.
+   */
+  onChange = (value) => {
+    // Rename for easier use
+    const { activePartIndex: index } = this.props
 
-    this.setState({
-      currentParts: copyOfParts
-    })
+    // Copy current state and replace old content with new value
+    const updatedParts = [...this.props.partsToEdit]
+    updatedParts[index] = { ...updatedParts[index], content: value }
 
-    this.props.dispatch(setCurrentParts(copyOfParts))
-
-    // saving code to localStorage on every new key stroke
-    // at the time it never loads anything from localStorage so this function
-    // is kind of useless atm...
-    // TODO: If it useless, why keep?
-    this.saveToLocalStorage()
+    this.props.dispatch(setPartsToEdit(updatedParts))
   }
 
-  handleTabClick(userOrOriginal) {
+  /*
+   * Set ref on editor
+   */
+  setEditorRef = (node) => {
+    this.editorRef = node
+  }
+
+  /**
+   * Toggle between tabs (user or original)
+   */
+  handleTabClick = (userOrOriginal) => {
     this.props.dispatch(changeEditorTab(userOrOriginal))
   }
 
 
-  saveToLocalStorage() {
-    localStorage.setItem('code', JSON.stringify(this.state.currentParts))
-  }
+  /**
+   * Render the Ace Editor with different content and editing
+   * possibilities depending on if user has chosen 'user' or 'original'
+   */
+  renderAceEditor = () => {
+    const { activePartIndex: index } = this.props
+    const userTab = this.props.activeTab === 'user' // true if user tab is chosen
 
-  renderTab() {
-    if (this.props.activeTab === 'user') {
-      return (
-        <AceEditor
-          ref="editor"
-          setOptions={{
-            readOnly: false
-          }}
-          theme="textmate"
-          fontSize="16px"
-          mode="c_cpp"
-          onChange={this.onChange}
-          name="codeEditor"
-          width="auto"
-          height="90%"
-          editorProps={{ $blockScrolling: true }}
-          value={this.state.currentParts[this.props.activePartIndex].code || 'Laddar...'}
-          showPrintMargin={false}
-        />
-      )
+    let activeEditPart = ''
+    let activeOriginalPart = ''
+
+    if (this.props.partsToEdit.length > 0) {
+      activeEditPart = this.props.partsToEdit[index].content
     }
+
+    if (this.props.currentWorkshop.parts.length > 0) {
+      activeOriginalPart = this.props.currentWorkshop.parts[index].content
+    }
+
     return (
       <AceEditor
-        setOptions={{
-          readOnly: true
-        }}
-        theme="textmate"
+        ref={this.setEditorRef}
+        theme="github"
         fontSize="16px"
         mode="c_cpp"
         name="codeEditor"
-        width="auto"
+        width="100%"
         height="90%"
+        highlightActiveLine={userTab}
         editorProps={{ $blockScrolling: true }}
-        value={this.state.workshop.parts[this.props.activePartIndex].code}
         showPrintMargin={false}
+        onChange={(...args) => userTab && this.onChange(...args)}
+        setOptions={userTab ? { readOnly: false } : { readOnly: true }}
+        value={userTab ? activeEditPart : activeOriginalPart}
       />
     )
   }
 
-  // FIXME: this.refs is depricated. Replace with best practice asap.
-  // More information: https://facebook.github.io/react/docs/refs-and-the-dom.html
-  renderControlPanelIfUser() {
+  /*
+   * Undo and redo buttons used for going back and forth
+   * when editing a specific part.
+   */
+  renderUndoRedo() {
     if (this.props.activeTab === 'user') {
       return (
         <div>
-          <button className={styles.undo} onClick={() => { this.refs.editor.editor.undo() }}><FA name="undo" /></button>
-          <button className={styles.redo} onClick={() => { this.refs.editor.editor.redo() }}><FA name="repeat" /></button>
+          <button className={styles.undo} onClick={() => { this.editorRef.editor.undo() }}><FA name="undo" /></button>
+          <button className={styles.redo} onClick={() => { this.editorRef.editor.redo() }}><FA name="repeat" /></button>
         </div>
       )
     }
   }
 
   render() {
-    if (this.state.currentParts) {
-      return (
-        <div className={styles.codeWrapper}>
-          {this.renderControlPanelIfUser()}
-          <ul>
-            {/* TODO: li element should not be interactive. Replace a with button. Fix asap (also styling) */}
-            <li onClick={() => this.handleTabClick('user')} className={this.props.activeTab === 'user' && styles.active}>
-              <a href="#">Din kod</a>
-            </li>
-            <li onClick={() => this.handleTabClick('original')} className={this.props.activeTab === 'original' && styles.active}>
-              <a href="#">Original</a>
-            </li>
-          </ul>
-          {this.renderTab()}
-        </div>
-      )
-    }
-
     return (
-      <h1>Laddar...</h1>
+      <div className={styles.codeWrapper}>
+        <button onClick={() => this.handleTabClick('user')} className={(this.props.activeTab === 'user') ? styles.activeButton : styles.inactiveButton}>Din kod</button>
+        <button onClick={() => this.handleTabClick('original')} className={(this.props.activeTab === 'original') ? styles.activeButton : styles.inactiveButton}>Original</button>
+        {this.renderUndoRedo()}
+        {this.renderAceEditor()}
+      </div>
     )
   }
 }
@@ -180,8 +162,8 @@ function mapStateToProps(state) {
     compilerResponse: state.editor.compilerResponse,
     willUpload: state.editor.willUpload,
     activePartIndex: state.editor.activePartIndex,
-    currentParts: state.student.currentParts,
-    workshop: JSON.parse(state.login.currentWorkshop)
+    partsToEdit: state.editor.partsToEdit,
+    currentWorkshop: state.currentWorkshop.item
   }
 }
 

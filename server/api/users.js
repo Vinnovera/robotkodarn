@@ -1,4 +1,9 @@
-import User from '../models/user'
+import { User } from '../models/user'
+
+/*
+ * Right now, these handlers are not used. They can be used in the future,
+ * i.e. when 'superadmin' handles users, or when user wants to be deleted.
+ */
 
 // -----------------------------------------------------------------------------
 // Get all the users [GET]

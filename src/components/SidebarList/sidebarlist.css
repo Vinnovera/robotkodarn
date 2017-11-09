@@ -1,0 +1,148 @@
+:local .sidebarList {
+  margin-top: 20px;
+}
+
+:local .listItem,
+:local .activeListItem {
+  color: inherit;
+  font-size: 1.2rem;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 0.2rem;
+  position: relative;
+}
+
+:local .activeListItem .background,
+:local .activeListItem .closedBackground {
+  content: "";
+  height: 100%;
+  width: 100%;
+  top: 1px;
+  left: 0;
+  position: absolute;
+  background-color: #EDEBE6;
+  z-index: -1;
+  transition: left 500ms ease-out;
+}
+
+:local .activeListItem .closedBackground {
+  left: -35px;
+}
+
+:local .flexContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* Remove some default styling and buttons and add general styling */
+:local .listLink,
+:local .addItem,
+:local .editItem {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  display: inherit;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: color 250ms ease;
+  width: 80%;
+}
+
+:local .editItem {
+  overflow: hidden;
+  width: 95%;
+}
+
+/* Used for styling parts and reference links in sidebar when not editing */
+:local .listLink {
+  display: block;
+  font-size: 1rem;
+  margin: 0 auto;
+  min-height: 1.6rem;
+  text-align: left;
+  width: 80%;
+  padding: 0.3em;
+}
+
+:local .listLink:hover {
+  color: #FE5D4B;
+}
+
+:local .addItem {
+  color: #3DA099;
+  border: none;
+  font-weight: 700;
+  margin: 0 auto;
+}
+
+:local .addItem:hover {
+  color: #238F88;
+}
+
+:local .editItem:hover {
+  color: #FE5D4B;
+}
+
+:local .listLink:hover {
+  text-decoration: none;
+}
+
+
+/* -----------------------------------------------------------------------------
+  ICONS
+------------------------------------------------------------------------------*/
+
+:local .codeIcon,
+:local .linkIcon {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+:local .linkIcon {
+  position: relative;
+  top: 1px;
+}
+
+:local .removeIcon,
+:local .editIcon,
+:local .addIcon {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.5rem;
+  width: auto;
+}
+
+:local .removeIcon {
+  transition: color 250ms ease;
+}
+
+/* Compensate for weird placement */
+:local .addIcon,
+:local .editIcon {
+  float: left;
+  margin-top: -0.1em;
+}
+
+:local .editIcon {
+  font-size: 1.3rem;
+  margin-right: 0.5rem;
+}
+
+:local .removeIcon {
+  color: #C52522;
+}
+
+:local .removeIcon:hover {
+  color: #FE5D4B;
+}
+
+:local .removeIcon:focus,
+:local .removeIcon:active {
+  outline: none;
+}

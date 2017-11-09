@@ -4,19 +4,24 @@ import Joi from 'joi'
 const workshopSchema = Schema({
   title: {
     type: String,
-    required: true
+    default: 'Ny workshop'
   },
   pincode: {
     type: String,
-    unique: true,
-    required: true
+    unique: true
   },
   userId: {
     type: String,
     required: true
   },
-  parts: [],
-  links: []
+  parts: {
+    type: Array,
+    default: []
+  },
+  links: {
+    type: Array,
+    default: []
+  }
 })
 
 export const workshopValidation = Joi.object().keys({

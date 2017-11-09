@@ -1,0 +1,113 @@
+/* -----------------------------------------------------------------------------
+  NAVIGATION
+------------------------------------------------------------------------------*/
+:local .navigation,
+:local .navigationOpen {
+  background-color: #fff;
+  box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.1);
+  color: #31283E;
+  height: 100vh;
+  position: fixed;
+  right: -300px;
+  top: 0;
+  transition: right 300ms ease-in-out 75ms;
+  width: 300px;
+  z-index: 2;
+}
+
+:local .navigationOpen {
+  right: 0;
+}
+
+/* -----------------------------------------------------------------------------
+  USER INFO
+------------------------------------------------------------------------------*/
+
+:local .userInfo {
+  border-bottom: 5px solid #F6F7F9;
+  padding: 5rem 1rem 1rem;
+  width: 100%;
+}
+
+:local .userName {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+:local .userRole {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+/* -----------------------------------------------------------------------------
+  NAVIGATION LINKS
+------------------------------------------------------------------------------*/
+
+:local .navigationLink,
+:local .navigationLinkActive {
+  background-color: #fff;
+  border-bottom: 2px solid transparent;
+  color: #31283E;
+  cursor: pointer;
+  display: block;
+  font-family: inherit;
+  font-size: 1.4rem;
+  padding: 1rem 0 0.8rem;
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 250ms ease, color 250ms ease;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .navigationLinkActive {
+  background-color: #EDEBE6;
+}
+
+:local .navigationLink:hover,
+:local .navigationLinkActive:hover {
+  background-color: #FE5D4B;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* -----------------------------------------------------------------------------
+  LOGOUT BUTTON WRAPPER
+------------------------------------------------------------------------------*/
+
+:local .buttonWrapper {
+  bottom: 0;
+  margin: 0 auto 2rem;
+  left: 0;
+  right: 0;
+  position: absolute;
+  width: calc(100% - 2.2rem);
+}
+
+/* -----------------------------------------------------------------------------
+  EXIT ICON
+------------------------------------------------------------------------------*/
+
+:local .exit {
+  background: url('./../../icons/exit.svg') no-repeat center left;
+  background-size: 2rem;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  height: 2rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: right;
+  text-transform: uppercase;
+  width: 5.5rem;
+  position: absolute;
+  left: 1rem;
+  top: 1.3rem;
+}
+
+:local .exit:focus,
+:local .exit:hover {
+  outline: none;
+}

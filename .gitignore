@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 npm-debug.log
-dist/client/static
+dist/client/static/*
+!dist/client/static/favicon.ico
 config/development.json
 
 .idea/
@@ -95,8 +96,8 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
-
+.env*
+!.env.example
 
 ### SublimeText ###
 # cache files for sublime text
@@ -132,10 +133,6 @@ GitHub.sublime-settings
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 ### Windows ###
 # Windows thumbnail cache files

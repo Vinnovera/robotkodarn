@@ -1,34 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { routeActions } from 'redux-simple-router'
-import WorkshopPincode from './WorkshopPincode'
+import { toggleMenu } from '../../actions/menu'
 import styles from './navbar.css'
+import Menu from '../Menu/'
 
-class Navbar extends Component {
-  constructor(props) {
-    super(props)
-
-    this.goToLogin = this
-      .goToLogin
-      .bind(this)
-  }
-
-  goToLogin() {
-    this
-      .props
-      .dispatch(routeActions.push('/login'))
+class Header extends Component {
+  handleMenu = () => {
+    this.props.dispatch(toggleMenu())
   }
 
   render() {
     return (
-      <nav className={styles.mainNavbar}>
-        {/* FIXME: No static element interactions */}
-        <div onClick={this.goToLogin} className={styles.logoRobot} />
-        <h3 className={styles.logo}>Robotkodarn</h3>
-        <WorkshopPincode pincode={this.props.pincode} />
-      </nav>
+      <header className={styles.header}>
+        <h1 className={styles.headerTitle}>Robotkodarn</h1>
+        { this.props.isLoggedIn ?
+          <div>
+            <button onClick={this.handleMenu} className={styles.toolsIcon} >Verktyg</button>
+            <Menu />
+          </div>
+          :
+          ''
+        }
+      </header>
     )
   }
 }
 
-export default connect()(Navbar)
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.user.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps)(Header)

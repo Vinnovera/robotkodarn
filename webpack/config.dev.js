@@ -1,5 +1,7 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack')
+const InlineEnvironmentVariablesPlugin = require('inline-environment-variables-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
@@ -15,13 +17,20 @@ module.exports = {
   plugins: [
     new webpack.NoErrorsPlugin(),
     function () {
-      this.plugin('done', function (stats) {
+      this.plugin('done', (stats) => {
         if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') === -1) {
-          console.log(stats.compilation.errors)
           process.exit(1)
         }
       })
-    }
+    },
+    new Dotenv({
+      path: '.env',
+      safe: true // load .env.example
+    }),
+    new InlineEnvironmentVariablesPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    })
   ],
   resolve: {
     alias: {}
@@ -30,7 +39,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        loaders: ['babel-loader'],
         include: path.join(__dirname, '..', 'src')
       },
       {
@@ -42,7 +51,7 @@ module.exports = {
         loader: 'style-loader!css-loader?localIdentName=[local]-[hash:base64:10]'
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|jpg|svg)$/,
         loader: 'url-loader'
       }
     ]

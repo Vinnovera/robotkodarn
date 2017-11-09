@@ -1,54 +1,66 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-
-import { toggleSidebar } from '../../actions/student'
-
-import PartList from './PartList'
-import ReferenceList from './ReferenceList'
+import { toggleSidebar } from '../../actions/sidebar'
+import { setEditingType } from '../../actions/editor'
+import SidebarList from './../SidebarList'
 import styles from './sidebar.css'
 
 class Sidebar extends Component {
-  constructor() {
-    super()
-    this.handleSidebarClick = this.handleSidebarClick.bind(this)
-    this.getSidebarClassName = this.getSidebarClassName.bind(this)
-  }
-
-  getSidebarClassName() {
+  getSidebarClassName = () => {
     if (this.props.isSidebarOpen) {
-      return styles.mainSidebar
+      return styles.sidebar
     }
 
-    return `${styles.mainSidebar} ${styles.mainSidebarClosed}`
+    return `${styles.sidebar} ${styles.sidebarClosed}`
   }
 
-  getCloseBtnClassName() {
+  getCloseBtnClassName = () => {
     if (!this.props.isSidebarOpen) {
       return styles.rotated
     }
   }
 
-  handleSidebarClick() {
+  handleSidebarClick = () => {
     this.props.dispatch(toggleSidebar(!this.props.isSidebarOpen))
   }
 
+  editTitle = (event) => {
+    event.preventDefault()
+    const type = event.currentTarget.value
+    this.props.dispatch(setEditingType(type))
+  }
 
   render() {
     return (
-      <div className={this.getSidebarClassName()}>
-        <div className="content">
-          <h2>{this.props.workshop.title}</h2>
-          <PartList parts={this.props.workshop.parts} />
-          <hr />
-          <h2>Referenslänkar</h2>
-          <ReferenceList links={this.props.workshop.links} />
-        </div>
-        {/* TODO: Replace with button asap. See rule 'jsx-a11y/href-no-hash */}
-        <a className={styles.closeBtn} href="#" onClick={this.handleSidebarClick}>
+      <aside className={this.getSidebarClassName()}>
+        <section>
+          <p className={styles.pinCode}>{this.props.workshop.pincode}</p>
+          { this.props.editing ?
+            <button onClick={this.editTitle} className={styles.sidebarTitleButton} value="title">
+              <FA className={styles.addIcon} name="pencil" />
+              <h2 className={styles.sidebarTitleEdit}>
+                {this.props.workshop.title}
+              </h2>
+            </button>
+            :
+            <h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>
+          }
+        </section>
+        <section className={styles.section}>
+          <div className={styles.wave} />
+          <h3 className={styles.sidebarSub}>Övningar</h3>
+          <SidebarList listType="parts" />
+        </section>
+        <section className={styles.section}>
+          <div className={styles.wave} />
+          <h3 className={styles.sidebarSub}>Läs mer</h3>
+          <SidebarList listType="reference" />
+        </section>
+        <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />
-        </a>
-      </div>
+        </button>
+      </aside>
     )
   }
 }
@@ -56,7 +68,8 @@ class Sidebar extends Component {
 function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
-    workshop: JSON.parse(state.login.currentWorkshop)
+    editing: state.editor.editing,
+    workshop: state.currentWorkshop.item
   }
 }
 

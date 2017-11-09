@@ -1,5 +1,4 @@
-import Joi from 'joi'
-import { Link, linkValidation } from '../models/link'
+import { Link, linkValidation, contentValidation } from '../models/link'
 import { Workshop } from '../models/workshop'
 
 // -----------------------------------------------------------------------------
@@ -33,81 +32,89 @@ const getLink = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Add a link [POST]
 // -----------------------------------------------------------------------------
-const addLink = (request, reply) => {
-  Workshop.findOne({ _id: request.params.id }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
+const addLink = async (request, reply) => {
+  try {
+    /**
+     * First make sure that the content received is valid
+     */
+    const validated = contentValidation.validate(request.payload, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
     }
 
-    const link = new Link(request.payload)
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const link = new Link(validated.value)
 
-    // 'value' exists, but is not used (and is therefore commented out)
-    Joi.validate(link, linkValidation, (validationError, /* value */) => {
-      if (validationError) {
-        return reply({ error: validationError }).code(400)
-      }
+    workshop.links.push(link)
+    await workshop.save()
 
-      foundWorkshop.links.push(link)
-
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-        return reply(foundWorkshop).code(200)
-      })
-    })
-  })
+    return reply(link).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
 // Update a link with {id} [PUT]
 // -----------------------------------------------------------------------------
-const updateLink = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
+const updateLink = async (request, reply) => {
+  try {
+    // This will cast a 500 error if no workshop is found.
+    const workshop = await Workshop.findOne({ _id: request.params.wid })
+
+    // Find the link that is to be updated
+    const linkToUpdate = workshop.links.filter((link) => {
+      return link._id.toString() === request.params.lid
+    })[0]
+    const index = workshop.links.indexOf(linkToUpdate)
+
+    // Update the fields with changes (can be title and/or content)
+    const updatedLink = Object.assign(linkToUpdate, request.payload)
+
+    /**
+     * First make sure that the content received is valid
+     */
+    const validated = linkValidation.validate(updatedLink, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
     }
 
-    const linkToUpdate = foundWorkshop.links.filter(link => link._id === request.params.lid)[0]
-    const index = foundWorkshop.links.indexOf(linkToUpdate)
-    const newLink = Object.assign(linkToUpdate, request.payload)
+    // Replace the old link with the new
+    workshop.links[index] = validated.value
 
-    Joi.validate(newLink, linkValidation, (validationError, /* value */) => {
-      if (validationError) return reply({ error: validationError }).code(400)
+    // Update and save to database
+    await Workshop.update({ _id: workshop._id }, { links: workshop.links })
 
-      foundWorkshop.links.splice(index, 1, newLink)
-
-      foundWorkshop.save((saveError) => {
-        if (saveError) {
-          return reply({ error: saveError.message }).code(400)
-        }
-        return reply(foundWorkshop).code(200)
-      })
-    })
-  })
+    return reply(workshop.links).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 // -----------------------------------------------------------------------------
 // Delete a link with {id} [DELETE]
 // -----------------------------------------------------------------------------
-const deleteLink = (request, reply) => {
-  Workshop.findOne({ _id: request.params.wid }, (error, foundWorkshop) => {
-    if (error) {
-      return reply(error).code(500)
-    }
+const deleteLink = async (request, reply) => {
+  try {
+    const currentWorkshop = await Workshop.findOne({ _id: request.params.wid })
 
-    const linkToDelete = foundWorkshop.links.filter(link => link._id === request.params.lid)[0]
-
-    foundWorkshop.links.splice(foundWorkshop.links.indexOf(linkToDelete), 1)
-
-    foundWorkshop.save((linkError) => {
-      if (linkError) {
-        return reply({ linkError: error.message }).code(400)
-      }
-
-      return reply(foundWorkshop).code(200)
+    /*
+     * Remove all links with the id of link to be deleted.
+     * Since link._id is an object, we first need to convert it to a string.
+     */
+    const updatedLinkList = currentWorkshop.links.filter((link) => {
+      return link._id.toString() !== request.params.lid
     })
-  })
+
+    // Save updatedLinkList as list of links.
+    currentWorkshop.links = updatedLinkList
+
+    await currentWorkshop.save()
+
+    return reply(updatedLinkList).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
 }
 
 exports.register = (server, options, next) => {

@@ -1,0 +1,70 @@
+
+:local .background {
+  background-color: #59B2AC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #59B2AC url('./../../patterns/minimal.svg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+:local .login {
+  background-color: #fff;
+  border-radius: 7px;
+  color: #3E3748;
+  margin: auto;
+  height: 340px;
+  width: 400px;
+  padding: 0.8rem 1.5rem 3rem;
+}
+
+:local .input[type=number]::-webkit-inner-spin-button,
+:local .input[type=number]::-webkit-outer-spin-button,
+:local .inputError[type=number]::-webkit-inner-spin-button,
+:local .inputError[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+:local .headline {
+  color: inherit;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+:local .label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .input,
+:local .inputError {
+  margin: 0.3rem 0 1rem;
+  padding: 0.9rem 0.9rem 0.8rem;
+  text-align: left;
+  width: 100%;
+  transition: border-color 250ms ease 250ms, color 250ms ease 250ms;
+}
+
+:local .inputError {
+  border-color:#FE5D4B;
+  color: #FE5D4B;
+}
+
+:local .info {
+  font-size: 0.8rem;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+:local .buttonContainer {
+  margin: 1.5rem 0 0.8rem;
+}

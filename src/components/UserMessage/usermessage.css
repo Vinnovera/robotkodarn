@@ -1,0 +1,29 @@
+:local .message {
+  background-color: #fff;
+  border-radius: 4px;
+  margin-top: 4rem;
+  padding: 2.5rem 2rem 3rem;
+}
+
+:local .headline {
+  font-size: 2rem;
+  margin: 0 0 1rem;
+}
+
+:local .messageButtons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+}
+
+:local .messageButtons button:first-of-type {
+  margin-right: 0.5rem;
+}
+
+:local .workshopPin {
+  color: #3DA099;
+  font-size: 1rem;
+  margin: 0;
+}
+

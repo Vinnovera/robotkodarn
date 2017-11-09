@@ -3,8 +3,9 @@
   height: 30%;
 }
 
-:local .consoleWrapper h4 a {
-  float: right;
+:local .headline {
+  font-size: 1rem;
+  margin: 2rem 0 0.2rem;
 }
 
 :local .console {
@@ -13,7 +14,7 @@
   border: 1px solid #e5e5e5;
   background: white;
   font-size: 1rem;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 :local .console pre {
@@ -37,16 +38,17 @@
 }
 
 :local .console .error {
-  color: #e6412f;
+  color: #C52522;
 }
 
 :local .console .success {
-  color: #00b491;
+  color: #238F88;
 }
 
 :local .console .info {
-  color: #3498db;
+  color: #208FA0;
 }
+
 
 @keyframes :local(fadeout) {
   0% {
@@ -56,3 +58,44 @@
     background-color: #fffef1;
   }
 }
+
+/* -----------------------------------------------------------------------------
+  CONSOLE BUTTON
+------------------------------------------------------------------------------*/
+
+:local .consoleButton {
+  background: transparent;
+  border: none;
+  color: #238F88;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: inherit;
+  float: right;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  width: 7rem;
+  padding: 0;
+  transition: color 250ms ease;
+}
+
+:local .consoleButton:hover {
+  color: #214E50;
+}
+
+/* -----------------------------------------------------------------------------
+  CUSTOM SCROLL BAR
+------------------------------------------------------------------------------*/
+
+:local .console::-webkit-scrollbar-track {
+  background-color: #EDEBE6;
+}
+
+:local .console::-webkit-scrollbar {
+  background-color: #EDEBE6;
+  width: 6px;
+}
+
+:local .console::-webkit-scrollbar-thumb {
+  background-color: #FF9078;
+}
+
