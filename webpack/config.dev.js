@@ -19,7 +19,6 @@ module.exports = {
     function () {
       this.plugin('done', (stats) => {
         if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') === -1) {
-          console.log(stats.compilation.errors)
           process.exit(1)
         }
       })
@@ -40,7 +39,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        loaders: ['babel-loader'],
         include: path.join(__dirname, '..', 'src')
       },
       {
