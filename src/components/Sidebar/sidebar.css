@@ -1,22 +1,27 @@
-/*
-* 1. 81px is the height of the navigation bar.
-*/
 :local .sidebar {
   background-color: #fff;
   color: #3E3748;
-  height: calc(100vh - 81px); /* 1 */
+  height: 100vh;
   left: 0;
   position: fixed;
-  padding-top: 2rem;
   width: 280px;
   transition: left 300ms ease-in-out 75ms;
-  top: 81px; /* 1 */
   text-align: center;
   overflow-y: scroll;
 }
 
 :local .sidebarClosed {
   left: -249px;
+}
+
+:local .sidebar h1 {
+  font-family: 'Roboto Slab', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  text-transform: uppercase;
+  border-bottom: 4px solid #eae8e2;
+  padding: 15px 0;
+  margin: 0 0 30px 0;
 }
 
 /* -----------------------------------------------------------------------------

@@ -10,19 +10,12 @@ class Header extends Component {
   }
 
   render() {
-    return (
-      <header className={styles.header}>
-        <h1 className={styles.headerTitle}>Robotkodarn</h1>
-        { this.props.isLoggedIn ?
-          <div>
-            <button onClick={this.handleMenu} className={styles.toolsIcon} >Verktyg</button>
-            <Menu />
-          </div>
-          :
-          ''
-        }
-      </header>
-    )
+    return (this.props.isLoggedIn) ? (
+      <div className={styles.toolsIconWrapper}>
+        <button onClick={this.handleMenu} className={styles.toolsIcon} >Verktyg</button>
+        <Menu />
+      </div>
+    ) : ''
   }
 }
 
