@@ -48,7 +48,7 @@ class Workshops extends Component {
     const workshops = this.props.userWorkshops
     return (
       <View background="red">
-        { this.props.isLoggedIn && <header className={styles.header}><ToolsButton /></header> }
+        { this.props.isLoggedIn && <header className={styles.header}><h1 className={styles.headerTitle}>Robotkodarn</h1><ToolsButton /></header> }
         <FadeIn>
           <div className={styles.workshops}>
             <h1 className={styles.workshopHeadline}>Mina workshops</h1>

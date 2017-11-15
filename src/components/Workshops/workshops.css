@@ -9,15 +9,17 @@
   left: 0;
   position: static;
   top: 0;
-  padding: 1.5rem 2rem 1.3rem;
   width: 100vw;
 }
 
 :local .headerTitle {
   color: inherit;
-  font-size: 1rem;
+  font-family: 'Roboto Slab', sans-serif;
+  font-size: 22px;
   font-weight: 400;
-  margin: 0;
+  margin: 0 20px;
+  padding: 0;
+  text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
