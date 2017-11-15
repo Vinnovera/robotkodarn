@@ -27,7 +27,7 @@
   padding: 5px;
 }
 
-:local .console pre div:last-of-type {
+:local .console pre div:first-of-type {
   background: #fffef1;
   animation: fadeout 3s;
   animation-iteration-count: 1;
