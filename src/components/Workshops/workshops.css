@@ -1,3 +1,27 @@
+:local .header {
+  background-color: #fff;
+  color: #31283E;
+  align-items: center;
+  border-bottom: 4px solid #EDEBE6;
+  display: flex;
+  justify-content: space-between;
+  min-height: 55px;
+  left: 0;
+  position: static;
+  top: 0;
+  padding: 1.5rem 2rem 1.3rem;
+  width: 100vw;
+}
+
+:local .headerTitle {
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
 :local .workshops {
   background-color: #fff;
   border-radius: 4px;

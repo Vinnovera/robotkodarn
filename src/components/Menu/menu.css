@@ -12,7 +12,7 @@
   top: 0;
   transition: right 300ms ease-in-out 75ms;
   width: 300px;
-  z-index: 2;
+  z-index: 1001;
 }
 
 :local .navigationOpen {

@@ -11,6 +11,9 @@ import Button from './../Button'
 import Spinner from './../Spinner'
 import View from './../View'
 import FadeIn from './../FadeIn'
+import ToolsButton from './../ToolsButton'
+import Menu from './../Menu'
+
 import styles from './workspace.css'
 
 export class Workspace extends Component {
@@ -53,6 +56,7 @@ export class Workspace extends Component {
     if (this.props.currentWorkshop) {
       return (
         <View>
+          { this.props.isLoggedIn && <ToolsButton /> }
           <Sidebar />
           { this.props.editing ?
             <FadeIn>
@@ -102,7 +106,8 @@ function mapStateToProps(state) {
     activePartIndex: state.editor.activePartIndex,
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
-    partsToEdit: state.editor.partsToEdit
+    partsToEdit: state.editor.partsToEdit,
+    isLoggedIn: state.user.isLoggedIn
   }
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { toggleMenu } from '../../actions/menu'
 import styles from './navbar.css'
+import ToolsButton from '../ToolsButton'
 import Menu from '../Menu/'
 
 class Header extends Component {
@@ -10,12 +11,19 @@ class Header extends Component {
   }
 
   render() {
-    return (this.props.isLoggedIn) ? (
-      <div className={styles.toolsIconWrapper}>
-        <button onClick={this.handleMenu} className={styles.toolsIcon} >Verktyg</button>
-        <Menu />
-      </div>
-    ) : ''
+    return (
+      <header className={styles.header}>
+        <h1 className={styles.headerTitle}>Robotkodarn</h1>
+        { this.props.isLoggedIn ?
+          <div>
+            <ToolsButton />
+            <Menu />
+          </div>
+          :
+          ''
+        }
+      </header>
+    )
   }
 }
 

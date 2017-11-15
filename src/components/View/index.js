@@ -1,5 +1,6 @@
 import React from 'react'
-import Navbar from './../Navbar'
+import ToolsButton from './../ToolsButton'
+import Menu from './../Menu'
 import styles from './view.css'
 
 const View = ({ children, background = 'beige' }) => {
@@ -15,7 +16,6 @@ const View = ({ children, background = 'beige' }) => {
 
   return (
     <div className={componentStyle}>
-      <Navbar />
       { children }
     </div>
   )
