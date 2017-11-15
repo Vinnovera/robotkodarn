@@ -34,6 +34,7 @@ class Sidebar extends Component {
   render() {
     return (
       <aside className={this.getSidebarClassName()}>
+        <h1>Robotkodarn</h1>
         <section>
           <p className={styles.pinCode}>{this.props.workshop.pincode}</p>
           { this.props.editing ?

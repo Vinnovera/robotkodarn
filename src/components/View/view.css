@@ -12,3 +12,10 @@
   background: #FE5D4B url('./../../patterns/bowie.svg') no-repeat center center;
   background-size: cover;
 }
+
+:local .toolsIconWrapper {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  z-index: 1000;
+}

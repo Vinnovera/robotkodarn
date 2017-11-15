@@ -1,10 +1,9 @@
 /*
  * 1. 280px === width of sidebar
- * 2. 81px === height of navigation bar
  */
 :local .mainPane {
   bottom: 0;
-  height: calc(100vh - 81px); /* 2 */
+  height: 100vh;
   transition: width 300ms ease-in-out 75ms;
   padding: 20px;
   position: fixed;

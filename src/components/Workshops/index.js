@@ -14,6 +14,7 @@ import {
 import View from '../View'
 import FadeIn from '../FadeIn'
 import Button from '../Button'
+import ToolsButton from '../ToolsButton'
 import styles from './workshops.css'
 
 class Workshops extends Component {
@@ -47,6 +48,7 @@ class Workshops extends Component {
     const workshops = this.props.userWorkshops
     return (
       <View background="red">
+        { this.props.isLoggedIn && <header className={styles.header}><h1 className={styles.headerTitle}>Robotkodarn</h1><ToolsButton /></header> }
         <FadeIn>
           <div className={styles.workshops}>
             <h1 className={styles.workshopHeadline}>Mina workshops</h1>
@@ -102,7 +104,8 @@ function mapStateToProps(state) {
     userWorkshops: state.workshops.userWorkshops,
     message: state.workshops.message,
     role: state.user.isLoggedIn,
-    editing: state.editor.editing
+    editing: state.editor.editing,
+    isLoggedIn: state.user.isLoggedIn
   }
 }
 
