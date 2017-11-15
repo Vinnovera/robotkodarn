@@ -2,6 +2,7 @@ const util = require('util')
 const avrpizza = require('avr-pizza')
 const tmp = require('tmp')
 const fs = require('fs')
+const thePath = require('path')
 
 /* Node utility
  * Converts a callback-based function to a Promise-based one.
@@ -27,7 +28,13 @@ const compileCode = (request, reply) => {
      */
     const pkg = {
       sketch: path,
-      board: 'uno' // Hardcoded during development
+      board: 'uno', // Hardcoded during development
+      libraries: [
+        `${thePath.resolve(__dirname)}/../arduino-libraries/Pushbutton`,
+        `${thePath.resolve(__dirname)}/../arduino-libraries/QTRSensors`,
+        `${thePath.resolve(__dirname)}/../arduino-libraries/ZumoMotors`,
+        `${thePath.resolve(__dirname)}/../arduino-libraries/ZumoReflectanceSensorArray`
+      ]
     }
 
     /*
