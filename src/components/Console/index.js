@@ -42,7 +42,7 @@ export class Console extends Component {
         <div className={styles.console} id="console">
           <pre>
             {
-              this.props.consoleOutput.reverse().map((message) => {
+              this.props.consoleOutput.map((message) => {
                 const h = (message.timestamp.getHours() < 10) ?
                   `0${message.timestamp.getHours()}` :
                   message.timestamp.getHours()

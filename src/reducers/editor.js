@@ -41,7 +41,7 @@ export default handleActions({
 
     return ({
       ...state,
-      consoleOutput: [...state.consoleOutput, consoleMessage]
+      consoleOutput: [consoleMessage, ...state.consoleOutput]
     })
   },
 
