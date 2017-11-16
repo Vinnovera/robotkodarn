@@ -38,15 +38,15 @@
 }
 
 :local .console .error {
-  color: #C52522;
+  color: #d92814;
 }
 
 :local .console .success {
-  color: #238F88;
+  color: #14b265;
 }
 
 :local .console .info {
-  color: #208FA0;
+  color: #239efa;
 }
 
 
