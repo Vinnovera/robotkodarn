@@ -17,6 +17,11 @@
   font-smoothing: antialiased;
 }
 
+:local .button:disabled {
+  opacity: .4;
+  pointer: not-allowed;
+}
+
 :local .buttonSuccess {
   background-color: #3DA099;
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { compileCode, setConsoleOutput } from '../../actions/editor'
+import { compileCode, setConsoleOutput, toggleCodeButtons } from '../../actions/editor'
 import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
@@ -50,6 +50,8 @@ export class Workspace extends Component {
     this.props.dispatch(
       compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
     )
+
+    this.props.dispatch(toggleCodeButtons(false))
   }
 
   renderMainContent() {
@@ -73,10 +75,10 @@ export class Workspace extends Component {
                   <h1 className={styles.workspaceHeadline}>Övning</h1>
                 }
                 <div className={styles.codeButtonsWrapper} >
-                  <Button kind="success" handleClick={() => this.handleClick()}>
+                  <Button isEnabled={this.props.enabledButtons} kind="success" handleClick={() => this.handleClick()}>
                     <FA className={styles.icons} name="cogs" />Testa min kod
                   </Button>
-                  <Button kind="success" handleClick={() => this.handleClick(true)}>
+                  <Button isEnabled={this.props.enabledButtons} kind="success" handleClick={() => this.handleClick(true)}>
                     <FA className={styles.icons} name="usb" />Ladda över kod
                   </Button>
                 </div>
@@ -107,7 +109,8 @@ function mapStateToProps(state) {
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
+    enabledButtons: state.editor.enabledButtons
   }
 }
 

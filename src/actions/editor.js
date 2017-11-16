@@ -6,6 +6,7 @@ const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
 const TOGGLE_EDITING = 'TOGGLE_EDITING'
 const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
 const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
+const TOGGLE_CODE_BUTTONS = 'TOGGLE_CODE_BUTTONS'
 
 // -----------------------------------------------------------------------------
 // setPartsToEdit, Sets the parts that user can edit in editor
@@ -195,5 +196,15 @@ export const setEditingType = (type, id = null) => (dispatch) => {
       type,
       id
     }
+  })
+}
+
+// -----------------------------------------------------------------------------
+// 
+// -----------------------------------------------------------------------------
+export const toggleCodeButtons = toggleValue => (dispatch) => {
+  dispatch({
+    type: TOGGLE_CODE_BUTTONS,
+    payload: toggleValue
   })
 }

@@ -71,6 +71,13 @@ export default handleActions({
       ...state,
       editingType: action.payload
     })
+  },
+
+  TOGGLE_CODE_BUTTONS: (state, action) => {
+    return ({
+      ...state,
+      enabledButtons: action.payload
+    })
   }
 
 }, {
@@ -83,5 +90,6 @@ export default handleActions({
     type: 'parts',
     id: null
   },
-  partsToEdit: []
+  partsToEdit: [],
+  enabledButtons: true
 })
