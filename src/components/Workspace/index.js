@@ -12,7 +12,6 @@ import Spinner from './../Spinner'
 import View from './../View'
 import FadeIn from './../FadeIn'
 import ToolsButton from './../ToolsButton'
-import Menu from './../Menu'
 
 import styles from './workspace.css'
 
@@ -74,14 +73,31 @@ export class Workspace extends Component {
                   :
                   <h1 className={styles.workspaceHeadline}>Övning</h1>
                 }
-                <div className={styles.codeButtonsWrapper} >
-                  <Button isEnabled={this.props.enabledButtons} kind="success" handleClick={() => this.handleClick()}>
-                    <FA className={styles.icons} name="cogs" />Testa min kod
-                  </Button>
-                  <Button isEnabled={this.props.enabledButtons} kind="success" handleClick={() => this.handleClick(true)}>
-                    <FA className={styles.icons} name="usb" />Ladda över kod
-                  </Button>
-                </div>
+                {
+                  this.props.enabledButtons
+                    ? (
+                      <div className={styles.codeButtonsWrapper} >
+                        <Button kind="success" handleClick={() => this.handleClick()}>
+                          <FA className={styles.icons} name="cogs" />Testa min kod
+                        </Button>
+
+                        <Button kind="success" handleClick={() => this.handleClick(true)}>
+                          <FA className={styles.icons} name="usb" />Ladda över kod
+                        </Button>
+                      </div>
+                    )
+                    : (
+                      <div className={styles.codeButtonsWrapper} >
+                        <Button kind="disabled">
+                          <FA className={styles.icons} name="cogs" />Testa min kod
+                        </Button>
+
+                        <Button kind="disabled">
+                          <FA className={styles.icons} name="usb" />Ladda över kod
+                        </Button>
+                      </div>
+                    )
+                }
                 <Editor />
                 <Console />
               </main>

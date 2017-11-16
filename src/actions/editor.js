@@ -135,6 +135,11 @@ export const uploadCode = compiledCode => (dispatch) => {
         }
       })
     }
+
+    dispatch({
+      type: 'TOGGLE_CODE_BUTTONS',
+      payload: true
+    })
   })
 
   // Send message to Chrome App

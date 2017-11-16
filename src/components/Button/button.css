@@ -1,6 +1,7 @@
 :local .button,
 :local .buttonSuccess,
-:local .buttonDanger {
+:local .buttonDanger,
+:local .buttonDisabled {
   border-radius: 2px;
   background-color: #3E3748;
   border: none;
@@ -17,11 +18,6 @@
   font-smoothing: antialiased;
 }
 
-:local .button:disabled {
-  opacity: .4;
-  pointer: not-allowed;
-}
-
 :local .buttonSuccess {
   background-color: #3DA099;
 
@@ -35,6 +31,14 @@
 }
 :local .buttonDanger:hover {
   background-color: #C52522;
+}
+
+:local .buttonDisabled {
+  background-color: #BABABA;
+  cursor: not-allowed;
+}
+:local .buttonDisabled:hover {
+  
 }
 
 :local .button:hover,
