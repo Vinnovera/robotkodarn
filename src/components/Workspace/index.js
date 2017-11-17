@@ -13,6 +13,9 @@ import View from './../View'
 import FadeIn from './../FadeIn'
 import ToolsButton from './../ToolsButton'
 
+import CogIcon from '../Icons/CogIcon'
+import USBIcon from '../Icons/USBIcon'
+
 import styles from './workspace.css'
 
 export class Workspace extends Component {
@@ -84,22 +87,22 @@ export class Workspace extends Component {
                     ? (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="success" handleClick={() => this.handleClick()}>
-                          <FA className={`${styles.icons} ${styles.compileIcon}`} name="cogs" />Testa min kod
+                          <CogIcon className={styles.cogwheelIcon} /> Testa min kod
                         </Button>
 
                         <Button kind="success" handleClick={() => this.handleClick(true)}>
-                          <FA className={`${styles.icons} ${styles.uploadIcon}`} name="usb" />Ladda över kod
+                          <USBIcon className={styles.usbIcon} /> Ladda över kod
                         </Button>
                       </div>
                     )
                     : (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="disabled">
-                          <FA className={`${styles.icons} ${styles.compileIcon} ${this.props.animatedCompileButton && styles.compileButtonAnimation}`} name="cogs" /> Testa min kod
+                          <CogIcon className={`${styles.cogwheelIcon} ${this.props.animatedCompileButton ? styles.compileButtonIsAnimated : ''}`} /> Testa min kod
                         </Button>
 
                         <Button kind="disabled">
-                          <FA className={`${styles.icons} ${this.props.animatedUploadButton && styles.uploadButtonAnimation}`} name="usb" /> Ladda över kod
+                          <USBIcon className={`${styles.usbIcon} ${this.props.animatedUploadButton ? styles.uploadButtonIsAnimated : ''}`} /> Ladda över kod
                         </Button>
                       </div>
                     )

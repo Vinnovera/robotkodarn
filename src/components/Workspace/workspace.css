@@ -28,6 +28,7 @@
 
 :local .codeButtonsWrapper button:first-of-type {
   margin-right: 10px;
+  max-height: 52px; /* So it doesn't grow when the icon gets larger */
 }
 
 /* FontAwesome */
@@ -35,16 +36,25 @@
   margin-right: 10px;
 }
 
-
-:local .compileIcon {
-  transform-origin: 5px 8px;
+:local .usbIcon {
+  display: inline;
+  width: 25px;
+  margin: -4px 5px 0 0;
+  padding: 0;
+  vertical-align: middle;
+  transition: transform .5s;
+}
+:local .usbIcon.uploadButtonIsAnimated {
+  transform: scale(1.5);
 }
 
-:local .compileButtonAnimation {
+:local .usbIcon.uploadButtonIsAnimated path {
   animation: spin 1s infinite;
+  transform-origin: center;
 }
-:local .uploadButtonAnimation {
-  animation: spin 1s infinite;
+
+:local .usbIcon path {
+  fill: white;
 }
 
 
@@ -54,5 +64,50 @@
   }
   100% {
     transform: rotateZ(360deg)
+  }
+}
+
+
+:local .cogwheelIcon {
+  display: inline;
+  height: 21px;
+  margin: -6px 8px 0 0;
+  padding: 0;
+  vertical-align: middle;
+  transition: transform .5s;
+}
+:local .cogwheelIcon.compileButtonIsAnimated {
+  transform: scale(1.8);
+}
+
+:local .cogwheelIcon path {
+  fill: white;
+}
+
+:local .cogwheelIcon.compileButtonIsAnimated path:nth-child(odd) {
+  animation: cogwheel--rotate-right 5s infinite linear;
+  transform-origin: center;
+}
+
+:local .cogwheelIcon.compileButtonIsAnimated path:nth-child(even) {
+  animation: cogwheel--rotate-left 5s infinite linear;
+  transform-origin: center;
+}
+
+@keyframes :local(cogwheel--rotate-right) {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes :local(cogwheel--rotate-left) {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
   }
 }
