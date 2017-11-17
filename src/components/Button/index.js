@@ -8,6 +8,8 @@ const Button = ({ children, handleClick, kind = 'normal' }) => {
     buttonStyle = styles.buttonDanger
   } else if (kind === 'success') {
     buttonStyle = styles.buttonSuccess
+  } else if (kind === 'disabled') {
+    buttonStyle = styles.buttonDisabled
   }
 
   return (

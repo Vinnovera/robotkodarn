@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { compileCode, setConsoleOutput } from '../../actions/editor'
+import { compileCode, setConsoleOutput, toggleCodeButtons } from '../../actions/editor'
 import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
@@ -12,7 +12,6 @@ import Spinner from './../Spinner'
 import View from './../View'
 import FadeIn from './../FadeIn'
 import ToolsButton from './../ToolsButton'
-import Menu from './../Menu'
 
 import styles from './workspace.css'
 
@@ -50,6 +49,8 @@ export class Workspace extends Component {
     this.props.dispatch(
       compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
     )
+
+    this.props.dispatch(toggleCodeButtons(false))
   }
 
   renderMainContent() {
@@ -72,14 +73,31 @@ export class Workspace extends Component {
                   :
                   <h1 className={styles.workspaceHeadline}>Övning</h1>
                 }
-                <div className={styles.codeButtonsWrapper} >
-                  <Button kind="success" handleClick={() => this.handleClick()}>
-                    <FA className={styles.icons} name="cogs" />Testa min kod
-                  </Button>
-                  <Button kind="success" handleClick={() => this.handleClick(true)}>
-                    <FA className={styles.icons} name="usb" />Ladda över kod
-                  </Button>
-                </div>
+                {
+                  this.props.enabledButtons
+                    ? (
+                      <div className={styles.codeButtonsWrapper} >
+                        <Button kind="success" handleClick={() => this.handleClick()}>
+                          <FA className={styles.icons} name="cogs" />Testa min kod
+                        </Button>
+
+                        <Button kind="success" handleClick={() => this.handleClick(true)}>
+                          <FA className={styles.icons} name="usb" />Ladda över kod
+                        </Button>
+                      </div>
+                    )
+                    : (
+                      <div className={styles.codeButtonsWrapper} >
+                        <Button kind="disabled">
+                          <FA className={styles.icons} name="cogs" />Testa min kod
+                        </Button>
+
+                        <Button kind="disabled">
+                          <FA className={styles.icons} name="usb" />Ladda över kod
+                        </Button>
+                      </div>
+                    )
+                }
                 <Editor />
                 <Console />
               </main>
@@ -107,7 +125,8 @@ function mapStateToProps(state) {
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
+    enabledButtons: state.editor.enabledButtons
   }
 }
 

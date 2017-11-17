@@ -18,7 +18,8 @@ import {
   changeEditorTab,
   uploadCode,
   setConsoleOutput,
-  setPartsToEdit
+  setPartsToEdit,
+  toggleCodeButtons
 } from '../../actions/editor'
 import styles from './editor.css'
 
@@ -57,6 +58,7 @@ export class Editor extends Component {
         }
 
         this.props.dispatch(setConsoleOutput(msg))
+        this.props.dispatch(toggleCodeButtons(true))
       }
     }
   }
