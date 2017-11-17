@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { compileCode, setConsoleOutput, toggleCodeButtons } from '../../actions/editor'
+import { compileCode, setConsoleOutput, toggleCodeButtons, animateCompileButton, animateUploadButton } from '../../actions/editor'
 import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
@@ -50,6 +50,12 @@ export class Workspace extends Component {
       compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
     )
 
+    if (upload) {
+      this.props.dispatch(animateUploadButton(true))
+    } else {
+      this.props.dispatch(animateCompileButton(true))
+    }
+
     this.props.dispatch(toggleCodeButtons(false))
   }
 
@@ -78,22 +84,22 @@ export class Workspace extends Component {
                     ? (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="success" handleClick={() => this.handleClick()}>
-                          <FA className={styles.icons} name="cogs" />Testa min kod
+                          <FA className={`${styles.icons} ${styles.compileIcon}`} name="cogs" />Testa min kod
                         </Button>
 
                         <Button kind="success" handleClick={() => this.handleClick(true)}>
-                          <FA className={styles.icons} name="usb" />Ladda över kod
+                          <FA className={`${styles.icons} ${styles.uploadIcon}`} name="usb" />Ladda över kod
                         </Button>
                       </div>
                     )
                     : (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="disabled">
-                          <FA className={styles.icons} name="cogs" />Testa min kod
+                          <FA className={`${styles.icons} ${styles.compileIcon} ${this.props.animatedCompileButton && styles.compileButtonAnimation}`} name="cogs" /> Testa min kod
                         </Button>
 
                         <Button kind="disabled">
-                          <FA className={styles.icons} name="usb" />Ladda över kod
+                          <FA className={`${styles.icons} ${this.props.animatedUploadButton && styles.uploadButtonAnimation}`} name="usb" /> Ladda över kod
                         </Button>
                       </div>
                     )
@@ -126,7 +132,9 @@ function mapStateToProps(state) {
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
-    enabledButtons: state.editor.enabledButtons
+    enabledButtons: state.editor.enabledButtons,
+    animatedCompileButton: state.editor.animatedCompileButton,
+    animatedUploadButton: state.editor.animatedUploadButton
   }
 }
 

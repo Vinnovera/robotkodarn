@@ -34,3 +34,25 @@
 :local .icons {
   margin-right: 10px;
 }
+
+
+:local .compileIcon {
+  transform-origin: 5px 8px;
+}
+
+:local .compileButtonAnimation {
+  animation: spin 1s infinite;
+}
+:local .uploadButtonAnimation {
+  animation: spin 1s infinite;
+}
+
+
+@keyframes :local(spin) {
+  0% {
+    transform: rotateZ(0deg)
+  }
+  100% {
+    transform: rotateZ(360deg)
+  }
+}

@@ -7,6 +7,8 @@ const TOGGLE_EDITING = 'TOGGLE_EDITING'
 const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
 const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
 const TOGGLE_CODE_BUTTONS = 'TOGGLE_CODE_BUTTONS'
+const TOGGLE_COMPILER_BUTTON_ANIMATION = 'TOGGLE_COMPILER_BUTTON_ANIMATION'
+const TOGGLE_UPLOAD_BUTTON_ANIMATION = 'TOGGLE_UPLOAD_BUTTON_ANIMATION'
 
 // -----------------------------------------------------------------------------
 // setPartsToEdit, Sets the parts that user can edit in editor
@@ -140,6 +142,11 @@ export const uploadCode = compiledCode => (dispatch) => {
       type: 'TOGGLE_CODE_BUTTONS',
       payload: true
     })
+
+    dispatch({
+      type: 'TOGGLE_UPLOAD_BUTTON_ANIMATION',
+      payload: true
+    })
   })
 
   // Send message to Chrome App
@@ -205,11 +212,31 @@ export const setEditingType = (type, id = null) => (dispatch) => {
 }
 
 // -----------------------------------------------------------------------------
-// 
+// toggleCodeButtons, disables or enables the compile and upload buttons
 // -----------------------------------------------------------------------------
 export const toggleCodeButtons = toggleValue => (dispatch) => {
   dispatch({
     type: TOGGLE_CODE_BUTTONS,
+    payload: toggleValue
+  })
+}
+
+// -----------------------------------------------------------------------------
+// animateCompilebutton, turn the animation for compiler button on or off
+// -----------------------------------------------------------------------------
+export const animateCompileButton = toggleValue => (dispatch) => {
+  dispatch({
+    type: TOGGLE_COMPILER_BUTTON_ANIMATION,
+    payload: toggleValue
+  })
+}
+
+// -----------------------------------------------------------------------------
+// animateUploadbutton, turn the animation for upload button on or off
+// -----------------------------------------------------------------------------
+export const animateUploadButton = toggleValue => (dispatch) => {
+  dispatch({
+    type: TOGGLE_UPLOAD_BUTTON_ANIMATION,
     payload: toggleValue
   })
 }

@@ -78,6 +78,20 @@ export default handleActions({
       ...state,
       enabledButtons: action.payload
     })
+  },
+
+  TOGGLE_COMPILER_BUTTON_ANIMATION: (state, action) => {
+    return ({
+      ...state,
+      animatedCompileButton: action.payload
+    })
+  },
+
+  TOGGLE_UPLOAD_BUTTON_ANIMATION: (state, action) => {
+    return ({
+      ...state,
+      animatedUploadButton: action.payload
+    })
   }
 
 }, {
@@ -91,5 +105,7 @@ export default handleActions({
     id: null
   },
   partsToEdit: [],
-  enabledButtons: true
+  enabledButtons: true,
+  animatedCompileButton: false,
+  animatedUploadButton: false
 })
