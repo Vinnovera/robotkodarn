@@ -78,6 +78,20 @@ export default handleActions({
       ...state,
       enabledButtons: action.payload
     })
+  },
+
+  SET_CHROME_PING: (state, action) => {
+    return ({
+      ...state,
+      chromeAppReachable: action.payload
+    })
+  },
+
+  SET_DEVICE_CONNECTED: (state, action) => {
+    return ({
+      ...state,
+      deviceConnected: action.payload
+    })
   }
 
 }, {
@@ -91,5 +105,7 @@ export default handleActions({
     id: null
   },
   partsToEdit: [],
-  enabledButtons: true
+  enabledButtons: true,
+  chromeAppReachable: false,
+  deviceConnected: false
 })
