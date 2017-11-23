@@ -58,6 +58,10 @@ class Sidebar extends Component {
           <h3 className={styles.sidebarSub}>Läs mer</h3>
           <SidebarList listType="reference" />
         </section>
+        <section className={styles.status}>
+          <div><span><i className={`${styles.connectionDot} ${this.props.chromeAppReachable ? styles.green : styles.red}`} /> Chrome-app</span></div>
+          <div><span className={!this.props.chromeAppReachable ? styles.unreachableText : null}><i className={`${styles.connectionDot} ${ this.props.chromeAppReachable ? (this.props.deviceConnected ? styles.green : styles.red) : styles.unreachable }`} /> Robot</span></div>
+        </section>
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />
         </button>
@@ -70,7 +74,9 @@ function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
     editing: state.editor.editing,
-    workshop: state.currentWorkshop.item
+    workshop: state.currentWorkshop.item,
+    chromeAppReachable: state.editor.chromeAppReachable,
+    deviceConnected: state.editor.deviceConnected
   }
 }
 

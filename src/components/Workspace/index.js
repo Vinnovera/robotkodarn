@@ -99,7 +99,7 @@ export class Workspace extends Component {
                             )
                             : (
                               <Button kind="disabled">
-                                <FA className={styles.icons} name="usb" /> { this.props.deviceConnected ? 'Ladda över kod' : 'Ingen robot...' }
+                                <FA className={styles.icons} name="usb" />Ladda över kod
                               </Button>
                             )
                         }
