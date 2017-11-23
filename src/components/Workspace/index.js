@@ -31,7 +31,7 @@ import styles from './workspace.css'
 export class Workspace extends Component {
   componentWillMount() {
     this.props.dispatch(findWorkshopByPin(this.props.params.pin))
-    this.ping(3000)
+    this.ping(1000)
   }
 
   componentWillUnmount() {
