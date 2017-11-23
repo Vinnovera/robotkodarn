@@ -7,6 +7,8 @@ const TOGGLE_EDITING = 'TOGGLE_EDITING'
 const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
 const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
 const TOGGLE_CODE_BUTTONS = 'TOGGLE_CODE_BUTTONS'
+const SET_CHROME_PING = 'SET_CHROME_PING'
+const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'
 
 // -----------------------------------------------------------------------------
 // setPartsToEdit, Sets the parts that user can edit in editor
@@ -211,5 +213,37 @@ export const toggleCodeButtons = toggleValue => (dispatch) => {
   dispatch({
     type: TOGGLE_CODE_BUTTONS,
     payload: toggleValue
+  })
+}
+
+// -----------------------------------------------------------------------------
+// pingChromeApp, pings the Chrome App expecting a response "pong"
+// -----------------------------------------------------------------------------
+export const pingChromeApp = () => (dispatch) => {
+  chrome.runtime.sendMessage(process.env.CHROME_EXTENSION_ID, { message: 'ping' }, (reply) => {
+    dispatch({
+      type: SET_CHROME_PING,
+      payload: (reply && reply.response === 'pong')
+    })
+  })
+}
+
+// -----------------------------------------------------------------------------
+// pingForUSBConnection, pings the Chrome App that retrieves a list of
+// arduino devices that are connected
+// -----------------------------------------------------------------------------
+export const pingForUSBConnection = () => (dispatch) => {
+  chrome.runtime.sendMessage(process.env.CHROME_EXTENSION_ID, { message: 'list' }, (reply) => {
+    if (!reply || reply.error) {
+      console.error('Ingen kontakt med Chrome App eller fel vid hämtning av lista')
+    } else {
+      const deviceConnected = reply.ports.filter(port => port.manufacturer !== undefined).length > 0
+
+      dispatch({
+        type: SET_DEVICE_CONNECTED,
+        payload: deviceConnected
+      })
+    }
+
   })
 }

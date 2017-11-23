@@ -8,12 +8,18 @@
   transition: left 300ms ease-in-out 75ms;
   text-align: center;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 :local .sidebarClosed {
   left: -249px;
 }
 
+
+/* -----------------------------------------------------------------------------
+  HEADING IN SIDEBAR
+------------------------------------------------------------------------------*/
 :local .sidebar h1 {
   font-family: 'Roboto Slab', sans-serif;
   font-size: 22px;
@@ -52,6 +58,7 @@
   font-family: inherit;
   font-size: 1.4rem;
   margin-top: 1rem;
+  margin-bottom: 0;
 }
 
 /* Remove default styling on buttons */
@@ -163,9 +170,115 @@
 }
 
 :local .section:last-of-type {
-  margin: 6rem 0 2rem;
+  /* margin: 6rem 0 2rem; */
 }
 
 :local .sidebarList {
   margin-top: 20px;
 }
+
+
+/* -----------------------------------------------------------------------------
+  STATUS
+------------------------------------------------------------------------------*/
+:local .status {
+  height: 50px;
+  border-top: 4px solid #eae8e2;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+:local .status div:first-of-type {
+  border-right: 2px solid #eae8e2;
+}
+:local .status div:last-of-type {
+  border-left: 2px solid #eae8e2;
+}
+:local .status div {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+:local .connectionDot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin: 0px 5px 2px 0;
+  transition: all .5s;
+}
+:local .red {
+  background-color: #e9485c;
+  animation: scaleRed .5s both;
+}
+:local .green {
+  background-color: #59d717;
+  animation: scaleGreen .5s both;
+}
+:local .unreachable {
+  background-color: #bbb;
+  animation: scaleUnreachable .5s both;
+}
+:local .unreachableText {
+  color: #bbb;
+  position: relative;
+}
+
+@keyframes :local(scaleRed) {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes :local(scaleGreen) {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes :local(scaleUnreachable) {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+/* :local .unreachableText::before,
+:local .unreachableText::after {
+  position: absolute;
+  content: '';
+  top: 50%;
+  left: -10%;
+  width: 120%;
+  height: 2px;
+  background-color: rgba(255, 0, 0, .5);
+}
+:local .unreachableText::before {
+  transform: rotateZ(-15deg);
+}
+:local .unreachableText::after {
+  transform: rotateZ(15deg);
+} */

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { compileCode, setConsoleOutput, toggleCodeButtons } from '../../actions/editor'
+import { compileCode, setConsoleOutput, toggleCodeButtons, pingChromeApp, pingForUSBConnection } from '../../actions/editor'
 import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
@@ -18,6 +18,7 @@ import styles from './workspace.css'
 export class Workspace extends Component {
   componentWillMount() {
     this.props.dispatch(findWorkshopByPin(this.props.params.pin))
+    this.ping(3000)
   }
 
   componentWillUnmount() {
@@ -30,6 +31,14 @@ export class Workspace extends Component {
     }
 
     return `${styles.mainPane} ${styles.mainPaneExpanded}`
+  }
+
+  ping(interval) {
+    setInterval(() => {
+      this.props.dispatch(pingChromeApp())
+      this.props.dispatch(pingForUSBConnection())
+    }, interval)
+
   }
 
   /**
@@ -81,9 +90,19 @@ export class Workspace extends Component {
                           <FA className={styles.icons} name="cogs" />Testa min kod
                         </Button>
 
-                        <Button kind="success" handleClick={() => this.handleClick(true)}>
-                          <FA className={styles.icons} name="usb" />Ladda över kod
-                        </Button>
+                        {
+                          this.props.chromeAppReachable && this.props.deviceConnected
+                            ? (
+                              <Button kind="success" handleClick={() => this.handleClick(true)}>
+                                <FA className={styles.icons} name="usb" />Ladda över kod
+                              </Button>
+                            )
+                            : (
+                              <Button kind="disabled">
+                                <FA className={styles.icons} name="usb" />Ladda över kod
+                              </Button>
+                            )
+                        }
                       </div>
                     )
                     : (
@@ -126,7 +145,9 @@ function mapStateToProps(state) {
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
-    enabledButtons: state.editor.enabledButtons
+    enabledButtons: state.editor.enabledButtons,
+    chromeAppReachable: state.editor.chromeAppReachable,
+    deviceConnected: state.editor.deviceConnected
   }
 }
 
