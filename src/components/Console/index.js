@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setConsoleOutput, clearConsole, toggleCodeButtons } from '../../actions/editor'
+import { setConsoleOutput, clearConsole, toggleCodeButtons, animateCompileButton } from '../../actions/editor'
 import styles from './console.css'
 
 export class Console extends Component {
@@ -19,6 +19,7 @@ export class Console extends Component {
         }
 
         this.props.dispatch(setConsoleOutput(msg))
+        this.props.dispatch(animateCompileButton(false))
         this.props.dispatch(toggleCodeButtons(true))
       }
     }

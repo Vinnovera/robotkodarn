@@ -1,7 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { compileCode, setConsoleOutput, toggleCodeButtons, pingChromeApp, pingForUSBConnection } from '../../actions/editor'
+
+import {
+  compileCode,
+  setConsoleOutput,
+  toggleCodeButtons,
+  pingChromeApp,
+  pingForUSBConnection,
+  animateCompileButton,
+  animateUploadButton
+} from '../../actions/editor'
+
 import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
@@ -12,6 +22,9 @@ import Spinner from './../Spinner'
 import View from './../View'
 import FadeIn from './../FadeIn'
 import ToolsButton from './../ToolsButton'
+
+import CogIcon from '../Icons/CogIcon'
+import USBIcon from '../Icons/USBIcon'
 
 import styles from './workspace.css'
 
@@ -59,6 +72,12 @@ export class Workspace extends Component {
       compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
     )
 
+    if (upload) {
+      this.props.dispatch(animateUploadButton(true))
+    } else {
+      this.props.dispatch(animateCompileButton(true))
+    }
+
     this.props.dispatch(toggleCodeButtons(false))
   }
 
@@ -87,9 +106,10 @@ export class Workspace extends Component {
                     ? (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="success" handleClick={() => this.handleClick()}>
-                          <FA className={styles.icons} name="cogs" />Testa min kod
+                          <CogIcon className={styles.cogwheelIcon} /> Testa min kod
                         </Button>
 
+<<<<<<< HEAD
                         {
                           this.props.chromeAppReachable && this.props.deviceConnected
                             ? (
@@ -103,16 +123,21 @@ export class Workspace extends Component {
                               </Button>
                             )
                         }
+=======
+                        <Button kind="success" handleClick={() => this.handleClick(true)}>
+                          <USBIcon className={styles.usbIcon} /> Ladda över kod
+                        </Button>
+>>>>>>> feature/process-feedback
                       </div>
                     )
                     : (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="disabled">
-                          <FA className={styles.icons} name="cogs" />Testa min kod
+                          <CogIcon className={`${styles.cogwheelIcon} ${this.props.animatedCompileButton ? styles.compileButtonIsAnimated : ''}`} /> Testa min kod
                         </Button>
 
                         <Button kind="disabled">
-                          <FA className={styles.icons} name="usb" />Ladda över kod
+                          <USBIcon className={`${styles.usbIcon} ${this.props.animatedUploadButton ? styles.uploadButtonIsAnimated : ''}`} /> Ladda över kod
                         </Button>
                       </div>
                     )
@@ -146,8 +171,13 @@ function mapStateToProps(state) {
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
     enabledButtons: state.editor.enabledButtons,
+<<<<<<< HEAD
     chromeAppReachable: state.editor.chromeAppReachable,
     deviceConnected: state.editor.deviceConnected
+=======
+    animatedCompileButton: state.editor.animatedCompileButton,
+    animatedUploadButton: state.editor.animatedUploadButton
+>>>>>>> feature/process-feedback
   }
 }
 

@@ -92,6 +92,20 @@ export default handleActions({
       ...state,
       deviceConnected: action.payload
     })
+  },
+  
+  TOGGLE_COMPILER_BUTTON_ANIMATION: (state, action) => {
+    return ({
+      ...state,
+      animatedCompileButton: action.payload
+    })
+  },
+
+  TOGGLE_UPLOAD_BUTTON_ANIMATION: (state, action) => {
+    return ({
+      ...state,
+      animatedUploadButton: action.payload
+    })
   }
 
 }, {
@@ -107,5 +121,7 @@ export default handleActions({
   partsToEdit: [],
   enabledButtons: true,
   chromeAppReachable: false,
-  deviceConnected: false
+  deviceConnected: false,
+  animatedCompileButton: false,
+  animatedUploadButton: false
 })

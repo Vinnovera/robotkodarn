@@ -9,6 +9,8 @@ const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
 const TOGGLE_CODE_BUTTONS = 'TOGGLE_CODE_BUTTONS'
 const SET_CHROME_PING = 'SET_CHROME_PING'
 const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'
+const TOGGLE_COMPILER_BUTTON_ANIMATION = 'TOGGLE_COMPILER_BUTTON_ANIMATION'
+const TOGGLE_UPLOAD_BUTTON_ANIMATION = 'TOGGLE_UPLOAD_BUTTON_ANIMATION'
 
 // -----------------------------------------------------------------------------
 // setPartsToEdit, Sets the parts that user can edit in editor
@@ -142,6 +144,11 @@ export const uploadCode = compiledCode => (dispatch) => {
       type: 'TOGGLE_CODE_BUTTONS',
       payload: true
     })
+
+    dispatch({
+      type: 'TOGGLE_UPLOAD_BUTTON_ANIMATION',
+      payload: true
+    })
   })
 
   // Send message to Chrome App
@@ -207,7 +214,7 @@ export const setEditingType = (type, id = null) => (dispatch) => {
 }
 
 // -----------------------------------------------------------------------------
-// 
+// toggleCodeButtons, disables or enables the compile and upload buttons
 // -----------------------------------------------------------------------------
 export const toggleCodeButtons = toggleValue => (dispatch) => {
   dispatch({
@@ -217,6 +224,7 @@ export const toggleCodeButtons = toggleValue => (dispatch) => {
 }
 
 // -----------------------------------------------------------------------------
+<<<<<<< HEAD
 // pingChromeApp, pings the Chrome App expecting a response "pong"
 // -----------------------------------------------------------------------------
 export const pingChromeApp = () => (dispatch) => {
@@ -225,10 +233,19 @@ export const pingChromeApp = () => (dispatch) => {
       type: SET_CHROME_PING,
       payload: (reply && reply.response === 'pong')
     })
+=======
+// animateCompilebutton, turn the animation for compiler button on or off
+// -----------------------------------------------------------------------------
+export const animateCompileButton = toggleValue => (dispatch) => {
+  dispatch({
+    type: TOGGLE_COMPILER_BUTTON_ANIMATION,
+    payload: toggleValue
+>>>>>>> feature/process-feedback
   })
 }
 
 // -----------------------------------------------------------------------------
+<<<<<<< HEAD
 // pingForUSBConnection, pings the Chrome App that retrieves a list of
 // arduino devices that are connected
 // -----------------------------------------------------------------------------
@@ -247,3 +264,13 @@ export const pingForUSBConnection = () => (dispatch) => {
 
   })
 }
+=======
+// animateUploadbutton, turn the animation for upload button on or off
+// -----------------------------------------------------------------------------
+export const animateUploadButton = toggleValue => (dispatch) => {
+  dispatch({
+    type: TOGGLE_UPLOAD_BUTTON_ANIMATION,
+    payload: toggleValue
+  })
+}
+>>>>>>> feature/process-feedback

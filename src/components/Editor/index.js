@@ -19,7 +19,8 @@ import {
   uploadCode,
   setConsoleOutput,
   setPartsToEdit,
-  toggleCodeButtons
+  toggleCodeButtons,
+  animateCompileButton
 } from '../../actions/editor'
 import styles from './editor.css'
 
@@ -58,6 +59,7 @@ export class Editor extends Component {
         }
 
         this.props.dispatch(setConsoleOutput(msg))
+        this.props.dispatch(animateCompileButton(false))
         this.props.dispatch(toggleCodeButtons(true))
       }
     }
