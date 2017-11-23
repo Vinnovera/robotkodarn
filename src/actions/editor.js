@@ -147,7 +147,7 @@ export const uploadCode = compiledCode => (dispatch) => {
 
     dispatch({
       type: 'TOGGLE_UPLOAD_BUTTON_ANIMATION',
-      payload: true
+      payload: false
     })
   })
 
@@ -224,7 +224,6 @@ export const toggleCodeButtons = toggleValue => (dispatch) => {
 }
 
 // -----------------------------------------------------------------------------
-<<<<<<< HEAD
 // pingChromeApp, pings the Chrome App expecting a response "pong"
 // -----------------------------------------------------------------------------
 export const pingChromeApp = () => (dispatch) => {
@@ -233,19 +232,10 @@ export const pingChromeApp = () => (dispatch) => {
       type: SET_CHROME_PING,
       payload: (reply && reply.response === 'pong')
     })
-=======
-// animateCompilebutton, turn the animation for compiler button on or off
-// -----------------------------------------------------------------------------
-export const animateCompileButton = toggleValue => (dispatch) => {
-  dispatch({
-    type: TOGGLE_COMPILER_BUTTON_ANIMATION,
-    payload: toggleValue
->>>>>>> feature/process-feedback
   })
 }
 
 // -----------------------------------------------------------------------------
-<<<<<<< HEAD
 // pingForUSBConnection, pings the Chrome App that retrieves a list of
 // arduino devices that are connected
 // -----------------------------------------------------------------------------
@@ -261,10 +251,21 @@ export const pingForUSBConnection = () => (dispatch) => {
         payload: deviceConnected
       })
     }
-
   })
 }
-=======
+
+// -----------------------------------------------------------------------------
+// animateCompilebutton, turn the animation for compiler button on or off
+// -----------------------------------------------------------------------------
+export const animateCompileButton = toggleValue => (dispatch) => {
+  dispatch({
+    type: TOGGLE_COMPILER_BUTTON_ANIMATION,
+    payload: toggleValue
+  })
+}
+
+
+// -----------------------------------------------------------------------------
 // animateUploadbutton, turn the animation for upload button on or off
 // -----------------------------------------------------------------------------
 export const animateUploadButton = toggleValue => (dispatch) => {
@@ -273,4 +274,3 @@ export const animateUploadButton = toggleValue => (dispatch) => {
     payload: toggleValue
   })
 }
->>>>>>> feature/process-feedback

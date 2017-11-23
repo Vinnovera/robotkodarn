@@ -37,9 +37,6 @@
   background-color: #BABABA;
   cursor: not-allowed;
 }
-:local .buttonDisabled:hover {
-  
-}
 
 :local .button:hover,
 :local .button:focus {

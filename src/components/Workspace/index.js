@@ -51,7 +51,6 @@ export class Workspace extends Component {
       this.props.dispatch(pingChromeApp())
       this.props.dispatch(pingForUSBConnection())
     }, interval)
-
   }
 
   /**
@@ -106,38 +105,32 @@ export class Workspace extends Component {
                     ? (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="success" handleClick={() => this.handleClick()}>
-                          <CogIcon className={styles.cogwheelIcon} /> Testa min kod
+                          <CogIcon className={styles.cogwheelIcon} />Testa min kod
                         </Button>
 
-<<<<<<< HEAD
                         {
                           this.props.chromeAppReachable && this.props.deviceConnected
                             ? (
                               <Button kind="success" handleClick={() => this.handleClick(true)}>
-                                <FA className={styles.icons} name="usb" />Ladda över kod
+                                <USBIcon className={styles.usbIcon} />Ladda över kod
                               </Button>
                             )
                             : (
                               <Button kind="disabled">
-                                <FA className={styles.icons} name="usb" />Ladda över kod
+                                <USBIcon className={styles.usbIcon} />Ladda över kod
                               </Button>
                             )
                         }
-=======
-                        <Button kind="success" handleClick={() => this.handleClick(true)}>
-                          <USBIcon className={styles.usbIcon} /> Ladda över kod
-                        </Button>
->>>>>>> feature/process-feedback
                       </div>
                     )
                     : (
                       <div className={styles.codeButtonsWrapper} >
                         <Button kind="disabled">
-                          <CogIcon className={`${styles.cogwheelIcon} ${this.props.animatedCompileButton ? styles.compileButtonIsAnimated : ''}`} /> Testa min kod
+                          <CogIcon className={`${styles.cogwheelIcon} ${this.props.animatedCompileButton ? styles.compileButtonIsAnimated : ''}`} />Testa min kod
                         </Button>
 
                         <Button kind="disabled">
-                          <USBIcon className={`${styles.usbIcon} ${this.props.animatedUploadButton ? styles.uploadButtonIsAnimated : ''}`} /> Ladda över kod
+                          <USBIcon className={`${styles.usbIcon} ${this.props.animatedUploadButton ? styles.uploadButtonIsAnimated : ''}`} />Ladda över kod
                         </Button>
                       </div>
                     )
@@ -171,13 +164,10 @@ function mapStateToProps(state) {
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
     enabledButtons: state.editor.enabledButtons,
-<<<<<<< HEAD
     chromeAppReachable: state.editor.chromeAppReachable,
-    deviceConnected: state.editor.deviceConnected
-=======
+    deviceConnected: state.editor.deviceConnected,
     animatedCompileButton: state.editor.animatedCompileButton,
     animatedUploadButton: state.editor.animatedUploadButton
->>>>>>> feature/process-feedback
   }
 }
 
