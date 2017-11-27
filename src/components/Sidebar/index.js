@@ -4,6 +4,8 @@ import FA from 'react-fontawesome'
 import { toggleSidebar } from '../../actions/sidebar'
 import { setEditingType } from '../../actions/editor'
 import SidebarList from './../SidebarList'
+import StatusBar from './StatusBar'
+
 import styles from './sidebar.css'
 
 class Sidebar extends Component {
@@ -58,10 +60,7 @@ class Sidebar extends Component {
           <h3 className={styles.sidebarSub}>Läs mer</h3>
           <SidebarList listType="reference" />
         </section>
-        <section className={styles.status}>
-          <div><span><i className={`${styles.connectionDot} ${this.props.chromeAppReachable ? styles.green : styles.red}`} /> Chrome-app</span></div>
-          <div><span className={!this.props.chromeAppReachable ? styles.unreachableText : null}><i className={`${styles.connectionDot} ${ this.props.chromeAppReachable ? (this.props.deviceConnected ? styles.green : styles.red) : styles.unreachable }`} /> Robot</span></div>
-        </section>
+        <StatusBar />
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>
           <FA className={this.getCloseBtnClassName()} name="angle-double-left" />
         </button>
