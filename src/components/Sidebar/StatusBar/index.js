@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import styles from '../sidebar.css'
+import styles from './statusbar.css'
 
-const Sidebar = (props) => {  
+const StatusBar = (props) => {  
   return (
     <section className={styles.status}>
       <div><span><i className={`${styles.connectionDot} ${props.chromeAppReachable ? styles.green : styles.red}`} /> Chrome-app</span></div>
@@ -19,4 +19,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Sidebar)
+export default connect(mapStateToProps)(StatusBar)
