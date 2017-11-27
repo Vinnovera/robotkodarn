@@ -14,8 +14,8 @@ const StatusBar = (props) => {
 
 function mapStateToProps(state) {
   return {
-    chromeAppReachable: state.editor.chromeAppReachable,
-    deviceConnected: state.editor.deviceConnected
+    chromeAppReachable: state.statusBar.chromeAppReachable,
+    deviceConnected: state.statusBar.deviceConnected
   }
 }
 

@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {
-  compileCode,
-  setConsoleOutput,
-  toggleCodeButtons,
-  pingChromeApp,
-  pingForUSBConnection,
-  animateCompileButton,
-  animateUploadButton
-} from '../../../actions/editor'
+import { compileCode, setConsoleOutput } from '../../../actions/editor'
+import { pingChromeApp, pingForUSBConnection } from '../../../actions/statusBar'
+import { toggleCodeButtons, animateCompileButton, animateUploadButton } from '../../../actions/workspaceButtons'
 
 import Button from './../../Button'
 import CogIcon from '../../Icons/CogIcon'
@@ -99,11 +93,11 @@ function mapStateToProps(state) {
   return {
     activePartIndex: state.editor.activePartIndex,
     partsToEdit: state.editor.partsToEdit,
-    enabledButtons: state.editor.enabledButtons,
-    chromeAppReachable: state.editor.chromeAppReachable,
-    deviceConnected: state.editor.deviceConnected,
-    animatedCompileButton: state.editor.animatedCompileButton,
-    animatedUploadButton: state.editor.animatedUploadButton
+    chromeAppReachable: state.statusBar.chromeAppReachable,
+    deviceConnected: state.statusBar.deviceConnected,
+    enabledButtons: state.workspaceButtons.enabledButtons,
+    animatedCompileButton: state.workspaceButtons.animatedCompileButton,
+    animatedUploadButton: state.workspaceButtons.animatedUploadButton
   }
 }
 
