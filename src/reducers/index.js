@@ -7,6 +7,8 @@ import currentWorkshop from './currentWorkshop'
 import sidebar from './sidebar'
 import menu from './menu'
 import user from './user'
+import workspaceButtons from './workspaceButtons'
+import statusBar from './statusBar'
 
 export default combineReducers({
   routeReducer,
@@ -16,5 +18,7 @@ export default combineReducers({
   sidebar,
   workshops,
   menu,
-  user
+  user,
+  workspaceButtons,
+  statusBar
 })

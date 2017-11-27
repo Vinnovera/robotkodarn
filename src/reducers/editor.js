@@ -71,43 +71,7 @@ export default handleActions({
       ...state,
       editingType: action.payload
     })
-  },
-
-  TOGGLE_CODE_BUTTONS: (state, action) => {
-    return ({
-      ...state,
-      enabledButtons: action.payload
-    })
-  },
-
-  SET_CHROME_PING: (state, action) => {
-    return ({
-      ...state,
-      chromeAppReachable: action.payload
-    })
-  },
-
-  SET_DEVICE_CONNECTED: (state, action) => {
-    return ({
-      ...state,
-      deviceConnected: action.payload
-    })
-  },
-  
-  TOGGLE_COMPILER_BUTTON_ANIMATION: (state, action) => {
-    return ({
-      ...state,
-      animatedCompileButton: action.payload
-    })
-  },
-
-  TOGGLE_UPLOAD_BUTTON_ANIMATION: (state, action) => {
-    return ({
-      ...state,
-      animatedUploadButton: action.payload
-    })
   }
-
 }, {
   activeTab: 'user',
   compilerResponse: null,
@@ -118,10 +82,5 @@ export default handleActions({
     type: 'parts',
     id: null
   },
-  partsToEdit: [],
-  enabledButtons: true,
-  chromeAppReachable: false,
-  deviceConnected: false,
-  animatedCompileButton: false,
-  animatedUploadButton: false
+  partsToEdit: []
 })
