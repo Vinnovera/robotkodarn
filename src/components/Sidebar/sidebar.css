@@ -57,12 +57,129 @@
   color: inherit;
   font-family: inherit;
   font-size: 1.4rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 0;
+  padding: 0 2rem;
+  word-wrap: break-word;
+}
+
+:local .notEditing {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+  :local .notEditing button {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transition: color 250ms ease;
+  }
+  :local .notEditing button:hover,
+  :local .notEditing button h2:hover,
+  :local .editing form button span:hover {
+    color: #FE5D4B;
+  }
+  /* FA Icon */
+  :local .notEditing button span {
+    font-size: 1.3rem;
+    margin-right: auto;
+  }
+  :local .notEditing button h2 {
+    font-family: 'Open Sans', sans-serif;
+    color: #3E3748;
+    font-size: 1.4rem;
+    margin: 0 0 0 -17px;
+    flex: 1;
+    text-align: center;
+    width: 100%;
+    word-wrap: break-word;
+    transition: color 250ms ease;
+  }
+  
+:local .editing {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+  :local .editing form {
+    width: 75%;
+    display: flex;
+    align-items: center;
+  }
+    :local .editing form button {
+      width: 30px;
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      z-index: 1;
+      position: absolute;
+      background-color: white;
+      transition: color 250ms ease;
+    }
+      :local .editing form input {
+        font-family: 'Open Sans', sans-serif;
+        color: #3e3748;
+        font-size: 1.4rem;
+        margin: 0;
+        padding: 0;
+        font-weight: 800;
+        border: none;
+        box-shadow: 0 2px 0 #3e3748;
+        border-radius: 0;
+        animation: colorPulse .4s infinite alternate;
+      }
+      :local .editing form button span {
+        font-size: 1.3rem;
+        position: absolute;
+        bottom: -10px;
+        left: 7px;
+      }
+
+:local .pencilAnimation {
+  animation: pencilRemove .2s forwards;
+  animation-timing-function: cubic-bezier(0.58, -0.85, 1, 1);
+}
+:local .diskAnimation {
+  animation: diskAdd .2s forwards;
+  animation-delay: .2s;
+  transform: scale(0);
+}
+
+@keyframes :local(pencilRemove) {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+@keyframes :local(diskAdd) {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes :local(colorPulse) {
+  from {
+    box-shadow: 0 2px 0 rgba(62, 55, 72, .1);
+  }
+  to {
+    box-shadow: 0 2px 0 #3e3748;
+  }
 }
 
 /* Remove default styling on buttons */
-:local .sidebarTitleButton {
+/* :local .sidebarTitleButton {
   border: none;
   cursor: pointer;
   background: transparent;
@@ -74,18 +191,18 @@
   margin: 1rem auto 0;
   min-height: 3rem;
   transition: color 250ms ease;
-}
+} */
 
 :local .sidebarTitleButton:hover {
   color: #FE5D4B;
 }
 
 /* 1. Remove default margin and give space to edit pencil */
-:local .sidebarTitleEdit {
+/* :local .sidebarTitleEdit {
   text-align: left;
   margin: 0;
-  width: 85%; /* 1. */
-}
+  width: 85%;
+} */
 
 :local .sidebarTitleButton:focus,
 :local .sidebarTitleButton:active {

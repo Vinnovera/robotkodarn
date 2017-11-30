@@ -18,8 +18,8 @@ class WorkshopTitle extends Component {
     }
 
     this.editWorkshopTitle = this.editWorkshopTitle.bind(this)
-    this.handleSubmit      = this.handleSubmit.bind(this)
-    this.handleChange      = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   editWorkshopTitle(e) {
@@ -41,30 +41,40 @@ class WorkshopTitle extends Component {
     this.props.dispatch(setWorkshopTitle(id, title))
   }
 
+  renderTitle() {
+    // If we are editing the workshop
+    if (this.props.editing) {
+      // If we are currently editing the workshop title
+      if (this.state.editing) {
+        return (
+          <div className={styles.editing}>
+            <form onSubmit={this.handleSubmit}>
+              <button type="submit" value="title">
+                <FA className={styles.pencilAnimation} name="pencil" />
+                <FA className={styles.diskAnimation} name="save" />
+              </button>
+              <input type="text" autoFocus onChange={this.handleChange} value={this.state.inputValue} />
+            </form>
+          </div>
+        )
+      } else {
+        return (
+          <div className={styles.notEditing}>
+            <button onClick={this.editWorkshopTitle} value="title">
+              <FA name="pencil" />
+              <h2>{this.props.workshop.title}</h2>
+            </button>
+          </div>
+        )
+      }
+    } else {
+      return (<h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>)
+    }
+  }
+
   render() {
     return (
-      <div>
-        {
-          this.props.editing ?
-            <button onClick={this.editWorkshopTitle} className={styles.sidebarTitleButton} value="title">
-              <FA className={styles.addIcon} name="pencil" />
-              {
-                this.state.editing ?
-                  <form onSubmit={this.handleSubmit}>
-                    <input
-                      type="text"
-                      autoFocus
-                      onChange={this.handleChange}
-                      value={this.state.inputValue}
-                      onBlur={this.handleSubmit}
-                    />
-                  </form>
-                  : <h2 className={styles.sidebarTitleEdit}>{this.props.workshop.title}</h2>
-              }
-            </button>
-            : <h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>
-        }
-      </div>
+      this.renderTitle()
     )
   }
 }
