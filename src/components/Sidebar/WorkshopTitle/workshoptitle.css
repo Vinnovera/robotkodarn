@@ -79,7 +79,6 @@
       font-weight: 800;
       border: none;
       border-radius: 0;
-      padding-left: 2px;
     }
     :local .editing form button span {
       font-size: 1.3rem;
