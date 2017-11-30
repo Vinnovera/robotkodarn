@@ -53,7 +53,7 @@ class WorkshopTitle extends Component {
                 <FA className={styles.pencilAnimation} name="pencil" />
                 <FA className={styles.diskAnimation} name="save" />
               </button>
-              <input type="text" autoFocus onChange={this.handleChange} value={this.state.inputValue} />
+              <input type="text" autoFocus onChange={this.handleChange} onBlur={this.handleSubmit} value={this.state.inputValue} />
             </form>
           </div>
         )
