@@ -57,19 +57,19 @@ class WorkshopTitle extends Component {
             </form>
           </div>
         )
-      } else {
-        return (
-          <div className={styles.notEditing}>
-            <button onClick={this.editWorkshopTitle} value="title">
-              <FA name="pencil" />
-              <h2>{this.props.workshop.title}</h2>
-            </button>
-          </div>
-        )
       }
-    } else {
-      return (<h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>)
+      // If we are not currently editing the title
+      return (
+        <div className={styles.notEditing}>
+          <button onClick={this.editWorkshopTitle} value="title">
+            <FA name="pencil" />
+            <h2>{this.props.workshop.title}</h2>
+          </button>
+        </div>
+      )
     }
+    // If we are not in editing mode
+    return (<h2 className={styles.sidebarTitle}>{this.props.workshop.title}</h2>)
   }
 
   render() {
