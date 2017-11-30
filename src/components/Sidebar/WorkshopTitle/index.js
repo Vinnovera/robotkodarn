@@ -5,8 +5,7 @@ import FA from 'react-fontawesome'
 
 import { setWorkshopTitle } from '../../../actions/workshops'
 
-// import styles from './workshoptitle.css'
-import styles from '../sidebar.css'
+import styles from './workshoptitle.css'
 
 class WorkshopTitle extends Component {
   constructor(props) {
@@ -53,7 +52,7 @@ class WorkshopTitle extends Component {
                 <FA className={styles.pencilAnimation} name="pencil" />
                 <FA className={styles.diskAnimation} name="save" />
               </button>
-              <input type="text" autoFocus onChange={this.handleChange} onBlur={this.handleSubmit} value={this.state.inputValue} />
+              <input type="text" autoFocus onChange={this.handleChange} value={this.state.inputValue} />
             </form>
           </div>
         )
