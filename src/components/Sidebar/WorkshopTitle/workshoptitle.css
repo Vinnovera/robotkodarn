@@ -29,6 +29,7 @@
     top: 50%;
     transform: translateY(-50%);
     box-shadow: 0 0 5px 5px white;
+    background: white;
     border-radius: 50%;
     padding: 0 0 0 5px;
   }
