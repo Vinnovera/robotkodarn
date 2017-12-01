@@ -96,23 +96,3 @@ export const deleteWorkshop = workshopId => (dispatch) => {
     })
     .catch(error => console.log(error))
 }
-
-// -----------------------------------------------------------------------------
-// setWorkshopTitle, updates the workshop title in current workshop
-// -----------------------------------------------------------------------------
-export const setWorkshopTitle = (workshopId, title) => (dispatch) => {
-  axios
-    .put(`/api/workshop/${workshopId}`, { title }, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(({ data }) => {
-      dispatch({
-        type: UPDATE_TITLE,
-        payload: data.title
-      })
-    })
-    .catch(error => console.log(error))
-}
-

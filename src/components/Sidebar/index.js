@@ -4,6 +4,7 @@ import FA from 'react-fontawesome'
 import { toggleSidebar } from '../../actions/sidebar'
 import { setEditingType } from '../../actions/editor'
 import SidebarList from './../SidebarList'
+import PartList from './PartList'
 import StatusBar from './StatusBar'
 import WorkshopTitle from './WorkshopTitle'
 
@@ -46,7 +47,8 @@ class Sidebar extends Component {
         <section className={styles.section}>
           <div className={styles.wave} />
           <h3 className={styles.sidebarSub}>Övningar</h3>
-          <SidebarList listType="parts" />
+          {/* <SidebarList listType="parts" /> */}
+          <PartList />
         </section>
         <section className={styles.section}>
           <div className={styles.wave} />

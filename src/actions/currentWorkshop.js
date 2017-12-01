@@ -15,11 +15,11 @@ const UPDATE_LINK = 'UPDATE_LINK'
 const REMOVE_LINK = 'REMOVE_LINK'
 
 // -----------------------------------------------------------------------------
-// updateTitle, edits the title of the workshop object
+// updateWorkshopTitle, updates the workshop title in current workshop
 // -----------------------------------------------------------------------------
-export const updateTitle = (title, workshop) => (dispatch) => {
+export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshop._id}`, title, {
+    .put(`/api/workshop/${workshopId}`, { title }, {
       headers: {
         'content-type': 'application/json'
       }
@@ -29,11 +29,25 @@ export const updateTitle = (title, workshop) => (dispatch) => {
         type: UPDATE_TITLE,
         payload: data.title
       })
+    })
+    .catch(error => console.log(error))
+}
 
+
+// -----------------------------------------------------------------------------
+// updatePartTitle, edits a part title
+// -----------------------------------------------------------------------------
+export const updatePartTitle = (title, workshopId, partId) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopId}/part/${partId}`, { title }, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
       dispatch({
-        type: SET_MESSAGE,
-        payload: `Workshopen har nu titeln ${data.title}.`,
-        time: +new Date()
+        type: UPDATE_PART,
+        payload: data
       })
     })
     .catch(error => console.log(error))
@@ -42,9 +56,9 @@ export const updateTitle = (title, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // addPart, create part and adds it to workshop in database
 // -----------------------------------------------------------------------------
-export const addPart = (part, workshop) => (dispatch) => {
+export const addPart = (part, workshopId) => (dispatch) => {
   axios
-    .post(`/api/workshop/${workshop._id}/part`, part, {
+    .post(`/api/workshop/${workshopId}/part`, part, {
       headers: {
         'content-type': 'application/json'
       }
@@ -53,12 +67,6 @@ export const addPart = (part, workshop) => (dispatch) => {
       dispatch({
         type: ADD_PART,
         payload: data
-      })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: `Övningen med titeln ${data.title} är nu tillagt.`,
-        time: +new Date()
       })
     })
     .catch(error => console.log(error))

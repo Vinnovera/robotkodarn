@@ -22,9 +22,8 @@ class SidebarList extends Component {
 
     return styles.listItem
   }
-
   /**
-   * Change between which partis showing.
+   * Change between which part is showing.
    */
   changePart = (index) => {
     this.props.dispatch(setActivePartIndex(index))

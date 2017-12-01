@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import FA from 'react-fontawesome'
 
-import { setWorkshopTitle } from '../../../actions/workshops'
+import { updateWorkshopTitle } from '../../../actions/currentWorkshop'
 
 import styles from './workshoptitle.css'
 
@@ -37,7 +37,7 @@ class WorkshopTitle extends Component {
     const title = this.state.inputValue
 
     this.setState({ editing: false })
-    this.props.dispatch(setWorkshopTitle(id, title))
+    this.props.dispatch(updateWorkshopTitle(id, title))
   }
 
   renderTitle() {
@@ -58,6 +58,7 @@ class WorkshopTitle extends Component {
         )
       }
       // If we are not currently editing the title
+      // TODO: Remove h2 from button and make it non click-able
       return (
         <div className={styles.notEditing}>
           <button onClick={this.editWorkshopTitle} value="title">

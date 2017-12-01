@@ -32,6 +32,7 @@
     background: white;
     border-radius: 50%;
     padding: 0 0 0 5px;
+    color: #3e3748;
   }
   :local .notEditing button h2 {
     font-family: 'Open Sans', sans-serif;
@@ -70,6 +71,7 @@
     bottom: 0;
     transition: color 250ms ease;
     background: linear-gradient(to right, rgba(255,255,255,1) 70%,rgba(0,0,0,0) 100%);
+    color: #3e3748;
   }
     :local .editing form input {
       font-family: 'Open Sans', sans-serif;
@@ -117,12 +119,12 @@
 }
 
 @keyframes :local(colorPulse) {
-from {
-    box-shadow: 0 2px 0 rgba(62, 55, 72, .1);
-}
-to {
-    box-shadow: 0 2px 0 #3e3748;
-}
+  from {
+      box-shadow: 0 2px 0 rgba(62, 55, 72, .1);
+  }
+  to {
+      box-shadow: 0 2px 0 #3e3748;
+  }
 }
 
 

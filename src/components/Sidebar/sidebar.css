@@ -8,6 +8,7 @@
   transition: left 300ms ease-in-out 75ms;
   text-align: center;
   overflow-y: scroll;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
