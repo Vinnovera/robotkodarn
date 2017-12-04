@@ -66,6 +66,8 @@ class PartList extends Component {
   confirmDeletion() {
     const partId = this.props.workshop.parts[this.state.deletePromptIndex]._id
     this.props.dispatch(removePart(partId, this.props.workshop._id))
+
+    this.cancelDeletion()
   }
 
   renderPartListItems() {
@@ -89,7 +91,7 @@ class PartList extends Component {
               (this.state.deletePromptIndex === i) && (
                 <div className={styles.deletePromptWrapper}>
                   <p>
-                    Är du säker?
+                    Radera övning?
                     <span>
                       <button onClick={this.confirmDeletion}><FA className={styles.codeIcon} name="check-circle" /></button>
                       <button onClick={this.cancelDeletion}><FA className={styles.codeIcon} name="times-circle" /></button>
@@ -119,7 +121,7 @@ class PartList extends Component {
   renderAddPartButton() {
     return this.props.editing ? (
       <div className={styles.addButtonWrapper}>
-        <button onClick={this.addPart}><FA className={styles.diskIcon} name="plus" />Lägg till övning</button>
+        <button onClick={this.addPart}><FA name="plus" />Lägg till övning</button>
       </div>
     ) : null
   }

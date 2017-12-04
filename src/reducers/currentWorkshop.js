@@ -84,8 +84,16 @@ export default handleActions({
         links: [...action.payload]
       }
     })
+  },
+
+  SET_ACTIVE_LINK_INDEX: (state, action) => {
+    return ({
+      ...state,
+      activeLinkIndex: action.payload
+    })
   }
 }, {
   item: null,
-  loginAttemptTimestamp: +new Date()
+  loginAttemptTimestamp: +new Date(),
+  activeLinkIndex: null
 })

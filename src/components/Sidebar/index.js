@@ -5,6 +5,7 @@ import { toggleSidebar } from '../../actions/sidebar'
 import { setEditingType } from '../../actions/editor'
 import SidebarList from './../SidebarList'
 import PartList from './PartList'
+import LinkList from './LinkList'
 import StatusBar from './StatusBar'
 import WorkshopTitle from './WorkshopTitle'
 
@@ -53,7 +54,7 @@ class Sidebar extends Component {
         <section className={styles.section}>
           <div className={styles.wave} />
           <h3 className={styles.sidebarSub}>Läs mer</h3>
-          <SidebarList listType="reference" />
+          <LinkList />
         </section>
         <StatusBar />
         <button className={styles.toggleSidebarButton} onClick={this.handleSidebarClick}>

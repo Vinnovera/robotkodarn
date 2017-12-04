@@ -13,6 +13,7 @@ const REMOVE_PART = 'REMOVE_PART'
 const ADD_LINK = 'ADD_LINK'
 const UPDATE_LINK = 'UPDATE_LINK'
 const REMOVE_LINK = 'REMOVE_LINK'
+const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
 
 // -----------------------------------------------------------------------------
 // updateWorkshopTitle, updates the workshop title in current workshop
@@ -101,7 +102,6 @@ export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => 
 // removePart, removes part from database
 // -----------------------------------------------------------------------------
 export const removePart = (partId, workshopId) => (dispatch) => {
-  console.log( partId, workshopId )
   axios
     .delete(`/api/workshop/${workshopId}/part/${partId}`, {
       headers: {
@@ -120,9 +120,9 @@ export const removePart = (partId, workshopId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // addLink, creates link and add it to workshop in database
 // -----------------------------------------------------------------------------
-export const addLink = (link, workshop) => (dispatch) => {
+export const addLink = (link, workshopId) => (dispatch) => {
   axios
-    .post(`/api/workshop/${workshop._id}/link`, link, {
+    .post(`/api/workshop/${workshopId}/link`, link, {
       headers: {
         'content-type': 'application/json'
       }
@@ -131,12 +131,6 @@ export const addLink = (link, workshop) => (dispatch) => {
       dispatch({
         type: ADD_LINK,
         payload: data
-      })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: `Länk med titeln ${data.title} är nu tillagd.`,
-        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -157,22 +151,16 @@ export const updateLink = (updatedContent, workshopID, linkId) => (dispatch) => 
         type: UPDATE_LINK,
         payload: data
       })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: 'Länken är nu uppdaterad.',
-        time: +new Date()
-      })
     })
     .catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
-// removeSelectedLink, removes link from database
+// removeLink, removes link from database
 // -----------------------------------------------------------------------------
-export const removeLink = (link, workshop) => (dispatch) => {
+export const removeLink = (linkId, workshopId) => (dispatch) => {
   axios
-    .delete(`/api/workshop/${workshop}/link/${link}`, {
+    .delete(`/api/workshop/${workshopId}/link/${linkId}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -182,14 +170,18 @@ export const removeLink = (link, workshop) => (dispatch) => {
         type: REMOVE_LINK,
         payload: data
       })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: 'Länken är nu borttagen.',
-        time: +new Date()
-      })
     })
     .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// setActiveLinkIndex, set active link index
+// -----------------------------------------------------------------------------
+export const setActiveLinkIndex = linkIndex => (dispatch) => {
+  dispatch({
+    type: SET_ACTIVE_LINK_INDEX,
+    payload: linkIndex
+  })
 }
 
 // -----------------------------------------------------------------------------
