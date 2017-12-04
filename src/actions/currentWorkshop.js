@@ -100,9 +100,10 @@ export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => 
 // -----------------------------------------------------------------------------
 // removePart, removes part from database
 // -----------------------------------------------------------------------------
-export const removePart = (part, workshop) => (dispatch) => {
+export const removePart = (partId, workshopId) => (dispatch) => {
+  console.log( partId, workshopId )
   axios
-    .delete(`/api/workshop/${workshop}/part/${part}`, {
+    .delete(`/api/workshop/${workshopId}/part/${partId}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -111,12 +112,6 @@ export const removePart = (part, workshop) => (dispatch) => {
       dispatch({
         type: REMOVE_PART,
         payload: data
-      })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: 'Övningen är nu borttaget.',
-        time: +new Date()
       })
     })
     .catch(error => console.log(error))

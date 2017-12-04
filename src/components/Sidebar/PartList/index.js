@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import FA from 'react-fontawesome'
-import { updatePartTitle, addPart } from '../../../actions/currentWorkshop'
-import { setActivePartIndex, setEditingType } from '../../../actions/editor'
+import { updatePartTitle, addPart, removePart } from '../../../actions/currentWorkshop'
+import { setActivePartIndex } from '../../../actions/editor'
 import styles from './partlist.css'
 
 class PartList extends Component {
@@ -65,7 +64,8 @@ class PartList extends Component {
   }
 
   confirmDeletion() {
-    console.log( 'DELETE: ', this.state.deletePromptIndex )
+    const partId = this.props.workshop.parts[this.state.deletePromptIndex]._id
+    this.props.dispatch(removePart(partId, this.props.workshop._id))
   }
 
   renderPartListItems() {
@@ -80,7 +80,7 @@ class PartList extends Component {
                 <FA className={styles.diskIcon} name="save" />
               </button>
               <input autoFocus onBlur={this.handleSubmit} onChange={e => this.setState({ inputText: e.target.value })} type="text" value={this.state.inputText} />
-              <button className={`${styles.deletePartButton} ${styles.deletePartButtonRemove}`} onClick={() => console.log('delete' + part._id)}><FA className={styles.codeIcon} name="times" /></button>
+              <button className={`${styles.deletePartButton} ${styles.deletePartButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
             </form>
           </li>
         ) : (
@@ -100,7 +100,7 @@ class PartList extends Component {
             }
             <button className={styles.editPartButton} onClick={() => this.editPartTitle(i)}><FA className={styles.codeIcon} name="pencil" /></button>
             <button className={styles.changePartButton} onClick={() => this.changePart(i)}>{part.title}</button>
-            <button className={styles.deletePartButton} onClick={() => this.promptForDelete(i)}><FA className={styles.codeIcon} name="times" /></button>
+            <button className={styles.deletePartButton} onClick={() => this.promptForDelete(i)}><FA className={styles.codeIcon} name="trash-o" /></button>
           </li>
         )
       })
