@@ -12,6 +12,8 @@ const View = ({ children, background = 'beige' }) => {
     componentStyle = styles.redView
   } else if (background === 'green') {
     componentStyle = styles.greenView
+  } else if (background === 'editMode') {
+    componentStyle = styles.editView
   }
 
   return (

@@ -12,7 +12,7 @@ class ToolsButton extends Component {
   render() {
     return (
       <div>
-        <div className={styles.toolsIconWrapper}>
+        <div className={`${styles.toolsIconWrapper} ${this.props.editing ? styles.editMode : ''}`}>
           <button onClick={this.handleMenu} className={styles.toolsIcon}>Verktyg</button>
         </div>
         <Menu />
@@ -23,7 +23,8 @@ class ToolsButton extends Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
+    editing: state.editor.editing
   }
 }
 

@@ -30,3 +30,7 @@
  :local .toolsIcon:hover {
   outline: none;
 }
+
+:local .editMode button {
+  background-image: url('./../../icons/tools_edit.svg');
+}

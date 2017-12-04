@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
 import { updateLink, addLink, removeLink, setActiveLinkIndex } from '../../../actions/currentWorkshop'
-// import { setActivePartIndex } from '../../../actions/editor'
+import { setActivePartIndex } from '../../../actions/editor'
 import styles from './linklist.css'
 
 class LinkList extends Component {
@@ -60,6 +60,8 @@ class LinkList extends Component {
   }
 
   cancelDeletion() {
+    this.props.dispatch(setActiveLinkIndex(null))
+
     this.setState({
       deletePromptIndex: null
     })
@@ -73,6 +75,7 @@ class LinkList extends Component {
   }
 
   changeLinkIndex(index) {
+    this.props.dispatch(setActivePartIndex(null))
     this.props.dispatch(setActiveLinkIndex(index))
   }
 
@@ -118,7 +121,6 @@ class LinkList extends Component {
     return this.props.workshop.links.map((link, i) => {
       return (
         <li key={link._id}>
-          {/* <button onClick={() => this.changePart(i)}><FA className={styles.codeIcon} name="file-code-o" /> {link.title}</button> */}
           <Link className={styles.listLink} to={link.content} target="_blank">
             <FA className={styles.linkIcon} name="external-link" />
             {link.title}
@@ -156,6 +158,7 @@ function mapStateToProps(state) {
     editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
     activePartIndex: state.editor.activePartIndex,
+    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
     sidebarOpen: state.sidebar.open
   }
 }

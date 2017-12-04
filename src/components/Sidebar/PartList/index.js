@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { updatePartTitle, addPart, removePart } from '../../../actions/currentWorkshop'
+import { updatePartTitle, addPart, removePart, setActiveLinkIndex } from '../../../actions/currentWorkshop'
 import { setActivePartIndex } from '../../../actions/editor'
 import styles from './partlist.css'
 
@@ -21,6 +21,7 @@ class PartList extends Component {
   }
 
   changePart(index) {
+    this.props.dispatch(setActiveLinkIndex(null))
     this.props.dispatch(setActivePartIndex(index))
   }
 
