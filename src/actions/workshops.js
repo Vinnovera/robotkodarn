@@ -4,6 +4,7 @@ const SET_WORKSHOPS = 'SET_WORKSHOPS'
 const ADD_WORKSHOP = 'ADD_WORKSHOP'
 const REMOVE_WORKSHOP = 'REMOVE_WORKSHOP'
 const SET_MESSAGE = 'SET_MESSAGE'
+const UPDATE_TITLE = 'UPDATE_TITLE'
 
 // -----------------------------------------------------------------------------
 // getWorkshopsByUserId, get logged in users' workshops
@@ -49,9 +50,9 @@ export const createWorkshop = workshop => (dispatch) => {
 // -----------------------------------------------------------------------------
 // Copy an existing workshop
 // -----------------------------------------------------------------------------
-export const copyWorkshop = workshopID => (dispatch) => {
+export const copyWorkshop = workshopId => (dispatch) => {
   axios
-    .post(`/api/copyWorkshop/${workshopID}`, {
+    .post(`/api/copyWorkshop/${workshopId}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -74,9 +75,9 @@ export const copyWorkshop = workshopID => (dispatch) => {
 // -----------------------------------------------------------------------------
 // deleteWorkshop, removes workshop from database
 // -----------------------------------------------------------------------------
-export const deleteWorkshop = workshopID => (dispatch) => {
+export const deleteWorkshop = workshopId => (dispatch) => {
   axios
-    .delete(`/api/workshop/${workshopID}`, {
+    .delete(`/api/workshop/${workshopId}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -95,4 +96,3 @@ export const deleteWorkshop = workshopID => (dispatch) => {
     })
     .catch(error => console.log(error))
 }
-

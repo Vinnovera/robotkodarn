@@ -13,13 +13,14 @@ const REMOVE_PART = 'REMOVE_PART'
 const ADD_LINK = 'ADD_LINK'
 const UPDATE_LINK = 'UPDATE_LINK'
 const REMOVE_LINK = 'REMOVE_LINK'
+const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
 
 // -----------------------------------------------------------------------------
-// updateTitle, edits the title of the workshop object
+// updateWorkshopTitle, updates the workshop title in current workshop
 // -----------------------------------------------------------------------------
-export const updateTitle = (title, workshop) => (dispatch) => {
+export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshop._id}`, title, {
+    .put(`/api/workshop/${workshopId}`, { title }, {
       headers: {
         'content-type': 'application/json'
       }
@@ -29,11 +30,25 @@ export const updateTitle = (title, workshop) => (dispatch) => {
         type: UPDATE_TITLE,
         payload: data.title
       })
+    })
+    .catch(error => console.log(error))
+}
 
+
+// -----------------------------------------------------------------------------
+// updatePartTitle, edits a part title
+// -----------------------------------------------------------------------------
+export const updatePartTitle = (title, workshopId, partId) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopId}/part/${partId}`, { title }, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
       dispatch({
-        type: SET_MESSAGE,
-        payload: `Workshopen har nu titeln ${data.title}.`,
-        time: +new Date()
+        type: UPDATE_PART,
+        payload: data
       })
     })
     .catch(error => console.log(error))
@@ -42,9 +57,9 @@ export const updateTitle = (title, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // addPart, create part and adds it to workshop in database
 // -----------------------------------------------------------------------------
-export const addPart = (part, workshop) => (dispatch) => {
+export const addPart = (part, workshopId) => (dispatch) => {
   axios
-    .post(`/api/workshop/${workshop._id}/part`, part, {
+    .post(`/api/workshop/${workshopId}/part`, part, {
       headers: {
         'content-type': 'application/json'
       }
@@ -53,12 +68,6 @@ export const addPart = (part, workshop) => (dispatch) => {
       dispatch({
         type: ADD_PART,
         payload: data
-      })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: `Övningen med titeln ${data.title} är nu tillagt.`,
-        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -92,9 +101,9 @@ export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => 
 // -----------------------------------------------------------------------------
 // removePart, removes part from database
 // -----------------------------------------------------------------------------
-export const removePart = (part, workshop) => (dispatch) => {
+export const removePart = (partId, workshopId) => (dispatch) => {
   axios
-    .delete(`/api/workshop/${workshop}/part/${part}`, {
+    .delete(`/api/workshop/${workshopId}/part/${partId}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -104,12 +113,6 @@ export const removePart = (part, workshop) => (dispatch) => {
         type: REMOVE_PART,
         payload: data
       })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: 'Övningen är nu borttaget.',
-        time: +new Date()
-      })
     })
     .catch(error => console.log(error))
 }
@@ -117,9 +120,9 @@ export const removePart = (part, workshop) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // addLink, creates link and add it to workshop in database
 // -----------------------------------------------------------------------------
-export const addLink = (link, workshop) => (dispatch) => {
+export const addLink = (link, workshopId) => (dispatch) => {
   axios
-    .post(`/api/workshop/${workshop._id}/link`, link, {
+    .post(`/api/workshop/${workshopId}/link`, link, {
       headers: {
         'content-type': 'application/json'
       }
@@ -128,12 +131,6 @@ export const addLink = (link, workshop) => (dispatch) => {
       dispatch({
         type: ADD_LINK,
         payload: data
-      })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: `Länk med titeln ${data.title} är nu tillagd.`,
-        time: +new Date()
       })
     })
     .catch(error => console.log(error))
@@ -154,22 +151,16 @@ export const updateLink = (updatedContent, workshopID, linkId) => (dispatch) => 
         type: UPDATE_LINK,
         payload: data
       })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: 'Länken är nu uppdaterad.',
-        time: +new Date()
-      })
     })
     .catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
-// removeSelectedLink, removes link from database
+// removeLink, removes link from database
 // -----------------------------------------------------------------------------
-export const removeLink = (link, workshop) => (dispatch) => {
+export const removeLink = (linkId, workshopId) => (dispatch) => {
   axios
-    .delete(`/api/workshop/${workshop}/link/${link}`, {
+    .delete(`/api/workshop/${workshopId}/link/${linkId}`, {
       headers: {
         'content-type': 'application/json'
       }
@@ -179,14 +170,18 @@ export const removeLink = (link, workshop) => (dispatch) => {
         type: REMOVE_LINK,
         payload: data
       })
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: 'Länken är nu borttagen.',
-        time: +new Date()
-      })
     })
     .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// setActiveLinkIndex, set active link index
+// -----------------------------------------------------------------------------
+export const setActiveLinkIndex = linkIndex => (dispatch) => {
+  dispatch({
+    type: SET_ACTIVE_LINK_INDEX,
+    payload: linkIndex
+  })
 }
 
 // -----------------------------------------------------------------------------

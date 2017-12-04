@@ -77,6 +77,7 @@ function mapStateToProps(state) {
     isSidebarOpen: state.sidebar.open,
     currentWorkshop: state.currentWorkshop.item,
     activePartIndex: state.editor.activePartIndex,
+    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,

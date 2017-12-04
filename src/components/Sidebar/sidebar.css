@@ -8,6 +8,7 @@
   transition: left 300ms ease-in-out 75ms;
   text-align: center;
   overflow-y: scroll;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -50,48 +51,6 @@
 /* -----------------------------------------------------------------------------
   HEADLINES
 ------------------------------------------------------------------------------*/
-
-:local .sidebarTitle,
-:local .sidebarTitleEdit,
-:local .sidebarTitleButton {
-  color: inherit;
-  font-family: inherit;
-  font-size: 1.4rem;
-  margin-top: 1rem;
-  margin-bottom: 0;
-}
-
-/* Remove default styling on buttons */
-:local .sidebarTitleButton {
-  border: none;
-  cursor: pointer;
-  background: transparent;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 80%;
-  margin: 1rem auto 0;
-  min-height: 3rem;
-  transition: color 250ms ease;
-}
-
-:local .sidebarTitleButton:hover {
-  color: #FE5D4B;
-}
-
-/* 1. Remove default margin and give space to edit pencil */
-:local .sidebarTitleEdit {
-  text-align: left;
-  margin: 0;
-  width: 85%; /* 1. */
-}
-
-:local .sidebarTitleButton:focus,
-:local .sidebarTitleButton:active {
-  outline: none;
-}
-
 :local .sidebarSub {
   color: inherit;
   font-size: 1.2rem;
