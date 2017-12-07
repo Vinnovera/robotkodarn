@@ -91,9 +91,25 @@ export default handleActions({
       ...state,
       activeLinkIndex: action.payload
     })
+  },
+
+  SET_CURRENT_EDITING_TYPE: (state, action) => {
+    return ({
+      ...state,
+      currentEditingType: action.payload
+    })
+  },
+
+  CODE_SAVED: (state, action) => {
+    return ({
+      ...state,
+      codeSaved: action.payload
+    })
   }
 }, {
   item: null,
   loginAttemptTimestamp: +new Date(),
-  activeLinkIndex: null
+  activeLinkIndex: 0,
+  currentEditingType: 'part',
+  codeSaved: false
 })

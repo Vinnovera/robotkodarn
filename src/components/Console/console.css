@@ -1,3 +1,6 @@
+:local .makeRoomForSaveButton {
+  height: calc(100% - 86px) !important;
+}
 :local .consoleWrapper {
   margin-top: 20px;
   height: 30%;

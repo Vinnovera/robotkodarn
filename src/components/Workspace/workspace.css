@@ -18,3 +18,58 @@
 :local .mainPaneExpanded {
   width: calc(100vw - 28px);
 }
+
+:local .saveCodeButton {
+  width: auto;
+  border-radius: 2px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font: inherit;
+  font-size: 1rem;
+  transition: 300ms;
+  text-transform: uppercase;
+  padding: 1rem;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  background-color: #36968e;
+  animation: codeSaved 1s;
+  position: relative;
+  overflow: hidden;
+}
+  :local .saveCodeButton:hover {
+    background-color: #238F88;
+  }
+  :local .saveCodeButton span {
+    margin-right: .5rem;
+  }
+
+  
+  :local .saveCodeButton div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #4CAF50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-100%);
+    transition: all .2s;
+  }
+  
+  :local .saveCodeButtonSaved div {
+    transform: translateX(0);
+    background: green;
+  }
+
+  /* @keyframes :local(codeSaved) {
+    0% {
+      transform: skewX(0deg) rotateX(0);
+    }
+    100% {
+      transform: skewX(180deg) rotateX(180deg);
+    }
+  } */

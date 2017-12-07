@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
-import { updateLink, addLink, removeLink, setActiveLinkIndex } from '../../../actions/currentWorkshop'
-import { setActivePartIndex } from '../../../actions/editor'
+import { updateLink, addLink, removeLink, setActiveLinkIndex, setCurrentEditingType } from '../../../actions/currentWorkshop'
 import styles from './linklist.css'
 
 class LinkList extends Component {
@@ -31,7 +30,7 @@ class LinkList extends Component {
     const linkId = this.props.workshop.links[this.state.editingLinkIndex]._id
 
     this.props.dispatch(updateLink(title, workshopId, linkId))
-    
+
     this.setState({
       editingLinkIndex: null
     })
@@ -75,7 +74,7 @@ class LinkList extends Component {
   }
 
   changeLinkIndex(index) {
-    this.props.dispatch(setActivePartIndex(null))
+    this.props.dispatch(setCurrentEditingType('link'))
     this.props.dispatch(setActiveLinkIndex(index))
   }
 
@@ -95,7 +94,7 @@ class LinkList extends Component {
             </form>
           </li>
         ) : (
-          <li className={`${this.props.activeLinkIndex === i ? styles.activeLink : ''}`} key={link._id}>
+          <li className={`${(this.props.activeLinkIndex === i && this.props.currentEditingType === 'link') ? styles.activeLink : ''}`} key={link._id}>
             {
               (this.state.deletePromptIndex === i) && (
                 <div className={styles.deletePromptWrapper}>
@@ -118,7 +117,7 @@ class LinkList extends Component {
     }
 
     // If we are not in editing mode
-    return this.props.workshop.links.map((link, i) => {
+    return this.props.workshop.links.map((link) => {
       return (
         <li key={link._id}>
           <Link className={styles.listLink} to={link.content} target="_blank">
@@ -159,7 +158,8 @@ function mapStateToProps(state) {
     current: state.editor.editingType.id,
     activePartIndex: state.editor.activePartIndex,
     activeLinkIndex: state.currentWorkshop.activeLinkIndex,
-    sidebarOpen: state.sidebar.open
+    sidebarOpen: state.sidebar.open,
+    currentEditingType: state.currentWorkshop.currentEditingType
   }
 }
 

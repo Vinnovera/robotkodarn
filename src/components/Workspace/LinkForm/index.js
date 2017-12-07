@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { updateLink } from '../../../actions/currentWorkshop'
+
 import styles from './linkform.css'
 
 import FadeIn from '../../FadeIn'
@@ -21,6 +23,11 @@ class NameOfComponent extends Component {
       title: this.props.workshop.links[nextProps.activeLinkIndex].title,
       content: this.props.workshop.links[nextProps.activeLinkIndex].content
     })
+  }
+  saveLink(e) {
+    e.preventDefault()
+    console.log( 'SPARA!' )
+    // this.props.dispatch(updateLink(content, workshopId, currentId))
   }
 
   render() {
@@ -53,7 +60,7 @@ class NameOfComponent extends Component {
 
           <div className={styles.flex}>
             <div className={styles.buttonContainer}>
-              <Button kind="success" handleClick={this.save}>Spara länk</Button>
+              <Button kind="success" handleClick={this.saveLink}>Spara länk</Button>
             </div>
           </div>
         </form>
