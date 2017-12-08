@@ -28,10 +28,6 @@ class Menu extends Component {
   }
 
   startEditing = () => {
-    // console.log( this.props.activePartIndex )
-    // if (!this.props.activePartIndex >= 0) {
-    //   this.props.dispatch(setActivePartIndex(0))
-    // }
     this.props.dispatch(toggleMenu())
     this.props.dispatch(toggleEditing())
   }

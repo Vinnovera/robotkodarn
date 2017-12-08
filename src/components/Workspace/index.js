@@ -65,10 +65,12 @@ export class Workspace extends Component {
                   <PartTitle />
                   <WorkspaceButtons />
                   <Editor />
-                  <button className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved ? this.updateCode : ''}>
-                    <div><span><FA name="check" /> Sparat</span></div>
-                    <FA name="save" /> Spara kod
-                  </button>
+                  <div>
+                    <button className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved ? this.updateCode : ''}>
+                      <div><span><FA name="check" /> Sparat</span></div>
+                      <FA name="save" /> Spara kod
+                    </button>
+                  </div>
                   <Console />
                 </main>
               )

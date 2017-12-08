@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import FA from 'react-fontawesome'
+
 import { updateLink } from '../../../actions/currentWorkshop'
 
 import styles from './linkform.css'
@@ -42,7 +44,7 @@ class LinkForm extends Component {
   render() {
     return (
       <FadeIn>
-        <form className={styles.linkForm}>
+        <form onSubmit={!this.props.linkSaved ? this.saveLink : ''} className={styles.linkForm}>
           <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.title} ({this.props.workshop.pincode})</h2>
           <h1 className={styles.formHeadline}>
             { `Uppdatera länk ${this.props.workshop.links[this.props.activeLinkIndex].title}` }
@@ -69,7 +71,10 @@ class LinkForm extends Component {
 
           <div className={styles.flex}>
             <div className={styles.buttonContainer}>
-              <Button kind="success" handleClick={this.saveLink}>Spara länk</Button>
+              <button type="submit" className={`${styles.saveLinkButton} ${this.props.linkSaved ? styles.saveLinkButtonSaved : ''}`}>
+                <div><span><FA name="check" /> Sparat</span></div>
+                <FA name="save" /> Spara kod
+              </button>
             </div>
           </div>
         </form>
@@ -81,7 +86,8 @@ class LinkForm extends Component {
 function mapStateToProps(state) {
   return {
     workshop: state.currentWorkshop.item,
-    activeLinkIndex: state.currentWorkshop.activeLinkIndex
+    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
+    linkSaved: state.currentWorkshop.linkSaved
   }
 }
 

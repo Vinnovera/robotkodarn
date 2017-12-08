@@ -40,7 +40,6 @@
   
   :local .buttonContainer {
     margin-top: 1rem;
-    width: 15rem;
   }
   
   :local .flex {
@@ -49,3 +48,49 @@
     justify-content: flex-end;
   }
   
+
+:local .saveLinkButton {
+  width: auto;
+  border-radius: 2px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font: inherit;
+  font-size: 1rem;
+  transition: 300ms;
+  text-transform: uppercase;
+  padding: 1rem;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  background-color: #36968e;
+  animation: linkSaved 1s;
+  position: relative;
+  overflow: hidden;
+}
+  :local .saveLinkButton:hover {
+    background-color: #238F88;
+  }
+  :local .saveLinkButton span {
+    margin-right: .5rem;
+  }
+
+  
+  :local .saveLinkButton div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2f8b56;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-100%);
+    transition: all .5s;
+  }
+  
+  :local .saveLinkButtonSaved div {
+    box-shadow: 0 0 60px black;
+    transform: translateX(0);
+  }

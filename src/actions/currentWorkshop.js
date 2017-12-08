@@ -18,6 +18,7 @@ const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
 const SET_CURRENT_EDITING_TYPE = 'SET_CURRENT_EDITING_TYPE'
 
 const CODE_SAVED = 'CODE_SAVED'
+const LINK_SAVED = 'LINK_SAVED'
 
 // -----------------------------------------------------------------------------
 // updateWorkshopTitle, updates the workshop title in current workshop
@@ -161,6 +162,18 @@ export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) 
         type: UPDATE_LINK,
         payload: data
       })
+
+      dispatch({
+        type: LINK_SAVED,
+        payload: true
+      })
+
+      setTimeout(() => {
+        dispatch({
+          type: LINK_SAVED,
+          payload: false
+        })
+      }, 2000);
     })
     .catch(error => console.log(error))
 }

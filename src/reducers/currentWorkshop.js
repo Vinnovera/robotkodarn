@@ -105,11 +105,19 @@ export default handleActions({
       ...state,
       codeSaved: action.payload
     })
+  },
+
+  LINK_SAVED: (state, action) => {
+    return ({
+      ...state,
+      linkSaved: action.payload
+    })
   }
 }, {
   item: null,
   loginAttemptTimestamp: +new Date(),
   activeLinkIndex: 0,
   currentEditingType: 'part',
-  codeSaved: false
+  codeSaved: false,
+  linkSaved: false
 })
