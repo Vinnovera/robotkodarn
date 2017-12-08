@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { toggleMenu } from '../../actions/menu'
 import { signOut } from '../../actions/authentication'
-import { toggleEditing } from '../../actions/editor'
+import { toggleEditing, setActivePartIndex } from '../../actions/editor'
+
 import styles from './menu.css'
 
 import Button from './../Button'
@@ -70,7 +71,8 @@ function mapStateToProps(state) {
     menu: state.menu.open,
     currentWorkshop: state.currentWorkshop.item,
     editing: state.editor.editing,
-    path: state.routeReducer.location.pathname
+    path: state.routeReducer.location.pathname,
+    activePartIndex: state.editor.activePartIndex
   }
 }
 

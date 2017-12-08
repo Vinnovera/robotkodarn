@@ -17,6 +17,7 @@ module.exports = {
       "error",
       "never"
     ],
+    "max-len": 0,
     "import/no-named-as-default": "off",
     "import/prefer-default-export": "off",
     "react/prop-types": "off",

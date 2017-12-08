@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { updatePartTitle, addPart, removePart } from '../../../actions/currentWorkshop'
-import { setActivePartIndex } from '../../../actions/editor'
+import { updatePartTitle, addPart, removePart, setCurrentEditingType } from '../../../actions/currentWorkshop'
+import { setActivePartIndex, setPartsToEdit } from '../../../actions/editor'
 import styles from './partlist.css'
 
 class PartList extends Component {
@@ -20,7 +20,13 @@ class PartList extends Component {
     this.cancelDeletion = this.cancelDeletion.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    // Update partsToEdit in redux state
+    this.props.dispatch(setPartsToEdit(nextProps.workshop.parts))
+  }
+
   changePart(index) {
+    this.props.dispatch(setCurrentEditingType('part'))
     this.props.dispatch(setActivePartIndex(index))
   }
 
@@ -64,6 +70,8 @@ class PartList extends Component {
   }
 
   confirmDeletion() {
+    this.props.dispatch(setActivePartIndex(0))
+    
     const partId = this.props.workshop.parts[this.state.deletePromptIndex]._id
     this.props.dispatch(removePart(partId, this.props.workshop._id))
 
@@ -86,7 +94,7 @@ class PartList extends Component {
             </form>
           </li>
         ) : (
-          <li className={`${this.props.activePartIndex === i ? styles.activePart : ''}`} key={part._id}>
+          <li className={`${(this.props.activePartIndex === i && this.props.currentEditingType === 'part') ? styles.activePart : ''}`} key={part._id}>
             {
               (this.state.deletePromptIndex === i) && (
                 <div className={styles.deletePromptWrapper}>
@@ -146,7 +154,8 @@ function mapStateToProps(state) {
     editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
     activePartIndex: state.editor.activePartIndex,
-    sidebarOpen: state.sidebar.open
+    sidebarOpen: state.sidebar.open,
+    currentEditingType: state.currentWorkshop.currentEditingType
   }
 }
 

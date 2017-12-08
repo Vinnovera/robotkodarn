@@ -35,14 +35,11 @@ export class Console extends Component {
       <div className={styles.consoleWrapper}>
         <h3 className={styles.headline}>
           Konsol
-          <button
-            className={styles.consoleButton}
-            onClick={this.handleClearConsoleClick}
-          >
+          <button className={`${styles.consoleButton} ${this.props.editing ? styles.editMode : ''}`} onClick={this.handleClearConsoleClick}>
             Rensa konsol
           </button>
         </h3>
-        <div className={styles.console} id="console">
+        <div className={`${styles.console} ${this.props.editing ? styles.makeRoomForSaveButton : ''}`} id="console">
           <pre>
             {
               this.props.consoleOutput.map((message) => {
@@ -80,7 +77,8 @@ export class Console extends Component {
 function mapStateToProps(state) {
   return {
     compilerResponse: state.editor.compilerResponse || '',
-    consoleOutput: state.editor.consoleOutput
+    consoleOutput: state.editor.consoleOutput,
+    editing: state.editor.editing
   }
 }
 

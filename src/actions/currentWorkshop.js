@@ -13,7 +13,12 @@ const REMOVE_PART = 'REMOVE_PART'
 const ADD_LINK = 'ADD_LINK'
 const UPDATE_LINK = 'UPDATE_LINK'
 const REMOVE_LINK = 'REMOVE_LINK'
+
 const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
+const SET_CURRENT_EDITING_TYPE = 'SET_CURRENT_EDITING_TYPE'
+
+const CODE_SAVED = 'CODE_SAVED'
+const LINK_SAVED = 'LINK_SAVED'
 
 // -----------------------------------------------------------------------------
 // updateWorkshopTitle, updates the workshop title in current workshop
@@ -76,9 +81,9 @@ export const addPart = (part, workshopId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updatePart, edits a specific part in a workshop
 // -----------------------------------------------------------------------------
-export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => {
+export const updatePartContent = (content, workshopId, partId) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshopId}/part/${partId}`, updatedContent, {
+    .put(`/api/workshop/${workshopId}/part/${partId}`, { content }, {
       headers: {
         'content-type': 'application/json'
       }
@@ -90,10 +95,16 @@ export const updatePart = (updatedContent, workshopId, partId) => (dispatch) => 
       })
 
       dispatch({
-        type: SET_MESSAGE,
-        payload: 'Övningen är nu uppdaterat.',
-        time: +new Date()
+        type: CODE_SAVED,
+        payload: true
       })
+
+      setTimeout(() => {
+        dispatch({
+          type: CODE_SAVED,
+          payload: false
+        })
+      }, 2000)
     })
     .catch(error => console.log(error))
 }
@@ -139,9 +150,9 @@ export const addLink = (link, workshopId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updateLink, edits a specific link in a workshop
 // -----------------------------------------------------------------------------
-export const updateLink = (updatedContent, workshopID, linkId) => (dispatch) => {
+export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshopID}/link/${linkId}`, updatedContent, {
+    .put(`/api/workshop/${workshopID}/link/${linkId}`, updatedLinkObject, {
       headers: {
         'content-type': 'application/json'
       }
@@ -151,6 +162,18 @@ export const updateLink = (updatedContent, workshopID, linkId) => (dispatch) => 
         type: UPDATE_LINK,
         payload: data
       })
+
+      dispatch({
+        type: LINK_SAVED,
+        payload: true
+      })
+
+      setTimeout(() => {
+        dispatch({
+          type: LINK_SAVED,
+          payload: false
+        })
+      }, 2000);
     })
     .catch(error => console.log(error))
 }
@@ -216,7 +239,17 @@ export const findWorkshopByPin = pin => (dispatch) => {
 //------------------------------------------------------------------------------
 // clearWorkshop, resets state to null when leaving workspace component.
 // -----------------------------------------------------------------------------
-
 export const clearWorkshop = () => (dispatch) => {
   dispatch({ type: SET_WORKSHOP_BY_PIN, payload: null })
+}
+
+//------------------------------------------------------------------------------
+// setCurrentEditingType, sets the current editing type to part with an
+// index of that part or link with that index
+// -----------------------------------------------------------------------------
+export const setCurrentEditingType = editingType => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_EDITING_TYPE,
+    payload: editingType
+  })
 }

@@ -1,11 +1,18 @@
 :local .beigeView,
 :local .redView,
-:local .greenView {
+:local .greenView,
+:local .editView {
   background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
   background-size: cover;
   color: #31283E;
   height: 100vh;
   width: 100vw;
+  transition: background-color .5s, color .5s;
+}
+
+:local .editView {
+  background-color: #36303f;
+  color: white;
 }
 
 :local .redView {

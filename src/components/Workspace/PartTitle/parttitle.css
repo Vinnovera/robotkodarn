@@ -1,0 +1,112 @@
+/* ----------------------------------------
+ When in editing mode but not editing the workshop title
+----------------------------------------- */
+:local .notEditing {
+  margin: calc(1.3rem - 2px) 0 1.3rem 0;
+}
+  :local .notEditing button {
+    text-align: left;
+    width: auto;
+    display: flex;
+    align-items: center;
+    border: none;
+    background: none;
+    color: white;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  :local .notEditing button:hover,
+  :local .notEditing button h2:hover,
+  :local .editing form button span:hover {
+    color: #FE5D4B;
+  }
+  /* FA Icon */
+  :local .notEditing button span {
+    font-size: 1.4rem;
+    margin-right: 10px;
+  }
+  :local .notEditing button h1 {
+    font-size: 2rem;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+  }
+  
+  /* ----------------------------------------
+   When in editing mode and editing the workshop title
+  ----------------------------------------- */
+  :local .editing {
+    margin: calc(1.3rem - 2px) 0 1.3rem 0;
+  }
+  :local .editing form {
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    height: 46px;
+    width: 40%;
+    animation: colorPulse .4s infinite alternate;
+  }
+    :local .editing form button {
+      width: 30px;
+      height: 25px;
+      padding: 0;
+      margin: 0;
+      font-size: 1.4rem;
+      position: relative;
+      border: none;
+      background: none;
+      color: white;
+    }
+      :local .editing form input {
+        text-align: left;
+        padding: 0;
+        padding-left: 2px;
+        margin: 0;
+        display: inline;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: bold;
+        font-size: 2rem;
+        color: white;
+        border: none;
+        background: none;
+      }
+      :local .editing form button span {
+        position: absolute;
+        left: 1px;
+        bottom: 2px;
+      }
+  
+:local .pencilAnimation {
+  animation: pencilRemove .2s forwards;
+  animation-timing-function: cubic-bezier(0.58, -0.85, 1, 1);
+}
+:local .diskAnimation {
+  animation: diskAdd .2s forwards;
+  animation-delay: .2s;
+  transform: scale(0);
+}
+
+@keyframes :local(pencilRemove) {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+@keyframes :local(diskAdd) {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes :local(colorPulse) {
+  from {
+    box-shadow: 0 2px 0 rgba(62, 55, 72, .1);
+  }
+  to {
+    box-shadow: 0 2px 0 #dfdbe4;
+  }
+}

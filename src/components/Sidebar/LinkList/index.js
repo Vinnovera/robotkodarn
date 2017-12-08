@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
-import { updateLink, addLink, removeLink, setActiveLinkIndex } from '../../../actions/currentWorkshop'
-// import { setActivePartIndex } from '../../../actions/editor'
+import { updateLink, addLink, removeLink, setActiveLinkIndex, setCurrentEditingType } from '../../../actions/currentWorkshop'
 import styles from './linklist.css'
 
 class LinkList extends Component {
@@ -31,7 +30,7 @@ class LinkList extends Component {
     const linkId = this.props.workshop.links[this.state.editingLinkIndex]._id
 
     this.props.dispatch(updateLink(title, workshopId, linkId))
-    
+
     this.setState({
       editingLinkIndex: null
     })
@@ -51,11 +50,14 @@ class LinkList extends Component {
   }
 
   confirmDeletion() {
+    // Move to the first link when deleting a link
+    this.props.dispatch(setActiveLinkIndex(0))
     const linkId = this.props.workshop.links[this.state.deletePromptIndex]._id
     const workshopId = this.props.workshop._id
 
     this.props.dispatch(removeLink(linkId, workshopId))
 
+    // This resets the deletePromtIndex state
     this.cancelDeletion()
   }
 
@@ -73,6 +75,7 @@ class LinkList extends Component {
   }
 
   changeLinkIndex(index) {
+    this.props.dispatch(setCurrentEditingType('link'))
     this.props.dispatch(setActiveLinkIndex(index))
   }
 
@@ -92,7 +95,7 @@ class LinkList extends Component {
             </form>
           </li>
         ) : (
-          <li className={`${this.props.activeLinkIndex === i ? styles.activeLink : ''}`} key={link._id}>
+          <li className={`${(this.props.activeLinkIndex === i && this.props.currentEditingType === 'link') ? styles.activeLink : ''}`} key={link._id}>
             {
               (this.state.deletePromptIndex === i) && (
                 <div className={styles.deletePromptWrapper}>
@@ -115,10 +118,9 @@ class LinkList extends Component {
     }
 
     // If we are not in editing mode
-    return this.props.workshop.links.map((link, i) => {
+    return this.props.workshop.links.map((link) => {
       return (
         <li key={link._id}>
-          {/* <button onClick={() => this.changePart(i)}><FA className={styles.codeIcon} name="file-code-o" /> {link.title}</button> */}
           <Link className={styles.listLink} to={link.content} target="_blank">
             <FA className={styles.linkIcon} name="external-link" />
             {link.title}
@@ -156,7 +158,9 @@ function mapStateToProps(state) {
     editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
     activePartIndex: state.editor.activePartIndex,
-    sidebarOpen: state.sidebar.open
+    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
+    sidebarOpen: state.sidebar.open,
+    currentEditingType: state.currentWorkshop.currentEditingType
   }
 }
 

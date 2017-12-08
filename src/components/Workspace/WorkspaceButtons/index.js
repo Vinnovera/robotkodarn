@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import FA from 'react-fontawesome'
 
 import { compileCode, setConsoleOutput } from '../../../actions/editor'
 import { pingChromeApp, pingForUSBConnection } from '../../../actions/statusBar'
@@ -50,6 +51,16 @@ export class WorkspaceButtons extends Component {
     this.props.dispatch(toggleCodeButtons(false))
   }
 
+  renderSaveButton() {
+    if (this.props.isLoggedIn && this.props.editing) {
+      return (
+        <Button kind="success" handleClick={() => this.handleClick()}>
+          <FA name="save" /> Spara kod
+        </Button>
+      )
+    }
+  }
+
   render() {
     return (
       this.props.enabledButtons
@@ -85,7 +96,6 @@ export class WorkspaceButtons extends Component {
           </div>
         )
     )
-    // return (<h1>test</h1>)
   }
 }
 
@@ -97,7 +107,9 @@ function mapStateToProps(state) {
     deviceConnected: state.statusBar.deviceConnected,
     enabledButtons: state.workspaceButtons.enabledButtons,
     animatedCompileButton: state.workspaceButtons.animatedCompileButton,
-    animatedUploadButton: state.workspaceButtons.animatedUploadButton
+    animatedUploadButton: state.workspaceButtons.animatedUploadButton,
+    editing: state.editor.editing,
+    isLoggedIn: state.user.isLoggedIn
   }
 }
 

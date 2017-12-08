@@ -18,8 +18,7 @@
 :local .codeWrapper .inactiveButton {
   background-color: #fff;
   border: none;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-radius: 4px 4px 0 0;
   cursor: pointer;
   color: #3E3748;
   font-size: 0.8rem;

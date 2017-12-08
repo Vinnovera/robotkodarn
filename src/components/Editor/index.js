@@ -143,11 +143,23 @@ export class Editor extends Component {
     }
   }
 
+  renderTabs() {
+    return this.props.editing ? (
+      <div>
+        <button onClick={() => this.handleTabClick('original')} className={styles.activeButton}>Original</button>
+      </div>
+    ) : (
+      <div>
+        <button onClick={() => this.handleTabClick('user')} className={(this.props.activeTab === 'user') ? styles.activeButton : styles.inactiveButton}>Din kod</button>
+        <button onClick={() => this.handleTabClick('original')} className={(this.props.activeTab === 'original') ? styles.activeButton : styles.inactiveButton}>Original</button>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className={styles.codeWrapper}>
-        <button onClick={() => this.handleTabClick('user')} className={(this.props.activeTab === 'user') ? styles.activeButton : styles.inactiveButton}>Din kod</button>
-        <button onClick={() => this.handleTabClick('original')} className={(this.props.activeTab === 'original') ? styles.activeButton : styles.inactiveButton}>Original</button>
+        {this.renderTabs()}
         {this.renderUndoRedo()}
         {this.renderAceEditor()}
       </div>
@@ -162,7 +174,8 @@ function mapStateToProps(state) {
     willUpload: state.editor.willUpload,
     activePartIndex: state.editor.activePartIndex,
     partsToEdit: state.editor.partsToEdit,
-    currentWorkshop: state.currentWorkshop.item
+    currentWorkshop: state.currentWorkshop.item,
+    editing: state.editor.editing
   }
 }
 
