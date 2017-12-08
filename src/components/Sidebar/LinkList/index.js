@@ -50,17 +50,18 @@ class LinkList extends Component {
   }
 
   confirmDeletion() {
+    // Move to the first link when deleting a link
+    this.props.dispatch(setActiveLinkIndex(0))
     const linkId = this.props.workshop.links[this.state.deletePromptIndex]._id
     const workshopId = this.props.workshop._id
 
     this.props.dispatch(removeLink(linkId, workshopId))
 
+    // This resets the deletePromtIndex state
     this.cancelDeletion()
   }
 
   cancelDeletion() {
-    this.props.dispatch(setActiveLinkIndex(null))
-
     this.setState({
       deletePromptIndex: null
     })

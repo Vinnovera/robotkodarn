@@ -11,6 +11,7 @@ import View from './../View'
 import FadeIn from './../FadeIn'
 import ToolsButton from './../ToolsButton'
 import LinkForm from './LinkForm'
+import PartTitle from './PartTitle'
 
 import WorkspaceButtons from './WorkspaceButtons'
 
@@ -61,11 +62,7 @@ export class Workspace extends Component {
               </main>
               : (
                 <main className={this.getMainPaneClassName()}>
-                  { this.props.currentWorkshop.parts.length > 0 ?
-                    <h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
-                    :
-                    <h1 className={styles.workspaceHeadline}>Övning</h1>
-                  }
+                  <PartTitle />
                   <WorkspaceButtons />
                   <Editor />
                   <button className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved ? this.updateCode : ''}>

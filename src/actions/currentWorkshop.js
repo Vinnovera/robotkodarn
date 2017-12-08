@@ -149,9 +149,9 @@ export const addLink = (link, workshopId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updateLink, edits a specific link in a workshop
 // -----------------------------------------------------------------------------
-export const updateLink = (updatedContent, workshopID, linkId) => (dispatch) => {
+export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshopID}/link/${linkId}`, updatedContent, {
+    .put(`/api/workshop/${workshopID}/link/${linkId}`, updatedLinkObject, {
       headers: {
         'content-type': 'application/json'
       }

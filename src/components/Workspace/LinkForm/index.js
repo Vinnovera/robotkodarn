@@ -8,7 +8,7 @@ import styles from './linkform.css'
 import FadeIn from '../../FadeIn'
 import Button from '../../Button'
 
-class NameOfComponent extends Component {
+class LinkForm extends Component {
   constructor(props) {
     super(props)
 
@@ -16,18 +16,27 @@ class NameOfComponent extends Component {
       title: this.props.workshop.links[this.props.activeLinkIndex].title,
       content: this.props.workshop.links[this.props.activeLinkIndex].content
     }
+    this.saveLink = this.saveLink.bind(this)
   }
-  // TODO: Force state update? Why?
   componentWillReceiveProps(nextProps) {
+    // Update the forms when the link has changed
     this.setState({
-      title: this.props.workshop.links[nextProps.activeLinkIndex].title,
-      content: this.props.workshop.links[nextProps.activeLinkIndex].content
+      title: nextProps.workshop.links[nextProps.activeLinkIndex].title,
+      content: nextProps.workshop.links[nextProps.activeLinkIndex].content
     })
   }
+
   saveLink(e) {
     e.preventDefault()
-    console.log( 'SPARA!' )
-    // this.props.dispatch(updateLink(content, workshopId, currentId))
+
+    const linkObj = {
+      title: this.state.title,
+      content: this.state.content
+    }
+    const workshopId = this.props.workshop._id
+    const linkId = this.props.workshop.links[this.props.activeLinkIndex]._id
+
+    this.props.dispatch(updateLink(linkObj, workshopId, linkId))
   }
 
   render() {
@@ -76,4 +85,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(NameOfComponent)
+export default connect(mapStateToProps)(LinkForm)
