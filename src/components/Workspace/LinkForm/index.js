@@ -38,13 +38,15 @@ class LinkForm extends Component {
     const workshopId = this.props.workshop._id
     const linkId = this.props.workshop.links[this.props.activeLinkIndex]._id
 
-    this.props.dispatch(updateLink(linkObj, workshopId, linkId))
+    if (!this.props.linkSaved) {
+      this.props.dispatch(updateLink(linkObj, workshopId, linkId))
+    }
   }
 
   render() {
     return (
       <FadeIn>
-        <form onSubmit={!this.props.linkSaved ? this.saveLink : ''} className={styles.linkForm}>
+        <form onSubmit={this.saveLink} className={styles.linkForm}>
           <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.title} ({this.props.workshop.pincode})</h2>
           <h1 className={styles.formHeadline}>
             { `Uppdatera länk ${this.props.workshop.links[this.props.activeLinkIndex].title}` }

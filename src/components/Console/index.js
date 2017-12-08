@@ -35,10 +35,7 @@ export class Console extends Component {
       <div className={styles.consoleWrapper}>
         <h3 className={styles.headline}>
           Konsol
-          <button
-            className={styles.consoleButton}
-            onClick={this.handleClearConsoleClick}
-          >
+          <button className={`${styles.consoleButton} ${this.props.editing ? styles.editMode : ''}`} onClick={this.handleClearConsoleClick}>
             Rensa konsol
           </button>
         </h3>
