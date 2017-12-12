@@ -12,6 +12,7 @@
   "scripts": {
     "mongo:start": "mongod",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
+    "mongo:seed": "mongoimport -d robotkodarn -c users --file ./seed/users.json && mongoimport -d robotkodarn -c workshops --file ./seed/workshops.json",
     "build": "webpack --config webpack/config.prod.js",
     "dev": "check-node-version --package && nodemon -r dotenv/config --inspect index.js",
     "start": "node index.js"
