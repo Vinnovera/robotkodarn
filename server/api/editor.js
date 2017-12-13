@@ -37,7 +37,7 @@ const compileCode = (request, reply) => {
       ],
       service: {
         host: process.env.COMPILERSERVICE_HOST,
-        port: process.env.COMPILERSERVICE_PORT
+        port: +process.env.COMPILERSERVICE_PORT
       }
     }
 
