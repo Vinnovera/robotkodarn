@@ -34,7 +34,11 @@ const compileCode = (request, reply) => {
         `${thePath.resolve(__dirname)}/../arduino-libraries/QTRSensors`,
         `${thePath.resolve(__dirname)}/../arduino-libraries/ZumoMotors`,
         `${thePath.resolve(__dirname)}/../arduino-libraries/ZumoReflectanceSensorArray`
-      ]
+      ],
+      service: {
+        host: process.env.COMPILERSERVICE_HOST,
+        port: +process.env.COMPILERSERVICE_PORT
+      }
     }
 
     /*
