@@ -1,5 +1,15 @@
 const SET_CHROME_PING = 'SET_CHROME_PING'
 const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'
+const supportedDevices = [
+  // RedBoard
+  { vendorId: '0x403', productId: '0x6015' },
+  // Uno Robot (bandhjul)
+  { vendorId: '0x2a03', productId: '0x43' },
+  // DF Robot (två hjul)
+  { vendorId: '0x2341', productId: '0x8036' },
+  // Kjell UNO
+  { vendorId: '0x2341', productId: '0x43' }
+]
 
 // -----------------------------------------------------------------------------
 // pingChromeApp, pings the Chrome App expecting a response "pong"
@@ -45,11 +55,15 @@ export const pingForUSBConnection = () => (dispatch) => {
     if (!response || response.error) {
       console.error('Ingen kontakt med Chrome App eller fel vid hämtning av lista')
     } else {
-      const deviceConnected = response.usbPorts.filter(usbPort => usbPort.manufacturer !== undefined).length > 0
+      const isSupported = supportedDevices.filter((supportedDevice) => {
+        return response.usbPorts.find((usbPort) => {
+          return supportedDevice.productId === usbPort.productId && supportedDevice.vendorId === usbPort.vendorId
+        })
+      }).length > 0
 
       dispatch({
         type: SET_DEVICE_CONNECTED,
-        payload: deviceConnected
+        payload: isSupported
       })
     }
   })
