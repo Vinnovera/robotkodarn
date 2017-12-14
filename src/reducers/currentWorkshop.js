@@ -46,6 +46,16 @@ export default handleActions({
     })
   },
 
+  UPDATE_PARTS: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: action.payload
+      }
+    })
+  },
+
   REMOVE_PART: (state, action) => {
     return ({
       ...state,

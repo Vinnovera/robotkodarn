@@ -9,3 +9,13 @@ export const toggleSidebar = toggleValue => (dispatch) => {
     payload: toggleValue
   })
 }
+
+// -----------------------------------------------------------------------------
+// reorganizeParts, reorders the parts when using drag n drop
+// -----------------------------------------------------------------------------
+export const reorganizeParts = reorganizedParts => (dispatch) => {
+  dispatch({
+    type: TOGGLE_SIDEBAR,
+    payload: reorganizedParts
+  })
+}

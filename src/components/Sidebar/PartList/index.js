@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-// import { SortableList, arrayMove } from 'react-sortable-hoc'
-import { updatePartTitle, addPart, removePart, setCurrentEditingType } from '../../../actions/currentWorkshop'
+import { arrayMove } from 'react-sortable-hoc'
+import { updatePartTitle, addPart, removePart, setCurrentEditingType, updateWorkshopParts } from '../../../actions/currentWorkshop'
 import { setActivePartIndex, setPartsToEdit } from '../../../actions/editor'
 
 import SortableList from './SortableList'
@@ -34,11 +34,22 @@ class PartList extends Component {
   }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
-    console.log('oldIndex: ', oldIndex)
-    console.log('newIndex: ', newIndex)
-    // this.setState({
-    //   items: arrayMove(this.state.items, oldIndex, newIndex)
-    // })
+    // TODO: parts gets broken after move function ($oid?!)
+    const copyOfWorkshop = { ...this.props.workshop }
+    copyOfWorkshop.parts = arrayMove(this.props.workshop.parts, oldIndex, newIndex)
+
+    const newParts = []
+
+    copyOfWorkshop.parts.forEach((part) => {
+      newParts.push({
+        title: part.title,
+        content: part.content
+      })
+    })
+
+    this.props.dispatch(updateWorkshopParts(copyOfWorkshop._id, newParts))
+
+    // console.log(copyOfWorkshopsWithoutId)
   }
 
   changePart(index) {
@@ -162,10 +173,7 @@ function mapStateToProps(state) {
   return {
     workshop: state.currentWorkshop.item,
     editing: state.editor.editing,
-    editingType: state.editor.editingType.type,
-    current: state.editor.editingType.id,
     activePartIndex: state.editor.activePartIndex,
-    sidebarOpen: state.sidebar.open,
     currentEditingType: state.currentWorkshop.currentEditingType
   }
 }

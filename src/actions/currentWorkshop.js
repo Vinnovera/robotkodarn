@@ -3,11 +3,11 @@ import { routeActions } from 'redux-simple-router'
 
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP'
-const SET_MESSAGE = 'SET_MESSAGE'
 const UPDATE_TITLE = 'UPDATE_TITLE'
 
 const ADD_PART = 'ADD_PART'
 const UPDATE_PART = 'UPDATE_PART'
+const UPDATE_PARTS = 'UPDATE_PARTS'
 const REMOVE_PART = 'REMOVE_PART'
 
 const ADD_LINK = 'ADD_LINK'
@@ -34,6 +34,25 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
       dispatch({
         type: UPDATE_TITLE,
         payload: data.title
+      })
+    })
+    .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// updateWorkshopParts, updates the workshop parts in current workshop
+// -----------------------------------------------------------------------------
+export const updateWorkshopParts = (workshopId, parts) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopId}`, { parts }, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: UPDATE_PARTS,
+        payload: data.parts
       })
     })
     .catch(error => console.log(error))
@@ -173,7 +192,7 @@ export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) 
           type: LINK_SAVED,
           payload: false
         })
-      }, 2000);
+      }, 2000)
     })
     .catch(error => console.log(error))
 }

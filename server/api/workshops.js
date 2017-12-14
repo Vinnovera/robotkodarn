@@ -81,6 +81,12 @@ const updateWorkshop = async (request, reply) => {
     const workshop = await Workshop.findOne({ _id: request.params.id })
     const updatedWorkshop = Object.assign(workshop, request.payload)
 
+    updatedWorkshop.parts.forEach((part) => {
+      part._id = mongoose.Types.ObjectId()
+    })
+
+    // console.log(updatedWorkshop)
+
     const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
     if (validated.error) {
       throw validated.error
