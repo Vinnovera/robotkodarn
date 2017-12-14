@@ -7,6 +7,9 @@
   padding: 5px 12%;
   position: relative;
 }
+:local .partList li:hover .sortHandler {
+  opacity: 1;
+}
 
 :local .partList li button {
   font-size: 1rem;
@@ -201,5 +204,43 @@
     transform: scale(0) rotate(180deg);
   }
 }
+@keyframes :local(fadeDown) {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: .5;
+  }
+}
 
-
+:local .sortHandler {
+  position: absolute;
+	left: 15px;
+	top: 6px;
+	font-size: 0.9rem;
+	opacity: .7;
+  cursor: -webkit-grab;
+  transition: opacity .4s;
+}
+:local .sorting .sortHandler {
+  opacity: 1;
+}
+:local .sorting {
+  list-style: none;
+  padding: 5px 33px;
+  cursor: pointer !important;
+  animation: fadeDown .5s forwards;
+}
+:local .sorting .deletePartButton {
+  margin-right: 3.5px;
+}
+:local .sorting button:first-of-type {
+  margin-right: 3.2px;
+}
+:local .sorting button {
+  color: #36303f;
+  width: auto;
+  background: none;
+  font-size: 1rem;
+  border: none;
+}
