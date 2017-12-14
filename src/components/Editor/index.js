@@ -14,7 +14,7 @@ import 'brace/theme/github'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import FA from 'react-fontawesome'
-import { changeEditorTab, uploadCode, setConsoleOutput, setPartsToEdit } from '../../actions/editor'
+import { changeEditorTab, uploadCode, setConsoleOutput, setPartsToEdit, setCodeToUnsaved } from '../../actions/editor'
 import { toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
 
 import styles from './editor.css'
@@ -73,6 +73,13 @@ export class Editor extends Component {
     updatedParts[index] = { ...updatedParts[index], content: value }
 
     this.props.dispatch(setPartsToEdit(updatedParts))
+
+    // Set the code to be unsaved if content has been changed
+    if (this.props.currentWorkshop.parts[this.props.activePartIndex].content === value) {
+      this.props.dispatch(setCodeToUnsaved(false))
+    } else {
+      this.props.dispatch(setCodeToUnsaved(true))
+    }
   }
 
   /*

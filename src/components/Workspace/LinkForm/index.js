@@ -75,7 +75,7 @@ class LinkForm extends Component {
             <div className={styles.buttonContainer}>
               <button type="submit" className={`${styles.saveLinkButton} ${this.props.linkSaved ? styles.saveLinkButtonSaved : ''}`}>
                 <div><span><FA name="check" /> Sparat</span></div>
-                <FA name="save" /> Spara kod
+                <FA name="save" /> Spara länk
               </button>
             </div>
           </div>

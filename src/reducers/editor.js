@@ -71,7 +71,15 @@ export default handleActions({
       ...state,
       editingType: action.payload
     })
+  },
+
+  SET_CODE_TO_UNSAVED: (state, action) => {
+    return ({
+      ...state,
+      codeIsUnsaved: action.payload
+    })
   }
+
 }, {
   activeTab: 'user',
   compilerResponse: null,
@@ -82,5 +90,6 @@ export default handleActions({
     type: 'parts',
     id: null
   },
-  partsToEdit: []
+  partsToEdit: [],
+  codeIsUnsaved: false
 })
