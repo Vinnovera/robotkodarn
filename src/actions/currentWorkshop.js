@@ -42,9 +42,9 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updateWorkshopParts, updates the workshop parts in current workshop
 // -----------------------------------------------------------------------------
-export const updateWorkshopParts = (workshopId, parts) => (dispatch) => {
+export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshopId}`, { parts }, {
+    .put(`/api/workshop/${workshopId}`, partIds, {
       headers: {
         'content-type': 'application/json'
       }

@@ -33,7 +33,7 @@ const SortableItem = SortableElement(({
           <FA className={styles.pencilIcon} name="pencil" />
           <FA className={styles.diskIcon} name="save" />
         </button>
-        <input autoFocus onChange={handleInputChange} type="text" value={inputValue} />
+        <input autoFocus onBlur={(handleFormSubmit)} onChange={handleInputChange} type="text" value={inputValue} />
         <button className={`${styles.deletePartButton} ${styles.deletePartButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
       </form>
     </li>

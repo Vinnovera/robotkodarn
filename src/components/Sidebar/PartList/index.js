@@ -34,22 +34,16 @@ class PartList extends Component {
   }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
-    // TODO: parts gets broken after move function ($oid?!)
     const copyOfWorkshop = { ...this.props.workshop }
     copyOfWorkshop.parts = arrayMove(this.props.workshop.parts, oldIndex, newIndex)
 
-    const newParts = []
+    const partIds = []
 
     copyOfWorkshop.parts.forEach((part) => {
-      newParts.push({
-        title: part.title,
-        content: part.content
-      })
+      partIds.push(part._id)
     })
 
-    this.props.dispatch(updateWorkshopParts(copyOfWorkshop._id, newParts))
-
-    // console.log(copyOfWorkshopsWithoutId)
+    this.props.dispatch(updateWorkshopParts(copyOfWorkshop._id, partIds))
   }
 
   changePart(index) {
@@ -58,7 +52,6 @@ class PartList extends Component {
   }
 
   editPartTitle(index) {
-    // console.log( index )
     this.setState({
       editingPartIndex: index,
       inputValue: this.props.workshop.parts[index].title
@@ -106,6 +99,7 @@ class PartList extends Component {
     this.cancelDeletion()
   }
   handleChange(e) {
+    console.log(this.props.activePartIndex)
     this.setState({ inputValue: e.target.value })
   }
 

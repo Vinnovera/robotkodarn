@@ -79,11 +79,18 @@ const addWorkshop = async (request, reply) => {
 const updateWorkshop = async (request, reply) => {
   try {
     const workshop = await Workshop.findOne({ _id: request.params.id })
-    const updatedWorkshop = Object.assign(workshop, request.payload)
+    const sortedParts = []
 
-    updatedWorkshop.parts.forEach((part) => {
-      part._id = mongoose.Types.ObjectId()
+    workshop.parts.forEach((part) => {
+      const index = request.payload.indexOf(part._id.toString())
+      sortedParts[index] = part
     })
+
+    const updatedWorkshop = Object.assign(workshop, { parts: sortedParts })
+
+    // updatedWorkshop.parts.forEach((part) => {
+    //   part._id = mongoose.Types.ObjectId()
+    // })
 
     // console.log(updatedWorkshop)
 
