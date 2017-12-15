@@ -44,6 +44,14 @@ class PartList extends Component {
     })
 
     this.props.dispatch(updateWorkshopParts(copyOfWorkshop._id, partIds))
+
+    if (oldIndex === this.props.activePartIndex) {
+      this.changePart(newIndex)
+    } else if ((oldIndex < this.props.activePartIndex) && (newIndex >= this.props.activePartIndex)) {
+      this.changePart(this.props.activePartIndex - 1)
+    } else if ((oldIndex > this.props.activePartIndex) && (newIndex <= this.props.activePartIndex)) {
+      this.changePart(this.props.activePartIndex + 1)
+    }
   }
 
   changePart(index) {

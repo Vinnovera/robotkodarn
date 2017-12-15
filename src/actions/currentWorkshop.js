@@ -9,6 +9,7 @@ const ADD_PART = 'ADD_PART'
 const UPDATE_PART = 'UPDATE_PART'
 const UPDATE_PARTS = 'UPDATE_PARTS'
 const REMOVE_PART = 'REMOVE_PART'
+const UPDATE_PART_TITLE = 'UPDATE_PART_TITLE'
 
 const ADD_LINK = 'ADD_LINK'
 const UPDATE_LINK = 'UPDATE_LINK'
@@ -63,6 +64,11 @@ export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
 // updatePartTitle, edits a part title
 // -----------------------------------------------------------------------------
 export const updatePartTitle = (title, workshopId, partId) => (dispatch) => {
+  dispatch({
+    type: UPDATE_PART_TITLE,
+    payload: { title, partId }
+  })
+
   axios
     .put(`/api/workshop/${workshopId}/part/${partId}`, { title }, {
       headers: {
