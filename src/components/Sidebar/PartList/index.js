@@ -71,7 +71,7 @@ class PartList extends Component {
 
   confirmDeletion() {
     this.props.dispatch(setActivePartIndex(0))
-    
+
     const partId = this.props.workshop.parts[this.state.deletePromptIndex]._id
     this.props.dispatch(removePart(partId, this.props.workshop._id))
 
@@ -89,7 +89,7 @@ class PartList extends Component {
                 <FA className={styles.pencilIcon} name="pencil" />
                 <FA className={styles.diskIcon} name="save" />
               </button>
-              <input autoFocus onBlur={this.handleSubmit} onChange={e => this.setState({ inputText: e.target.value })} type="text" value={this.state.inputText} />
+              <input autoFocus onChange={e => this.setState({ inputText: e.target.value })} type="text" value={this.state.inputText} />
               <button className={`${styles.deletePartButton} ${styles.deletePartButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
             </form>
           </li>

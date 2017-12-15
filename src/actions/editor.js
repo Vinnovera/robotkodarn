@@ -9,6 +9,7 @@ const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
 const TOGGLE_EDITING = 'TOGGLE_EDITING'
 const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
 const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
+const SET_CODE_TO_UNSAVED = 'SET_CODE_TO_UNSAVED'
 
 // -----------------------------------------------------------------------------
 // setPartsToEdit, Sets the parts that user can edit in editor
@@ -209,5 +210,15 @@ export const setEditingType = (type, id = null) => (dispatch) => {
       type,
       id
     }
+  })
+}
+
+// -----------------------------------------------------------------------------
+// setCodeToUnsaved, sets the code to be unsaved
+// -----------------------------------------------------------------------------
+export const setCodeToUnsaved = isUnsaved => (dispatch) => {
+  dispatch({
+    type: SET_CODE_TO_UNSAVED,
+    payload: isUnsaved
   })
 }

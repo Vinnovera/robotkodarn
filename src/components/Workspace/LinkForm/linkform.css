@@ -47,7 +47,6 @@
     display: flex;
     justify-content: flex-end;
   }
-  
 
 :local .saveLinkButton {
   width: auto;
@@ -74,7 +73,6 @@
   :local .saveLinkButton span {
     margin-right: .5rem;
   }
-
   
   :local .saveLinkButton div {
     position: absolute;

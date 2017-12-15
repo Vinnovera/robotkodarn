@@ -21,16 +21,12 @@ class PartTitle extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    // Update the forms when the link has changed
-    this.setState({
-      inputValue: nextProps.workshop.parts[this.props.activePartIndex].title
-    })
-  }
-
   editWorkshopTitle(e) {
     e.preventDefault()
-    this.setState({ editing: true })
+    this.setState({
+      editing: true,
+      inputValue: this.props.workshop.parts[this.props.activePartIndex].title
+    })
   }
 
   handleChange(e) {
@@ -39,7 +35,10 @@ class PartTitle extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.setState({ editing: false })
+    this.setState({
+      editing: false,
+      inputValue: ''
+    })
 
     this.props.dispatch(updatePartTitle(
       this.state.inputValue,
@@ -60,7 +59,7 @@ class PartTitle extends Component {
                 <FA className={styles.pencilAnimation} name="pencil" />
                 <FA className={styles.diskAnimation} name="save" />
               </button>
-              <input type="text" autoFocus onChange={this.handleChange} value={this.state.inputValue} />
+              <input type="text" autoFocus onBlur={this.handleSubmit} onChange={this.handleChange} value={this.state.inputValue} />
             </form>
           </div>
         )

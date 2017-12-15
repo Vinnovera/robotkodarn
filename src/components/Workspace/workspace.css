@@ -19,8 +19,13 @@
   width: calc(100vw - 28px);
 }
 
+:local .saveCodeButtonContainer {
+  overflow: hidden;
+}
+
 :local .saveCodeButton {
   width: auto;
+  float: right;
   border-radius: 2px;
   border: none;
   color: #fff;
@@ -37,13 +42,16 @@
   animation: codeSaved 1s;
   position: relative;
   overflow: hidden;
-  margin-top: 20px;
 }
   :local .saveCodeButton:hover {
     background-color: #238F88;
   }
   :local .saveCodeButton span {
     margin-right: .5rem;
+  }
+  :local .saveCodeButton[disabled] {
+    background: #b2b1b2;
+    cursor: not-allowed;
   }
 
   

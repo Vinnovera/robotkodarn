@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
 import { findWorkshopByPin, clearWorkshop, updatePartContent } from '../../actions/currentWorkshop'
+import { setCodeToUnsaved } from '../../actions/editor'
+
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
 import Console from './../Console'
@@ -46,6 +48,7 @@ export class Workspace extends Component {
     const currentPartId = this.props.partsToEdit[this.props.activePartIndex]._id
 
     this.props.dispatch(updatePartContent(currentPartContent, workshopId, currentPartId))
+    this.props.dispatch(setCodeToUnsaved(false))
   }
 
   renderMainContent() {
@@ -65,8 +68,8 @@ export class Workspace extends Component {
                   <PartTitle />
                   <WorkspaceButtons />
                   <Editor />
-                  <div>
-                    <button className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved ? this.updateCode : ''}>
+                  <div className={styles.saveCodeButtonContainer}>
+                    <button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
                       <div><span><FA name="check" /> Sparat</span></div>
                       <FA name="save" /> Spara kod
                     </button>
@@ -119,7 +122,8 @@ function mapStateToProps(state) {
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
     currentEditingType: state.currentWorkshop.currentEditingType,
-    codeSaved: state.currentWorkshop.codeSaved
+    codeSaved: state.currentWorkshop.codeSaved, // When code is saved (when button is pressed)
+    codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
   }
 }
 
