@@ -1,5 +1,5 @@
-import { connectPort } from "../utils/chromeapp"
-import { serialListen } from "./serial"
+import { connectPort } from '../utils/chromeapp'
+import { serialListen } from './serial'
 
 const CLEAR_CONSOLE = 'CLEAR_CONSOLE'
 const SET_EDITOR_TAB = 'SET_EDITOR_TAB'

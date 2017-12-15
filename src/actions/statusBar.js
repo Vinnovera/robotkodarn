@@ -1,4 +1,4 @@
-import { connectPort } from "../utils/chromeapp"
+import { connectPort } from '../utils/chromeapp'
 
 const SET_CHROME_PING = 'SET_CHROME_PING'
 const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'

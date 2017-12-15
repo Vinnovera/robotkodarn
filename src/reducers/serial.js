@@ -10,5 +10,5 @@ export default handleActions({
   }
 
 }, {
-  messages: ""
+  messages: ''
 })
