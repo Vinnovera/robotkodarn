@@ -99,7 +99,6 @@ class PartList extends Component {
     this.cancelDeletion()
   }
   handleChange(e) {
-    console.log(this.props.activePartIndex)
     this.setState({ inputValue: e.target.value })
   }
 

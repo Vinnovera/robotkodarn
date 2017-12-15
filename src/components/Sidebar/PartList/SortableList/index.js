@@ -25,7 +25,7 @@ const SortableList = SortableContainer(({
     <ul className={`${styles.partList} ${editing ? styles.editingMode : ''}`}>
       {parts.map((part, index) => (
         <SortableItem
-          key={`itemNr-${Math.floor(Math.random() * 10000)}`}
+          key={part._id}
           index={index}
           partIndex={index}
           part={part}
