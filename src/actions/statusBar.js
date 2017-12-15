@@ -1,3 +1,5 @@
+import { connectPort } from "../utils/chromeapp"
+
 const SET_CHROME_PING = 'SET_CHROME_PING'
 const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'
 
@@ -5,8 +7,7 @@ const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'
 // pingChromeApp, pings the Chrome App expecting a response "pong"
 // -----------------------------------------------------------------------------
 export const pingChromeApp = () => (dispatch) => {
-  const CHROME_EXTENSION_ID = process.env.CHROME_EXTENSION_ID
-  const port = chrome.runtime.connect(CHROME_EXTENSION_ID)
+  const port = connectPort()
   const message = {
     type: 'ping'
   }
@@ -32,8 +33,7 @@ export const pingChromeApp = () => (dispatch) => {
 // arduino devices that are connected
 // -----------------------------------------------------------------------------
 export const pingForUSBConnection = () => (dispatch) => {
-  const CHROME_EXTENSION_ID = process.env.CHROME_EXTENSION_ID
-  const port = chrome.runtime.connect(CHROME_EXTENSION_ID)
+  const port = connectPort()
   const message = {
     type: 'list'
   }

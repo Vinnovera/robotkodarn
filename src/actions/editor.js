@@ -1,3 +1,6 @@
+import { connectPort } from "../utils/chromeapp"
+import { serialListen } from "./serial"
+
 const CLEAR_CONSOLE = 'CLEAR_CONSOLE'
 const SET_EDITOR_TAB = 'SET_EDITOR_TAB'
 const SET_ACTIVE_PART_INDEX = 'SET_ACTIVE_PART_INDEX'
@@ -100,9 +103,7 @@ export const uploadCode = compiledCode => (dispatch) => {
     return
   }
 
-  // Robotkodarn's Chrome App ID
-  const CHROME_EXTENSION_ID = process.env.CHROME_EXTENSION_ID
-  const port = chrome.runtime.connect(CHROME_EXTENSION_ID)
+  const port = connectPort()
 
   // Payload to be sent to Chrome App
   const message = {
@@ -122,6 +123,8 @@ export const uploadCode = compiledCode => (dispatch) => {
           message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
         }
       })
+
+      dispatch(serialListen())
     } else {
       dispatch({
         type: 'SET_CONSOLE_OUTPUT',

@@ -9,6 +9,7 @@ import menu from './menu'
 import user from './user'
 import workspaceButtons from './workspaceButtons'
 import statusBar from './statusBar'
+import serial from './serial'
 
 export default combineReducers({
   routeReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   menu,
   user,
   workspaceButtons,
-  statusBar
+  statusBar,
+  serial
 })
