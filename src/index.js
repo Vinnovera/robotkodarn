@@ -17,6 +17,7 @@ import LoginAdmin from './components/LoginAdmin'
 import Workshops from './components/Workshops'
 import Invite from './components/Invite'
 import RegisterForm from './components/RegisterForm'
+import NotFound from './components/NotFound'
 
 import './index.css'
 
@@ -51,6 +52,7 @@ render((
         <Route path="/workshops" component={Workshops} onEnter={authorize} permissions={['superadmin', 'editor']} />
         <Route path="/invite" component={Invite} onEnter={authorize} permissions={['superadmin']} />
         <Route path="/register" component={RegisterForm} onEnter={authorize} forward="/workshops" />
+        <Route path="*" component={NotFound} onEnter={authorize} forward="onlyAuthCheck" />
       </Route>
     </Router>
   </Provider>
