@@ -8,6 +8,10 @@
   position: relative;
 }
 
+:local .linkList li:hover .sortHandler {
+  opacity: 1;
+}
+
 :local .linkList li button,
 :local .linkList li a {
   font-size: 1rem;
@@ -208,3 +212,34 @@
 }
 
 
+:local .sortHandler {
+  position: absolute;
+	left: 15px;
+	top: 6px;
+	font-size: 0.9rem;
+	opacity: .7;
+  cursor: -webkit-grab;
+  transition: opacity .4s;
+}
+:local .sorting .sortHandler {
+  opacity: 1;
+}
+:local .sorting {
+  list-style: none;
+  padding: 5px 33px;
+  cursor: pointer !important;
+  animation: fadeDown .5s forwards;
+}
+:local .sorting .deleteLinkButton {
+  margin-right: 3.5px;
+}
+:local .sorting button:first-of-type {
+  margin-right: 3.2px;
+}
+:local .sorting button {
+  color: #36303f;
+  width: auto;
+  background: none;
+  font-size: 1rem;
+  border: none;
+}

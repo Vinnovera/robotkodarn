@@ -4,29 +4,29 @@ import { SortableContainer } from 'react-sortable-hoc'
 
 import SortableItem from '../SortableItem'
 
-import styles from '../partlist.css'
+import styles from '../linklist.css'
 
 const SortableList = SortableContainer(({ ...props }) => {
   return (
-    <ul className={`${styles.partList} ${props.editing ? styles.editingMode : ''}`}>
-      {props.parts.map((part, index) => (
+    <ul className={`${styles.linkList} ${props.editing ? styles.editingMode : ''}`}>
+      {props.links.map((link, index) => (
         <SortableItem
-          key={part._id}
+          key={link._id}
           index={index}
-          partIndex={index}
-          part={part}
-          editingPartIndex={props.editingPartIndex}
+          linkIndex={index}
+          link={link}
+          editingLinkIndex={props.editingLinkIndex}
           handleFormSubmit={props.handleFormSubmit}
           handleInputChange={props.handleInputChange}
           inputValue={props.inputValue}
-          activePartIndex={props.activePartIndex}
+          activeLinkIndex={props.activeLinkIndex}
           currentEditingType={props.currentEditingType}
           deletePromptIndex={props.deletePromptIndex}
           deleteHandleClickConfirm={props.deleteHandleClickConfirm}
           deleteHandleClickCancel={props.deleteHandleClickCancel}
-          editPartHandleClick={() => props.editPartHandleClick(index)}
-          changePartHandleClick={() => props.changePartHandleClick(index)}
-          deletePartHandleClick={() => props.deletePartHandleClick(index)}
+          editLinkHandleClick={() => props.editLinkHandleClick(index)}
+          changeLinkHandleClick={() => props.changeLinkHandleClick(index)}
+          deleteLinkHandleClick={() => props.deleteLinkHandleClick(index)}
         />
       ))}
     </ul>

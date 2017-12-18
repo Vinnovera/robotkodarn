@@ -13,6 +13,7 @@ const UPDATE_PART_TITLE = 'UPDATE_PART_TITLE'
 
 const ADD_LINK = 'ADD_LINK'
 const UPDATE_LINK = 'UPDATE_LINK'
+const UPDATE_LINKS = 'UPDATE_LINKS'
 const REMOVE_LINK = 'REMOVE_LINK'
 
 const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
@@ -45,7 +46,7 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
 // -----------------------------------------------------------------------------
 export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
   axios
-    .put(`/api/workshop/${workshopId}`, partIds, {
+    .put(`/api/workshop/${workshopId}/parts`, partIds, {
       headers: {
         'content-type': 'application/json'
       }
@@ -54,6 +55,25 @@ export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
       dispatch({
         type: UPDATE_PARTS,
         payload: data.parts
+      })
+    })
+    .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// updateWorkshopLinks, updates the workshop links in current workshop
+// -----------------------------------------------------------------------------
+export const updateWorkshopLinks = (workshopId, linkIds) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopId}/links`, linkIds, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: UPDATE_LINKS,
+        payload: data.links
       })
     })
     .catch(error => console.log(error))

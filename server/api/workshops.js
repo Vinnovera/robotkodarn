@@ -74,9 +74,9 @@ const addWorkshop = async (request, reply) => {
 }
 
 // -----------------------------------------------------------------------------
-// Update a workshop with {id} [PUT]
+// Update a workshop parts with {id} [PUT]
 // -----------------------------------------------------------------------------
-const updateWorkshop = async (request, reply) => {
+const updateWorkshopParts = async (request, reply) => {
   try {
     const workshop = await Workshop.findOne({ _id: request.params.id })
     const sortedParts = []
@@ -88,11 +88,33 @@ const updateWorkshop = async (request, reply) => {
 
     const updatedWorkshop = Object.assign(workshop, { parts: sortedParts })
 
-    // updatedWorkshop.parts.forEach((part) => {
-    //   part._id = mongoose.Types.ObjectId()
-    // })
+    const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
 
-    // console.log(updatedWorkshop)
+    await validated.value.save()
+
+    return reply(validated.value).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Update a workshop links with {id} [PUT]
+// -----------------------------------------------------------------------------
+const updateWorkshopLinks = async (request, reply) => {
+  try {
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const sortedLinks = []
+
+    workshop.links.forEach((link) => {
+      const index = request.payload.indexOf(link._id.toString())
+      sortedLinks[index] = link
+    })
+
+    const updatedWorkshop = Object.assign(workshop, { links: sortedLinks })
 
     const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
     if (validated.error) {
@@ -205,9 +227,17 @@ exports.register = (server, options, next) => {
     },
     {
       method: 'PUT',
-      path: '/api/workshop/{id}',
+      path: '/api/workshop/{id}/parts',
       config: {
-        handler: updateWorkshop,
+        handler: updateWorkshopParts,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'PUT',
+      path: '/api/workshop/{id}/links',
+      config: {
+        handler: updateWorkshopLinks,
         auth: 'session'
       }
     },

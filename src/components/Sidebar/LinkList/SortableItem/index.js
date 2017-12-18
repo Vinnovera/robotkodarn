@@ -3,28 +3,28 @@ import FA from 'react-fontawesome'
 
 import { SortableElement, SortableHandle } from 'react-sortable-hoc'
 
-import styles from '../partlist.css'
+import styles from '../linklist.css'
 
 const DragHandle = SortableHandle(() => <span className={styles.sortHandler}><FA name="bars" /></span>)
 
 const SortableItem = SortableElement(({ ...props }) => {
-  return (props.editingPartIndex === props.partIndex) ? (
+  return (props.editingLinkIndex === props.linkIndex) ? (
     <li className={styles.editing} key={props.key}>
       <DragHandle />
       <form onSubmit={props.handleFormSubmit}>
-        <button type="submit" className={styles.editPartButton}>
+        <button type="submit" className={styles.editLinkButton}>
           <FA className={styles.pencilIcon} name="pencil" />
           <FA className={styles.diskIcon} name="save" />
         </button>
         <input autoFocus onBlur={(props.handleFormSubmit)} onChange={props.handleInputChange} type="text" value={props.inputValue} />
-        <button className={`${styles.deletePartButton} ${styles.deletePartButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
+        <button className={`${styles.deleteLinkButton} ${styles.deleteLinkButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
       </form>
     </li>
   ) : (
-    <li className={(props.activePartIndex === props.partIndex && props.currentEditingType === 'part') ? styles.activePart : ''} key={props.key}>
+    <li className={(props.activeLinkIndex === props.linkIndex && props.currentEditingType === 'link') ? styles.activeLink : ''} key={props.key}>
       <DragHandle />
       {
-        (props.deletePromptIndex === props.partIndex) && (
+        (props.deletePromptIndex === props.linkIndex) && (
           <div className={styles.deletePromptWrapper}>
             <p>
               Radera övning?
@@ -36,9 +36,9 @@ const SortableItem = SortableElement(({ ...props }) => {
           </div>
         )
       }
-      <button className={styles.editPartButton} onClick={props.editPartHandleClick}><FA className={styles.codeIcon} name="pencil" /></button>
-      <button className={styles.changePartButton} onClick={props.changePartHandleClick}>{props.part.title}</button>
-      <button className={styles.deletePartButton} onClick={props.deletePartHandleClick}><FA className={styles.codeIcon} name="trash-o" /></button>
+      <button className={styles.editLinkButton} onClick={props.editLinkHandleClick}><FA className={styles.codeIcon} name="pencil" /></button>
+      <button className={styles.changeLinkButton} onClick={props.changeLinkHandleClick}>{props.link.title}</button>
+      <button className={styles.deleteLinkButton} onClick={props.deleteLinkHandleClick}><FA className={styles.codeIcon} name="trash-o" /></button>
     </li>
   )
 })

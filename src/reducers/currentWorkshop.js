@@ -76,6 +76,16 @@ export default handleActions({
     })
   },
 
+  UPDATE_LINKS: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: action.payload
+      }
+    })
+  },
+
   REMOVE_PART: (state, action) => {
     return ({
       ...state,
