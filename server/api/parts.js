@@ -78,8 +78,10 @@ const updatePart = async (request, reply) => {
      */
     const validated = partValidation.validate(updatedPart, { abortEarly: false })
     if (validated.error) {
+      console.log('error', validated.error)
       throw validated.error
     }
+
 
     // Replace the old part with the new
     workshop.parts[index] = validated.value

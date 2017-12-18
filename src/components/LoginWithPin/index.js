@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'redux-simple-router'
-import { findWorkshopByPin } from '../../actions/currentWorkshop'
+import { findWorkshopByPin } from '../../actions/workshops'
 import styles from './login.css'
 
 import Button from '../Button'

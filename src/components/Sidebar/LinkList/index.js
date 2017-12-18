@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
 import { arrayMove } from 'react-sortable-hoc'
-import { updateLink, addLink, removeLink, setActiveLinkIndex, setCurrentEditingType, updateWorkshopLinks } from '../../../actions/currentWorkshop'
+
+import { updateLink, addLink, removeLink, setActiveLinkIndex, updateWorkshopLinks } from '../../../actions/links'
+import { setCurrentEditingType } from '../../../actions/workshops'
 
 import SortableList from './SortableList'
 

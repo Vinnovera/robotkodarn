@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setConsoleOutput, clearConsole } from '../../actions/editor'
+import { setConsoleOutput, clearConsole } from '../../actions/console'
 import { toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
 import styles from './console.css'
 

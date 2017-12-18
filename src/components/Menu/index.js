@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { toggleMenu } from '../../actions/menu'
-import { signOut } from '../../actions/authentication'
-import { toggleEditing, setActivePartIndex } from '../../actions/editor'
+import { signOut } from '../../actions/auth'
+import { toggleEditing } from '../../actions/workshops'
 
 import styles from './menu.css'
 

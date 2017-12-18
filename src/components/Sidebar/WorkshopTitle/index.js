@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import FA from 'react-fontawesome'
 
-import { updateWorkshopTitle } from '../../../actions/currentWorkshop'
+import { updateWorkshopTitle } from '../../../actions/workshops'
 
 import styles from './workshoptitle.css'
 

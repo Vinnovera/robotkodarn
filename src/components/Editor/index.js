@@ -14,8 +14,10 @@ import 'brace/theme/github'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import FA from 'react-fontawesome'
-import { changeEditorTab, uploadCode, setConsoleOutput, setPartsToEdit, setCodeToUnsaved } from '../../actions/editor'
-import { toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
+import { changeEditorTab } from '../../actions/editor'
+import { setConsoleOutput } from '../../actions/console'
+import { setPartsToEdit, setCodeToUnsaved } from '../../actions/parts'
+import { uploadCode, toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
 
 import styles from './editor.css'
 

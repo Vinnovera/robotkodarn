@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
-import { toggleEditing } from '../../actions/editor'
 
 import {
+  toggleEditing,
   getWorkshopsByUserId,
   createWorkshop,
   copyWorkshop,

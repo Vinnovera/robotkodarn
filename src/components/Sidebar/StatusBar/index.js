@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import styles from './statusbar.css'
 
-const StatusBar = (props) => {  
+const StatusBar = (props) => {
   return (
     <section className={styles.status}>
       <div><span><i className={`${styles.connectionDot} ${props.chromeAppReachable ? styles.green : styles.red}`} /> Chrome-app</span></div>

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
-import { findWorkshopByPin, clearWorkshop, updatePartContent } from '../../actions/currentWorkshop'
-import { setCodeToUnsaved } from '../../actions/editor'
+import { updatePartContent, setCodeToUnsaved } from '../../actions/parts'
+import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
 
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'

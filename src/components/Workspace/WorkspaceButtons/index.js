@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
-import { compileCode, setConsoleOutput } from '../../../actions/editor'
+import { setConsoleOutput } from '../../../actions/console'
 import { pingChromeApp, pingForUSBConnection } from '../../../actions/statusBar'
-import { toggleCodeButtons, animateCompileButton, animateUploadButton } from '../../../actions/workspaceButtons'
+import { compileCode, toggleCodeButtons, animateCompileButton, animateUploadButton } from '../../../actions/workspaceButtons'
 
 import Button from './../../Button'
 import CogIcon from '../../Icons/CogIcon'
@@ -14,7 +14,7 @@ import styles from './workspacebuttons.css'
 
 export class WorkspaceButtons extends Component {
   componentWillMount() {
-    // this.ping(1000)
+    this.ping(1000)
   }
 
   ping(interval) {

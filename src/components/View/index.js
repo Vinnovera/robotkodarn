@@ -1,6 +1,5 @@
 import React from 'react'
-import ToolsButton from './../ToolsButton'
-import Menu from './../Menu'
+
 import styles from './view.css'
 
 const View = ({ children, background = 'beige' }) => {

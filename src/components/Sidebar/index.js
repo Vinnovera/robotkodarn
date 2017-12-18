@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
+
 import { toggleSidebar } from '../../actions/sidebar'
-import { setEditingType } from '../../actions/editor'
-import SidebarList from './../SidebarList'
+
 import PartList from './PartList'
 import LinkList from './LinkList'
 import StatusBar from './StatusBar'

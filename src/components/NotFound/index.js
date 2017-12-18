@@ -13,11 +13,11 @@ const NotFound = ({ isLoggedIn }) => {
           <h1 className={styles.headline}>Sidan du försöker nå finns inte</h1>
           <ul className={styles.linksuggestions}>
             <li>
-              <Link href='/login' className={styles.link}>Gå till en workshop</Link>
+              <Link href="/login" className={styles.link}>Gå till en workshop</Link>
             </li>
             { isLoggedIn ? (
               <li>
-                <Link href='/workshops' className={styles.link}>Gå till lektionsöversikten</Link>
+                <Link href="/workshops" className={styles.link}>Gå till lektionsöversikten</Link>
               </li>
             ) : '' }
           </ul>

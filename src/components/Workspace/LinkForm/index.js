@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 
 import FA from 'react-fontawesome'
 
-import { updateLink } from '../../../actions/currentWorkshop'
+import { updateLink } from '../../../actions/links'
 
 import styles from './linkform.css'
 
 import FadeIn from '../../FadeIn'
-import Button from '../../Button'
 
 class LinkForm extends Component {
   constructor(props) {
