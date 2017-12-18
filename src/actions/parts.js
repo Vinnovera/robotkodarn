@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { routeActions } from 'redux-simple-router'
 
 const UPDATE_PARTS = 'UPDATE_PARTS'
 const UPDATE_PART_TITLE = 'UPDATE_PART_TITLE'

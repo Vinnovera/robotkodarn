@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { routeActions } from 'redux-simple-router'
 
 const UPDATE_LINKS = 'UPDATE_LINKS'
 const ADD_LINK = 'ADD_LINK'
