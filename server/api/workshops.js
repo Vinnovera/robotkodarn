@@ -74,6 +74,27 @@ const addWorkshop = async (request, reply) => {
 }
 
 // -----------------------------------------------------------------------------
+// Update a workshop with {id} [PUT]
+// -----------------------------------------------------------------------------
+const updateWorkshop = async (request, reply) => {
+  try {
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const updatedWorkshop = Object.assign(workshop, request.payload)
+
+    const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
+
+    await validated.value.save()
+
+    return reply(validated.value).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Update a workshop parts with {id} [PUT]
 // -----------------------------------------------------------------------------
 const updateWorkshopParts = async (request, reply) => {
@@ -222,6 +243,14 @@ exports.register = (server, options, next) => {
       path: '/api/copyWorkshop/{id}',
       config: {
         handler: copyWorkshop,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'PUT',
+      path: '/api/workshop/{id}',
+      config: {
+        handler: updateWorkshop,
         auth: 'session'
       }
     },
