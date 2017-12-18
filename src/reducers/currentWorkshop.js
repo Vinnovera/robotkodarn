@@ -46,6 +46,46 @@ export default handleActions({
     })
   },
 
+  UPDATE_PART_TITLE: (state, action) => {
+    const parts = [...state.item.parts].map((part) => {
+      if (part._id === action.payload.partId) {
+        return {
+          ...part,
+          title: action.payload.title
+        }
+      }
+      return part
+    })
+
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts
+      }
+    })
+  },
+
+  UPDATE_PARTS: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: action.payload
+      }
+    })
+  },
+
+  UPDATE_LINKS: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: action.payload
+      }
+    })
+  },
+
   REMOVE_PART: (state, action) => {
     return ({
       ...state,
