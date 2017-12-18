@@ -3,15 +3,17 @@ import { routeActions } from 'redux-simple-router'
 
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP'
-const SET_MESSAGE = 'SET_MESSAGE'
 const UPDATE_TITLE = 'UPDATE_TITLE'
 
 const ADD_PART = 'ADD_PART'
 const UPDATE_PART = 'UPDATE_PART'
+const UPDATE_PARTS = 'UPDATE_PARTS'
 const REMOVE_PART = 'REMOVE_PART'
+const UPDATE_PART_TITLE = 'UPDATE_PART_TITLE'
 
 const ADD_LINK = 'ADD_LINK'
 const UPDATE_LINK = 'UPDATE_LINK'
+const UPDATE_LINKS = 'UPDATE_LINKS'
 const REMOVE_LINK = 'REMOVE_LINK'
 
 const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
@@ -39,11 +41,54 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
     .catch(error => console.log(error))
 }
 
+// -----------------------------------------------------------------------------
+// updateWorkshopParts, updates the workshop parts in current workshop
+// -----------------------------------------------------------------------------
+export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopId}/parts`, partIds, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: UPDATE_PARTS,
+        payload: data.parts
+      })
+    })
+    .catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// updateWorkshopLinks, updates the workshop links in current workshop
+// -----------------------------------------------------------------------------
+export const updateWorkshopLinks = (workshopId, linkIds) => (dispatch) => {
+  axios
+    .put(`/api/workshop/${workshopId}/links`, linkIds, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(({ data }) => {
+      dispatch({
+        type: UPDATE_LINKS,
+        payload: data.links
+      })
+    })
+    .catch(error => console.log(error))
+}
+
 
 // -----------------------------------------------------------------------------
 // updatePartTitle, edits a part title
 // -----------------------------------------------------------------------------
 export const updatePartTitle = (title, workshopId, partId) => (dispatch) => {
+  dispatch({
+    type: UPDATE_PART_TITLE,
+    payload: { title, partId }
+  })
+
   axios
     .put(`/api/workshop/${workshopId}/part/${partId}`, { title }, {
       headers: {
@@ -173,7 +218,7 @@ export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) 
           type: LINK_SAVED,
           payload: false
         })
-      }, 2000);
+      }, 2000)
     })
     .catch(error => console.log(error))
 }

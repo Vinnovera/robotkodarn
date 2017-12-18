@@ -95,6 +95,62 @@ const updateWorkshop = async (request, reply) => {
 }
 
 // -----------------------------------------------------------------------------
+// Update a workshop parts with {id} [PUT]
+// -----------------------------------------------------------------------------
+const updateWorkshopParts = async (request, reply) => {
+  try {
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const sortedParts = []
+
+    workshop.parts.forEach((part) => {
+      const index = request.payload.indexOf(part._id.toString())
+      sortedParts[index] = part
+    })
+
+    const updatedWorkshop = Object.assign(workshop, { parts: sortedParts })
+
+    const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
+
+    await validated.value.save()
+
+    return reply(validated.value).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Update a workshop links with {id} [PUT]
+// -----------------------------------------------------------------------------
+const updateWorkshopLinks = async (request, reply) => {
+  try {
+    const workshop = await Workshop.findOne({ _id: request.params.id })
+    const sortedLinks = []
+
+    workshop.links.forEach((link) => {
+      const index = request.payload.indexOf(link._id.toString())
+      sortedLinks[index] = link
+    })
+
+    const updatedWorkshop = Object.assign(workshop, { links: sortedLinks })
+
+    const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
+    if (validated.error) {
+      throw validated.error
+    }
+
+    await validated.value.save()
+
+    return reply(validated.value).code(200)
+  } catch (error) {
+    return reply({ error: error.message }).code(error.code || 500)
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Copy a workshop by existing workshop with ID [POST]
 // -----------------------------------------------------------------------------
 const copyWorkshop = async (request, reply) => {
@@ -195,6 +251,22 @@ exports.register = (server, options, next) => {
       path: '/api/workshop/{id}',
       config: {
         handler: updateWorkshop,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'PUT',
+      path: '/api/workshop/{id}/parts',
+      config: {
+        handler: updateWorkshopParts,
+        auth: 'session'
+      }
+    },
+    {
+      method: 'PUT',
+      path: '/api/workshop/{id}/links',
+      config: {
+        handler: updateWorkshopLinks,
         auth: 'session'
       }
     },

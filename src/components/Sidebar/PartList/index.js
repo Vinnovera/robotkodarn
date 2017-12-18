@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { updatePartTitle, addPart, removePart, setCurrentEditingType } from '../../../actions/currentWorkshop'
+import { arrayMove } from 'react-sortable-hoc'
+import { updatePartTitle, addPart, removePart, setCurrentEditingType, updateWorkshopParts } from '../../../actions/currentWorkshop'
 import { setActivePartIndex, setPartsToEdit } from '../../../actions/editor'
+
+import SortableList from './SortableList'
+
 import styles from './partlist.css'
 
 class PartList extends Component {
@@ -10,19 +14,46 @@ class PartList extends Component {
     super(props)
     this.state = {
       editingPartIndex: null,
-      inputText: null,
+      inputValue: null,
       deletePromptIndex: null
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.addPart = this.addPart.bind(this)
     this.confirmDeletion = this.confirmDeletion.bind(this)
     this.cancelDeletion = this.cancelDeletion.bind(this)
+    this.editPartTitle = this.editPartTitle.bind(this)
+    this.changePart = this.changePart.bind(this)
+    this.promptForDelete = this.promptForDelete.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     // Update partsToEdit in redux state
     this.props.dispatch(setPartsToEdit(nextProps.workshop.parts))
+  }
+
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    const copyOfWorkshop = { ...this.props.workshop }
+    copyOfWorkshop.parts = arrayMove(this.props.workshop.parts, oldIndex, newIndex)
+
+    const partIds = []
+
+    copyOfWorkshop.parts.forEach((part) => {
+      partIds.push(part._id)
+    })
+
+    this.props.dispatch(updateWorkshopParts(copyOfWorkshop._id, partIds))
+
+    if (this.props.currentEditingType === 'part') {
+      if (oldIndex === this.props.activePartIndex) {
+        this.changePart(newIndex)
+      } else if ((oldIndex < this.props.activePartIndex) && (newIndex >= this.props.activePartIndex)) {
+        this.changePart(this.props.activePartIndex - 1)
+      } else if ((oldIndex > this.props.activePartIndex) && (newIndex <= this.props.activePartIndex)) {
+        this.changePart(this.props.activePartIndex + 1)
+      }
+    }
   }
 
   changePart(index) {
@@ -33,14 +64,14 @@ class PartList extends Component {
   editPartTitle(index) {
     this.setState({
       editingPartIndex: index,
-      inputText: this.props.workshop.parts[index].title
+      inputValue: this.props.workshop.parts[index].title
     })
   }
 
   handleSubmit(e) {
     e.preventDefault()
     this.props.dispatch(updatePartTitle(
-      this.state.inputText,
+      this.state.inputValue,
       this.props.workshop._id,
       this.props.workshop.parts[this.state.editingPartIndex]._id
     ))
@@ -57,9 +88,9 @@ class PartList extends Component {
     }, this.props.workshop._id))
   }
 
-  promptForDelete(i) {
+  promptForDelete(index) {
     this.setState({
-      deletePromptIndex: i
+      deletePromptIndex: index
     })
   }
 
@@ -77,53 +108,50 @@ class PartList extends Component {
 
     this.cancelDeletion()
   }
+  handleChange(e) {
+    this.setState({ inputValue: e.target.value })
+  }
 
   renderPartListItems() {
     // If we are in editing mode
     if (this.props.editing) {
-      return this.props.workshop.parts.map((part, i) => {
-        return (this.state.editingPartIndex === i) ? (
-          <li className={styles.editing} key={part._id}>
-            <form onSubmit={this.handleSubmit}>
-              <button type="submit" className={styles.editPartButton}>
-                <FA className={styles.pencilIcon} name="pencil" />
-                <FA className={styles.diskIcon} name="save" />
-              </button>
-              <input autoFocus onChange={e => this.setState({ inputText: e.target.value })} type="text" value={this.state.inputText} />
-              <button className={`${styles.deletePartButton} ${styles.deletePartButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
-            </form>
-          </li>
-        ) : (
-          <li className={`${(this.props.activePartIndex === i && this.props.currentEditingType === 'part') ? styles.activePart : ''}`} key={part._id}>
-            {
-              (this.state.deletePromptIndex === i) && (
-                <div className={styles.deletePromptWrapper}>
-                  <p>
-                    Radera övning?
-                    <span>
-                      <button onClick={this.confirmDeletion}><FA className={styles.codeIcon} name="check-circle" /></button>
-                      <button onClick={this.cancelDeletion}><FA className={styles.codeIcon} name="times-circle" /></button>
-                    </span>
-                  </p>
-                </div>
-              )
-            }
-            <button className={styles.editPartButton} onClick={() => this.editPartTitle(i)}><FA className={styles.codeIcon} name="pencil" /></button>
-            <button className={styles.changePartButton} onClick={() => this.changePart(i)}>{part.title}</button>
-            <button className={styles.deletePartButton} onClick={() => this.promptForDelete(i)}><FA className={styles.codeIcon} name="trash-o" /></button>
-          </li>
-        )
-      })
+      return (<SortableList
+        onSortEnd={this.onSortEnd}
+        useDragHandle
+        lockAxis="y"
+        lockToContainerEdges
+        helperClass={styles.sorting}
+        parts={this.props.workshop.parts}
+        editing={this.props.editing}
+        editingPartIndex={this.state.editingPartIndex}
+        handleFormSubmit={this.handleSubmit}
+        handleInputChange={this.handleChange}
+        inputValue={this.state.inputValue}
+        activePartIndex={this.props.activePartIndex}
+        currentEditingType={this.props.currentEditingType}
+        deletePromptIndex={this.state.deletePromptIndex}
+        deleteHandleClickConfirm={this.confirmDeletion}
+        deleteHandleClickCancel={this.cancelDeletion}
+        editPartHandleClick={this.editPartTitle}
+        changePartHandleClick={this.changePart}
+        deletePartHandleClick={this.promptForDelete}
+      />)
     }
 
     // If we are not in editing mode
-    return this.props.workshop.parts.map((part, i) => {
-      return (
-        <li className={`${this.props.activePartIndex === i ? styles.activePart : ''}`} key={part._id}>
-          <button onClick={() => this.changePart(i)}><FA className={styles.codeIcon} name="file-code-o" /> {part.title}</button>
-        </li>
-      )
-    })
+    return (
+      <ul className={`${styles.partList} ${this.props.editing && styles.editingMode}`}>
+        {
+          this.props.workshop.parts.map((part, i) => {
+            return (
+              <li className={`${this.props.activePartIndex === i ? styles.activePart : ''}`} key={part._id}>
+                <button onClick={() => this.changePart(i)}><FA className={styles.codeIcon} name="file-code-o" /> {part.title}</button>
+              </li>
+            )
+          })
+        }
+      </ul>
+    )
   }
 
   renderAddPartButton() {
@@ -137,10 +165,7 @@ class PartList extends Component {
   render() {
     return (
       <div>
-        <ul className={`${styles.partList} ${this.props.editing && styles.editingMode}`}>
-          { this.renderPartListItems() }
-        </ul>
-
+        { this.renderPartListItems() }
         { this.renderAddPartButton() }
       </div>
     )
@@ -151,10 +176,7 @@ function mapStateToProps(state) {
   return {
     workshop: state.currentWorkshop.item,
     editing: state.editor.editing,
-    editingType: state.editor.editingType.type,
-    current: state.editor.editingType.id,
     activePartIndex: state.editor.activePartIndex,
-    sidebarOpen: state.sidebar.open,
     currentEditingType: state.currentWorkshop.currentEditingType
   }
 }

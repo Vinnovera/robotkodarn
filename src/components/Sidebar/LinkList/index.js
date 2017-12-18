@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
-import { updateLink, addLink, removeLink, setActiveLinkIndex, setCurrentEditingType } from '../../../actions/currentWorkshop'
+import { arrayMove } from 'react-sortable-hoc'
+import { updateLink, addLink, removeLink, setActiveLinkIndex, setCurrentEditingType, updateWorkshopLinks } from '../../../actions/currentWorkshop'
+
+import SortableList from './SortableList'
+
 import styles from './linklist.css'
 
 class LinkList extends Component {
@@ -10,7 +14,7 @@ class LinkList extends Component {
     super(props)
     this.state = {
       editingLinkIndex: null,
-      inputText: null,
+      inputValue: null,
       deletePromptIndex: null
     }
 
@@ -19,13 +23,39 @@ class LinkList extends Component {
     this.confirmDeletion = this.confirmDeletion.bind(this)
     this.cancelDeletion = this.cancelDeletion.bind(this)
     this.editLinkTitle = this.editLinkTitle.bind(this)
-    this.changeLinkIndex = this.changeLinkIndex.bind(this)
+    this.changeLink = this.changeLink.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.promptForDelete = this.promptForDelete.bind(this)
+    this.onSortEnd = this.onSortEnd.bind(this)
+  }
+
+  onSortEnd({ oldIndex, newIndex }) {
+    const copyOfWorkshop = { ...this.props.workshop }
+    copyOfWorkshop.links = arrayMove(this.props.workshop.links, oldIndex, newIndex)
+
+    const linkIds = []
+
+    copyOfWorkshop.links.forEach((link) => {
+      linkIds.push(link._id)
+    })
+
+    this.props.dispatch(updateWorkshopLinks(copyOfWorkshop._id, linkIds))
+
+    if (this.props.currentEditingType === 'link') {
+      if (oldIndex === this.props.activeLinkIndex) {
+        this.changeLink(newIndex)
+      } else if ((oldIndex < this.props.activeLinkIndex) && (newIndex >= this.props.activeLinkIndex)) {
+        this.changeLink(this.props.activeLinkIndex - 1)
+      } else if ((oldIndex > this.props.activeLinkIndex) && (newIndex <= this.props.activeLinkIndex)) {
+        this.changeLink(this.props.activeLinkIndex + 1)
+      }
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault()
 
-    const title = { title: this.state.inputText }
+    const title = { title: this.state.inputValue }
     const workshopId = this.props.workshop._id
     const linkId = this.props.workshop.links[this.state.editingLinkIndex]._id
 
@@ -35,6 +65,7 @@ class LinkList extends Component {
       editingLinkIndex: null
     })
   }
+
 
   addLink() {
     this.props.dispatch(addLink({
@@ -70,13 +101,17 @@ class LinkList extends Component {
   editLinkTitle(index) {
     this.setState({
       editingLinkIndex: index,
-      inputText: this.props.workshop.links[index].title
+      inputValue: this.props.workshop.links[index].title
     })
   }
 
-  changeLinkIndex(index) {
+  changeLink(index) {
     this.props.dispatch(setCurrentEditingType('link'))
     this.props.dispatch(setActiveLinkIndex(index))
+  }
+
+  handleChange(e) {
+    this.setState({ inputValue: e.target.value })
   }
 
   renderLinkListItems() {
@@ -90,7 +125,7 @@ class LinkList extends Component {
                 <FA className={styles.pencilIcon} name="pencil" />
                 <FA className={styles.diskIcon} name="save" />
               </button>
-              <input autoFocus onBlur={this.handleSubmit} onChange={e => this.setState({ inputText: e.target.value })} type="text" value={this.state.inputText} />
+              <input autoFocus onBlur={this.handleSubmit} onChange={this.handleChange} type="text" value={this.state.inputValue} />
               <button className={`${styles.deleteLinkButton} ${styles.deleteLinkButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
             </form>
           </li>
@@ -110,7 +145,7 @@ class LinkList extends Component {
               )
             }
             <button className={styles.editLinkButton} onClick={() => this.editLinkTitle(i)}><FA className={styles.linkIcon} name="pencil" /></button>
-            <button className={styles.changeLinkButton} onClick={() => this.changeLinkIndex(i)}>{link.title}</button>
+            <button className={styles.changeLinkButton} onClick={() => this.changeLink(i)}>{link.title}</button>
             <button className={styles.deleteLinkButton} onClick={() => this.promptForDelete(i)}><FA className={styles.linkIcon} name="trash-o" /></button>
           </li>
         )
@@ -130,6 +165,51 @@ class LinkList extends Component {
     })
   }
 
+  renderLinkListItems2() {
+    // If we are in editing mode
+    if (this.props.editing) {
+      return (<SortableList
+        onSortEnd={this.onSortEnd}
+        useDragHandle
+        lockAxis="y"
+        lockToContainerEdges
+        helperClass={styles.sorting}
+        links={this.props.workshop.links}
+        editing={this.props.editing}
+        editingLinkIndex={this.state.editingLinkIndex}
+        handleFormSubmit={this.handleSubmit}
+        handleInputChange={this.handleChange}
+        inputValue={this.state.inputValue}
+        activeLinkIndex={this.props.activeLinkIndex}
+        currentEditingType={this.props.currentEditingType}
+        deletePromptIndex={this.state.deletePromptIndex}
+        deleteHandleClickConfirm={this.confirmDeletion}
+        deleteHandleClickCancel={this.cancelDeletion}
+        editLinkHandleClick={this.editLinkTitle}
+        changeLinkHandleClick={this.changeLink}
+        deleteLinkHandleClick={this.promptForDelete}
+      />)
+    }
+
+    // If we are not in editing mode
+    return (
+      <ul className={`${styles.linkList} ${this.props.editing && styles.editingMode}`}>
+        {
+          this.props.workshop.links.map((link) => {
+            return (
+              <li key={link._id}>
+                <Link className={styles.listLink} to={link.content} target="_blank">
+                  <FA className={styles.linkIcon} name="external-link" />
+                  {link.title}
+                </Link>
+              </li>
+            )
+          })
+        }
+      </ul>
+    )
+  }
+
   renderAddLinkButton() {
     return this.props.editing ? (
       <div className={styles.addButtonWrapper}>
@@ -142,7 +222,7 @@ class LinkList extends Component {
     return (
       <div>
         <ul className={`${styles.linkList} ${this.props.editing && styles.editingMode}`}>
-          { this.renderLinkListItems() }
+          { this.renderLinkListItems2() }
         </ul>
 
         { this.renderAddLinkButton() }
@@ -157,7 +237,6 @@ function mapStateToProps(state) {
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
-    activePartIndex: state.editor.activePartIndex,
     activeLinkIndex: state.currentWorkshop.activeLinkIndex,
     sidebarOpen: state.sidebar.open,
     currentEditingType: state.currentWorkshop.currentEditingType
