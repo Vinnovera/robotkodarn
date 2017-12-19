@@ -1,6 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
 import Joi from 'joi'
 
+import { Part } from './part'
+
 const workshopSchema = Schema({
   title: {
     type: String,
@@ -16,7 +18,10 @@ const workshopSchema = Schema({
   },
   parts: {
     type: Array,
-    default: []
+    default: [new Part({
+      title: 'Övning 1',
+      content: ''
+    })]
   },
   links: {
     type: Array,
