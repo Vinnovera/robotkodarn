@@ -65,7 +65,7 @@ export const pingForUSBConnection = () => (dispatch) => {
       dispatch({
         type: SET_DEVICE_CONNECTED,
         payload: {
-          board: foundDevices[0],
+          board: foundDevices[0] || {},
           isSupported
         }
       })
