@@ -14,7 +14,7 @@ import styles from './workspacebuttons.css'
 
 export class WorkspaceButtons extends Component {
   componentWillMount() {
-    // this.ping(1000)
+    this.ping(1000)
   }
 
   ping(interval) {
@@ -32,6 +32,8 @@ export class WorkspaceButtons extends Component {
    * @param {boolean} upload true = code will be uploaded to Arduino
    */
   handleClick = (upload = false) => {
+    const board = this.props.connectedDevice.board;
+
     this.props.dispatch(setConsoleOutput({
       type: 'info',
       heading: 'Testar kod',
@@ -39,7 +41,7 @@ export class WorkspaceButtons extends Component {
     }))
 
     this.props.dispatch(
-      compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
+      compileCode(this.props.partsToEdit[this.props.activePartIndex].content, board, upload)
     )
 
     if (upload) {
@@ -109,7 +111,8 @@ function mapStateToProps(state) {
     animatedCompileButton: state.workspaceButtons.animatedCompileButton,
     animatedUploadButton: state.workspaceButtons.animatedUploadButton,
     editing: state.editor.editing,
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
+    connectedDevice: state.statusBar.connectedDevice
   }
 }
 

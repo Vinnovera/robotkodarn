@@ -44,10 +44,11 @@ export const toggleEditing = () => (dispatch) => {
 // -----------------------------------------------------------------------------
 // compileCode, sends code to compiler
 // -----------------------------------------------------------------------------
-export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
+export const compileCode = (codeToCompile, board = 'uno', willUpload) => (dispatch) => {
   const request = new XMLHttpRequest()
   request.open('POST', '/api/editor', true)
   request.setRequestHeader('Content-Type', 'application/json')
+  request.setRequestHeader('x-board', board)
 
   request.onload = () => {
     if (request.status === 200) {
@@ -88,7 +89,7 @@ export const compileCode = (codeToCompile, willUpload) => (dispatch) => {
  *
  * @param {string} compiledCode The code compiled through avrpizza
  */
-export const uploadCode = compiledCode => (dispatch) => {
+export const uploadCode = (compiledCode, board) => (dispatch) => {
   /* If error occurs during compilation,
    * exit early and inform user.
    */
@@ -109,7 +110,7 @@ export const uploadCode = compiledCode => (dispatch) => {
   // Payload to be sent to Chrome App
   const message = {
     type: 'flash',
-    board: 'uno', // Hardcoded 'uno' for testing purposes
+    board: board || 'uno',
     file: compiledCode
   }
 
