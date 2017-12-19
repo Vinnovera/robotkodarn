@@ -43,7 +43,7 @@ export class Editor extends Component {
         }
 
         this.props.dispatch(setConsoleOutput(msg))
-        this.props.dispatch(uploadCode(nextProps.compilerResponse.response))
+        this.props.dispatch(uploadCode(nextProps.compilerResponse.response, nextProps.connectedDevice.board))
 
       // If code is without error, print message to user.
       } else if (!nextProps.compilerResponse.response.error && !nextProps.willUpload) {
@@ -182,7 +182,8 @@ function mapStateToProps(state) {
     activePartIndex: state.editor.activePartIndex,
     partsToEdit: state.editor.partsToEdit,
     currentWorkshop: state.currentWorkshop.item,
-    editing: state.editor.editing
+    editing: state.editor.editing,
+    connectedDevice: state.statusBar.connectedDevice
   }
 }
 

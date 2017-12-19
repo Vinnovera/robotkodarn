@@ -11,11 +11,13 @@ export default handleActions({
   SET_DEVICE_CONNECTED: (state, action) => {
     return ({
       ...state,
-      deviceConnected: action.payload
+      deviceConnected: action.payload.isSupported,
+      connectedDevice: action.payload.board
     })
   }
 
 }, {
   chromeAppReachable: false,
-  deviceConnected: false
+  deviceConnected: false,
+  connectedDevice: {}
 })

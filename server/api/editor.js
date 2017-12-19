@@ -22,13 +22,15 @@ const compileCode = (request, reply) => {
       throw error
     }
 
+    const board = request.headers['x-board'] || 'uno'
+
     /*
      * Simple sketch with no
      * custom library dependencies
      */
     const pkg = {
       sketch: path,
-      board: 'uno', // Hardcoded during development
+      board: board,
       libraries: [
         `${thePath.resolve(__dirname)}/../arduino-libraries/Pushbutton`,
         `${thePath.resolve(__dirname)}/../arduino-libraries/QTRSensors`,

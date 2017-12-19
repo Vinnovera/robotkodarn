@@ -4,13 +4,13 @@ const SET_CHROME_PING = 'SET_CHROME_PING'
 const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'
 const supportedDevices = [
   // RedBoard
-  { vendorId: '0x403', productId: '0x6015' },
+  { vendorId: '0x403', productId: '0x6015', board: 'tinyduino' },
   // Uno Robot (bandhjul)
-  { vendorId: '0x2a03', productId: '0x43' },
+  { vendorId: '0x2a03', productId: '0x43', board: 'uno' },
   // DF Robot (två hjul)
-  { vendorId: '0x2341', productId: '0x8036' },
+  { vendorId: '0x2341', productId: '0x8036', board: 'leonardo' },
   // Kjell UNO
-  { vendorId: '0x2341', productId: '0x43' }
+  { vendorId: '0x2341', productId: '0x43', board: 'uno' }
 ]
 
 // -----------------------------------------------------------------------------
@@ -55,15 +55,19 @@ export const pingForUSBConnection = () => (dispatch) => {
     if (!response || response.error) {
       console.error('Ingen kontakt med Chrome App eller fel vid hämtning av lista')
     } else {
-      const isSupported = supportedDevices.filter((supportedDevice) => {
+      const foundDevices = supportedDevices.filter((supportedDevice) => {
         return response.usbPorts.find((usbPort) => {
           return supportedDevice.productId === usbPort.productId && supportedDevice.vendorId === usbPort.vendorId
         })
-      }).length > 0
+      })
+      const isSupported = foundDevices.length > 0
 
       dispatch({
         type: SET_DEVICE_CONNECTED,
-        payload: isSupported
+        payload: {
+          board: foundDevices[0] || {},
+          isSupported
+        }
       })
     }
   })
