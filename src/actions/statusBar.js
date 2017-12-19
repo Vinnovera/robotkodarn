@@ -4,9 +4,9 @@ const SET_CHROME_PING = 'SET_CHROME_PING'
 const SET_DEVICE_CONNECTED = 'SET_DEVICE_CONNECTED'
 const supportedDevices = [
   // RedBoard
-  { vendorId: '0x403', productId: '0x6015' },
+  { vendorId: '0x403', productId: '0x6015', board: 'tinyduino' },
   // Uno Robot (bandhjul)
-  { vendorId: '0x2a03', productId: '0x43' },
+  { vendorId: '0x2a03', productId: '0x43', board: 'uno' },
   // DF Robot (två hjul)
   { vendorId: '0x2341', productId: '0x8036', board: 'leonardo' },
   // Kjell UNO
