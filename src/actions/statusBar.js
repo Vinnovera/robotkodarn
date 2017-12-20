@@ -10,7 +10,9 @@ const supportedDevices = [
   // DF Robot (två hjul)
   { vendorId: '0x2341', productId: '0x8036', board: 'leonardo' },
   // Kjell UNO
-  { vendorId: '0x2341', productId: '0x43', board: 'uno' }
+  { vendorId: '0x2341', productId: '0x43', board: 'uno' },
+  // Pololu A-Star 32U4
+  { vendorId: '0x1ffb', productId: '0x2300', board: 'zumo' }
 ]
 
 // -----------------------------------------------------------------------------
@@ -52,6 +54,7 @@ export const pingForUSBConnection = () => (dispatch) => {
 
   // Give user feedback when recieving message from Chrome App
   port.onMessage.addListener((response) => {
+
     if (!response || response.error) {
       console.error('Ingen kontakt med Chrome App eller fel vid hämtning av lista')
     } else {

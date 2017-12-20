@@ -22,7 +22,9 @@ const compileCode = (request, reply) => {
       throw error
     }
 
-    const board = request.headers['x-board'] || 'uno'
+    let board = request.headers['x-board'] || 'uno'
+
+    if(board === 'zumo') board = 'leonardo'
 
     /*
      * Simple sketch with no
@@ -35,7 +37,8 @@ const compileCode = (request, reply) => {
         `${thePath.resolve(__dirname)}/../arduino-libraries/Pushbutton`,
         `${thePath.resolve(__dirname)}/../arduino-libraries/QTRSensors`,
         `${thePath.resolve(__dirname)}/../arduino-libraries/ZumoMotors`,
-        `${thePath.resolve(__dirname)}/../arduino-libraries/ZumoReflectanceSensorArray`
+        `${thePath.resolve(__dirname)}/../arduino-libraries/ZumoReflectanceSensorArray`,
+        `${thePath.resolve(__dirname)}/../arduino-libraries/Zumo32U4`
       ],
       service: {
         host: process.env.COMPILERSERVICE_HOST,
