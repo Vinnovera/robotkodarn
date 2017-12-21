@@ -54,11 +54,135 @@ export default handleActions({
       ...state,
       currentEditingType: action.payload
     })
+  },
+
+  UPDATE_PARTS: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: action.payload
+      }
+    })
+  },
+
+  ADD_PART: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: [...state.item.parts, action.payload]
+      }
+    })
+  },
+
+  UPDATE_PART: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: [...action.payload]
+      }
+    })
+  },
+
+  UPDATE_PART_TITLE: (state, action) => {
+    const parts = state.item.parts.map((part) => {
+      if (part._id === action.payload.partId) {
+        return {
+          ...part,
+          title: action.payload.title
+        }
+      }
+      return part
+    })
+
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts
+      }
+    })
+  },
+
+  REMOVE_PART: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: [...action.payload]
+      }
+    })
+  },
+
+  CODE_SAVED: (state, action) => {
+    return ({
+      ...state,
+      codeSaved: action.payload
+    })
+  },
+
+  UPDATE_LINKS: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: action.payload
+      }
+    })
+  },
+
+  ADD_LINK: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: [...state.item.links, action.payload]
+      }
+    })
+  },
+
+  UPDATE_LINK: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: [...action.payload]
+      }
+    })
+  },
+
+  REMOVE_LINK: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: [...action.payload]
+      }
+    })
+  },
+
+  SET_ACTIVE_LINK_INDEX: (state, action) => {
+    return ({
+      ...state,
+      activeLinkIndex: action.payload
+    })
+  },
+
+  LINK_SAVED: (state, action) => {
+    return ({
+      ...state,
+      linkSaved: action.payload
+    })
   }
 
 }, {
   userWorkshops: [],
   item: null,
   currentEditingType: 'part',
-  loginAttemptTimestamp: +new Date()
+  loginAttemptTimestamp: +new Date(),
+  codeSaved: false,
+  activeLinkIndex: 0,
+  linkSaved: false
 })

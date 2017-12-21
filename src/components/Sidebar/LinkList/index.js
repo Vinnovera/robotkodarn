@@ -239,7 +239,7 @@ function mapStateToProps(state) {
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
-    activeLinkIndex: state.links.activeLinkIndex,
+    activeLinkIndex: state.workshops.activeLinkIndex,
     sidebarOpen: state.sidebar.open,
     currentEditingType: state.workshops.currentEditingType
   }

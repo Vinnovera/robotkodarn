@@ -116,13 +116,13 @@ function mapStateToProps(state) {
     isSidebarOpen: state.sidebar.open,
     currentWorkshop: state.workshops.item,
     activePartIndex: state.editor.activePartIndex,
-    activeLinkIndex: state.links.activeLinkIndex,
+    activeLinkIndex: state.workshops.activeLinkIndex,
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
     currentEditingType: state.workshops.currentEditingType,
-    codeSaved: state.parts.codeSaved, // When code is saved (when button is pressed)
+    codeSaved: state.workshops.codeSaved, // When code is saved (when button is pressed)
     codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
   }
 }

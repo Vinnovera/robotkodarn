@@ -9,8 +9,6 @@ import user from './user'
 import workspaceButtons from './workspaceButtons'
 import statusBar from './statusBar'
 import serial from './serial'
-import links from './links'
-import parts from './parts'
 
 export default combineReducers({
   routeReducer,
@@ -22,7 +20,5 @@ export default combineReducers({
   user,
   workspaceButtons,
   statusBar,
-  serial,
-  links,
-  parts
+  serial
 })
