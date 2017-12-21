@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 
 import FA from 'react-fontawesome'
 
-import { updateLink } from '../../../actions/currentWorkshop'
+import { updateLink } from '../../../actions/links'
 
 import styles from './linkform.css'
 
 import FadeIn from '../../FadeIn'
-import Button from '../../Button'
 
 class LinkForm extends Component {
   constructor(props) {
@@ -87,9 +86,9 @@ class LinkForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    workshop: state.currentWorkshop.item,
-    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
-    linkSaved: state.currentWorkshop.linkSaved
+    workshop: state.workshops.item,
+    activeLinkIndex: state.workshops.activeLinkIndex,
+    linkSaved: state.workshops.linkSaved
   }
 }
 

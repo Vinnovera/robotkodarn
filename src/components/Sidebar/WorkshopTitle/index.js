@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import FA from 'react-fontawesome'
 
-import { updateWorkshopTitle } from '../../../actions/currentWorkshop'
+import { updateWorkshopTitle } from '../../../actions/workshops'
 
 import styles from './workshoptitle.css'
 
@@ -82,7 +82,7 @@ class WorkshopTitle extends Component {
 function mapStateToProps(state) {
   return {
     editing: state.editor.editing,
-    workshop: state.currentWorkshop.item
+    workshop: state.workshops.item
   }
 }
 

@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { arrayMove } from 'react-sortable-hoc'
-import { updatePartTitle, addPart, removePart, setCurrentEditingType, updateWorkshopParts } from '../../../actions/currentWorkshop'
-import { setActivePartIndex, setPartsToEdit } from '../../../actions/editor'
+
+import { setCurrentEditingType } from '../../../actions/workshops'
+import { updatePartTitle, addPart, removePart, updateWorkshopParts, setActivePartIndex, setPartsToEdit } from '../../../actions/parts'
 
 import SortableList from './SortableList'
 
@@ -174,10 +175,10 @@ class PartList extends Component {
 
 function mapStateToProps(state) {
   return {
-    workshop: state.currentWorkshop.item,
+    workshop: state.workshops.item,
     editing: state.editor.editing,
     activePartIndex: state.editor.activePartIndex,
-    currentEditingType: state.currentWorkshop.currentEditingType
+    currentEditingType: state.workshops.currentEditingType
   }
 }
 

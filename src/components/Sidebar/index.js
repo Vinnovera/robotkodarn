@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
+
 import { toggleSidebar } from '../../actions/sidebar'
-import { setEditingType } from '../../actions/editor'
-import SidebarList from './../SidebarList'
+
 import PartList from './PartList'
 import LinkList from './LinkList'
 import StatusBar from './StatusBar'
@@ -69,7 +69,7 @@ function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
     editing: state.editor.editing,
-    workshop: state.currentWorkshop.item,
+    workshop: state.workshops.item,
     chromeAppReachable: state.statusBar.chromeAppReachable,
     deviceConnected: state.statusBar.deviceConnected
   }

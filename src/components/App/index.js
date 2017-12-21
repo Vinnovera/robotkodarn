@@ -1,16 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
-export class App extends Component {
-  render() {
-    return (
-      <div>{ this.props.children }</div>
-    )
-  }
-}
-
-App.propTypes = {
-  children: PropTypes.object
-}
+const App = ({ ...props }) => <div>{ props.children }</div>
 
 export default connect()(App)

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { store } from '../index'
-import { IS_AUHTORIZED, signOut } from '../actions/authentication'
+import { IS_AUHTORIZED, signOut } from '../actions/auth'
 
 /**
  * Check if user is logged in. If route is restricted to certain user roles,

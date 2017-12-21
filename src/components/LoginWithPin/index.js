@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'redux-simple-router'
-import { findWorkshopByPin } from '../../actions/currentWorkshop'
+import { findWorkshopByPin } from '../../actions/workshops'
 import styles from './login.css'
 
 import Button from '../Button'
@@ -85,8 +85,8 @@ export class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentWorkshop: state.currentWorkshop.item,
-    loginAttemptTimestamp: state.currentWorkshop.loginAttemptTimestamp
+    currentWorkshop: state.workshops.item,
+    loginAttemptTimestamp: state.workshops.loginAttemptTimestamp
   }
 }
 

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
-import { findWorkshopByPin, clearWorkshop, updatePartContent } from '../../actions/currentWorkshop'
-import { setCodeToUnsaved } from '../../actions/editor'
+import { updatePartContent, setCodeToUnsaved } from '../../actions/parts'
+import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
 
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
@@ -114,15 +114,15 @@ export class Workspace extends Component {
 function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
-    currentWorkshop: state.currentWorkshop.item,
+    currentWorkshop: state.workshops.item,
     activePartIndex: state.editor.activePartIndex,
-    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
+    activeLinkIndex: state.workshops.activeLinkIndex,
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
-    currentEditingType: state.currentWorkshop.currentEditingType,
-    codeSaved: state.currentWorkshop.codeSaved, // When code is saved (when button is pressed)
+    currentEditingType: state.workshops.currentEditingType,
+    codeSaved: state.workshops.codeSaved, // When code is saved (when button is pressed)
     codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
   }
 }

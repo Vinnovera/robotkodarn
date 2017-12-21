@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import forge from 'node-forge'
-import { signIn } from '../../actions/authentication'
+import { signIn } from '../../actions/auth'
 
 import Button from '../Button'
 import FadeIn from '../FadeIn'

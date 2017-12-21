@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
-import { toggleEditing } from '../../actions/editor'
 
 import {
+  toggleEditing,
   getWorkshopsByUserId,
   createWorkshop,
   copyWorkshop,
@@ -102,7 +102,6 @@ class Workshops extends Component {
 function mapStateToProps(state) {
   return {
     userWorkshops: state.workshops.userWorkshops,
-    message: state.workshops.message,
     role: state.user.isLoggedIn,
     editing: state.editor.editing,
     isLoggedIn: state.user.isLoggedIn

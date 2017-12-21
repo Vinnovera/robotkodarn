@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import FA from 'react-fontawesome'
 
-import { updatePartTitle } from '../../../actions/currentWorkshop'
+import { updatePartTitle } from '../../../actions/parts'
 
 import styles from './parttitle.css'
 
@@ -88,7 +88,7 @@ class PartTitle extends Component {
 function mapStateToProps(state) {
   return {
     editing: state.editor.editing,
-    workshop: state.currentWorkshop.item,
+    workshop: state.workshops.item,
     activePartIndex: state.editor.activePartIndex
   }
 }

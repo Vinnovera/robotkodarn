@@ -14,8 +14,10 @@ import 'brace/theme/github'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import FA from 'react-fontawesome'
-import { changeEditorTab, uploadCode, setConsoleOutput, setPartsToEdit, setCodeToUnsaved } from '../../actions/editor'
-import { toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
+import { changeEditorTab } from '../../actions/editor'
+import { setConsoleOutput } from '../../actions/console'
+import { setPartsToEdit, setCodeToUnsaved } from '../../actions/parts'
+import { uploadCode, toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
 
 import styles from './editor.css'
 
@@ -181,9 +183,9 @@ function mapStateToProps(state) {
     willUpload: state.editor.willUpload,
     activePartIndex: state.editor.activePartIndex,
     partsToEdit: state.editor.partsToEdit,
-    currentWorkshop: state.currentWorkshop.item,
-    editing: state.editor.editing,
-    connectedDevice: state.statusBar.connectedDevice
+    editing: state.workshops.editing,
+    connectedDevice: state.statusBar.connectedDevice,
+    currentWorkshop: state.workshops.item
   }
 }
 

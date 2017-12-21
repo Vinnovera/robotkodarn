@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 import { Link } from 'react-router'
 import { arrayMove } from 'react-sortable-hoc'
-import { updateLink, addLink, removeLink, setActiveLinkIndex, setCurrentEditingType, updateWorkshopLinks } from '../../../actions/currentWorkshop'
+
+import { updateLink, addLink, removeLink, setActiveLinkIndex, updateWorkshopLinks } from '../../../actions/links'
+import { setCurrentEditingType } from '../../../actions/workshops'
 
 import SortableList from './SortableList'
 
@@ -233,13 +235,13 @@ class LinkList extends Component {
 
 function mapStateToProps(state) {
   return {
-    workshop: state.currentWorkshop.item,
+    workshop: state.workshops.item,
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
-    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
+    activeLinkIndex: state.workshops.activeLinkIndex,
     sidebarOpen: state.sidebar.open,
-    currentEditingType: state.currentWorkshop.currentEditingType
+    currentEditingType: state.workshops.currentEditingType
   }
 }
 
