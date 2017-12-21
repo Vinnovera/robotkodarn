@@ -12,7 +12,8 @@ const supportedDevices = [
   // Kjell UNO
   { vendorId: '0x2341', productId: '0x43', board: 'uno' },
   // Pololu A-Star 32U4
-  { vendorId: '0x1ffb', productId: '0x2300', board: 'zumo' }
+  { vendorId: '0x1ffb', productId: '0x2300', board: 'zumo' },
+  { vendorId: '0x1ffb', productId: '0x101', board: 'zumoBoot' }
 ]
 
 // -----------------------------------------------------------------------------
@@ -65,10 +66,16 @@ export const pingForUSBConnection = () => (dispatch) => {
       })
       const isSupported = foundDevices.length > 0
 
+      let currentDevice = {}
+
+      if(isSupported && foundDevices[0].name !== 'zumoBoot') {
+        currentDevice = foundDevices[0]
+      }
+
       dispatch({
         type: SET_DEVICE_CONNECTED,
         payload: {
-          board: foundDevices[0] || {},
+          board: currentDevice,
           isSupported
         }
       })
