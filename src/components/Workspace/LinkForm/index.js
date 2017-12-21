@@ -86,9 +86,9 @@ class LinkForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    workshop: state.currentWorkshop.item,
-    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
-    linkSaved: state.currentWorkshop.linkSaved
+    workshop: state.workshops.item,
+    activeLinkIndex: state.links.activeLinkIndex,
+    linkSaved: state.links.linkSaved
   }
 }
 

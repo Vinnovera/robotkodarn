@@ -102,7 +102,6 @@ class Workshops extends Component {
 function mapStateToProps(state) {
   return {
     userWorkshops: state.workshops.userWorkshops,
-    message: state.workshops.message,
     role: state.user.isLoggedIn,
     editing: state.editor.editing,
     isLoggedIn: state.user.isLoggedIn

@@ -82,7 +82,7 @@ class WorkshopTitle extends Component {
 function mapStateToProps(state) {
   return {
     editing: state.editor.editing,
-    workshop: state.currentWorkshop.item
+    workshop: state.workshops.item
   }
 }
 

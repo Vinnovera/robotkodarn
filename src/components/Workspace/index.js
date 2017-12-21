@@ -114,15 +114,15 @@ export class Workspace extends Component {
 function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
-    currentWorkshop: state.currentWorkshop.item,
+    currentWorkshop: state.workshops.item,
     activePartIndex: state.editor.activePartIndex,
-    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
+    activeLinkIndex: state.links.activeLinkIndex,
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     partsToEdit: state.editor.partsToEdit,
     isLoggedIn: state.user.isLoggedIn,
-    currentEditingType: state.currentWorkshop.currentEditingType,
-    codeSaved: state.currentWorkshop.codeSaved, // When code is saved (when button is pressed)
+    currentEditingType: state.workshops.currentEditingType,
+    codeSaved: state.parts.codeSaved, // When code is saved (when button is pressed)
     codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
   }
 }

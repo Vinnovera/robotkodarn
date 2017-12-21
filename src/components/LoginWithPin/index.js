@@ -85,8 +85,8 @@ export class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentWorkshop: state.currentWorkshop.item,
-    loginAttemptTimestamp: state.currentWorkshop.loginAttemptTimestamp
+    currentWorkshop: state.workshops.item,
+    loginAttemptTimestamp: state.workshops.loginAttemptTimestamp
   }
 }
 

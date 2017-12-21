@@ -5,11 +5,12 @@ const SET_WORKSHOPS = 'SET_WORKSHOPS'
 const ADD_WORKSHOP = 'ADD_WORKSHOP'
 const REMOVE_WORKSHOP = 'REMOVE_WORKSHOP'
 const SET_MESSAGE = 'SET_MESSAGE'
-const UPDATE_TITLE = 'UPDATE_TITLE'
+const UPDATE_WORKSHOP_TITLE = 'UPDATE_WORKSHOP_TITLE'
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 const SET_CURRENT_EDITING_TYPE = 'SET_CURRENT_EDITING_TYPE'
 const TOGGLE_EDITING = 'TOGGLE_EDITING'
 const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
+const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP'
 
 // -----------------------------------------------------------------------------
 // updateWorkshopTitle, updates the workshop title in current workshop
@@ -23,7 +24,7 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_TITLE,
+        type: UPDATE_WORKSHOP_TITLE,
         payload: data.title
       })
     })

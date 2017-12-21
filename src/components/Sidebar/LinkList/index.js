@@ -235,13 +235,13 @@ class LinkList extends Component {
 
 function mapStateToProps(state) {
   return {
-    workshop: state.currentWorkshop.item,
+    workshop: state.workshops.item,
     editing: state.editor.editing,
     editingType: state.editor.editingType.type,
     current: state.editor.editingType.id,
-    activeLinkIndex: state.currentWorkshop.activeLinkIndex,
+    activeLinkIndex: state.links.activeLinkIndex,
     sidebarOpen: state.sidebar.open,
-    currentEditingType: state.currentWorkshop.currentEditingType
+    currentEditingType: state.workshops.currentEditingType
   }
 }
 

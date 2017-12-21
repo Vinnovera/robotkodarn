@@ -1,6 +1,21 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
+  SET_WORKSHOP_BY_PIN: (state, action) => {
+    return ({
+      ...state,
+      item: action.payload,
+      loginAttemptTimestamp: +new Date()
+    })
+  },
+
+  UPDATE_TIMESTAMP: (state, action) => {
+    return ({
+      ...state,
+      loginAttemptTimestamp: action.payload
+    })
+  },
+
   SET_WORKSHOPS: (state, action) => {
     return ({
       ...state,
@@ -24,16 +39,26 @@ export default handleActions({
     })
   },
 
-  SET_MESSAGE: (state, action) => {
+  UPDATE_WORKSHOP_TITLE: (state, action) => {
     return ({
       ...state,
-      message: action.payload,
-      time: +new Date()
+      item: {
+        ...state.item,
+        title: action.payload
+      }
+    })
+  },
+
+  SET_CURRENT_EDITING_TYPE: (state, action) => {
+    return ({
+      ...state,
+      currentEditingType: action.payload
     })
   }
 
 }, {
   userWorkshops: [],
-  message: null,
-  time: +new Date()
+  item: null,
+  currentEditingType: 'part',
+  loginAttemptTimestamp: +new Date()
 })

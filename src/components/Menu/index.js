@@ -69,7 +69,7 @@ function mapStateToProps(state) {
     role: state.user.role,
     name: state.user.name,
     menu: state.menu.open,
-    currentWorkshop: state.currentWorkshop.item,
+    currentWorkshop: state.workshops.item,
     editing: state.editor.editing,
     path: state.routeReducer.location.pathname,
     activePartIndex: state.editor.activePartIndex

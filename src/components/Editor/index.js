@@ -183,7 +183,7 @@ function mapStateToProps(state) {
     willUpload: state.editor.willUpload,
     activePartIndex: state.editor.activePartIndex,
     partsToEdit: state.editor.partsToEdit,
-    currentWorkshop: state.currentWorkshop.item,
+    currentWorkshop: state.workshops.item,
     editing: state.editor.editing
   }
 }

@@ -175,10 +175,10 @@ class PartList extends Component {
 
 function mapStateToProps(state) {
   return {
-    workshop: state.currentWorkshop.item,
+    workshop: state.workshops.item,
     editing: state.editor.editing,
     activePartIndex: state.editor.activePartIndex,
-    currentEditingType: state.currentWorkshop.currentEditingType
+    currentEditingType: state.workshops.currentEditingType
   }
 }
 

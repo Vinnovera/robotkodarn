@@ -69,7 +69,7 @@ function mapStateToProps(state) {
   return {
     isSidebarOpen: state.sidebar.open,
     editing: state.editor.editing,
-    workshop: state.currentWorkshop.item,
+    workshop: state.workshops.item,
     chromeAppReachable: state.statusBar.chromeAppReachable,
     deviceConnected: state.statusBar.deviceConnected
   }
