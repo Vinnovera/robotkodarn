@@ -55,7 +55,6 @@ export const pingForUSBConnection = () => (dispatch) => {
 
   // Give user feedback when recieving message from Chrome App
   port.onMessage.addListener((response) => {
-
     if (!response || response.error) {
       console.error('Ingen kontakt med Chrome App eller fel vid hämtning av lista')
     } else {
@@ -68,7 +67,7 @@ export const pingForUSBConnection = () => (dispatch) => {
 
       let currentDevice = {}
 
-      if(isSupported && foundDevices[0].name !== 'zumoBoot') {
+      if (isSupported && foundDevices[0].name !== 'zumoBoot') {
         currentDevice = foundDevices[0]
       }
 
