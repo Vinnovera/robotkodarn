@@ -24,7 +24,7 @@ const compileCode = (request, reply) => {
 
     let board = request.headers['x-board'] || 'uno'
 
-    if(board === 'zumo') board = 'leonardo'
+    if (board === 'zumo') board = 'leonardo'
 
     /*
      * Simple sketch with no

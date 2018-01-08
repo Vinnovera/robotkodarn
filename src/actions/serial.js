@@ -7,8 +7,8 @@ export const serialListen = (board = 'uno', baudrate = 57600) => (dispatch) => {
 
   const message = {
     type: 'serial',
-    board,
-    baudrate
+    board: board,
+    baudrate: baudrate
   }
 
   port.onMessage.addListener((response) => {

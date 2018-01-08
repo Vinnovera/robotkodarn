@@ -32,7 +32,7 @@ export class WorkspaceButtons extends Component {
    * @param {boolean} upload true = code will be uploaded to Arduino
    */
   handleClick = (upload = false) => {
-    const board = this.props.connectedDevice.board;
+    const board = this.props.connectedDevice.board
 
     this.props.dispatch(setConsoleOutput({
       type: 'info',

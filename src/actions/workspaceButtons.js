@@ -57,7 +57,7 @@ export const compileCode = (codeToCompile, board = 'uno', willUpload) => (dispat
             response: request.response,
             timestamp: +new Date()
           },
-          willUpload
+          willUpload: willUpload
         }
       })
     } else if (request.status === 400) {

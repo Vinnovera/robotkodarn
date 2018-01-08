@@ -26,7 +26,12 @@ module.exports = {
     "arrow-body-style": "off",
     "consistent-return": "off",
     "class-methods-use-this": "off", // Skip forcing static until further investigation
-    "func-names": "off" // Since we are using unnamed functions in webpack config
+    "func-names": "off", // Since we are using unnamed functions in webpack config
+    "object-shorthand": [
+      "error",
+      "consistent"
+    ],
+    "jsx-a11y/no-autofocus": "off"
   },
   "globals": {
     "chrome": false
