@@ -39,7 +39,17 @@ export default handleActions({
     })
   },
 
-  UPDATE_WORKSHOP_TITLE: (state, action) => {
+  UPDATE_WORKSHOP_TITLE_START: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        title: action.payload
+      }
+    })
+  },
+
+  UPDATE_WORKSHOP_TITLE_DONE: (state, action) => {
     return ({
       ...state,
       item: {
