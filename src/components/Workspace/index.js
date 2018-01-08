@@ -61,20 +61,27 @@ export class Workspace extends Component {
           <FadeIn>
             { (this.props.currentEditingType === 'link') ?
               <main className={this.getMainPaneClassName()}>
-                <LinkForm />
+                { this.props.currentWorkshop.links.length > 0 ?
+                  <LinkForm />
+                  : <h3>Det finns inga länkar!</h3>
+                }
               </main>
               : (
                 <main className={this.getMainPaneClassName()}>
-                  <PartTitle />
-                  <WorkspaceButtons />
-                  <Editor />
-                  <div className={styles.saveCodeButtonContainer}>
-                    <button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
-                      <div><span><FA name="check" /> Sparat</span></div>
-                      <FA name="save" /> Spara kod
-                    </button>
-                  </div>
-                  <Console />
+                  { this.props.currentWorkshop.parts.length > 0 ? (
+                    <div style={{ height: '100%' }}>
+                      <PartTitle />
+                      <WorkspaceButtons />
+                      <Editor />
+                      <div className={styles.saveCodeButtonContainer}>
+                        <button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
+                          <div><span><FA name="check" /> Sparat</span></div>
+                          <FA name="save" /> Spara kod
+                        </button>
+                      </div>
+                      <Console />
+                    </div>) : <h3>Det finns inga lektioner!</h3>
+                  }
                 </main>
               )
             }
