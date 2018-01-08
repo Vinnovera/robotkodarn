@@ -1,5 +1,7 @@
 import React from 'react'
 
+import FA from 'react-fontawesome'
+
 import { SortableContainer } from 'react-sortable-hoc'
 
 import SortableItem from '../SortableItem'
@@ -27,8 +29,10 @@ const SortableList = SortableContainer(({ ...props }) => {
           editLinkHandleClick={() => props.editLinkHandleClick(index)}
           changeLinkHandleClick={() => props.changeLinkHandleClick(index)}
           deleteLinkHandleClick={() => props.deleteLinkHandleClick(index)}
+          isAddingLink={props.isAddingLink}
         />
       ))}
+      { props.isAddingLink && <li className={styles.cogLoader}><FA name="cog" /></li> }
     </ul>
   )
 })

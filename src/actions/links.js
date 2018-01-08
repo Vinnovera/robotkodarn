@@ -1,16 +1,25 @@
 import axios from 'axios'
 
-const UPDATE_LINKS = 'UPDATE_LINKS'
-const ADD_LINK = 'ADD_LINK'
-const UPDATE_LINK = 'UPDATE_LINK'
+const UPDATE_LINKS_START = 'UPDATE_LINKS_START'
+const UPDATE_LINKS_DONE = 'UPDATE_LINKS_DONE'
+const ADD_LINK_START = 'ADD_LINK_START'
+const ADD_LINK_DONE = 'ADD_LINK_DONE'
+const UPDATE_LINK_DONE = 'UPDATE_LINK_DONE'
+const UPDATE_LINK_START = 'UPDATE_LINK_START'
 const LINK_SAVED = 'LINK_SAVED'
-const REMOVE_LINK = 'REMOVE_LINK'
+const REMOVE_LINK_START = 'REMOVE_LINK_START'
+const REMOVE_LINK_DONE = 'REMOVE_LINK_DONE'
 const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
 
 // -----------------------------------------------------------------------------
 // updateWorkshopLinks, updates the workshop links in current workshop
 // -----------------------------------------------------------------------------
-export const updateWorkshopLinks = (workshopId, linkIds) => (dispatch) => {
+export const updateWorkshopLinks = (updatedLinks, workshopId, linkIds) => (dispatch) => {
+  dispatch({
+    type: UPDATE_LINKS_START,
+    payload: updatedLinks
+  })
+
   axios
     .put(`/api/workshop/${workshopId}/links`, linkIds, {
       headers: {
@@ -19,7 +28,7 @@ export const updateWorkshopLinks = (workshopId, linkIds) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_LINKS,
+        type: UPDATE_LINKS_DONE,
         payload: data.links
       })
     })
@@ -30,6 +39,10 @@ export const updateWorkshopLinks = (workshopId, linkIds) => (dispatch) => {
 // addLink, creates link and add it to workshop in database
 // -----------------------------------------------------------------------------
 export const addLink = (link, workshopId) => (dispatch) => {
+  dispatch({
+    type: ADD_LINK_START
+  })
+
   axios
     .post(`/api/workshop/${workshopId}/link`, link, {
       headers: {
@@ -38,7 +51,7 @@ export const addLink = (link, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_LINK,
+        type: ADD_LINK_DONE,
         payload: data
       })
     })
@@ -48,16 +61,24 @@ export const addLink = (link, workshopId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updateLink, edits a specific link in a workshop
 // -----------------------------------------------------------------------------
-export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) => {
+export const updateLink = (linkObject, workshopID, linkId) => (dispatch) => {
+  dispatch({
+    type: UPDATE_LINK_START,
+    payload: {
+      title: linkObject.title,
+      linkId: linkId
+    }
+  })
+
   axios
-    .put(`/api/workshop/${workshopID}/link/${linkId}`, updatedLinkObject, {
+    .put(`/api/workshop/${workshopID}/link/${linkId}`, { title: linkObject.title }, {
       headers: {
         'content-type': 'application/json'
       }
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_LINK,
+        type: UPDATE_LINK_DONE,
         payload: data
       })
 
@@ -79,7 +100,12 @@ export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) 
 // -----------------------------------------------------------------------------
 // removeLink, removes link from database
 // -----------------------------------------------------------------------------
-export const removeLink = (linkId, workshopId) => (dispatch) => {
+export const removeLink = (linksAfterDeletion, linkId, workshopId) => (dispatch) => {
+  dispatch({
+    type: REMOVE_LINK_START,
+    payload: linksAfterDeletion
+  })
+
   axios
     .delete(`/api/workshop/${workshopId}/link/${linkId}`, {
       headers: {
@@ -88,7 +114,7 @@ export const removeLink = (linkId, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: REMOVE_LINK,
+        type: REMOVE_LINK_DONE,
         payload: data
       })
     })

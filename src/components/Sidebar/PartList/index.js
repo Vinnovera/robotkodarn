@@ -44,7 +44,7 @@ class PartList extends Component {
       partIds.push(part._id)
     })
 
-    this.props.dispatch(updateWorkshopParts(copyOfWorkshop._id, partIds))
+    this.props.dispatch(updateWorkshopParts(copyOfWorkshop.parts, copyOfWorkshop._id, partIds))
 
     if (this.props.currentEditingType === 'part') {
       if (oldIndex === this.props.activePartIndex) {
@@ -102,10 +102,16 @@ class PartList extends Component {
   }
 
   confirmDeletion() {
-    this.props.dispatch(setActivePartIndex(0))
+    // Move to the fist part if you are deleting the one you're currently on
+    if (this.state.deletePromptIndex === this.props.activePartIndex) {
+      this.props.dispatch(setActivePartIndex(0))
+    }
 
     const partId = this.props.workshop.parts[this.state.deletePromptIndex]._id
-    this.props.dispatch(removePart(partId, this.props.workshop._id))
+    const partsAfterDeletion = this.props.workshop.parts.filter((part) => {
+      return part._id !== partId
+    })
+    this.props.dispatch(removePart(partsAfterDeletion, partId, this.props.workshop._id))
 
     this.cancelDeletion()
   }
@@ -136,6 +142,7 @@ class PartList extends Component {
         editPartHandleClick={this.editPartTitle}
         changePartHandleClick={this.changePart}
         deletePartHandleClick={this.promptForDelete}
+        isAddingPart={this.props.isAddingPart}
       />)
     }
 
@@ -178,7 +185,8 @@ function mapStateToProps(state) {
     workshop: state.workshops.item,
     editing: state.editor.editing,
     activePartIndex: state.editor.activePartIndex,
-    currentEditingType: state.workshops.currentEditingType
+    currentEditingType: state.workshops.currentEditingType,
+    isAddingPart: state.workshops.isAddingPart
   }
 }
 

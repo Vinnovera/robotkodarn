@@ -1,11 +1,15 @@
 import axios from 'axios'
 
-const UPDATE_PARTS = 'UPDATE_PARTS'
-const UPDATE_PART_TITLE = 'UPDATE_PART_TITLE'
+const UPDATE_PARTS_START = 'UPDATE_PARTS_START'
+const UPDATE_PARTS_DONE = 'UPDATE_PARTS_DONE'
 const UPDATE_PART = 'UPDATE_PART'
-const ADD_PART = 'ADD_PART'
+const ADD_PART_START = 'ADD_PART_START'
+const ADD_PART_DONE = 'ADD_PART_DONE'
+const UPDATE_PART_TITLE_START = 'UPDATE_PART_TITLE_START'
+const UPDATE_PART_TITLE_DONE = 'UPDATE_PART_TITLE_DONE'
 const CODE_SAVED = 'CODE_SAVED'
-const REMOVE_PART = 'REMOVE_PART'
+const REMOVE_PART_START = 'REMOVE_PART_START'
+const REMOVE_PART_DONE = 'REMOVE_PART_DONE'
 const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
 const SET_ACTIVE_PART_INDEX = 'SET_ACTIVE_PART_INDEX'
 const SET_CODE_TO_UNSAVED = 'SET_CODE_TO_UNSAVED'
@@ -13,7 +17,12 @@ const SET_CODE_TO_UNSAVED = 'SET_CODE_TO_UNSAVED'
 // -----------------------------------------------------------------------------
 // updateWorkshopParts, updates the workshop parts in current workshop
 // -----------------------------------------------------------------------------
-export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
+export const updateWorkshopParts = (updatedParts, workshopId, partIds) => (dispatch) => {
+  dispatch({
+    type: UPDATE_PARTS_START,
+    payload: updatedParts
+  })
+
   axios
     .put(`/api/workshop/${workshopId}/parts`, partIds, {
       headers: {
@@ -22,7 +31,7 @@ export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_PARTS,
+        type: UPDATE_PARTS_DONE,
         payload: data.parts
       })
     })
@@ -32,21 +41,21 @@ export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updatePartTitle, edits a part title
 // -----------------------------------------------------------------------------
-export const updatePartTitle = (title, workshopId, partId) => (dispatch) => {
+export const updatePartTitle = (partTitle, workshopId, partId) => (dispatch) => {
   dispatch({
-    type: UPDATE_PART_TITLE,
-    payload: { title, partId }
+    type: UPDATE_PART_TITLE_START,
+    payload: { partTitle, partId }
   })
 
   axios
-    .put(`/api/workshop/${workshopId}/part/${partId}`, { title }, {
+    .put(`/api/workshop/${workshopId}/part/${partId}`, { title: partTitle }, {
       headers: {
         'content-type': 'application/json'
       }
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_PART,
+        type: UPDATE_PART_TITLE_DONE,
         payload: data
       })
     })
@@ -57,6 +66,10 @@ export const updatePartTitle = (title, workshopId, partId) => (dispatch) => {
 // addPart, create part and adds it to workshop in database
 // -----------------------------------------------------------------------------
 export const addPart = (part, workshopId) => (dispatch) => {
+  dispatch({
+    type: ADD_PART_START
+  })
+
   axios
     .post(`/api/workshop/${workshopId}/part`, part, {
       headers: {
@@ -65,7 +78,7 @@ export const addPart = (part, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_PART,
+        type: ADD_PART_DONE,
         payload: data
       })
     })
@@ -107,7 +120,12 @@ export const updatePartContent = (content, workshopId, partId) => (dispatch) => 
 // -----------------------------------------------------------------------------
 // removePart, removes part from database
 // -----------------------------------------------------------------------------
-export const removePart = (partId, workshopId) => (dispatch) => {
+export const removePart = (partsAfterDeletion, partId, workshopId) => (dispatch) => {
+  dispatch({
+    type: REMOVE_PART_START,
+    payload: partsAfterDeletion
+  })
+
   axios
     .delete(`/api/workshop/${workshopId}/part/${partId}`, {
       headers: {
@@ -116,7 +134,7 @@ export const removePart = (partId, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: REMOVE_PART,
+        type: REMOVE_PART_DONE,
         payload: data
       })
     })

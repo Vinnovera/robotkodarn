@@ -211,6 +211,16 @@
   }
 }
 
+@keyframes :local(spin) {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 
 :local .sortHandler {
   position: absolute;
@@ -243,3 +253,15 @@
   font-size: 1rem;
   border: none;
 }
+
+:local .cogLoader {
+  text-align: center;
+	font-size: 1.4rem;
+	padding: 0 !important;
+	opacity: 1;
+  color: #36303f;
+}
+  :local .cogLoader span {
+    transform-origin: center;
+    animation: spin 2s linear infinite;
+  }
