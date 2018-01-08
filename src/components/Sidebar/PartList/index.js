@@ -102,10 +102,16 @@ class PartList extends Component {
   }
 
   confirmDeletion() {
-    this.props.dispatch(setActivePartIndex(0))
+    // Move to the fist part if you are deleting the one you're currently on
+    if (this.state.deletePromptIndex === this.props.activePartIndex) {
+      this.props.dispatch(setActivePartIndex(0))
+    }
 
     const partId = this.props.workshop.parts[this.state.deletePromptIndex]._id
-    this.props.dispatch(removePart(partId, this.props.workshop._id))
+    const partsAfterDeletion = this.props.workshop.parts.filter((part) => {
+      return part._id !== partId
+    })
+    this.props.dispatch(removePart(partsAfterDeletion, partId, this.props.workshop._id))
 
     this.cancelDeletion()
   }

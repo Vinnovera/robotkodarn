@@ -8,7 +8,8 @@ const ADD_PART_DONE = 'ADD_PART_DONE'
 const UPDATE_PART_TITLE_START = 'UPDATE_PART_TITLE_START'
 const UPDATE_PART_TITLE_DONE = 'UPDATE_PART_TITLE_DONE'
 const CODE_SAVED = 'CODE_SAVED'
-const REMOVE_PART = 'REMOVE_PART'
+const REMOVE_PART_START = 'REMOVE_PART_START'
+const REMOVE_PART_DONE = 'REMOVE_PART_DONE'
 const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
 const SET_ACTIVE_PART_INDEX = 'SET_ACTIVE_PART_INDEX'
 const SET_CODE_TO_UNSAVED = 'SET_CODE_TO_UNSAVED'
@@ -119,7 +120,12 @@ export const updatePartContent = (content, workshopId, partId) => (dispatch) => 
 // -----------------------------------------------------------------------------
 // removePart, removes part from database
 // -----------------------------------------------------------------------------
-export const removePart = (partId, workshopId) => (dispatch) => {
+export const removePart = (partsAfterDeletion, partId, workshopId) => (dispatch) => {
+  dispatch({
+    type: REMOVE_PART_START,
+    payload: partsAfterDeletion
+  })
+
   axios
     .delete(`/api/workshop/${workshopId}/part/${partId}`, {
       headers: {
@@ -128,7 +134,7 @@ export const removePart = (partId, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: REMOVE_PART,
+        type: REMOVE_PART_DONE,
         payload: data
       })
     })
