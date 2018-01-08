@@ -1,9 +1,11 @@
 import axios from 'axios'
 
-const UPDATE_PARTS = 'UPDATE_PARTS'
-const UPDATE_PART_TITLE = 'UPDATE_PART_TITLE'
+const UPDATE_PARTS_START = 'UPDATE_PARTS_START'
+const UPDATE_PARTS_DONE = 'UPDATE_PARTS_DONE'
 const UPDATE_PART = 'UPDATE_PART'
 const ADD_PART = 'ADD_PART'
+const UPDATE_PART_TITLE_START = 'UPDATE_PART_TITLE_START'
+const UPDATE_PART_TITLE_DONE = 'UPDATE_PART_TITLE_DONE'
 const CODE_SAVED = 'CODE_SAVED'
 const REMOVE_PART = 'REMOVE_PART'
 const SET_PARTS_TO_EDIT = 'SET_PARTS_TO_EDIT'
@@ -13,7 +15,12 @@ const SET_CODE_TO_UNSAVED = 'SET_CODE_TO_UNSAVED'
 // -----------------------------------------------------------------------------
 // updateWorkshopParts, updates the workshop parts in current workshop
 // -----------------------------------------------------------------------------
-export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
+export const updateWorkshopParts = (updatedParts, workshopId, partIds) => (dispatch) => {
+  dispatch({
+    type: UPDATE_PARTS_START,
+    payload: updatedParts
+  })
+
   axios
     .put(`/api/workshop/${workshopId}/parts`, partIds, {
       headers: {
@@ -22,7 +29,7 @@ export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_PARTS,
+        type: UPDATE_PARTS_DONE,
         payload: data.parts
       })
     })
@@ -32,21 +39,21 @@ export const updateWorkshopParts = (workshopId, partIds) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updatePartTitle, edits a part title
 // -----------------------------------------------------------------------------
-export const updatePartTitle = (title, workshopId, partId) => (dispatch) => {
+export const updatePartTitle = (partTitle, workshopId, partId) => (dispatch) => {
   dispatch({
-    type: UPDATE_PART_TITLE,
-    payload: { title, partId }
+    type: UPDATE_PART_TITLE_START,
+    payload: { partTitle, partId }
   })
 
   axios
-    .put(`/api/workshop/${workshopId}/part/${partId}`, { title }, {
+    .put(`/api/workshop/${workshopId}/part/${partId}`, { title: partTitle }, {
       headers: {
         'content-type': 'application/json'
       }
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_PART,
+        type: UPDATE_PART_TITLE_DONE,
         payload: data
       })
     })

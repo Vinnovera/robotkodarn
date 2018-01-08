@@ -66,7 +66,17 @@ export default handleActions({
     })
   },
 
-  UPDATE_PARTS: (state, action) => {
+  UPDATE_PARTS_START: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: action.payload
+      }
+    })
+  },
+
+  UPDATE_PARTS_DONE: (state, action) => {
     return ({
       ...state,
       item: {
@@ -96,12 +106,12 @@ export default handleActions({
     })
   },
 
-  UPDATE_PART_TITLE: (state, action) => {
+  UPDATE_PART_TITLE_START: (state, action) => {
     const parts = state.item.parts.map((part) => {
       if (part._id === action.payload.partId) {
         return {
           ...part,
-          title: action.payload.title
+          title: action.payload.partTitle
         }
       }
       return part
@@ -112,6 +122,16 @@ export default handleActions({
       item: {
         ...state.item,
         parts
+      }
+    })
+  },
+
+  UPDATE_PART_TITLE_DONE: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        parts: [...action.payload]
       }
     })
   },
@@ -133,7 +153,17 @@ export default handleActions({
     })
   },
 
-  UPDATE_LINKS: (state, action) => {
+  UPDATE_LINKS_START: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: action.payload
+      }
+    })
+  },
+
+  UPDATE_LINKS_DONE: (state, action) => {
     return ({
       ...state,
       item: {
@@ -153,7 +183,27 @@ export default handleActions({
     })
   },
 
-  UPDATE_LINK: (state, action) => {
+  UPDATE_LINK_START: (state, action) => {
+    const links = state.item.links.map((link) => {
+      if (link._id === action.payload.linkId) {
+        return {
+          ...link,
+          title: action.payload.title
+        }
+      }
+      return link
+    })
+
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links
+      }
+    })
+  },
+
+  UPDATE_LINK_DONE: (state, action) => {
     return ({
       ...state,
       item: {

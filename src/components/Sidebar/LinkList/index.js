@@ -41,7 +41,7 @@ class LinkList extends Component {
       linkIds.push(link._id)
     })
 
-    this.props.dispatch(updateWorkshopLinks(copyOfWorkshop._id, linkIds))
+    this.props.dispatch(updateWorkshopLinks(copyOfWorkshop.links, copyOfWorkshop._id, linkIds))
 
     if (this.props.currentEditingType === 'link') {
       if (oldIndex === this.props.activeLinkIndex) {
@@ -57,11 +57,11 @@ class LinkList extends Component {
   handleSubmit(e) {
     e.preventDefault()
 
-    const title = { title: this.state.inputValue }
+    const linkObj = { title: this.state.inputValue }
     const workshopId = this.props.workshop._id
     const linkId = this.props.workshop.links[this.state.editingLinkIndex]._id
 
-    this.props.dispatch(updateLink(title, workshopId, linkId))
+    this.props.dispatch(updateLink(linkObj, workshopId, linkId))
 
     this.setState({
       editingLinkIndex: null

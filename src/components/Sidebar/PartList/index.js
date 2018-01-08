@@ -44,7 +44,7 @@ class PartList extends Component {
       partIds.push(part._id)
     })
 
-    this.props.dispatch(updateWorkshopParts(copyOfWorkshop._id, partIds))
+    this.props.dispatch(updateWorkshopParts(copyOfWorkshop.parts, copyOfWorkshop._id, partIds))
 
     if (this.props.currentEditingType === 'part') {
       if (oldIndex === this.props.activePartIndex) {

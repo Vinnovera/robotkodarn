@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-const UPDATE_LINKS = 'UPDATE_LINKS'
+const UPDATE_LINKS_START = 'UPDATE_LINKS_START'
+const UPDATE_LINKS_DONE = 'UPDATE_LINKS_DONE'
 const ADD_LINK = 'ADD_LINK'
-const UPDATE_LINK = 'UPDATE_LINK'
+const UPDATE_LINK_DONE = 'UPDATE_LINK_DONE'
+const UPDATE_LINK_START = 'UPDATE_LINK_START'
 const LINK_SAVED = 'LINK_SAVED'
 const REMOVE_LINK = 'REMOVE_LINK'
 const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
@@ -10,7 +12,12 @@ const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
 // -----------------------------------------------------------------------------
 // updateWorkshopLinks, updates the workshop links in current workshop
 // -----------------------------------------------------------------------------
-export const updateWorkshopLinks = (workshopId, linkIds) => (dispatch) => {
+export const updateWorkshopLinks = (updatedLinks, workshopId, linkIds) => (dispatch) => {
+  dispatch({
+    type: UPDATE_LINKS_START,
+    payload: updatedLinks
+  })
+
   axios
     .put(`/api/workshop/${workshopId}/links`, linkIds, {
       headers: {
@@ -19,7 +26,7 @@ export const updateWorkshopLinks = (workshopId, linkIds) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_LINKS,
+        type: UPDATE_LINKS_DONE,
         payload: data.links
       })
     })
@@ -48,16 +55,24 @@ export const addLink = (link, workshopId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // updateLink, edits a specific link in a workshop
 // -----------------------------------------------------------------------------
-export const updateLink = (updatedLinkObject, workshopID, linkId) => (dispatch) => {
+export const updateLink = (linkObject, workshopID, linkId) => (dispatch) => {
+  dispatch({
+    type: UPDATE_LINK_START,
+    payload: {
+      title: linkObject.title,
+      linkId: linkId
+    }
+  })
+
   axios
-    .put(`/api/workshop/${workshopID}/link/${linkId}`, updatedLinkObject, {
+    .put(`/api/workshop/${workshopID}/link/${linkId}`, { title: linkObject.title }, {
       headers: {
         'content-type': 'application/json'
       }
     })
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_LINK,
+        type: UPDATE_LINK_DONE,
         payload: data
       })
 
