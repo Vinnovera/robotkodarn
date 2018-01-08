@@ -7,7 +7,8 @@ const ADD_LINK_DONE = 'ADD_LINK_DONE'
 const UPDATE_LINK_DONE = 'UPDATE_LINK_DONE'
 const UPDATE_LINK_START = 'UPDATE_LINK_START'
 const LINK_SAVED = 'LINK_SAVED'
-const REMOVE_LINK = 'REMOVE_LINK'
+const REMOVE_LINK_START = 'REMOVE_LINK_START'
+const REMOVE_LINK_DONE = 'REMOVE_LINK_DONE'
 const SET_ACTIVE_LINK_INDEX = 'SET_ACTIVE_LINK_INDEX'
 
 // -----------------------------------------------------------------------------
@@ -99,7 +100,12 @@ export const updateLink = (linkObject, workshopID, linkId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // removeLink, removes link from database
 // -----------------------------------------------------------------------------
-export const removeLink = (linkId, workshopId) => (dispatch) => {
+export const removeLink = (linksAfterDeletion, linkId, workshopId) => (dispatch) => {
+  dispatch({
+    type: REMOVE_LINK_START,
+    payload: linksAfterDeletion
+  })
+
   axios
     .delete(`/api/workshop/${workshopId}/link/${linkId}`, {
       headers: {
@@ -108,7 +114,7 @@ export const removeLink = (linkId, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: REMOVE_LINK,
+        type: REMOVE_LINK_DONE,
         payload: data
       })
     })

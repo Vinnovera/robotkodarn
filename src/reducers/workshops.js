@@ -239,7 +239,17 @@ export default handleActions({
     })
   },
 
-  REMOVE_LINK: (state, action) => {
+  REMOVE_LINK_START: (state, action) => {
+    return ({
+      ...state,
+      item: {
+        ...state.item,
+        links: [...action.payload]
+      }
+    })
+  },
+
+  REMOVE_LINK_DONE: (state, action) => {
     return ({
       ...state,
       item: {

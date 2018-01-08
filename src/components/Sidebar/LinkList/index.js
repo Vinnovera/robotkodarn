@@ -83,12 +83,18 @@ class LinkList extends Component {
   }
 
   confirmDeletion() {
-    // Move to the first link when deleting a link
-    this.props.dispatch(setActiveLinkIndex(0))
+    // Move to the fist link if you are deleting the one you're currently on
+    if (this.state.deleteLinkIndex === this.props.activeLinkIndex) {
+      this.props.dispatch(setActiveLinkIndex(0))
+    }
+
     const linkId = this.props.workshop.links[this.state.deletePromptIndex]._id
     const workshopId = this.props.workshop._id
+    const linksAfterDeletion = this.props.workshop.links.filter((link) => {
+      return link._id !== linkId
+    })
 
-    this.props.dispatch(removeLink(linkId, workshopId))
+    this.props.dispatch(removeLink(linksAfterDeletion, linkId, workshopId))
 
     // This resets the deletePromtIndex state
     this.cancelDeletion()
