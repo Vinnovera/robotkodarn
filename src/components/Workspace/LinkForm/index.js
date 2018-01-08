@@ -7,8 +7,6 @@ import { updateLink } from '../../../actions/links'
 
 import styles from './linkform.css'
 
-import FadeIn from '../../FadeIn'
-
 class LinkForm extends Component {
   constructor(props) {
     super(props)
@@ -44,42 +42,40 @@ class LinkForm extends Component {
 
   render() {
     return (
-      <FadeIn>
-        <form onSubmit={this.saveLink} className={styles.linkForm}>
-          <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.title} ({this.props.workshop.pincode})</h2>
-          <h1 className={styles.formHeadline}>
-            { `Uppdatera länk ${this.props.workshop.links[this.props.activeLinkIndex].title}` }
-          </h1>
-          <label className={styles.label} htmlFor="title">Länkens rubrik</label>
-          <input
-            onChange={event => this.setState({ title: event.target.value })}
-            className={styles.input}
-            type="text"
-            placeholder="Den rubrik du vill ska synas"
-            name="title"
-            value={this.state.title}
-          />
+      <form onSubmit={this.saveLink} className={styles.linkForm}>
+        <h2 className={styles.workshopPin}>Workshop: {this.props.workshop.title} ({this.props.workshop.pincode})</h2>
+        <h1 className={styles.formHeadline}>
+          { `Uppdatera länk ${this.props.workshop.links[this.props.activeLinkIndex].title}` }
+        </h1>
+        <label className={styles.label} htmlFor="title">Länkens rubrik</label>
+        <input
+          onChange={event => this.setState({ title: event.target.value })}
+          className={styles.input}
+          type="text"
+          placeholder="Den rubrik du vill ska synas"
+          name="title"
+          value={this.state.title}
+        />
 
-          <label className={styles.label} htmlFor="url">Länkens webbadress</label>
-          <input
-            onChange={event => this.setState({ content: event.target.value })}
-            className={styles.input}
-            type="url"
-            placeholder="Webbadress till länk"
-            name="url"
-            value={this.state.content}
-          />
+        <label className={styles.label} htmlFor="url">Länkens webbadress</label>
+        <input
+          onChange={event => this.setState({ content: event.target.value })}
+          className={styles.input}
+          type="url"
+          placeholder="Webbadress till länk"
+          name="url"
+          value={this.state.content}
+        />
 
-          <div className={styles.flex}>
-            <div className={styles.buttonContainer}>
-              <button type="submit" className={`${styles.saveLinkButton} ${this.props.linkSaved ? styles.saveLinkButtonSaved : ''}`}>
-                <div><span><FA name="check" /> Sparat</span></div>
-                <FA name="save" /> Spara länk
-              </button>
-            </div>
+        <div className={styles.flex}>
+          <div className={styles.buttonContainer}>
+            <button type="submit" className={`${styles.saveLinkButton} ${this.props.linkSaved ? styles.saveLinkButtonSaved : ''}`}>
+              <div><span><FA name="check" /> Sparat</span></div>
+              <FA name="save" /> Spara länk
+            </button>
           </div>
-        </form>
-      </FadeIn>
+        </div>
+      </form>
     )
   }
 }
