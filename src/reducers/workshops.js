@@ -86,9 +86,17 @@ export default handleActions({
     })
   },
 
-  ADD_PART: (state, action) => {
+  ADD_PART_START: (state) => {
     return ({
       ...state,
+      isAddingPart: true
+    })
+  },
+
+  ADD_PART_DONE: (state, action) => {
+    return ({
+      ...state,
+      isAddingPart: false,
       item: {
         ...state.item,
         parts: [...state.item.parts, action.payload]
@@ -173,9 +181,17 @@ export default handleActions({
     })
   },
 
-  ADD_LINK: (state, action) => {
+  ADD_LINK_START: (state) => {
     return ({
       ...state,
+      isAddingLink: true
+    })
+  },
+
+  ADD_LINK_DONE: (state, action) => {
+    return ({
+      ...state,
+      isAddingLink: false,
       item: {
         ...state.item,
         links: [...state.item.links, action.payload]
@@ -244,5 +260,7 @@ export default handleActions({
   loginAttemptTimestamp: +new Date(),
   codeSaved: false,
   activeLinkIndex: 0,
-  linkSaved: false
+  linkSaved: false,
+  isAddingPart: false,
+  isAddingLink: false
 })

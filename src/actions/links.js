@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const UPDATE_LINKS_START = 'UPDATE_LINKS_START'
 const UPDATE_LINKS_DONE = 'UPDATE_LINKS_DONE'
-const ADD_LINK = 'ADD_LINK'
+const ADD_LINK_START = 'ADD_LINK_START'
+const ADD_LINK_DONE = 'ADD_LINK_DONE'
 const UPDATE_LINK_DONE = 'UPDATE_LINK_DONE'
 const UPDATE_LINK_START = 'UPDATE_LINK_START'
 const LINK_SAVED = 'LINK_SAVED'
@@ -37,6 +38,10 @@ export const updateWorkshopLinks = (updatedLinks, workshopId, linkIds) => (dispa
 // addLink, creates link and add it to workshop in database
 // -----------------------------------------------------------------------------
 export const addLink = (link, workshopId) => (dispatch) => {
+  dispatch({
+    type: ADD_LINK_START
+  })
+
   axios
     .post(`/api/workshop/${workshopId}/link`, link, {
       headers: {
@@ -45,7 +50,7 @@ export const addLink = (link, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_LINK,
+        type: ADD_LINK_DONE,
         payload: data
       })
     })

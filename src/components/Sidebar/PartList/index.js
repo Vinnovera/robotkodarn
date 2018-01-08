@@ -136,6 +136,7 @@ class PartList extends Component {
         editPartHandleClick={this.editPartTitle}
         changePartHandleClick={this.changePart}
         deletePartHandleClick={this.promptForDelete}
+        isAddingPart={this.props.isAddingPart}
       />)
     }
 
@@ -178,7 +179,8 @@ function mapStateToProps(state) {
     workshop: state.workshops.item,
     editing: state.editor.editing,
     activePartIndex: state.editor.activePartIndex,
-    currentEditingType: state.workshops.currentEditingType
+    currentEditingType: state.workshops.currentEditingType,
+    isAddingPart: state.workshops.isAddingPart
   }
 }
 

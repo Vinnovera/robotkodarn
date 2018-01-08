@@ -190,6 +190,7 @@ class LinkList extends Component {
         editLinkHandleClick={this.editLinkTitle}
         changeLinkHandleClick={this.changeLink}
         deleteLinkHandleClick={this.promptForDelete}
+        isAddingLink={this.props.isAddingLink}
       />)
     }
 
@@ -241,7 +242,8 @@ function mapStateToProps(state) {
     current: state.editor.editingType.id,
     activeLinkIndex: state.workshops.activeLinkIndex,
     sidebarOpen: state.sidebar.open,
-    currentEditingType: state.workshops.currentEditingType
+    currentEditingType: state.workshops.currentEditingType,
+    isAddingLink: state.workshops.isAddingLink
   }
 }
 

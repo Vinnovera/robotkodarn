@@ -3,7 +3,8 @@ import axios from 'axios'
 const UPDATE_PARTS_START = 'UPDATE_PARTS_START'
 const UPDATE_PARTS_DONE = 'UPDATE_PARTS_DONE'
 const UPDATE_PART = 'UPDATE_PART'
-const ADD_PART = 'ADD_PART'
+const ADD_PART_START = 'ADD_PART_START'
+const ADD_PART_DONE = 'ADD_PART_DONE'
 const UPDATE_PART_TITLE_START = 'UPDATE_PART_TITLE_START'
 const UPDATE_PART_TITLE_DONE = 'UPDATE_PART_TITLE_DONE'
 const CODE_SAVED = 'CODE_SAVED'
@@ -64,6 +65,10 @@ export const updatePartTitle = (partTitle, workshopId, partId) => (dispatch) => 
 // addPart, create part and adds it to workshop in database
 // -----------------------------------------------------------------------------
 export const addPart = (part, workshopId) => (dispatch) => {
+  dispatch({
+    type: ADD_PART_START
+  })
+
   axios
     .post(`/api/workshop/${workshopId}/part`, part, {
       headers: {
@@ -72,7 +77,7 @@ export const addPart = (part, workshopId) => (dispatch) => {
     })
     .then(({ data }) => {
       dispatch({
-        type: ADD_PART,
+        type: ADD_PART_DONE,
         payload: data
       })
     })
