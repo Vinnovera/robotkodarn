@@ -41,7 +41,11 @@ export const toggleCodeButtons = toggleValue => (dispatch) => {
 // -----------------------------------------------------------------------------
 // compileCode, sends code to compiler
 // -----------------------------------------------------------------------------
-export const compileCode = (codeToCompile, board = 'uno', willUpload) => (dispatch) => {
+/*
+  Set the default board to zumo so the compiler doesn't complain if no robot is connected.
+  The zumo can handle everything that uno can but not the other way around.
+*/
+export const compileCode = (codeToCompile, board = 'zumo', willUpload) => (dispatch) => {
   const request = new XMLHttpRequest()
   request.open('POST', '/api/editor', true)
   request.setRequestHeader('Content-Type', 'application/json')
