@@ -108,6 +108,11 @@
     cursor: pointer;
     transition: all .2s ease-in-out;
   }
+  :local .addButtonWrapper button[disabled],
+  :local .addButtonWrapper button[disabled]:hover {
+    color: #b6b6b6;
+    cursor: not-allowed;
+  }
   :local .addButtonWrapper button:hover {
     color: #fe5d4b;
   }

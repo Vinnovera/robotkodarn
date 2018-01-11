@@ -165,7 +165,7 @@ class PartList extends Component {
   renderAddPartButton() {
     return this.props.editing ? (
       <div className={styles.addButtonWrapper}>
-        <button onClick={this.addPart}><FA name="plus" />Lägg till övning</button>
+        <button disabled={this.props.isAddingPart} onClick={this.addPart}><FA name="plus" />Lägg till övning</button>
       </div>
     ) : null
   }

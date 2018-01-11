@@ -125,57 +125,6 @@ class LinkList extends Component {
   renderLinkListItems() {
     // If we are in editing mode
     if (this.props.editing) {
-      return this.props.workshop.links.map((link, i) => {
-        return (this.state.editingLinkIndex === i) ? (
-          <li className={styles.editing} key={link._id}>
-            <form onSubmit={this.handleSubmit}>
-              <button type="submit" className={styles.editLinkButton}>
-                <FA className={styles.pencilIcon} name="pencil" />
-                <FA className={styles.diskIcon} name="save" />
-              </button>
-              <input autoFocus onBlur={this.handleSubmit} onChange={this.handleChange} type="text" value={this.state.inputValue} />
-              <button className={`${styles.deleteLinkButton} ${styles.deleteLinkButtonRemove}`}><FA className={styles.codeIcon} name="trash-o" /></button>
-            </form>
-          </li>
-        ) : (
-          <li className={`${(this.props.activeLinkIndex === i && this.props.currentEditingType === 'link') ? styles.activeLink : ''}`} key={link._id}>
-            {
-              (this.state.deletePromptIndex === i) && (
-                <div className={styles.deletePromptWrapper}>
-                  <p>
-                    Radera länk?
-                    <span>
-                      <button onClick={this.confirmDeletion}><FA className={styles.linkIcon} name="check-circle" /></button>
-                      <button onClick={this.cancelDeletion}><FA className={styles.linkIcon} name="times-circle" /></button>
-                    </span>
-                  </p>
-                </div>
-              )
-            }
-            <button className={styles.editLinkButton} onClick={() => this.editLinkTitle(i)}><FA className={styles.linkIcon} name="pencil" /></button>
-            <button className={styles.changeLinkButton} onClick={() => this.changeLink(i)}>{link.title}</button>
-            <button className={styles.deleteLinkButton} onClick={() => this.promptForDelete(i)}><FA className={styles.linkIcon} name="trash-o" /></button>
-          </li>
-        )
-      })
-    }
-
-    // If we are not in editing mode
-    return this.props.workshop.links.map((link) => {
-      return (
-        <li key={link._id}>
-          <Link className={styles.listLink} to={link.content} target="_blank">
-            <FA className={styles.linkIcon} name="external-link" />
-            {link.title}
-          </Link>
-        </li>
-      )
-    })
-  }
-
-  renderLinkListItems2() {
-    // If we are in editing mode
-    if (this.props.editing) {
       return (<SortableList
         onSortEnd={this.onSortEnd}
         useDragHandle
@@ -222,7 +171,7 @@ class LinkList extends Component {
   renderAddLinkButton() {
     return this.props.editing ? (
       <div className={styles.addButtonWrapper}>
-        <button onClick={this.addLink}><FA name="plus" />Lägg till länk</button>
+        <button disabled={this.props.isAddingLink} onClick={this.addLink}><FA name="plus" />Lägg till länk</button>
       </div>
     ) : null
   }
@@ -231,7 +180,7 @@ class LinkList extends Component {
     return (
       <div>
         <ul className={`${styles.linkList} ${this.props.editing && styles.editingMode}`}>
-          { this.renderLinkListItems2() }
+          { this.renderLinkListItems() }
         </ul>
 
         { this.renderAddLinkButton() }
