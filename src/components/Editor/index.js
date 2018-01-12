@@ -170,7 +170,7 @@ export class Editor extends Component {
     return (
       <div className={styles.codeWrapper}>
         {this.renderTabs()}
-        {this.renderUndoRedo()}
+        {/* {this.renderUndoRedo()} */}
         {this.renderAceEditor()}
       </div>
     )
