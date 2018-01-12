@@ -15,7 +15,7 @@ import 'brace/theme/tomorrow'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import FA from 'react-fontawesome'
-import { changeEditorTab } from '../../actions/editor'
+import { changeEditorTab, changeEditorFontSize } from '../../actions/editor'
 import { setConsoleOutput } from '../../actions/console'
 import { setPartsToEdit, setCodeToUnsaved } from '../../actions/parts'
 import { uploadCode, toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
@@ -99,6 +99,10 @@ export class Editor extends Component {
 		this.props.dispatch(changeEditorTab(userOrOriginal))
 	}
 
+	changeFontSize(fontSize) {
+		this.props.dispatch(changeEditorFontSize(fontSize))
+	}
+
 
 	/**
 	 * Render the Ace Editor with different content and editing
@@ -132,7 +136,12 @@ export class Editor extends Component {
 				editorProps={{ $blockScrolling: true }}
 				showPrintMargin={false}
 				onChange={(...args) => userTab && this.onChange(...args)}
-				setOptions={userTab ? { readOnly: false } : { readOnly: true }}
+				setOptions={{
+					readOnly: !userTab,
+					tabSize: 4,
+					showFoldWidgets: false,
+					fontSize: this.props.editorFontSize
+				}}
 				value={userTab ? activeEditPart : activeOriginalPart}
 			/>
 		)
@@ -153,6 +162,33 @@ export class Editor extends Component {
 		}
 	}
 
+	renderFontSizeButtons() {
+		return (
+			<div className={styles.fontSizeButtons}>
+				<button
+					className={`${styles.fontSizeSmall} ${this.props.editorFontSize === 10 ? styles.active : ''}`}
+					onClick={() => { this.changeFontSize(10) }}
+				>
+					<FA name="font" />
+				</button>
+
+				<button
+					className={`${styles.fontSizeMedium} ${this.props.editorFontSize === 14 ? styles.active : ''}`}
+					onClick={() => { this.changeFontSize(14) }}
+				>
+					<FA name="font" />
+				</button>
+
+				<button
+					className={`${styles.fontSizeLarge} ${this.props.editorFontSize === 20 ? styles.active : ''}`}
+					onClick={() => { this.changeFontSize(20) }}
+				>
+					<FA name="font" />
+				</button>
+			</div>
+		)
+	}
+
 	renderTabs() {
 		return this.props.editing ? (
 			<div>
@@ -171,6 +207,7 @@ export class Editor extends Component {
 			<div className={styles.codeWrapper}>
 				{this.renderTabs()}
 				{/* {this.renderUndoRedo()} */}
+				{this.renderFontSizeButtons()}
 				{this.renderAceEditor()}
 			</div>
 		)
@@ -186,7 +223,8 @@ function mapStateToProps(state) {
 		partsToEdit: state.editor.partsToEdit,
 		editing: state.workshops.editing,
 		connectedDevice: state.statusBar.connectedDevice,
-		currentWorkshop: state.workshops.item
+		currentWorkshop: state.workshops.item,
+		editorFontSize: state.editor.editorFontSize
 	}
 }
 

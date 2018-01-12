@@ -74,3 +74,37 @@
 :local .redo:hover {
 	color: #214E50
 }
+
+:local .fontSizeButtons {
+	position: absolute;
+	top: 43px;
+	right: 15px;
+	z-index: 100;
+}
+:local .fontSizeButtons button {
+	width: 20px;
+	height: 24px;
+	font-size: 1.4rem;
+	color: #ccc;
+	background: none;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	font-weight: 700;
+	transition: color 250ms ease;
+	-webkit-font-smoothing: antialiased;
+	color: #888;
+}
+:local .fontSizeButtons button:hover,
+:local .fontSizeButtons .active {
+	color: #333;
+}
+:local .fontSizeSmall {
+	font-size: 10px !important;
+}
+:local .fontSizeMedium {
+	font-size: 14px !important;
+}
+:local .fontSizeLarge {
+	font-size: 20px !important;
+}

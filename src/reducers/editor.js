@@ -78,6 +78,13 @@ export default handleActions({
 			...state,
 			codeIsUnsaved: action.payload
 		})
+	},
+
+	SET_EDITOR_FONT_SIZE: (state, action) => {
+		return ({
+			...state,
+			editorFontSize: action.payload
+		})
 	}
 
 }, {
@@ -91,5 +98,6 @@ export default handleActions({
 		id: null
 	},
 	partsToEdit: [],
-	codeIsUnsaved: false
+	codeIsUnsaved: false,
+	editorFontSize: 14
 })
