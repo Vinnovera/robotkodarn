@@ -11,10 +11,10 @@ const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
 // animateCompilebutton, turn the animation for compiler button on or off
 // -----------------------------------------------------------------------------
 export const animateCompileButton = toggleValue => (dispatch) => {
-  dispatch({
-    type: TOGGLE_COMPILER_BUTTON_ANIMATION,
-    payload: toggleValue
-  })
+	dispatch({
+		type: TOGGLE_COMPILER_BUTTON_ANIMATION,
+		payload: toggleValue
+	})
 }
 
 
@@ -22,62 +22,62 @@ export const animateCompileButton = toggleValue => (dispatch) => {
 // animateUploadbutton, turn the animation for upload button on or off
 // -----------------------------------------------------------------------------
 export const animateUploadButton = toggleValue => (dispatch) => {
-  dispatch({
-    type: TOGGLE_UPLOAD_BUTTON_ANIMATION,
-    payload: toggleValue
-  })
+	dispatch({
+		type: TOGGLE_UPLOAD_BUTTON_ANIMATION,
+		payload: toggleValue
+	})
 }
 
 // -----------------------------------------------------------------------------
 // toggleCodeButtons, disables or enables the compile and upload buttons
 // -----------------------------------------------------------------------------
 export const toggleCodeButtons = toggleValue => (dispatch) => {
-  dispatch({
-    type: TOGGLE_CODE_BUTTONS,
-    payload: toggleValue
-  })
+	dispatch({
+		type: TOGGLE_CODE_BUTTONS,
+		payload: toggleValue
+	})
 }
 
 // -----------------------------------------------------------------------------
 // compileCode, sends code to compiler
 // -----------------------------------------------------------------------------
 /*
-  Set the default board to zumo so the compiler doesn't complain if no robot is connected.
-  The zumo can handle everything that uno can but not the other way around.
+	Set the default board to zumo so the compiler doesn't complain if no robot is connected.
+	The zumo can handle everything that uno can but not the other way around.
 */
 export const compileCode = (codeToCompile, board = 'zumo', willUpload) => (dispatch) => {
-  const request = new XMLHttpRequest()
-  request.open('POST', '/api/editor', true)
-  request.setRequestHeader('Content-Type', 'application/json')
-  request.setRequestHeader('x-board', board)
+	const request = new XMLHttpRequest()
+	request.open('POST', '/api/editor', true)
+	request.setRequestHeader('Content-Type', 'application/json')
+	request.setRequestHeader('x-board', board)
 
 
-  request.onload = () => {
-    if (request.status === 200) {
-      dispatch({
-        type: SET_COMPILER_RESPONSE,
-        payload: {
-          compilerResponse: {
-            response: request.response,
-            timestamp: +new Date()
-          },
-          willUpload: willUpload
-        }
-      })
-    } else if (request.status === 400) {
-      dispatch({
-        type: SET_COMPILER_RESPONSE,
-        payload: {
-          compilerResponse: {
-            response: JSON.parse(request.response),
-            timestamp: +new Date()
-          },
-          willUpload: false
-        }
-      })
-    }
-  }
-  request.send(JSON.stringify(codeToCompile))
+	request.onload = () => {
+		if (request.status === 200) {
+			dispatch({
+				type: SET_COMPILER_RESPONSE,
+				payload: {
+					compilerResponse: {
+						response: request.response,
+						timestamp: +new Date()
+					},
+					willUpload: willUpload
+				}
+			})
+		} else if (request.status === 400) {
+			dispatch({
+				type: SET_COMPILER_RESPONSE,
+				payload: {
+					compilerResponse: {
+						response: JSON.parse(request.response),
+						timestamp: +new Date()
+					},
+					willUpload: false
+				}
+			})
+		}
+	}
+	request.send(JSON.stringify(codeToCompile))
 }
 
 // -----------------------------------------------------------------------------
@@ -92,68 +92,68 @@ export const compileCode = (codeToCompile, board = 'zumo', willUpload) => (dispa
  * @param {string} compiledCode The code compiled through avrpizza
  */
 export const uploadCode = (compiledCode, board = 'uno') => (dispatch) => {
-  /* If error occurs during compilation,
-   * exit early and inform user.
-   */
-  if (compiledCode.error) {
-    dispatch({
-      type: SET_CONSOLE_OUTPUT,
-      payload: {
-        type: 'error',
-        heading: 'Fel vid kompilering',
-        message: 'Hhhmm, något ser inte rätt ut i koden.'
-      }
-    })
-    return
-  }
+	/* If error occurs during compilation,
+	 * exit early and inform user.
+	 */
+	if (compiledCode.error) {
+		dispatch({
+			type: SET_CONSOLE_OUTPUT,
+			payload: {
+				type: 'error',
+				heading: 'Fel vid kompilering',
+				message: 'Hhhmm, något ser inte rätt ut i koden.'
+			}
+		})
+		return
+	}
 
-  const port = connectPort()
+	const port = connectPort()
 
-  // Payload to be sent to Chrome App
-  const message = {
-    type: 'flash',
-    board: board,
-    file: compiledCode
-  }
+	// Payload to be sent to Chrome App
+	const message = {
+		type: 'flash',
+		board: board,
+		file: compiledCode
+	}
 
-  // Give user feedback when recieving message from Chrome App
-  port.onMessage.addListener((uploadMessage) => {
-    if (uploadMessage.success) {
-      dispatch({
-        type: SET_CONSOLE_OUTPUT,
-        payload: {
-          type: 'success',
-          heading: 'Lyckad uppladdning',
-          message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
-        }
-      })
+	// Give user feedback when recieving message from Chrome App
+	port.onMessage.addListener((uploadMessage) => {
+		if (uploadMessage.success) {
+			dispatch({
+				type: SET_CONSOLE_OUTPUT,
+				payload: {
+					type: 'success',
+					heading: 'Lyckad uppladdning',
+					message: 'Bra jobbat, du har nu laddat upp koden till din robot.'
+				}
+			})
 
-      dispatch(serialListen())
-    } else {
-      dispatch({
-        type: SET_CONSOLE_OUTPUT,
-        payload: {
-          type: 'error',
-          heading: 'Fel vid uppladdningen',
-          // Inform user if no robot is connected.
-          message: uploadMessage.error.includes('no Arduino') ?
-            'Du har inte kopplat in någon robot.' :
-            uploadMessage.error // FYI: will be in English
-        }
-      })
-    }
+			dispatch(serialListen())
+		} else {
+			dispatch({
+				type: SET_CONSOLE_OUTPUT,
+				payload: {
+					type: 'error',
+					heading: 'Fel vid uppladdningen',
+					// Inform user if no robot is connected.
+					message: uploadMessage.error.includes('no Arduino') ?
+						'Du har inte kopplat in någon robot.' :
+						uploadMessage.error // FYI: will be in English
+				}
+			})
+		}
 
-    dispatch({
-      type: TOGGLE_CODE_BUTTONS,
-      payload: true
-    })
+		dispatch({
+			type: TOGGLE_CODE_BUTTONS,
+			payload: true
+		})
 
-    dispatch({
-      type: TOGGLE_UPLOAD_BUTTON_ANIMATION,
-      payload: false
-    })
-  })
+		dispatch({
+			type: TOGGLE_UPLOAD_BUTTON_ANIMATION,
+			payload: false
+		})
+	})
 
-  // Send message to Chrome App
-  port.postMessage(message)
+	// Send message to Chrome App
+	port.postMessage(message)
 }

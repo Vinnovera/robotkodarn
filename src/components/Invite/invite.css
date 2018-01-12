@@ -1,83 +1,82 @@
 :local .invite {
-  align-items: center;
-  color: #31283E;
-  background-color: #fff;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 7rem auto 0;
-  max-width: 750px;
-  padding: 4rem 0.5rem 4rem;
-  position: relative;
-  text-align: center;
+	align-items: center;
+	color: #31283E;
+	background-color: #fff;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 7rem auto 0;
+	max-width: 750px;
+	padding: 4rem 0.5rem 4rem;
+	position: relative;
+	text-align: center;
 }
 
 :local .inviteHeadline {
-  font-size: 2.5rem;
-  color: inherit;
-  margin: 0;
+	font-size: 2.5rem;
+	color: inherit;
+	margin: 0;
 }
 
 :local .invite p {
-  color: inherit;
-  font-size: 1.2rem;
-  margin: 1.5rem;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
+	color: inherit;
+	font-size: 1.2rem;
+	margin: 1.5rem;
+	-webkit-font-smoothing: antialiased;
 }
 
 :local .buttonContainer {
-  margin-bottom: 1rem;
-  max-width: 18rem;
-  width: 100%;
+	margin-bottom: 1rem;
+	max-width: 18rem;
+	width: 100%;
 }
 
 /* -----------------------------------------------------------------------------
-  INVITATION LINK
+	INVITATION LINK
 ------------------------------------------------------------------------------*/
 
 :local .invite .invitationWrapper {
-  align-content: center;
-  color: #31283E;
-  display: flex;
-  font-size: 0.9rem;
-  justify-content: center;
-  margin: 0.5rem 0;
-  width: 100%;
+	align-content: center;
+	color: #31283E;
+	display: flex;
+	font-size: 0.9rem;
+	justify-content: center;
+	margin: 0.5rem 0;
+	width: 100%;
 }
 
 :local .invite .invitationURL {
-  border-bottom: 1px solid #31283E;
-  color: inherit;
-  font-size: inherit;
-  margin: 0 1rem 0 0;
-  padding-bottom: 0.3em;
+	border-bottom: 1px solid #31283E;
+	color: inherit;
+	font-size: inherit;
+	margin: 0 1rem 0 0;
+	padding-bottom: 0.3em;
 }
 
 :local .invite .shortCuts {
-  background: none;
-  border: 1px solid #31283E;
-  border-radius: 2px;
-  color: #31283E;
-  cursor: pointer;
-  font-size: 0.8rem;
-  height: 1.5rem;
-  margin-right: 0.5rem;
-  width: 2rem;
-  transition: 300ms;
+	background: none;
+	border: 1px solid #31283E;
+	border-radius: 2px;
+	color: #31283E;
+	cursor: pointer;
+	font-size: 0.8rem;
+	height: 1.5rem;
+	margin-right: 0.5rem;
+	width: 2rem;
+	transition: 300ms;
 }
 
 :local .invite .shortCuts:hover {
-  background: #332C3D;
-  color: white;
-  outline: none;
+	background: #332C3D;
+	color: white;
+	outline: none;
 }
 
 :local .invite .shortCuts:focus {
-  outline: none;
+	outline: none;
 }
 
 :local .invite .envelope {
-  padding-top: 0.28rem;
+	padding-top: 0.28rem;
 }

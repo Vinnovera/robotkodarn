@@ -17,150 +17,150 @@ const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP'
 // updateWorkshopTitle, updates the workshop title in current workshop
 // -----------------------------------------------------------------------------
 export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
-  dispatch({
-    type: UPDATE_WORKSHOP_TITLE_START,
-    payload: title
-  })
+	dispatch({
+		type: UPDATE_WORKSHOP_TITLE_START,
+		payload: title
+	})
 
-  axios
-    .put(`/api/workshop/${workshopId}`, { title }, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(({ data }) => {
-      dispatch({
-        type: UPDATE_WORKSHOP_TITLE_DONE,
-        payload: data.title
-      })
-    })
-    .catch(error => console.log(error))
+	axios
+		.put(`/api/workshop/${workshopId}`, { title }, {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then(({ data }) => {
+			dispatch({
+				type: UPDATE_WORKSHOP_TITLE_DONE,
+				payload: data.title
+			})
+		})
+		.catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
 // getWorkshopsByUserId, get logged in users' workshops
 // -----------------------------------------------------------------------------
 export const getWorkshopsByUserId = () => (dispatch) => {
-  axios
-    .get('/api/workshopsbyuser', {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then((response) => {
-      dispatch({ type: SET_WORKSHOPS, payload: response.data })
-    })
-    .catch(error => console.log(error))
+	axios
+		.get('/api/workshopsbyuser', {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then((response) => {
+			dispatch({ type: SET_WORKSHOPS, payload: response.data })
+		})
+		.catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
 // createWorkshop, creates empty workshop with a title and a PIN
 // -----------------------------------------------------------------------------
 export const createWorkshop = workshop => (dispatch) => {
-  axios
-    .post('/api/workshop', workshop, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(({ data }) => {
-      dispatch({
-        type: ADD_WORKSHOP,
-        payload: data
-      })
+	axios
+		.post('/api/workshop', workshop, {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then(({ data }) => {
+			dispatch({
+				type: ADD_WORKSHOP,
+				payload: data
+			})
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
-        time: +new Date()
-      })
-    })
-    .catch(error => console.log(error))
+			dispatch({
+				type: SET_MESSAGE,
+				payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
+				time: +new Date()
+			})
+		})
+		.catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
 // Copy an existing workshop
 // -----------------------------------------------------------------------------
 export const copyWorkshop = workshopId => (dispatch) => {
-  axios
-    .post(`/api/copyWorkshop/${workshopId}`, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(({ data }) => {
-      dispatch({
-        type: ADD_WORKSHOP,
-        payload: data
-      })
+	axios
+		.post(`/api/copyWorkshop/${workshopId}`, {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then(({ data }) => {
+			dispatch({
+				type: ADD_WORKSHOP,
+				payload: data
+			})
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
-        time: +new Date()
-      })
-    })
-    .catch(error => console.log(error))
+			dispatch({
+				type: SET_MESSAGE,
+				payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
+				time: +new Date()
+			})
+		})
+		.catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
 // deleteWorkshop, removes workshop from database
 // -----------------------------------------------------------------------------
 export const deleteWorkshop = workshopId => (dispatch) => {
-  axios
-    .delete(`/api/workshop/${workshopId}`, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(({ data }) => {
-      dispatch({
-        type: REMOVE_WORKSHOP,
-        payload: data.id
-      })
+	axios
+		.delete(`/api/workshop/${workshopId}`, {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then(({ data }) => {
+			dispatch({
+				type: REMOVE_WORKSHOP,
+				payload: data.id
+			})
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: 'Workshopen är nu borttagen.',
-        time: +new Date()
-      })
-    })
-    .catch(error => console.log(error))
+			dispatch({
+				type: SET_MESSAGE,
+				payload: 'Workshopen är nu borttagen.',
+				time: +new Date()
+			})
+		})
+		.catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
 // findWorkshopByPin, gets workshop by typed in PIN in the login page
 // -----------------------------------------------------------------------------
 export const findWorkshopByPin = pin => (dispatch) => {
-  axios
-    .get(`/api/workshop/pin/${pin}`, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        dispatch({
-          type: SET_WORKSHOP_BY_PIN,
-          payload: response.data
-        })
-      }
-    })
-    .catch(() => {
-      dispatch({
-        type: UPDATE_TIMESTAMP,
-        payload: +new Date()
-      })
+	axios
+		.get(`/api/workshop/pin/${pin}`, {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then((response) => {
+			if (response.status === 200) {
+				dispatch({
+					type: SET_WORKSHOP_BY_PIN,
+					payload: response.data
+				})
+			}
+		})
+		.catch(() => {
+			dispatch({
+				type: UPDATE_TIMESTAMP,
+				payload: +new Date()
+			})
 
-      dispatch(routeActions.push('/login'))
-    })
+			dispatch(routeActions.push('/login'))
+		})
 }
 
 //------------------------------------------------------------------------------
 // clearWorkshop, resets state to null when leaving workspace component.
 // -----------------------------------------------------------------------------
 export const clearWorkshop = () => (dispatch) => {
-  dispatch({ type: SET_WORKSHOP_BY_PIN, payload: null })
+	dispatch({ type: SET_WORKSHOP_BY_PIN, payload: null })
 }
 
 //------------------------------------------------------------------------------
@@ -168,10 +168,10 @@ export const clearWorkshop = () => (dispatch) => {
 // index of that part or link with that index
 // -----------------------------------------------------------------------------
 export const setCurrentEditingType = editingType => (dispatch) => {
-  dispatch({
-    type: SET_CURRENT_EDITING_TYPE,
-    payload: editingType
-  })
+	dispatch({
+		type: SET_CURRENT_EDITING_TYPE,
+		payload: editingType
+	})
 }
 
 // -----------------------------------------------------------------------------
@@ -179,9 +179,9 @@ export const setCurrentEditingType = editingType => (dispatch) => {
 // to start editing currentWorkshop
 // -----------------------------------------------------------------------------
 export const toggleEditing = () => (dispatch) => {
-  dispatch({
-    type: TOGGLE_EDITING
-  })
+	dispatch({
+		type: TOGGLE_EDITING
+	})
 }
 
 // -----------------------------------------------------------------------------
@@ -190,11 +190,11 @@ export const toggleEditing = () => (dispatch) => {
 // Else: create new.
 // -----------------------------------------------------------------------------
 export const setEditingType = (type, id = null) => (dispatch) => {
-  dispatch({
-    type: SET_EDITING_TYPE,
-    payload: {
-      type,
-      id
-    }
-  })
+	dispatch({
+		type: SET_EDITING_TYPE,
+		payload: {
+			type,
+			id
+		}
+	})
 }

@@ -37,7 +37,6 @@
   text-transform: uppercase;
   padding: 1rem;
   -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
   background-color: #36968e;
   animation: codeSaved 1s;
   position: relative;

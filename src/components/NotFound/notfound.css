@@ -1,37 +1,36 @@
 :local .background {
-  background-color: #59B2AC;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background: #59B2AC url('./../../patterns/minimal.svg') no-repeat center center fixed;
-  background-size: cover;
+	background-color: #59B2AC;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	background: #59B2AC url('./../../patterns/minimal.svg') no-repeat center center fixed;
+	background-size: cover;
 }
 
 :local .notfound {
-  background-color: #fff;
-  border-radius: 7px;
-  color: #3E3748;
-  margin: auto;
-  max-width: 600px;
-  padding: 0.8rem 1.5rem 3rem;
+	background-color: #fff;
+	border-radius: 7px;
+	color: #3E3748;
+	margin: auto;
+	max-width: 600px;
+	padding: 0.8rem 1.5rem 3rem;
 }
 
 :local .headline {
-  color: inherit;
-  font-size: 2rem;
-  margin-bottom: 3rem;
-  text-align: center;
+	color: inherit;
+	font-size: 2rem;
+	margin-bottom: 3rem;
+	text-align: center;
 }
 
 :local .linksuggestions li {
-  margin: 1rem 0 0;
+	margin: 1rem 0 0;
 }
 
 :local .link {
-  font-size: 1rem;
-  font-weight: 600;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
+	font-size: 1rem;
+	font-weight: 600;
+	-webkit-font-smoothing: antialiased;
 }

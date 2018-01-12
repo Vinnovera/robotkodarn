@@ -5,32 +5,32 @@
  */
 
  :local .toolsIconWrapper {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  z-index: 1000;
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	z-index: 1000;
 }
 
  :local .toolsIcon {
-  background: url('./../../icons/tools.svg') no-repeat center right;
-  background-size: 2rem;
-  border: none;
-  color: inherit;
-  cursor: pointer;
-  height: 2rem;
-  font-family: inherit;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-align: left;
-  text-transform: uppercase;
-  width: 6.5rem;
+	background: url('./../../icons/tools.svg') no-repeat center right;
+	background-size: 2rem;
+	border: none;
+	color: inherit;
+	cursor: pointer;
+	height: 2rem;
+	font-family: inherit;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-align: left;
+	text-transform: uppercase;
+	width: 6.5rem;
 }
 
  :local .toolsIcon:focus,
  :local .toolsIcon:hover {
-  outline: none;
+	outline: none;
 }
 
 :local .editMode button {
-  background-image: url('./../../icons/tools_edit.svg');
+	background-image: url('./../../icons/tools_edit.svg');
 }

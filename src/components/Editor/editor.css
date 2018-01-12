@@ -1,77 +1,76 @@
 :local .codeWrapper {
-  height: calc(70% - 110px);
-  position: relative;
+	height: calc(70% - 110px);
+	position: relative;
 }
 
 #codeEditor {
-  border: 1px solid rgba(0, 0, 0, .1);
-  height: 100%;
-  margin-top: -1px;
+	border: 1px solid rgba(0, 0, 0, .1);
+	height: 100%;
+	margin-top: -1px;
 }
 
 /* Small adjustment in the code theme */
 .ace-tm .ace_gutter {
-  background-color: #ecf0f1 !important;
+	background-color: #ecf0f1 !important;
 }
 
 :local .codeWrapper .activeButton,
 :local .codeWrapper .inactiveButton {
-  background-color: #fff;
-  border: none;
-  border-radius: 4px 4px 0 0;
-  cursor: pointer;
-  color: #3E3748;
-  font-size: 0.8rem;
-  font-weight: 700;
-  height: 2.4rem;
-  margin-right: 4px;
-  width: 6rem;
+	background-color: #fff;
+	border: none;
+	border-radius: 4px 4px 0 0;
+	cursor: pointer;
+	color: #3E3748;
+	font-size: 0.8rem;
+	font-weight: 700;
+	height: 2.4rem;
+	margin-right: 4px;
+	width: 6rem;
 }
 
 :local .codeWrapper .inactiveButton {
-  background-color: #DADCDF;
-  color: rgba(62, 55, 72, 0.5);
-  transition: color 350ms ease, background-color 350ms ease;
+	background-color: #DADCDF;
+	color: rgba(62, 55, 72, 0.5);
+	transition: color 350ms ease, background-color 350ms ease;
 }
 
 :local .codeWrapper .inactiveButton:hover {
-  background-color: #FBFBFD;
-  color: #3E3748;
+	background-color: #FBFBFD;
+	color: #3E3748;
 }
 
 :local .undo,
 :local .redo {
-  position: absolute;
-  top: 43px;
-  width: 30px;
-  height: 30px;
-  z-index: 100;
-  font-size: 1.4rem;
-  color: #ccc;
-  background: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-weight: 700;
-  transition: color 250ms ease;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
+	position: absolute;
+	top: 43px;
+	width: 30px;
+	height: 30px;
+	z-index: 100;
+	font-size: 1.4rem;
+	color: #ccc;
+	background: none;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	font-weight: 700;
+	transition: color 250ms ease;
+	-webkit-font-smoothing: antialiased;
 }
 
 :local .undo {
-  color: #FE5D4B;
-  right: 45px;
+	color: #FE5D4B;
+	right: 45px;
 }
 
 :local .undo:hover {
-  color: #C52522;
+	color: #C52522;
 }
 
 :local .redo {
-  color: #3DA099;
-  right: 15px;
+	color: #3DA099;
+	right: 15px;
 }
 
 :local .redo:hover {
-  color: #214E50
+	color: #214E50
 }

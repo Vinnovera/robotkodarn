@@ -20,118 +20,118 @@ import WorkspaceButtons from './WorkspaceButtons'
 import styles from './workspace.css'
 
 export class Workspace extends Component {
-  constructor(props) {
-    super(props)
+	constructor(props) {
+		super(props)
 
-    this.updateCode = this.updateCode.bind(this)
-  }
+		this.updateCode = this.updateCode.bind(this)
+	}
 
-  componentWillMount() {
-    this.props.dispatch(findWorkshopByPin(this.props.params.pin))
-  }
+	componentWillMount() {
+		this.props.dispatch(findWorkshopByPin(this.props.params.pin))
+	}
 
-  componentWillUnmount() {
-    this.props.dispatch(clearWorkshop())
-  }
+	componentWillUnmount() {
+		this.props.dispatch(clearWorkshop())
+	}
 
-  getMainPaneClassName = () => {
-    if (this.props.isSidebarOpen) {
-      return styles.mainPane
-    }
+	getMainPaneClassName = () => {
+		if (this.props.isSidebarOpen) {
+			return styles.mainPane
+		}
 
-    return `${styles.mainPane} ${styles.mainPaneExpanded}`
-  }
+		return `${styles.mainPane} ${styles.mainPaneExpanded}`
+	}
 
-  updateCode() {
-    const currentPartContent = this.props.partsToEdit[this.props.activePartIndex].content
-    const workshopId = this.props.currentWorkshop._id
-    const currentPartId = this.props.partsToEdit[this.props.activePartIndex]._id
+	updateCode() {
+		const currentPartContent = this.props.partsToEdit[this.props.activePartIndex].content
+		const workshopId = this.props.currentWorkshop._id
+		const currentPartId = this.props.partsToEdit[this.props.activePartIndex]._id
 
-    this.props.dispatch(updatePartContent(currentPartContent, workshopId, currentPartId))
-    this.props.dispatch(setCodeToUnsaved(false))
-  }
+		this.props.dispatch(updatePartContent(currentPartContent, workshopId, currentPartId))
+		this.props.dispatch(setCodeToUnsaved(false))
+	}
 
-  renderMainContent() {
-    if (this.props.currentWorkshop) {
-      return (this.props.isLoggedIn && this.props.editing) ? (
-        <View background="editMode">
-          <ToolsButton />
-          <Sidebar />
+	renderMainContent() {
+		if (this.props.currentWorkshop) {
+			return (this.props.isLoggedIn && this.props.editing) ? (
+				<View background="editMode">
+					<ToolsButton />
+					<Sidebar />
 
-          <FadeIn>
-            { (this.props.currentEditingType === 'link') ?
-              <main className={this.getMainPaneClassName()}>
-                { this.props.currentWorkshop.links.length > 0 ?
-                  <LinkForm />
-                  : <h3>Det finns inga länkar!</h3>
-                }
-              </main>
-              : (
-                <main className={this.getMainPaneClassName()}>
-                  { this.props.currentWorkshop.parts.length > 0 ? (
-                    <div style={{ height: '100%' }}>
-                      <PartTitle />
-                      <WorkspaceButtons />
-                      <Editor />
-                      <div className={styles.saveCodeButtonContainer}>
-                        <button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
-                          <div><span><FA name="check" /> Sparat</span></div>
-                          <FA name="save" /> Spara kod
-                        </button>
-                      </div>
-                      <Console />
-                    </div>) : <h3>Det finns inga lektioner!</h3>
-                  }
-                </main>
-              )
-            }
-          </FadeIn>
-        </View>
-      ) : (
-        <View>
-          { this.props.isLoggedIn && <ToolsButton /> }
-          <Sidebar />
+					<FadeIn>
+						{ (this.props.currentEditingType === 'link') ?
+							<main className={this.getMainPaneClassName()}>
+								{ this.props.currentWorkshop.links.length > 0 ?
+									<LinkForm />
+									: <h3>Det finns inga länkar!</h3>
+								}
+							</main>
+							: (
+								<main className={this.getMainPaneClassName()}>
+									{ this.props.currentWorkshop.parts.length > 0 ? (
+										<div style={{ height: '100%' }}>
+											<PartTitle />
+											<WorkspaceButtons />
+											<Editor />
+											<div className={styles.saveCodeButtonContainer}>
+												<button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
+													<div><span><FA name="check" /> Sparat</span></div>
+													<FA name="save" /> Spara kod
+												</button>
+											</div>
+											<Console />
+										</div>) : <h3>Det finns inga lektioner!</h3>
+									}
+								</main>
+							)
+						}
+					</FadeIn>
+				</View>
+			) : (
+				<View>
+					{ this.props.isLoggedIn && <ToolsButton /> }
+					<Sidebar />
 
-          <FadeIn>
-            <main className={this.getMainPaneClassName()}>
-              { this.props.currentWorkshop.parts.length > 0 && this.props.activePartIndex >= 0 ?
-                <h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
-                :
-                <h1 className={styles.workspaceHeadline}>Övning</h1>
-              }
-              <WorkspaceButtons />
-              <Editor />
-              <Console />
-            </main>
-          </FadeIn>
-        </View>
-      )
-    }
+					<FadeIn>
+						<main className={this.getMainPaneClassName()}>
+							{ this.props.currentWorkshop.parts.length > 0 && this.props.activePartIndex >= 0 ?
+								<h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
+								:
+								<h1 className={styles.workspaceHeadline}>Övning</h1>
+							}
+							<WorkspaceButtons />
+							<Editor />
+							<Console />
+						</main>
+					</FadeIn>
+				</View>
+			)
+		}
 
-    return (
-      <Spinner />
-    )
-  }
+		return (
+			<Spinner />
+		)
+	}
 
-  render() {
-    return this.renderMainContent()
-  }
+	render() {
+		return this.renderMainContent()
+	}
 }
 
 function mapStateToProps(state) {
-  return {
-    isSidebarOpen: state.sidebar.open,
-    currentWorkshop: state.workshops.item,
-    activePartIndex: state.editor.activePartIndex,
-    activeLinkIndex: state.workshops.activeLinkIndex,
-    editing: state.editor.editing,
-    editingType: state.editor.editingType.type,
-    partsToEdit: state.editor.partsToEdit,
-    isLoggedIn: state.user.isLoggedIn,
-    currentEditingType: state.workshops.currentEditingType,
-    codeSaved: state.workshops.codeSaved, // When code is saved (when button is pressed)
-    codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
-  }
+	return {
+		isSidebarOpen: state.sidebar.open,
+		currentWorkshop: state.workshops.item,
+		activePartIndex: state.editor.activePartIndex,
+		activeLinkIndex: state.workshops.activeLinkIndex,
+		editing: state.editor.editing,
+		editingType: state.editor.editingType.type,
+		partsToEdit: state.editor.partsToEdit,
+		isLoggedIn: state.user.isLoggedIn,
+		currentEditingType: state.workshops.currentEditingType,
+		codeSaved: state.workshops.codeSaved, // When code is saved (when button is pressed)
+		codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
+	}
 }
 
 export default connect(mapStateToProps)(Workspace)

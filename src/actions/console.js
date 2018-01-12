@@ -15,21 +15,21 @@ const CLEAR_CONSOLE = 'CLEAR_CONSOLE'
  * If no type provided, heading will be black.
  */
 export const setConsoleOutput = output => (dispatch) => {
-  dispatch({
-    type: SET_CONSOLE_OUTPUT,
-    payload: {
-      type: output.type,
-      heading: output.heading,
-      message: output.message
-    }
-  })
+	dispatch({
+		type: SET_CONSOLE_OUTPUT,
+		payload: {
+			type: output.type,
+			heading: output.heading,
+			message: output.message
+		}
+	})
 }
 
 // -----------------------------------------------------------------------------
 // clearConsole, clears console
 // -----------------------------------------------------------------------------
 export const clearConsole = () => (dispatch) => {
-  dispatch({
-    type: CLEAR_CONSOLE
-  })
+	dispatch({
+		type: CLEAR_CONSOLE
+	})
 }

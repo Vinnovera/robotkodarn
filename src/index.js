@@ -23,15 +23,15 @@ import './index.css'
 
 // Enable Redux DevTools
 const enhancers = compose(
-  window.devToolsExtension ?
-    window.devToolsExtension() :
-    f => f
+	window.devToolsExtension ?
+		window.devToolsExtension() :
+		f => f
 )
 
 const reduxRouterMiddleware = syncHistory(browserHistory)
 const createStoreWithMiddleware = compose(applyMiddleware(
-  reduxRouterMiddleware,
-  thunkMiddleware
+	reduxRouterMiddleware,
+	thunkMiddleware
 ), enhancers)(createStore)
 export const store = createStoreWithMiddleware(reducers)
 
@@ -40,20 +40,20 @@ export const store = createStoreWithMiddleware(reducers)
  * since react-router has changed a lot from the version we are currently using.
  */
 render((
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <IndexRedirect to="/login" />
-        <Route path="/pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
-        <Route path="/editor" component={Editor} onEnter={authorize} forward="onlyAuthCheck" />
-        <Route path="/id/:pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
-        <Route path="/login" component={LoginWithPin} onEnter={authorize} forward="onlyAuthCheck" />
-        <Route path="/admin" component={LoginAdmin} onEnter={authorize} forward="/workshops" />
-        <Route path="/workshops" component={Workshops} onEnter={authorize} permissions={['superadmin', 'editor']} />
-        <Route path="/invite" component={Invite} onEnter={authorize} permissions={['superadmin']} />
-        <Route path="/register" component={RegisterForm} onEnter={authorize} forward="/workshops" />
-        <Route path="*" component={NotFound} onEnter={authorize} forward="onlyAuthCheck" />
-      </Route>
-    </Router>
-  </Provider>
+	<Provider store={store}>
+		<Router history={browserHistory}>
+			<Route path="/" component={App}>
+				<IndexRedirect to="/login" />
+				<Route path="/pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
+				<Route path="/editor" component={Editor} onEnter={authorize} forward="onlyAuthCheck" />
+				<Route path="/id/:pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
+				<Route path="/login" component={LoginWithPin} onEnter={authorize} forward="onlyAuthCheck" />
+				<Route path="/admin" component={LoginAdmin} onEnter={authorize} forward="/workshops" />
+				<Route path="/workshops" component={Workshops} onEnter={authorize} permissions={['superadmin', 'editor']} />
+				<Route path="/invite" component={Invite} onEnter={authorize} permissions={['superadmin']} />
+				<Route path="/register" component={RegisterForm} onEnter={authorize} forward="/workshops" />
+				<Route path="*" component={NotFound} onEnter={authorize} forward="onlyAuthCheck" />
+			</Route>
+		</Router>
+	</Provider>
 ), document.getElementById('root'))

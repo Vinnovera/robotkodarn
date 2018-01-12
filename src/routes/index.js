@@ -12,50 +12,50 @@ import { IS_AUHTORIZED, signOut } from '../actions/auth'
  * @param {function} callback Called when function is complete
  */
 export const authorize = (nextState, replace, callback) => {
-  // The second one in the array is the route we are requesting
-  const route = nextState.routes[1]
+	// The second one in the array is the route we are requesting
+	const route = nextState.routes[1]
 
-  axios.get('/auth/checkAuthorization')
-    .then(({ data }) => {
-      // If data is returned, dispatch information about user
-      if (data) {
-        store.dispatch({
-          type: IS_AUHTORIZED,
-          payload: {
-            ...data,
-            isLoggedIn: true
-          }
-        })
-      }
+	axios.get('/auth/checkAuthorization')
+		.then(({ data }) => {
+			// If data is returned, dispatch information about user
+			if (data) {
+				store.dispatch({
+					type: IS_AUHTORIZED,
+					payload: {
+						...data,
+						isLoggedIn: true
+					}
+				})
+			}
 
-      /* If route.forward === 'onlyAuthCheck',
-       * return straight after dispatching (no redirect).
-       */
-      if (route.forward === 'onlyAuthCheck') {
-        return
-      } else if (route.forward) {
-        return replace(route.forward)
-      }
+			/* If route.forward === 'onlyAuthCheck',
+			 * return straight after dispatching (no redirect).
+			 */
+			if (route.forward === 'onlyAuthCheck') {
+				return
+			} else if (route.forward) {
+				return replace(route.forward)
+			}
 
-      /* If route requires specific user role for accessing,
-       * make sure user has the right permissions.
-       */
-      if (route.permissions.length > 0) {
-        const isAuthorized = route.permissions.indexOf(data.role) !== -1
+			/* If route requires specific user role for accessing,
+			 * make sure user has the right permissions.
+			 */
+			if (route.permissions.length > 0) {
+				const isAuthorized = route.permissions.indexOf(data.role) !== -1
 
-        if (!isAuthorized) {
-          store.dispatch(signOut('/admin'))
-          return replace('/admin')
-        }
-      }
-    })
-    .catch((error) => {
-      if (error.response && error.response.status === 401) {
-        if (!route.forward) {
-          store.dispatch(signOut('/admin'))
-          return replace('/admin')
-        }
-      }
-    })
-    .then(callback)
+				if (!isAuthorized) {
+					store.dispatch(signOut('/admin'))
+					return replace('/admin')
+				}
+			}
+		})
+		.catch((error) => {
+			if (error.response && error.response.status === 401) {
+				if (!route.forward) {
+					store.dispatch(signOut('/admin'))
+					return replace('/admin')
+				}
+			}
+		})
+		.then(callback)
 }

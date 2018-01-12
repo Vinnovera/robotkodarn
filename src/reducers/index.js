@@ -11,14 +11,14 @@ import statusBar from './statusBar'
 import serial from './serial'
 
 export default combineReducers({
-  routeReducer,
-  editor,
-  invite,
-  sidebar,
-  workshops,
-  menu,
-  user,
-  workspaceButtons,
-  statusBar,
-  serial
+	routeReducer,
+	editor,
+	invite,
+	sidebar,
+	workshops,
+	menu,
+	user,
+	workspaceButtons,
+	statusBar,
+	serial
 })
