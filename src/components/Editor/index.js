@@ -11,6 +11,7 @@ import AceEditor from 'react-ace'
 /* eslint-disable import/no-extraneous-dependencies */
 import 'brace/mode/c_cpp'
 import 'brace/theme/github'
+import 'brace/theme/tomorrow'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import FA from 'react-fontawesome'
@@ -121,7 +122,7 @@ export class Editor extends Component {
     return (
       <AceEditor
         ref={this.setEditorRef}
-        theme="github"
+        theme="tomorrow"
         fontSize="16px"
         mode="c_cpp"
         name="codeEditor"
@@ -145,7 +146,7 @@ export class Editor extends Component {
     if (this.props.activeTab === 'user') {
       return (
         <div>
-          <button className={styles.undo} onClick={() => { this.editorRef.editor.undo() }}><FA name="undo" /></button>
+          <button className={styles.undo} onClick={() => { console.log(this.editorRef.editor) }}><FA name="undo" /></button>
           <button className={styles.redo} onClick={() => { this.editorRef.editor.redo() }}><FA name="repeat" /></button>
         </div>
       )
