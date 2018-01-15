@@ -53,12 +53,10 @@ export const getWorkshopsByUserId = () => (dispatch) => {
 			}
 		})
 		.then((response) => {
-			setTimeout(() => {
-				dispatch({
-					type: SET_WORKSHOPS_DONE,
-					payload: response.data
-				})
-			}, 2000)
+			dispatch({
+				type: SET_WORKSHOPS_DONE,
+				payload: response.data
+			})
 		})
 		.catch(error => console.log(error))
 }
@@ -78,12 +76,10 @@ export const addWorkshop = workshop => (dispatch) => {
 			}
 		})
 		.then(({ data }) => {
-			setTimeout(() => {
-				dispatch({
-					type: ADD_WORKSHOP_DONE,
-					payload: data
-				})
-			}, 2000)
+			dispatch({
+				type: ADD_WORKSHOP_DONE,
+				payload: data
+			})
 		})
 		.catch(error => console.log(error))
 }
