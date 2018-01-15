@@ -121,7 +121,7 @@ class Workshops extends Component {
 				</table>
 				{
 					this.props.isAddingWorkshop
-						? <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="2rem" style={{ marginBottom: '10px' }} /></div>
+						? <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="1.5rem" style={{ marginBottom: '10px' }} /></div>
 						: ''
 				}
 				{ this.renderAddButton() }
