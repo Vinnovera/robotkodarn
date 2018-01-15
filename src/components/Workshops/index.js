@@ -44,56 +44,97 @@ class Workshops extends Component {
 		this.props.dispatch(createWorkshop())
 	}
 
-	render() {
-		const workshops = this.props.userWorkshops
+	renderSpinner() {
 		return (
-			<View background="red">
-				{ this.props.isLoggedIn && <header className={styles.header}><h1 className={styles.headerTitle}>Robotkodarn</h1><ToolsButton /></header> }
-				<FadeIn>
-					<div className={styles.workshops}>
-						<h1 className={styles.workshopHeadline}>Mina workshops</h1>
-						<form className={styles.form} method="post">
-							{ workshops.length > 0 ?
-								<table className={styles.workshopTable}>
-									<thead>
-										<tr>
-											<th>Namn</th>
-											<th>Pinkod</th>
-											<th>Kopiera</th>
-											<th>Radera</th>
-										</tr>
-									</thead>
-									<tbody>
-										{workshops.map((workshop) => {
-											return (
-												<tr className={styles.workshopItem} key={workshop._id}>
-													<td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
-													<td>{workshop.pincode}</td>
-													<td>
-														<button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
-															<FA name="clone" />
-														</button>
-													</td>
-													<td>
-														<button onClick={this.handleWorkshop} type="submit" className={styles.tableIconDanger} value={workshop._id} name="delete">
-															<FA name="times" />
-														</button>
-													</td>
-												</tr>
-											)
-										}
-										)}
-									</tbody>
-								</table>
-								:
-								<p className={styles.info}>Du har inte skapat några workshops än.</p>
-							}
-							<div className={styles.buttonContainer}>
-								<Button kind="success" handleClick={this.handleCreateNew}>Lägg till ny</Button>
-							</div>
-						</form>
-					</div>
-				</FadeIn>
+			<div className={styles.cog}>
+				<FA name="cog" />
+			</div>
+		)
+	}
+
+	renderNoWorkshops() {
+		return (
+			<FadeIn>
+				<p className={styles.info}>Du har inte skapat några workshops än.</p>
+				<div className={styles.buttonContainer}>
+					<form className={styles.form} method="post">
+						<Button kind="success" handleClick={this.handleCreateNew}>Lägg till ny</Button>
+					</form>
+				</div>
+			</FadeIn>
+		)
+	}
+
+	renderListOfWorkshops() {
+		return (
+			<FadeIn>
+				<table className={styles.workshopTable}>
+					<thead>
+						<tr>
+							<th>Namn</th>
+							<th>Pinkod</th>
+							<th>Kopiera</th>
+							<th>Radera</th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							this.props.userWorkshops.map((workshop) => {
+								return (
+									<tr className={styles.workshopItem} key={workshop._id}>
+										<td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
+										<td>{workshop.pincode}</td>
+										<td>
+											<button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
+												<FA name="clone" />
+											</button>
+										</td>
+										<td>
+											<button onClick={this.handleWorkshop} type="submit" className={styles.tableIconDanger} value={workshop._id} name="delete">
+												<FA name="times" />
+											</button>
+										</td>
+									</tr>
+								)
+							})
+						}
+					</tbody>
+				</table>
+				<div className={styles.buttonContainer}>
+					<form className={styles.form} method="post">
+						<Button kind="success" handleClick={this.handleCreateNew}>Lägg till ny</Button>
+					</form>
+				</div>
+			</FadeIn>
+		)
+	}
+
+	renderHeader() {
+		return this.props.isLoggedIn ? (
+			<header className={styles.header}>
+				<h1 className={styles.headerTitle}>Robotkodarn</h1>
+				<ToolsButton />
+			</header>
+		) : ''
+	}
+
+	renderCombined() {
+		if (this.props.isLoadingWorkshop) {
+			return this.renderSpinner()
+		} else if (this.props.userWorkshops.length > 0) {
+			return this.renderListOfWorkshops()
+		}
+		return this.renderNoWorkshops()
+	}
+
+	render() {
+		return (
+			<View background="listWorkshopsView">
+				{ this.renderHeader() }
+				<div className={styles.workshops}>
+					<h1 className={styles.workshopHeadline}>Mina workshops</h1>
+					{ this.renderCombined() }
+				</div>
 			</View>
 		)
 	}
@@ -104,7 +145,8 @@ function mapStateToProps(state) {
 		userWorkshops: state.workshops.userWorkshops,
 		role: state.user.isLoggedIn,
 		editing: state.editor.editing,
-		isLoggedIn: state.user.isLoggedIn
+		isLoggedIn: state.user.isLoggedIn,
+		isLoadingWorkshop: state.workshops.isLoadingWorkshop
 	}
 }
 

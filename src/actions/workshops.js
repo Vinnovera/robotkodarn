@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { routeActions } from 'redux-simple-router'
 
-const SET_WORKSHOPS = 'SET_WORKSHOPS'
+const SET_WORKSHOPS_DONE = 'SET_WORKSHOPS_DONE'
+const SET_WORKSHOPS_START = 'SET_WORKSHOPS_START'
 const ADD_WORKSHOP = 'ADD_WORKSHOP'
 const REMOVE_WORKSHOP = 'REMOVE_WORKSHOP'
 const SET_MESSAGE = 'SET_MESSAGE'
@@ -41,6 +42,10 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
 // getWorkshopsByUserId, get logged in users' workshops
 // -----------------------------------------------------------------------------
 export const getWorkshopsByUserId = () => (dispatch) => {
+	dispatch({
+		type: SET_WORKSHOPS_START
+	})
+
 	axios
 		.get('/api/workshopsbyuser', {
 			headers: {
@@ -48,7 +53,12 @@ export const getWorkshopsByUserId = () => (dispatch) => {
 			}
 		})
 		.then((response) => {
-			dispatch({ type: SET_WORKSHOPS, payload: response.data })
+			setTimeout(() => {
+				dispatch({
+					type: SET_WORKSHOPS_DONE,
+					payload: response.data
+				})
+			}, 2000)
 		})
 		.catch(error => console.log(error))
 }

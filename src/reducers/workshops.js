@@ -16,10 +16,18 @@ export default handleActions({
 		})
 	},
 
-	SET_WORKSHOPS: (state, action) => {
+	SET_WORKSHOPS_START: (state) => {
 		return ({
 			...state,
-			userWorkshops: action.payload
+			isLoadingWorkshop: true
+		})
+	},
+
+	SET_WORKSHOPS_DONE: (state, action) => {
+		return ({
+			...state,
+			userWorkshops: action.payload,
+			isLoadingWorkshop: false
 		})
 	},
 
@@ -282,5 +290,6 @@ export default handleActions({
 	activeLinkIndex: 0,
 	linkSaved: false,
 	isAddingPart: false,
-	isAddingLink: false
+	isAddingLink: false,
+	isLoadingWorkshop: false
 })
