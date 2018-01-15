@@ -19,6 +19,7 @@ const SET_CURRENT_EDITING_TYPE = 'SET_CURRENT_EDITING_TYPE'
 const TOGGLE_EDITING = 'TOGGLE_EDITING'
 const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
 const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP'
+const SET_ACTIVE_WORKSHOPS_TAB = 'SET_ACTIVE_WORKSHOPS_TAB'
 
 // -----------------------------------------------------------------------------
 // updateWorkshopTitle, updates the workshop title in current workshop
@@ -220,5 +221,15 @@ export const setEditingType = (type, id = null) => (dispatch) => {
 			type,
 			id
 		}
+	})
+}
+
+// -----------------------------------------------------------------------------
+// setActiveWorkshopsTab, sets the active tab in Workshops component
+// -----------------------------------------------------------------------------
+export const setActiveWorkshopsTab = activeTab => (dispatch) => {
+	dispatch({
+		type: SET_ACTIVE_WORKSHOPS_TAB,
+		payload: activeTab
 	})
 }

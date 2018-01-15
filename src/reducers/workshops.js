@@ -46,6 +46,13 @@ export default handleActions({
 		})
 	},
 
+	SET_ACTIVE_WORKSHOPS_TAB: (state, action) => {
+		return ({
+			...state,
+			activeWorkshopsTab: action.payload
+		})
+	},
+
 	ADD_WORKSHOP_START: (state) => {
 		return ({
 			...state,
@@ -317,5 +324,6 @@ export default handleActions({
 	isAddingLink: false,
 	isAddingWorkshop: false,
 	isLoadingUserWorkshops: false,
-	isLoadingAllWorkshops: false
+	isLoadingAllWorkshops: false,
+	activeWorkshopsTab: 'user'
 })

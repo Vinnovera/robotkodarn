@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { setActiveWorkshopsTab } from '../../actions/workshops'
+
 import View from '../View'
 import UserWorkshops from './UserWorkshops'
 import AllWorkshops from './AllWorkshops'
@@ -9,15 +11,8 @@ import ToolsButton from '../ToolsButton'
 import styles from './workshops.css'
 
 class Workshops extends Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			workshopsTab: 'user'
-		}
-	}
 	setTab(tab) {
-		this.setState({ workshopsTab: tab })
+		this.props.dispatch(setActiveWorkshopsTab(tab))
 	}
 
 	renderHeader() {
@@ -30,9 +25,9 @@ class Workshops extends Component {
 	}
 
 	renderWorkshopList() {
-		if (this.state.workshopsTab === 'user') {
+		if (this.props.activeWorkshopsTab === 'user') {
 			return <UserWorkshops />
-		} else if (this.state.workshopsTab === 'all') {
+		} else if (this.props.activeWorkshopsTab === 'all') {
 			return <AllWorkshops />
 		}
 	}
@@ -45,11 +40,11 @@ class Workshops extends Component {
 				<div className={styles.workshops}>
 					<nav>
 						<ul>
-							<li className={`${this.state.workshopsTab === 'user' ? styles.activeTab : ''}`}>
+							<li className={`${this.props.activeWorkshopsTab === 'user' ? styles.activeTab : ''}`}>
 								<button onClick={() => this.setTab('user')}>Mina workshops</button>
 							</li>
 
-							<li className={`${this.state.workshopsTab === 'all' ? styles.activeTab : ''}`}>
+							<li className={`${this.props.activeWorkshopsTab === 'all' ? styles.activeTab : ''}`}>
 								<button onClick={() => this.setTab('all')}>Alla workshops</button>
 							</li>
 						</ul>
@@ -64,11 +59,11 @@ class Workshops extends Component {
 function mapStateToProps(state) {
 	return {
 		userWorkshops: state.workshops.userWorkshops,
-		role: state.user.isLoggedIn,
 		editing: state.editor.editing,
 		isLoggedIn: state.user.isLoggedIn,
 		isLoadingUserWorkshops: state.workshops.isLoadingUserWorkshops,
-		isAddingWorkshop: state.workshops.isAddingWorkshop
+		isAddingWorkshop: state.workshops.isAddingWorkshop,
+		activeWorkshopsTab: state.workshops.activeWorkshopsTab
 	}
 }
 

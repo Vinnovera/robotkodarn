@@ -6,7 +6,8 @@ import { Link } from 'react-router'
 import {
 	toggleEditing,
 	getAllWorkshops,
-	copyWorkshop
+	copyWorkshop,
+	setActiveWorkshopsTab
 } from '../../../actions/workshops'
 
 import FadeIn from '../../FadeIn'
@@ -41,6 +42,7 @@ class AllWorkshops extends Component {
 
 		if (name === 'copy') {
 			this.props.dispatch(copyWorkshop(value))
+			this.props.dispatch(setActiveWorkshopsTab('user'))
 		}
 	}
 
