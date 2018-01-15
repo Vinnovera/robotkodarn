@@ -118,6 +118,7 @@
 	:local .addButtonWrapper button[disabled]:hover {
 		color: #b6b6b6;
 		cursor: not-allowed;
+		background: transparent;
 	}
 	:local .addButtonWrapper button:hover {
 		color: #fe5d4b;
