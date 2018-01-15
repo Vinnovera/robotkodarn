@@ -84,7 +84,7 @@ class LinkList extends Component {
 
 	confirmDeletion() {
 		// Move to the fist link if you are deleting the one you're currently on
-		if (this.state.deleteLinkIndex === this.props.activeLinkIndex) {
+		if (this.state.deletePromptIndex === this.props.activeLinkIndex) {
 			this.props.dispatch(setActiveLinkIndex(0))
 		}
 

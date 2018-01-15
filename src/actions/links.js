@@ -71,7 +71,7 @@ export const updateLink = (linkObject, workshopID, linkId) => (dispatch) => {
 	})
 
 	axios
-		.put(`/api/workshop/${workshopID}/link/${linkId}`, { title: linkObject.title }, {
+		.put(`/api/workshop/${workshopID}/link/${linkId}`, { title: linkObject.title, content: linkObject.content }, {
 			headers: {
 				'content-type': 'application/json'
 			}
