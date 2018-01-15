@@ -154,6 +154,8 @@ const updateWorkshopLinks = async (request, reply) => {
 // Copy a workshop by existing workshop with ID [POST]
 // -----------------------------------------------------------------------------
 const copyWorkshop = async (request, reply) => {
+	const loggedInUserId = request.auth.credentials._id
+
 	try {
 		const existingWorkshop = await Workshop.findOne({ _id: request.params.id })
 
@@ -161,7 +163,8 @@ const copyWorkshop = async (request, reply) => {
 			title: `${existingWorkshop.title} – kopia`,
 			_id: mongoose.Types.ObjectId(),
 			isNew: true,
-			pincode: Math.floor(1000 + (Math.random() * 9000))
+			pincode: Math.floor(1000 + (Math.random() * 9000)),
+			userId: loggedInUserId
 		})
 
 		await copy.save()
