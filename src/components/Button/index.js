@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './button.css'
 
-const Button = ({ children, handleClick, kind = 'normal' }) => {
+const Button = ({ children, handleClick, kind = 'normal', disabled = false }) => {
 	let buttonStyle = styles.button
 
 	if (kind === 'danger') {
@@ -13,7 +13,7 @@ const Button = ({ children, handleClick, kind = 'normal' }) => {
 	}
 
 	return (
-  <button onClick={handleClick} className={buttonStyle}>{children}</button>
+		<button disabled={disabled} onClick={handleClick} className={buttonStyle}>{children}</button>
 	)
 }
 

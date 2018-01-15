@@ -31,10 +31,18 @@ export default handleActions({
 		})
 	},
 
-	ADD_WORKSHOP: (state, action) => {
+	ADD_WORKSHOP_START: (state) => {
 		return ({
 			...state,
-			userWorkshops: [...state.userWorkshops, action.payload]
+			isAddingWorkshop: true
+		})
+	},
+
+	ADD_WORKSHOP_DONE: (state, action) => {
+		return ({
+			...state,
+			userWorkshops: [...state.userWorkshops, action.payload],
+			isAddingWorkshop: false
 		})
 	},
 
@@ -291,5 +299,6 @@ export default handleActions({
 	linkSaved: false,
 	isAddingPart: false,
 	isAddingLink: false,
-	isLoadingWorkshop: false
+	isLoadingWorkshop: false,
+	isAddingWorkshop: false
 })

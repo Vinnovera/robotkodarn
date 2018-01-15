@@ -15,6 +15,8 @@ import View from '../View'
 import FadeIn from '../FadeIn'
 import Button from '../Button'
 import ToolsButton from '../ToolsButton'
+import SpinnerCog from '../SpinnerCog'
+
 import styles from './workshops.css'
 
 class Workshops extends Component {
@@ -57,9 +59,17 @@ class Workshops extends Component {
 
 	renderSpinner() {
 		return (
-			<div className={styles.cog}>
-				<FA name="cog" />
+			<div className={styles.spinnerCogWrapper}>
+				<SpinnerCog fontSize="5rem" />
 			</div>
+		)
+	}
+
+	renderAddButton() {
+		return (
+			<form className={styles.form} method="post">
+				<Button disabled={this.props.isAddingWorkshop} kind="success" handleClick={this.handleAddWorkshop}>Lägg till ny</Button>
+			</form>
 		)
 	}
 
@@ -68,9 +78,7 @@ class Workshops extends Component {
 			<FadeIn>
 				<p className={styles.info}>Du har inte skapat några workshops än.</p>
 				<div className={styles.buttonContainer}>
-					<form className={styles.form} method="post">
-						<Button kind="success" handleClick={this.handleAddWorkshop}>Lägg till ny</Button>
-					</form>
+					{ this.renderAddButton() }
 				</div>
 			</FadeIn>
 		)
@@ -111,9 +119,12 @@ class Workshops extends Component {
 						}
 					</tbody>
 				</table>
-				<form className={styles.form} method="post">
-					<Button kind="success" handleClick={this.handleAddWorkshop}>Lägg till ny</Button>
-				</form>
+				{
+					this.props.isAddingWorkshop
+						? <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="2rem" style={{ marginBottom: '10px' }} /></div>
+						: ''
+				}
+				{ this.renderAddButton() }
 			</FadeIn>
 		)
 	}
@@ -155,7 +166,8 @@ function mapStateToProps(state) {
 		role: state.user.isLoggedIn,
 		editing: state.editor.editing,
 		isLoggedIn: state.user.isLoggedIn,
-		isLoadingWorkshop: state.workshops.isLoadingWorkshop
+		isLoadingWorkshop: state.workshops.isLoadingWorkshop,
+		isAddingWorkshop: state.workshops.isAddingWorkshop
 	}
 }
 

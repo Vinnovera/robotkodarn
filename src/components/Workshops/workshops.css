@@ -28,7 +28,7 @@
 	border-radius: 4px;
 	margin: 3rem auto;
 	max-width: 1000px;
-	padding: 1rem 0.5rem 3rem 0.5rem;
+	padding: 1rem 0.5rem 1.5rem 0.5rem;
 	width: 95vw;
 }
 
@@ -156,20 +156,6 @@
 :local .tableIconDanger:hover {
 	color: #FE5D4B;
 }
-:local .cog {
+:local .spinnerCogWrapper {
 	text-align: center;
-}
-
-:local .cog span {
-	font-size: 5rem;
-	animation: spin 4s linear infinite;
-}
-
-@keyframes :local(spin) {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
 }
