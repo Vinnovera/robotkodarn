@@ -22,7 +22,7 @@ class Workshops extends Component {
 		this.props.dispatch(getWorkshopsByUserId())
 	}
 
-	handleWorkshop = (event) => {
+	handleWorkshop(event) {
 		event.preventDefault()
 		const { value, name } = event.currentTarget
 
@@ -33,13 +33,13 @@ class Workshops extends Component {
 		}
 	}
 
-	startEditing = () => {
+	startEditing() {
 		if (!this.props.editing) {
 			this.props.dispatch(toggleEditing())
 		}
 	}
 
-	handleCreateNew = (event) => {
+	handleCreateNew(event) {
 		event.preventDefault()
 		this.props.dispatch(createWorkshop())
 	}
