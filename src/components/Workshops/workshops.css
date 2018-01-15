@@ -28,7 +28,7 @@
 	border-radius: 4px;
 	margin: 3rem auto;
 	max-width: 1000px;
-	padding: 1rem 0.5rem 4rem;
+	padding: 1rem 0.5rem 1.5rem 0.5rem;
 	width: 95vw;
 }
 
@@ -155,4 +155,7 @@
 
 :local .tableIconDanger:hover {
 	color: #FE5D4B;
+}
+:local .spinnerCogWrapper {
+	text-align: center;
 }

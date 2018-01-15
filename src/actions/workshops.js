@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { routeActions } from 'redux-simple-router'
 
-const SET_WORKSHOPS = 'SET_WORKSHOPS'
-const ADD_WORKSHOP = 'ADD_WORKSHOP'
+const SET_WORKSHOPS_DONE = 'SET_WORKSHOPS_DONE'
+const SET_WORKSHOPS_START = 'SET_WORKSHOPS_START'
+const ADD_WORKSHOP_START = 'ADD_WORKSHOP_START'
+const ADD_WORKSHOP_DONE = 'ADD_WORKSHOP_DONE'
 const REMOVE_WORKSHOP = 'REMOVE_WORKSHOP'
-const SET_MESSAGE = 'SET_MESSAGE'
 const UPDATE_WORKSHOP_TITLE_START = 'UPDATE_WORKSHOP_TITLE_START'
 const UPDATE_WORKSHOP_TITLE_DONE = 'UPDATE_WORKSHOP_TITLE_DONE'
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
@@ -41,6 +42,10 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
 // getWorkshopsByUserId, get logged in users' workshops
 // -----------------------------------------------------------------------------
 export const getWorkshopsByUserId = () => (dispatch) => {
+	dispatch({
+		type: SET_WORKSHOPS_START
+	})
+
 	axios
 		.get('/api/workshopsbyuser', {
 			headers: {
@@ -48,15 +53,24 @@ export const getWorkshopsByUserId = () => (dispatch) => {
 			}
 		})
 		.then((response) => {
-			dispatch({ type: SET_WORKSHOPS, payload: response.data })
+			setTimeout(() => {
+				dispatch({
+					type: SET_WORKSHOPS_DONE,
+					payload: response.data
+				})
+			}, 2000)
 		})
 		.catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
-// createWorkshop, creates empty workshop with a title and a PIN
+// addWorkshop, creates empty workshop with a title and a PIN
 // -----------------------------------------------------------------------------
-export const createWorkshop = workshop => (dispatch) => {
+export const addWorkshop = workshop => (dispatch) => {
+	dispatch({
+		type: ADD_WORKSHOP_START
+	})
+
 	axios
 		.post('/api/workshop', workshop, {
 			headers: {
@@ -64,16 +78,12 @@ export const createWorkshop = workshop => (dispatch) => {
 			}
 		})
 		.then(({ data }) => {
-			dispatch({
-				type: ADD_WORKSHOP,
-				payload: data
-			})
-
-			dispatch({
-				type: SET_MESSAGE,
-				payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
-				time: +new Date()
-			})
+			setTimeout(() => {
+				dispatch({
+					type: ADD_WORKSHOP_DONE,
+					payload: data
+				})
+			}, 2000)
 		})
 		.catch(error => console.log(error))
 }
@@ -90,14 +100,8 @@ export const copyWorkshop = workshopId => (dispatch) => {
 		})
 		.then(({ data }) => {
 			dispatch({
-				type: ADD_WORKSHOP,
+				type: ADD_WORKSHOP_DONE,
 				payload: data
-			})
-
-			dispatch({
-				type: SET_MESSAGE,
-				payload: `Workshopen ${data.title} är nu tillagd med pinkoden: ${data.pincode}.`,
-				time: +new Date()
 			})
 		})
 		.catch(error => console.log(error))
@@ -117,12 +121,6 @@ export const deleteWorkshop = workshopId => (dispatch) => {
 			dispatch({
 				type: REMOVE_WORKSHOP,
 				payload: data.id
-			})
-
-			dispatch({
-				type: SET_MESSAGE,
-				payload: 'Workshopen är nu borttagen.',
-				time: +new Date()
 			})
 		})
 		.catch(error => console.log(error))

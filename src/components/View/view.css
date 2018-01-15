@@ -1,6 +1,7 @@
 :local .beigeView,
 :local .redView,
 :local .greenView,
+:local .listWorkshopsView,
 :local .editView {
 	background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
 	background-size: cover;
@@ -13,6 +14,10 @@
 :local .editView {
 	background-color: #36303f;
 	color: white;
+}
+
+:local .listWorkshopsView {
+	background-color: #36303f;
 }
 
 :local .redView {

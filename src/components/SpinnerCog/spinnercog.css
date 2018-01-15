@@ -1,0 +1,12 @@
+:local .cog {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes :local(spin) {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

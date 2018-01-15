@@ -32,7 +32,9 @@
 	background-color: #C52522;
 }
 
-:local .buttonDisabled {
+:local .buttonDisabled,
+:local button[disabled],
+:local button[disabled]:hover {
 	background-color: #BABABA;
 	cursor: not-allowed;
 }
