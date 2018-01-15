@@ -49,7 +49,7 @@ class Menu extends Component {
 						:
 						''
 					}
-					<Link className={this.getLinkStyle('/workshops')} to="/workshops" onClick={this.handleMenu}>Mina workshops</Link>
+					<Link className={this.getLinkStyle('/workshops')} to="/workshops" onClick={this.handleMenu}>Lista workshops</Link>
 					{this.props.role === 'superadmin' ?
 						<Link className={this.getLinkStyle('/invite')} to="/invite" onClick={this.handleMenu}>Bjud in nya användare</Link>
 						:

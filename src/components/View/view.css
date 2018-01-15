@@ -6,7 +6,8 @@
 	background: #F6F7F9 url('./../../patterns/minimal-beige.svg') no-repeat center center fixed;
 	background-size: cover;
 	color: #31283E;
-	height: 100vh;
+	min-height: 100vh;
+	height: 100%;
 	width: 100vw;
 	transition: background-color .5s, color .5s;
 }

@@ -16,18 +16,33 @@ export default handleActions({
 		})
 	},
 
-	SET_WORKSHOPS_START: (state) => {
+	SET_USER_WORKSHOPS_START: (state) => {
 		return ({
 			...state,
-			isLoadingWorkshop: true
+			isLoadingUserWorkshops: true
 		})
 	},
 
-	SET_WORKSHOPS_DONE: (state, action) => {
+	SET_USER_WORKSHOPS_DONE: (state, action) => {
 		return ({
 			...state,
 			userWorkshops: action.payload,
-			isLoadingWorkshop: false
+			isLoadingUserWorkshops: false
+		})
+	},
+
+	SET_ALL_WORKSHOPS_START: (state) => {
+		return ({
+			...state,
+			isLoadingAllWorkshops: true
+		})
+	},
+
+	SET_ALL_WORKSHOPS_DONE: (state, action) => {
+		return ({
+			...state,
+			allWorkshops: action.payload,
+			isLoadingAllWorkshops: false
 		})
 	},
 
@@ -291,6 +306,7 @@ export default handleActions({
 
 }, {
 	userWorkshops: [],
+	allWorkshops: [],
 	item: null,
 	currentEditingType: 'part',
 	loginAttemptTimestamp: +new Date(),
@@ -299,6 +315,7 @@ export default handleActions({
 	linkSaved: false,
 	isAddingPart: false,
 	isAddingLink: false,
-	isLoadingWorkshop: false,
-	isAddingWorkshop: false
+	isAddingWorkshop: false,
+	isLoadingUserWorkshops: false,
+	isLoadingAllWorkshops: false
 })

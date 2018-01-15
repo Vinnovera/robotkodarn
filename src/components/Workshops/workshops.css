@@ -23,139 +23,25 @@
 	-webkit-font-smoothing: antialiased;
 }
 
-:local .workshops {
-	background-color: #fff;
-	border-radius: 4px;
-	margin: 3rem auto;
-	max-width: 1000px;
-	padding: 1rem 0.5rem 1.5rem 0.5rem;
-	width: 95vw;
+:local .workshops nav {
+	margin: 20px;
 }
-
-@media screen and (min-height: 900px) {
-	:local .workshops {
-		margin: 7rem auto;
+	:local .workshops nav ul li {
+		display: inline-block;
+		margin-right: 20px;
 	}
-}
+	:local .workshops nav ul li button {
+		padding: 10px 20px;
+		text-transform: uppercase;
+		font-family: 'Open Sans', sans-serif;
+		border: none;
+		font-size: 1rem;
+		background-color: transparent;
+		border: 2px solid white;
+		color: white;
+		cursor: pointer;
+	}
 
-:local .form {
-	max-width: 800px;
-	margin: 0 auto;
-}
-
-:local .workshopHeadline {
-	font-size: 2.5rem;
-	margin: 1rem;
-	text-align: center;
-}
-
-:local .workshopTable {
-	border-spacing: 0 1rem;
-	text-align: left;
-	width: 100%;
-	-webkit-font-smoothing: antialiased;
-}
-
-:local .tableLink {
-	color: inherit;
-	transition: color 250ms ease;
-}
-
-:local .tableLink:hover {
-	color: #503F69;
-	text-decoration: none;
-}
-
-:local th:first-of-type {
-	padding-left: 1.5rem;
-}
-
-:local th:last-of-type {
-	text-align: center;
-}
-
-:local .workshopItem {
-	border-radius: 2px;
-	background-color: #f6f6f6;
-	color: #31283E;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
-	font-weight: 700;
-	line-height: 2;
-	margin: 0.5rem 0;
-	padding: 0.7rem 1rem 0.5rem;
-}
-
-/*
- * FIX TO ADD BORDER RADIUS ON TR
- * 1. Fix to improve spacing
- */
-:local td {
-	border: 3px solid #f6f6f6;
-}
-
-:local td:first-of-type {
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-	padding-left: 1.5rem;
-}
-
-:local td:last-of-type {
-	text-align: center; /* 1 */
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-}
-/*
- * END OF FIX TO ADD BORDER RADIUS ON TR
- */
-
-:local .info {
-	background-color: #c3e9e6;
-	border-radius: 4px;
-	font-weight: 700;
-	font-size: 1.1rem;
-	padding: 2rem 3rem;
-	text-align: center;
-	margin-bottom: 2rem;
-}
-
-/* -----------------------------------------------------------------------------
-	TABLE ICONS
-------------------------------------------------------------------------------*/
-
-:local .tableIcon,
-:local .tableIconDanger {
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	font-size: 1.5rem;
-	height: 2rem;
-	width: 2rem;
-	transition: color 250ms ease;
-}
-
-:local .tableIcon:focus,
-:local .tableIcon:active,
-:local .tableIconDanger:focus,
-:local .tableIconDanger:active {
-	outline: none;
-}
-
-:local .tableIcon {
-	color: #31283E;
-}
-
-:local .tableIcon:hover {
-	color: #503F69;
-}
-
-:local .tableIconDanger {
-	color: #C52522;
-}
-
-:local .tableIconDanger:hover {
-	color: #FE5D4B;
-}
-:local .spinnerCogWrapper {
-	text-align: center;
-}
+	:local nav ul li.activeTab button {
+		background-color: rgba(0, 0, 0, .5);
+	}

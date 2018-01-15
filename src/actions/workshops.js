@@ -1,13 +1,19 @@
 import axios from 'axios'
 import { routeActions } from 'redux-simple-router'
 
-const SET_WORKSHOPS_DONE = 'SET_WORKSHOPS_DONE'
-const SET_WORKSHOPS_START = 'SET_WORKSHOPS_START'
+const SET_USER_WORKSHOPS_START = 'SET_USER_WORKSHOPS_START'
+const SET_USER_WORKSHOPS_DONE = 'SET_USER_WORKSHOPS_DONE'
+const SET_ALL_WORKSHOPS_START = 'SET_ALL_WORKSHOPS_START'
+const SET_ALL_WORKSHOPS_DONE = 'SET_ALL_WORKSHOPS_DONE'
+
 const ADD_WORKSHOP_START = 'ADD_WORKSHOP_START'
 const ADD_WORKSHOP_DONE = 'ADD_WORKSHOP_DONE'
+
 const REMOVE_WORKSHOP = 'REMOVE_WORKSHOP'
+
 const UPDATE_WORKSHOP_TITLE_START = 'UPDATE_WORKSHOP_TITLE_START'
 const UPDATE_WORKSHOP_TITLE_DONE = 'UPDATE_WORKSHOP_TITLE_DONE'
+
 const SET_WORKSHOP_BY_PIN = 'SET_WORKSHOP_BY_PIN'
 const SET_CURRENT_EDITING_TYPE = 'SET_CURRENT_EDITING_TYPE'
 const TOGGLE_EDITING = 'TOGGLE_EDITING'
@@ -43,7 +49,7 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
 // -----------------------------------------------------------------------------
 export const getWorkshopsByUserId = () => (dispatch) => {
 	dispatch({
-		type: SET_WORKSHOPS_START
+		type: SET_USER_WORKSHOPS_START
 	})
 
 	axios
@@ -54,7 +60,30 @@ export const getWorkshopsByUserId = () => (dispatch) => {
 		})
 		.then((response) => {
 			dispatch({
-				type: SET_WORKSHOPS_DONE,
+				type: SET_USER_WORKSHOPS_DONE,
+				payload: response.data
+			})
+		})
+		.catch(error => console.log(error))
+}
+
+// -----------------------------------------------------------------------------
+// getWorkshopsByUserId, get logged in users' workshops
+// -----------------------------------------------------------------------------
+export const getAllWorkshops = () => (dispatch) => {
+	dispatch({
+		type: SET_ALL_WORKSHOPS_START
+	})
+
+	axios
+		.get('/api/workshops', {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then((response) => {
+			dispatch({
+				type: SET_ALL_WORKSHOPS_DONE,
 				payload: response.data
 			})
 		})
