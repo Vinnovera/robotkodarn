@@ -64,9 +64,9 @@ export const getWorkshopsByUserId = () => (dispatch) => {
 }
 
 // -----------------------------------------------------------------------------
-// createWorkshop, creates empty workshop with a title and a PIN
+// addWorkshop, creates empty workshop with a title and a PIN
 // -----------------------------------------------------------------------------
-export const createWorkshop = workshop => (dispatch) => {
+export const addWorkshop = workshop => (dispatch) => {
 	axios
 		.post('/api/workshop', workshop, {
 			headers: {

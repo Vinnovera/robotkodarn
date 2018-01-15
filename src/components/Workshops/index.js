@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 import {
 	toggleEditing,
 	getWorkshopsByUserId,
-	createWorkshop,
+	addWorkshop,
 	copyWorkshop,
 	deleteWorkshop
 } from '../../actions/workshops'
@@ -18,6 +18,17 @@ import ToolsButton from '../ToolsButton'
 import styles from './workshops.css'
 
 class Workshops extends Component {
+	constructor(props) {
+		super(props)
+
+		this.handleWorkshop = this.handleWorkshop.bind(this)
+		this.startEditing = this.startEditing.bind(this)
+		this.handleAddWorkshop = this.handleAddWorkshop.bind(this)
+		this.renderNoWorkshops = this.renderNoWorkshops.bind(this)
+		this.renderListOfWorkshops = this.renderListOfWorkshops.bind(this)
+		this.renderHeader = this.renderHeader.bind(this)
+		this.renderCombined = this.renderCombined.bind(this)
+	}
 	componentWillMount() {
 		this.props.dispatch(getWorkshopsByUserId())
 	}
@@ -39,9 +50,9 @@ class Workshops extends Component {
 		}
 	}
 
-	handleCreateNew(event) {
+	handleAddWorkshop(event) {
 		event.preventDefault()
-		this.props.dispatch(createWorkshop())
+		this.props.dispatch(addWorkshop())
 	}
 
 	renderSpinner() {
@@ -58,7 +69,7 @@ class Workshops extends Component {
 				<p className={styles.info}>Du har inte skapat några workshops än.</p>
 				<div className={styles.buttonContainer}>
 					<form className={styles.form} method="post">
-						<Button kind="success" handleClick={this.handleCreateNew}>Lägg till ny</Button>
+						<Button kind="success" handleClick={this.handleAddWorkshop}>Lägg till ny</Button>
 					</form>
 				</div>
 			</FadeIn>
@@ -100,11 +111,9 @@ class Workshops extends Component {
 						}
 					</tbody>
 				</table>
-				<div className={styles.buttonContainer}>
-					<form className={styles.form} method="post">
-						<Button kind="success" handleClick={this.handleCreateNew}>Lägg till ny</Button>
-					</form>
-				</div>
+				<form className={styles.form} method="post">
+					<Button kind="success" handleClick={this.handleAddWorkshop}>Lägg till ny</Button>
+				</form>
 			</FadeIn>
 		)
 	}
