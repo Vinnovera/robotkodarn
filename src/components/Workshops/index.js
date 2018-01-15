@@ -31,8 +31,13 @@ class Workshops extends Component {
 		this.renderHeader = this.renderHeader.bind(this)
 		this.renderCombined = this.renderCombined.bind(this)
 	}
+
 	componentWillMount() {
 		this.props.dispatch(getWorkshopsByUserId())
+	}
+
+	componentDidMount() {
+		this.props.dispatch(toggleEditing(false))
 	}
 
 	handleWorkshop(event) {
@@ -48,7 +53,7 @@ class Workshops extends Component {
 
 	startEditing() {
 		if (!this.props.editing) {
-			this.props.dispatch(toggleEditing())
+			this.props.dispatch(toggleEditing(true))
 		}
 	}
 

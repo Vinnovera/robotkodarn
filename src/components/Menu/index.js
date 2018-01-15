@@ -27,9 +27,9 @@ class Menu extends Component {
 		this.props.dispatch(toggleMenu())
 	}
 
-	startEditing = () => {
+	startEditing = (boolean) => {
 		this.props.dispatch(toggleMenu())
-		this.props.dispatch(toggleEditing())
+		this.props.dispatch(toggleEditing(boolean))
 	}
 
 	render() {
@@ -45,7 +45,7 @@ class Menu extends Component {
 						<p className={styles.userRole}>Roll: {this.props.role}</p>
 					</div>
 					{ this.props.currentWorkshop ?
-						<Link className={this.getLinkStyle(`/id/${pin}`)} onClick={this.startEditing}>{ this.props.editing ? `Sluta redigera ${pin}` : `Redigera ${pin}`}</Link>
+						<Link className={this.getLinkStyle(`/id/${pin}`)} onClick={() => this.startEditing(!this.props.editing)}>{ this.props.editing ? `Sluta redigera ${pin}` : `Redigera ${pin}`}</Link>
 						:
 						''
 					}

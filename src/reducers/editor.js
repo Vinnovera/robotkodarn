@@ -59,10 +59,10 @@ export default handleActions({
 		})
 	},
 
-	TOGGLE_EDITING: (state) => {
+	TOGGLE_EDITING: (state, action) => {
 		return ({
 			...state,
-			editing: !state.editing
+			editing: action.payload
 		})
 	},
 

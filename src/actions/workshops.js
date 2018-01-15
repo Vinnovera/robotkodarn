@@ -172,9 +172,10 @@ export const setCurrentEditingType = editingType => (dispatch) => {
 // toggleEditing, used if editor/superadmin is logged in and wants
 // to start editing currentWorkshop
 // -----------------------------------------------------------------------------
-export const toggleEditing = () => (dispatch) => {
+export const toggleEditing = isEditing => (dispatch) => {
 	dispatch({
-		type: TOGGLE_EDITING
+		type: TOGGLE_EDITING,
+		payload: isEditing
 	})
 }
 
