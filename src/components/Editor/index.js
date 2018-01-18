@@ -163,28 +163,26 @@ export class Editor extends Component {
 	}
 
 	renderFontSizeButtons() {
+		const fontSizes = [
+			{ name: 'small', size: '.9rem' },
+			{ name: 'medium', size: '1rem' },
+			{ name: 'large', size: '1.2rem' }
+		]
+
 		return (
 			<div className={styles.fontSizeButtons}>
-				<button
-					className={`${styles.fontSizeSmall} ${this.props.editorFontSize === 10 ? styles.active : ''}`}
-					onClick={() => { this.changeFontSize(10) }}
-				>
-					<FA name="font" />
-				</button>
-
-				<button
-					className={`${styles.fontSizeMedium} ${this.props.editorFontSize === 14 ? styles.active : ''}`}
-					onClick={() => { this.changeFontSize(14) }}
-				>
-					<FA name="font" />
-				</button>
-
-				<button
-					className={`${styles.fontSizeLarge} ${this.props.editorFontSize === 20 ? styles.active : ''}`}
-					onClick={() => { this.changeFontSize(20) }}
-				>
-					<FA name="font" />
-				</button>
+				{
+					fontSizes.map((fontSize) => {
+						return (
+							<button
+								className={`${styles.fontSize} ${styles[fontSize.name]} ${this.props.editorFontSize === fontSize.size ? styles.active : ''}`}
+								onClick={() => { this.changeFontSize(fontSize.size) }}
+							>
+								<FA name="font" />
+							</button>
+						)
+					})
+				}
 			</div>
 		)
 	}
