@@ -16,6 +16,7 @@ import ToolsButton from '../../ToolsButton'
 import SpinnerCog from '../../SpinnerCog'
 
 import styles from './allworkshops.css'
+import { log } from 'util'
 
 class AllWorkshops extends Component {
 	constructor(props) {
@@ -97,9 +98,19 @@ class AllWorkshops extends Component {
 											</button>
 										</td>
 										<td className={styles.centered}>
-											<button onClick={e => this.starWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
-												<FA name="star-o" />
-											</button>
+											{
+												this.props.starredWorkshops.indexOf(workshop._id) !== -1
+													? (
+														<button onClick={e => this.starWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
+															<FA name="star" />
+														</button>
+													)
+													: (
+														<button onClick={e => this.starWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
+															<FA name="star-o" />
+														</button>
+													)
+											}
 										</td>
 									</tr>
 								)
@@ -145,6 +156,7 @@ function mapStateToProps(state) {
 		role: state.user.isLoggedIn,
 		editing: state.editor.editing,
 		isLoggedIn: state.user.isLoggedIn,
+		starredWorkshops: state.user.starredWorkshops,
 		isLoadingAllWorkshops: state.workshops.isLoadingAllWorkshops,
 		userId: state.user._id
 	}

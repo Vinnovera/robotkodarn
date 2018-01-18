@@ -44,7 +44,8 @@ const checkAuthorization = async (request, reply) => {
 				_id: existingUser._id,
 				name: existingUser.name,
 				email: existingUser.email,
-				role: existingUser.role
+				role: existingUser.role,
+				starredWorkshops: existingUser.starredWorkshops
 			}).code(200)
 		} else {
 			const error = new Error('Registration not completed')

@@ -7,12 +7,14 @@ export default handleActions({
 			isLoggedIn: action.payload.isLoggedIn,
 			role: action.payload.role,
 			name: action.payload.name,
-			_id: action.payload._id
+			_id: action.payload._id,
+			starredWorkshops: action.payload.starredWorkshops
 		})
 	}
 }, {
 	isLoggedIn: false,
 	role: null,
 	name: null,
-	_id: null
+	_id: null,
+	starredWorkshops: []
 })
