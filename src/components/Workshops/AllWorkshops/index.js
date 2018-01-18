@@ -16,7 +16,6 @@ import ToolsButton from '../../ToolsButton'
 import SpinnerCog from '../../SpinnerCog'
 
 import styles from './allworkshops.css'
-import { log } from 'util'
 
 class AllWorkshops extends Component {
 	constructor(props) {
