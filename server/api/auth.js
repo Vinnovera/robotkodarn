@@ -14,17 +14,19 @@ const signIn = (request, reply) => {
 
 		// Email found, check if password is correct
 		if (user) {
-			const { _id } = user
-
+			const { _id, name, email, starredWorkshops, role } = user
 			if (user.password === request.payload.password) {
 				request.cookieAuth.set({ _id })
-				reply({ message: 'Logged in' }).code(200)
+				reply({
+					user: { _id, name, email, starredWorkshops, role }
+				}).code(200)
 			} else {
-				reply({ message: 'Wrong username and/or password' }).code(401)
+				// TODO: Check how to response with this custom message when using code 401
+				reply({ error: 'Fel användarnamn och/eller lösenord' }).code(401)
 			}
 		} else {
 			// Email doesn't exist in db
-			reply({ message: 'Wrong username and/or password' }).code(401)
+			reply({ error: 'Fel användarnamn och/eller lösenord' }).code(401)
 		}
 	})
 }
@@ -38,7 +40,12 @@ const checkAuthorization = async (request, reply) => {
 	try {
 		const existingUser = await User.findOne({ _id })
 		if (existingUser.complete) {
-			reply({ role: existingUser.role, name: existingUser.name }).code(200)
+			reply({
+				_id: existingUser._id,
+				name: existingUser.name,
+				email: existingUser.email,
+				role: existingUser.role
+			}).code(200)
 		} else {
 			const error = new Error('Registration not completed')
 			error.code = 401

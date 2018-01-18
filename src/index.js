@@ -44,10 +44,8 @@ render((
 		<Router history={browserHistory}>
 			<Route path="/" component={App}>
 				<IndexRedirect to="/login" />
-				<Route path="/pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
-				<Route path="/editor" component={Editor} onEnter={authorize} forward="onlyAuthCheck" />
 				<Route path="/id/:pin" component={Workspace} onEnter={authorize} forward="onlyAuthCheck" />
-				<Route path="/login" component={LoginWithPin} onEnter={authorize} forward="onlyAuthCheck" />
+				<Route path="/login" component={LoginWithPin} forward="onlyAuthCheck" />
 				<Route path="/admin" component={LoginAdmin} onEnter={authorize} forward="/workshops" />
 				<Route path="/workshops" component={Workshops} onEnter={authorize} permissions={['superadmin', 'editor']} />
 				<Route path="/invite" component={Invite} onEnter={authorize} permissions={['superadmin']} />

@@ -1,14 +1,18 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
-	IS_AUHTORIZED: (state, action) => {
+	SET_USER_INFO: (state, action) => {
 		return ({
 			...state,
 			isLoggedIn: action.payload.isLoggedIn,
 			role: action.payload.role,
-			name: action.payload.name
+			name: action.payload.name,
+			_id: action.payload._id
 		})
 	}
 }, {
-	isLoggedIn: false
+	isLoggedIn: false,
+	role: null,
+	name: null,
+	_id: null
 })

@@ -12,15 +12,15 @@ const workshopSchema = Schema({
 		type: String,
 		unique: true
 	},
-	userId: {
+	author: {
 		type: String,
-		required: true
+		ref: 'User'
 	},
 	parts: {
 		type: Array,
 		default: [new Part({
 			title: 'Övning 1',
-			content: ''
+			content: '/* Skriv din kod här */'
 		})]
 	},
 	links: {
@@ -33,7 +33,7 @@ export const workshopValidation = Joi.object().keys({
 	_id: Joi.object().required(),
 	title: Joi.string().required(),
 	pincode: Joi.string().required(),
-	userId: Joi.string().required(),
+	author: Joi.string().required(),
 	parts: Joi.array().required(),
 	links: Joi.array().required()
 }).unknown()

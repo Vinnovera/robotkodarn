@@ -1,7 +1,7 @@
 import { routeActions } from 'redux-simple-router'
 import axios from 'axios'
 
-export const IS_AUHTORIZED = 'IS_AUHTORIZED'
+const SET_USER_INFO = 'SET_USER_INFO'
 
 // -----------------------------------------------------------------------------
 // signIn, takes email and hashed input
@@ -12,9 +12,15 @@ export const signIn = (credentials, redirect) => (dispatch) => {
 		headers: {
 			'content-type': 'application/json'
 		}
-	})
-		.then(() => dispatch(routeActions.push(redirect)))
-		.catch(error => console.log(error))
+	}).then((response) => {
+		if (response.status === 200) {
+			dispatch({
+				type: SET_USER_INFO,
+				payload: { ...response.data.user, isLoggedIn: true }
+			})
+			dispatch(routeActions.push(redirect))
+		}
+	}).catch(error => console.log(error))
 }
 
 // -----------------------------------------------------------------------------
@@ -26,7 +32,7 @@ export const signOut = path => (dispatch) => {
 		.then(() => {
 			// Remove user from Redux State.
 			dispatch({
-				type: IS_AUHTORIZED,
+				type: SET_USER_INFO,
 				payload: {
 					isLoggedIn: false
 				}

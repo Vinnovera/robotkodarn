@@ -11,6 +11,9 @@ const getWorkshops = (request, reply) => {
 		}
 
 		return reply(workshops).code(200)
+	}).populate('author', {
+		_id: 1,
+		name: 1
 	})
 }
 
@@ -26,7 +29,7 @@ const getWorkshop = (request, reply) => {
 		}
 
 		return reply(workshops).code(200)
-	})
+	}).populate('author')
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +39,7 @@ const getWorkshopsByUserId = (request, reply) => {
 	const name = request.auth.artifacts
 
 	Workshop.find({
-		userId: name._id
+		author: name._id
 	}, (error, workshops) => {
 		if (error) {
 			return reply(error).code(500)
@@ -54,7 +57,7 @@ const addWorkshop = async (request, reply) => {
 	try {
 		const user = request.auth.artifacts
 		const workshop = new Workshop(request.payload)
-		workshop.userId = user._id
+		workshop.author = user._id
 		workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
 
 		/**
@@ -164,7 +167,7 @@ const copyWorkshop = async (request, reply) => {
 			_id: mongoose.Types.ObjectId(),
 			isNew: true,
 			pincode: Math.floor(1000 + (Math.random() * 9000)),
-			userId: loggedInUserId
+			author: loggedInUserId
 		})
 
 		await copy.save()
@@ -214,8 +217,7 @@ exports.register = (server, options, next) => {
 			method: 'GET',
 			path: '/api/workshops',
 			config: {
-				handler: getWorkshops,
-				auth: 'session'
+				handler: getWorkshops
 			}
 		},
 		{

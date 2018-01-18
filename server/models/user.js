@@ -33,7 +33,11 @@ const userSchema = Schema({
 		type: Boolean,
 		required: true,
 		default: false
-	}
+	},
+	starredWorkshops: [{
+		type: String,
+		ref: 'Workshop'
+	}]
 })
 
 export const User = mongoose.model('User', userSchema)

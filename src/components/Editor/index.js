@@ -175,6 +175,7 @@ export class Editor extends Component {
 					fontSizes.map((fontSize) => {
 						return (
 							<button
+								key={fontSize.name}
 								className={`${styles.fontSize} ${styles[fontSize.name]} ${this.props.editorFontSize === fontSize.size ? styles.active : ''}`}
 								onClick={() => { this.changeFontSize(fontSize.size) }}
 							>

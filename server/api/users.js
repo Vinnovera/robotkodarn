@@ -15,6 +15,11 @@ const getUsers = (request, reply) => {
 		}
 
 		return reply(users).code(200)
+	}).populate('starredWorkshops', {
+		_id: 1,
+		pincode: 1,
+		title: 1,
+		author: 1
 	})
 }
 
@@ -23,7 +28,7 @@ const getUsers = (request, reply) => {
 // -----------------------------------------------------------------------------
 const getUser = (request, reply) => {
 	User.find({
-		email: request.params.id
+		email: request.params.email
 	}, (error, user) => {
 		if (error) return reply(error).code(500)
 
@@ -101,16 +106,14 @@ exports.register = (server, options, next) => {
 			method: 'GET',
 			path: '/api/users',
 			config: {
-				handler: getUsers,
-				auth: 'session'
+				handler: getUsers
 			}
 		},
 		{
 			method: 'GET',
-			path: '/api/user/{id}',
+			path: '/api/user/{email}',
 			config: {
-				handler: getUser,
-				auth: 'session'
+				handler: getUser
 			}
 		},
 		{

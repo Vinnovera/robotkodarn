@@ -70,10 +70,6 @@
 	padding-left: 1.5rem;
 }
 
-:local th:last-of-type {
-	text-align: center;
-}
-
 :local .workshopItem {
 	border-radius: 2px;
 	background-color: #f6f6f6;
@@ -101,7 +97,6 @@
 }
 
 :local td:last-of-type {
-	text-align: center; /* 1 */
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }

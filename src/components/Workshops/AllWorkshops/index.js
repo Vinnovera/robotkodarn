@@ -7,6 +7,7 @@ import {
 	toggleEditing,
 	getAllWorkshops,
 	copyWorkshop,
+	starWorkshop,
 	setActiveWorkshopsTab
 } from '../../../actions/workshops'
 
@@ -20,7 +21,7 @@ class AllWorkshops extends Component {
 	constructor(props) {
 		super(props)
 
-		this.handleWorkshop = this.handleWorkshop.bind(this)
+		this.copyWorkshop = this.copyWorkshop.bind(this)
 		this.startEditing = this.startEditing.bind(this)
 		this.renderNoWorkshops = this.renderNoWorkshops.bind(this)
 		this.renderListOfWorkshops = this.renderListOfWorkshops.bind(this)
@@ -36,14 +37,15 @@ class AllWorkshops extends Component {
 		this.props.dispatch(toggleEditing(false))
 	}
 
-	handleWorkshop(event) {
-		event.preventDefault()
-		const { value, name } = event.currentTarget
+	copyWorkshop(e, workshopId) {
+		e.preventDefault()
+		this.props.dispatch(copyWorkshop(workshopId))
+		this.props.dispatch(setActiveWorkshopsTab('user'))
+	}
 
-		if (name === 'copy') {
-			this.props.dispatch(copyWorkshop(value))
-			this.props.dispatch(setActiveWorkshopsTab('user'))
-		}
+	starWorkshop(e, workshopId, userId) {
+		e.preventDefault()
+		this.props.dispatch(starWorkshop(workshopId, userId))
 	}
 
 	startEditing() {
@@ -75,8 +77,10 @@ class AllWorkshops extends Component {
 					<thead>
 						<tr>
 							<th>Namn</th>
+							<th>Redaktör</th>
 							<th>Pinkod</th>
-							<th>Kopiera</th>
+							<th className={styles.centered}>Kopiera</th>
+							<th className={styles.centered}>Stjärnmärk</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,10 +89,16 @@ class AllWorkshops extends Component {
 								return (
 									<tr className={styles.workshopItem} key={workshop._id}>
 										<td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
+										<td>{workshop.author.name}</td>
 										<td>{workshop.pincode}</td>
-										<td>
-											<button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
+										<td className={styles.centered}>
+											<button onClick={e => this.copyWorkshop(e, workshop._id)} type="submit" className={styles.tableIcon}>
 												<FA name="clone" />
+											</button>
+										</td>
+										<td className={styles.centered}>
+											<button onClick={e => this.starWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
+												<FA name="star-o" />
 											</button>
 										</td>
 									</tr>
@@ -135,7 +145,8 @@ function mapStateToProps(state) {
 		role: state.user.isLoggedIn,
 		editing: state.editor.editing,
 		isLoggedIn: state.user.isLoggedIn,
-		isLoadingAllWorkshops: state.workshops.isLoadingAllWorkshops
+		isLoadingAllWorkshops: state.workshops.isLoadingAllWorkshops,
+		userId: state.user._id
 	}
 }
 
