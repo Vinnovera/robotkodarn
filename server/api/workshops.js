@@ -217,7 +217,8 @@ exports.register = (server, options, next) => {
 			method: 'GET',
 			path: '/api/workshops',
 			config: {
-				handler: getWorkshops
+				handler: getWorkshops,
+				auth: 'session'
 			}
 		},
 		{

@@ -10,7 +10,6 @@ import reducers from './reducers'
 import { authorize } from './routes'
 
 import App from './components/App'
-import Editor from './components/Editor'
 import Workspace from './components/Workspace'
 import LoginWithPin from './components/LoginWithPin'
 import LoginAdmin from './components/LoginAdmin'

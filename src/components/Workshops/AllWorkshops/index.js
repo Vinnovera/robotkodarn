@@ -46,11 +46,15 @@ class AllWorkshops extends Component {
 
 	starWorkshop(e, workshopId, userId) {
 		e.preventDefault()
-		this.props.dispatch(starWorkshop(workshopId, userId))
+		if (!this.props.isStarringWorkshop) {
+			this.props.dispatch(starWorkshop(workshopId, userId))
+		}
 	}
 	unstarWorkshop(e, workshopId, userId) {
 		e.preventDefault()
-		this.props.dispatch(unstarWorkshop(workshopId, userId))
+		if (!this.props.isUnstarringWorkshop) {
+			this.props.dispatch(unstarWorkshop(workshopId, userId))
+		}
 	}
 
 	startEditing() {
@@ -162,7 +166,9 @@ function mapStateToProps(state) {
 		isLoggedIn: state.user.isLoggedIn,
 		starredWorkshops: state.user.starredWorkshops,
 		isLoadingAllWorkshops: state.workshops.isLoadingAllWorkshops,
-		userId: state.user._id
+		userId: state.user._id,
+		isStarringWorkshop: state.user.isStarringWorkshop,
+		isUnstarringWorkshop: state.user.isUnstarringWorkshop
 	}
 }
 

@@ -15,6 +15,8 @@ import FadeIn from '../../FadeIn'
 import Button from '../../Button'
 import ToolsButton from '../../ToolsButton'
 import SpinnerCog from '../../SpinnerCog'
+import MyWorkshops from './MyWorkshops'
+import StarredWorkshops from './StarredWorkshops'
 
 import styles from './userworkshops.css'
 
@@ -26,7 +28,7 @@ class UserWorkshops extends Component {
 		this.startEditing = this.startEditing.bind(this)
 		this.handleAddWorkshop = this.handleAddWorkshop.bind(this)
 		this.renderNoWorkshops = this.renderNoWorkshops.bind(this)
-		this.renderListOfWorkshops = this.renderListOfWorkshops.bind(this)
+		this.renderListOfUserWorkshops = this.renderListOfUserWorkshops.bind(this)
 		this.renderHeader = this.renderHeader.bind(this)
 		this.renderCombined = this.renderCombined.bind(this)
 	}
@@ -88,47 +90,22 @@ class UserWorkshops extends Component {
 		)
 	}
 
-	renderListOfWorkshops() {
+	renderListOfUserWorkshops() {
 		return (
 			<FadeIn>
-				<table className={styles.workshopTable}>
-					<thead>
-						<tr>
-							<th>Namn</th>
-							<th>Pinkod</th>
-							<th>Kopiera</th>
-							<th>Radera</th>
-						</tr>
-					</thead>
-					<tbody>
-						{
-							this.props.userWorkshops.map((workshop) => {
-								return (
-									<tr className={styles.workshopItem} key={workshop._id}>
-										<td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
-										<td>{workshop.pincode}</td>
-										<td>
-											<button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
-												<FA name="clone" />
-											</button>
-										</td>
-										<td>
-											<button onClick={this.handleWorkshop} type="submit" className={styles.tableIconDanger} value={workshop._id} name="delete">
-												<FA name="times" />
-											</button>
-										</td>
-									</tr>
-								)
-							})
-						}
-					</tbody>
-				</table>
+				<MyWorkshops
+					userWorkshops={this.props.userWorkshops}
+					styles={styles}
+					handleWorkshop={this.handleWorkshop}
+					startEditing={this.startEditing}
+				/>
 				{
 					this.props.isAddingWorkshop
 						? <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="1.5rem" style={{ marginBottom: '10px' }} /></div>
 						: ''
 				}
 				{ this.renderAddButton() }
+				{ this.renderStarred() }
 			</FadeIn>
 		)
 	}
@@ -146,15 +123,35 @@ class UserWorkshops extends Component {
 		if (this.props.isLoadingUserWorkshops) {
 			return this.renderSpinner()
 		} else if (this.props.userWorkshops.length > 0) {
-			return this.renderListOfWorkshops()
+			return this.renderListOfUserWorkshops()
 		}
 		return this.renderNoWorkshops()
+	}
+	renderStarred() {
+		console.log(this.props.allWorkshops)
+
+		const starredWorkshops = this.props.starredWorkshops.map((starredWorkshop) => {
+			return this.props.allWorkshops.filter((workshop) => {
+				return workshop._id === starredWorkshop
+			})[0]
+		})
+
+		console.log(starredWorkshops)
+		// console.log(this.props.userWorkshops)
+		return (
+			<div className={styles.starredWorkshops}>
+				<h2>Starred</h2>
+				{/* <StarredWorkshops
+					starredWorkshops={this.props.userWorkshops}
+				/> */}
+			</div>
+		)
 	}
 
 	render() {
 		return (
 			<div className={styles.workshops}>
-				<h1 className={styles.workshopHeadline}>Mina workshops</h1>
+				<h2 className={styles.workshopHeadline}>Mina favoritworkshops</h2>
 				{ this.renderCombined() }
 			</div>
 		)
@@ -163,12 +160,14 @@ class UserWorkshops extends Component {
 
 function mapStateToProps(state) {
 	return {
+		allWorkshops: state.workshops.allWorkshops,
 		userWorkshops: state.workshops.userWorkshops,
 		role: state.user.isLoggedIn,
 		editing: state.editor.editing,
 		isLoggedIn: state.user.isLoggedIn,
 		isLoadingUserWorkshops: state.workshops.isLoadingUserWorkshops,
-		isAddingWorkshop: state.workshops.isAddingWorkshop
+		isAddingWorkshop: state.workshops.isAddingWorkshop,
+		starredWorkshops: state.user.starredWorkshops
 	}
 }
 

@@ -29,7 +29,6 @@ export class Workspace extends Component {
 	componentWillMount() {
 		this.props.dispatch(findWorkshopByPin(this.props.params.pin))
 	}
-
 	componentWillUnmount() {
 		this.props.dispatch(clearWorkshop())
 	}
