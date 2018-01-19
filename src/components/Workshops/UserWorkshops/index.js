@@ -126,6 +126,7 @@ class UserWorkshops extends Component {
 			return this.renderListOfUserWorkshops()
 		}
 		return this.renderNoWorkshops()
+		console.log(1)
 	}
 	renderStarred() {
 		console.log(this.props.allWorkshops)
