@@ -69,7 +69,7 @@ export const getWorkshopsByUserId = () => (dispatch) => {
 }
 
 // -----------------------------------------------------------------------------
-// getWorkshopsByUserId, get logged in users' workshops
+// getAllWorkshops, get all workshops
 // -----------------------------------------------------------------------------
 export const getAllWorkshops = () => (dispatch) => {
 	dispatch({
@@ -133,24 +133,6 @@ export const copyWorkshop = workshopId => (dispatch) => {
 		.catch(error => console.log(error))
 }
 
-// -----------------------------------------------------------------------------
-// Star a workshop
-// -----------------------------------------------------------------------------
-export const starWorkshop = workshopId => (dispatch) => {
-	// axios
-	// 	.post(`/api/copyWorkshop/${workshopId}`, {
-	// 		headers: {
-	// 			'content-type': 'application/json'
-	// 		}
-	// 	})
-	// 	.then(({ data }) => {
-	// 		dispatch({
-	// 			type: ADD_WORKSHOP_DONE,
-	// 			payload: data
-	// 		})
-	// 	})
-	// 	.catch(error => console.log(error))
-}
 
 // -----------------------------------------------------------------------------
 // deleteWorkshop, removes workshop from database

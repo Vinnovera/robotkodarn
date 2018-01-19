@@ -53,6 +53,9 @@ export const userValidation = Joi.object().keys({
 	email: Joi.string().required(),
 	role: Joi.string().required(),
 	invitationID: Joi.string().required(),
-	complete: Joi.boolean().required()
+	complete: Joi.boolean().required(),
+	starredWorkshop: Joi.array().required()
 }).unknown()
+
+export const starredWorkshopValidation = Joi.string()
 

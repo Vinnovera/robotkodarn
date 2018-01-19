@@ -10,6 +10,34 @@ export default handleActions({
 			_id: action.payload._id,
 			starredWorkshops: action.payload.starredWorkshops
 		})
+	},
+
+	ADD_STARRED_WORKSHOP_START: (state, action) => {
+		return ({
+			...state,
+			starredWorkshops: [...state.starredWorkshops, action.payload]
+		})
+	},
+
+	ADD_STARRED_WORKSHOP_DONE: (state, action) => {
+		return ({
+			...state,
+			starredWorkshops: action.payload
+		})
+	},
+
+	REMOVE_STARRED_WORKSHOP_START: (state, action) => {
+		return ({
+			...state,
+			starredWorkshops: [...state.starredWorkshops].filter(workshopId => workshopId !== action.payload)
+		})
+	},
+
+	REMOVE_STARRED_WORKSHOP_DONE: (state, action) => {
+		return ({
+			...state,
+			starredWorkshops: action.payload
+		})
 	}
 }, {
 	isLoggedIn: false,

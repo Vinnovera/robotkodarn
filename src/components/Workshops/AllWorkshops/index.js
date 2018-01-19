@@ -7,9 +7,10 @@ import {
 	toggleEditing,
 	getAllWorkshops,
 	copyWorkshop,
-	starWorkshop,
 	setActiveWorkshopsTab
 } from '../../../actions/workshops'
+
+import { starWorkshop, unstarWorkshop } from '../../../actions/user'
 
 import FadeIn from '../../FadeIn'
 import ToolsButton from '../../ToolsButton'
@@ -46,6 +47,10 @@ class AllWorkshops extends Component {
 	starWorkshop(e, workshopId, userId) {
 		e.preventDefault()
 		this.props.dispatch(starWorkshop(workshopId, userId))
+	}
+	unstarWorkshop(e, workshopId, userId) {
+		e.preventDefault()
+		this.props.dispatch(unstarWorkshop(workshopId, userId))
 	}
 
 	startEditing() {
@@ -100,7 +105,7 @@ class AllWorkshops extends Component {
 											{
 												this.props.starredWorkshops.indexOf(workshop._id) !== -1
 													? (
-														<button onClick={e => this.starWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
+														<button onClick={e => this.unstarWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
 															<FA name="star" />
 														</button>
 													)
