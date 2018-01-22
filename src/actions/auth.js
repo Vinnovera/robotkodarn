@@ -1,6 +1,7 @@
 import { routeActions } from 'redux-simple-router'
 import axios from 'axios'
 
+const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS'
 const SET_USER_INFO = 'SET_USER_INFO'
 
 // -----------------------------------------------------------------------------
@@ -15,8 +16,21 @@ export const signIn = (credentials, redirect) => (dispatch) => {
 	}).then((response) => {
 		if (response.status === 200) {
 			dispatch({
+				type: SET_LOGGED_IN_STATUS,
+				payload: {
+					isLoggedIn: true
+				}
+			})
+
+			dispatch({
 				type: SET_USER_INFO,
-				payload: { ...response.data.user, isLoggedIn: true }
+				payload: {
+					_id: response.data.user._id,
+					name: response.data.user.name,
+					role: response.data.user.role,
+					email: response.data.user.email,
+					starredWorkshops: response.data.user.starredWorkshops
+				}
 			})
 			dispatch(routeActions.push(redirect))
 		}
@@ -32,7 +46,7 @@ export const signOut = path => (dispatch) => {
 		.then(() => {
 			// Remove user from Redux State.
 			dispatch({
-				type: SET_USER_INFO,
+				type: SET_LOGGED_IN_STATUS,
 				payload: {
 					isLoggedIn: false
 				}

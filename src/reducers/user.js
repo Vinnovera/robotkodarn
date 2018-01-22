@@ -1,13 +1,20 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
+	SET_LOGGED_IN_STATUS: (state, action) => {
+		return ({
+			...state,
+			isLoggedIn: action.payload.isLoggedIn
+		})
+	},
+
 	SET_USER_INFO: (state, action) => {
 		return ({
 			...state,
-			isLoggedIn: action.payload.isLoggedIn,
-			role: action.payload.role,
-			name: action.payload.name,
 			_id: action.payload._id,
+			name: action.payload.name,
+			role: action.payload.role,
+			email: action.payload.email,
 			starredWorkshops: action.payload.starredWorkshops
 		})
 	},
@@ -49,6 +56,7 @@ export default handleActions({
 	name: null,
 	_id: null,
 	starredWorkshops: [],
+	email: null,
 	isStarringWorkshop: false,
 	isUnstarringWorkshop: false
 })

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { setActiveWorkshopsTab } from '../../actions/workshops'
+import { setUserInfo } from '../../actions/user'
 
 import View from '../View'
 import UserWorkshops from './UserWorkshops'
@@ -11,6 +12,9 @@ import ToolsButton from '../ToolsButton'
 import styles from './workshops.css'
 
 class Workshops extends Component {
+	componentWillMount() {
+		this.props.dispatch(setUserInfo())
+	}
 	setTab(tab) {
 		this.props.dispatch(setActiveWorkshopsTab(tab))
 	}
@@ -32,23 +36,29 @@ class Workshops extends Component {
 		}
 	}
 
+	renderNav() {
+		return (
+			<nav>
+				<ul>
+					<li className={`${this.props.activeWorkshopsTab === 'user' ? styles.activeTab : ''}`}>
+						<button onClick={() => this.setTab('user')}>Mina workshops</button>
+					</li>
+
+					<li className={`${this.props.activeWorkshopsTab === 'all' ? styles.activeTab : ''}`}>
+						<button onClick={() => this.setTab('all')}>Alla workshops</button>
+					</li>
+				</ul>
+			</nav>
+		)
+	}
+
 	render() {
 		return (
 			<View background="listWorkshopsView">
 				{ this.renderHeader() }
 
 				<div className={styles.workshops}>
-					<nav>
-						<ul>
-							<li className={`${this.props.activeWorkshopsTab === 'user' ? styles.activeTab : ''}`}>
-								<button onClick={() => this.setTab('user')}>Mina workshops</button>
-							</li>
-
-							<li className={`${this.props.activeWorkshopsTab === 'all' ? styles.activeTab : ''}`}>
-								<button onClick={() => this.setTab('all')}>Alla workshops</button>
-							</li>
-						</ul>
-					</nav>
+					{ this.renderNav() }
 					{ this.renderWorkshopList() }
 				</div>
 			</View>
@@ -59,6 +69,7 @@ class Workshops extends Component {
 function mapStateToProps(state) {
 	return {
 		userWorkshops: state.workshops.userWorkshops,
+		allWorkshops: state.workshops.allWorkshops,
 		editing: state.editor.editing,
 		isLoggedIn: state.user.isLoggedIn,
 		isLoadingUserWorkshops: state.workshops.isLoadingUserWorkshops,

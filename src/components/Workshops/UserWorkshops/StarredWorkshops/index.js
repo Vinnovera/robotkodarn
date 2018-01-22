@@ -15,7 +15,7 @@ const StarredWorkshops = ({ ...props }) => {
 			</thead>
 			<tbody>
 				{
-					props.userWorkshops.map((workshop) => {
+					props.starredWorkshops.map((workshop) => {
 						return (
 							<tr className={props.styles.workshopItem} key={workshop._id}>
 								<td><Link onClick={props.startEditing} className={props.styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>

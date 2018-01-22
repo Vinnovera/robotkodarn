@@ -20,6 +20,7 @@ import StarredWorkshops from './StarredWorkshops'
 
 import styles from './userworkshops.css'
 
+
 class UserWorkshops extends Component {
 	constructor(props) {
 		super(props)
@@ -35,6 +36,7 @@ class UserWorkshops extends Component {
 
 	componentWillMount() {
 		this.props.dispatch(getWorkshopsByUserId())
+		// this.props.dispatch(getAllWorkshops())
 	}
 
 	componentDidMount() {
@@ -105,9 +107,33 @@ class UserWorkshops extends Component {
 						: ''
 				}
 				{ this.renderAddButton() }
-				{ this.renderStarred() }
 			</FadeIn>
 		)
+	}
+
+	renderStarred() {
+		const starredWorkshops = this.props.starredWorkshops.map((starredWorkshop) => {
+			return this.props.allWorkshops.filter((workshop) => {
+				return workshop._id === starredWorkshop
+			})[0]
+		})
+
+		console.log(0, this.props.allWorkshops)
+
+		setTimeout(() => {
+			console.log(1, this.props.allWorkshops)
+		}, 2000)
+
+		// return (
+		// 	<FadeIn>
+		// 		<StarredWorkshops
+		// 			starredWorkshops={starredWorkshops}
+		// 			styles={styles}
+		// 			handleWorkshop={this.handleWorkshop}
+		// 			startEditing={this.startEditing}
+		// 		/>
+		// 	</FadeIn>
+		// )
 	}
 
 	renderHeader() {
@@ -127,32 +153,17 @@ class UserWorkshops extends Component {
 		}
 		return this.renderNoWorkshops()
 	}
-	renderStarred() {
-		console.log(this.props.allWorkshops)
-
-		const starredWorkshops = this.props.starredWorkshops.map((starredWorkshop) => {
-			return this.props.allWorkshops.filter((workshop) => {
-				return workshop._id === starredWorkshop
-			})[0]
-		})
-
-		console.log(starredWorkshops)
-		// console.log(this.props.userWorkshops)
-		return (
-			<div className={styles.starredWorkshops}>
-				<h2>Starred</h2>
-				{/* <StarredWorkshops
-					starredWorkshops={this.props.userWorkshops}
-				/> */}
-			</div>
-		)
-	}
 
 	render() {
 		return (
 			<div className={styles.workshops}>
-				<h2 className={styles.workshopHeadline}>Mina favoritworkshops</h2>
+				<h2 className={styles.workshopHeadline}>Mina workshops</h2>
 				{ this.renderCombined() }
+
+				<hr />
+
+				<h2 className={styles.workshopHeadline}>Mina stjärnmärkta workshops</h2>
+				{/* { this.renderStarred() } */}
 			</div>
 		)
 	}

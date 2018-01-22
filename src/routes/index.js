@@ -2,7 +2,7 @@ import axios from 'axios'
 import { store } from '../index'
 import { signOut } from '../actions/auth'
 
-const SET_USER_INFO = 'SET_USER_INFO'
+const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS'
 
 /**
  * Check if user is logged in. If route is restricted to certain user roles,
@@ -22,9 +22,8 @@ export const authorize = (nextState, replace, callback) => {
 			// If data is returned, dispatch information about user
 			if (data) {
 				store.dispatch({
-					type: SET_USER_INFO,
+					type: SET_LOGGED_IN_STATUS,
 					payload: {
-						...data,
 						isLoggedIn: true
 					}
 				})

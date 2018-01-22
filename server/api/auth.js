@@ -28,7 +28,7 @@ const signIn = (request, reply) => {
 			// Email doesn't exist in db
 			reply({ error: 'Fel användarnamn och/eller lösenord' }).code(401)
 		}
-	})
+	}).populate('starredWorkshops')
 }
 
 // -----------------------------------------------------------------------------

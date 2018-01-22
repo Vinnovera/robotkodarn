@@ -23,15 +23,45 @@ const getUsers = (request, reply) => {
 }
 
 // -----------------------------------------------------------------------------
-// Get one user with the id [GET]
+// Get user by id [GET]
 // -----------------------------------------------------------------------------
-const getUser = (request, reply) => {
+const getUserById = (request, reply) => {
+	const { _id } = request.auth.credentials
+
+	User.findOne({
+		_id: _id
+	}, (error, user) => {
+		if (error) return reply(error).code(500)
+
+		return reply({
+			email: user.email,
+			role: user.role,
+			name: user.name,
+			starredWorkshops: user.starredWorkshops
+		}).code(200)
+	}).populate('starredWorkshops', {
+		_id: 1,
+		pincode: 1,
+		title: 1,
+		author: 1
+	})
+}
+
+// -----------------------------------------------------------------------------
+// Get one user with the email [GET]
+// -----------------------------------------------------------------------------
+const getUserByEmail = (request, reply) => {
 	User.find({
 		email: request.params.email
 	}, (error, user) => {
 		if (error) return reply(error).code(500)
 
 		return reply(user).code(200)
+	}).populate('starredWorkshops', {
+		_id: 1,
+		pincode: 1,
+		title: 1,
+		author: 1
 	})
 }
 
@@ -165,14 +195,23 @@ exports.register = (server, options, next) => {
 			method: 'GET',
 			path: '/api/users',
 			config: {
-				handler: getUsers
+				handler: getUsers,
+				auth: 'session'
 			}
 		},
 		{
 			method: 'GET',
 			path: '/api/user/{email}',
 			config: {
-				handler: getUser
+				handler: getUserByEmail
+			}
+		},
+		{
+			method: 'GET',
+			path: '/api/user',
+			config: {
+				handler: getUserById,
+				auth: 'session'
 			}
 		},
 		{

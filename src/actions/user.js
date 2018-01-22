@@ -6,6 +6,27 @@ const ADD_STARRED_WORKSHOP_DONE = 'ADD_STARRED_WORKSHOP_DONE'
 const REMOVE_STARRED_WORKSHOP_START = 'REMOVE_STARRED_WORKSHOP_START'
 const REMOVE_STARRED_WORKSHOP_DONE = 'REMOVE_STARRED_WORKSHOP_DONE'
 
+const SET_USER_INFO = 'SET_USER_INFO'
+
+// -----------------------------------------------------------------------------
+// Star a workshop
+// -----------------------------------------------------------------------------
+export const setUserInfo = () => (dispatch) => {
+	axios
+		.get('/api/user', {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then(({ data }) => {
+			dispatch({
+				type: SET_USER_INFO,
+				payload: data
+			})
+		})
+		.catch(error => console.log(error))
+}
+
 // -----------------------------------------------------------------------------
 // Star a workshop
 // -----------------------------------------------------------------------------
