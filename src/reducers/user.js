@@ -22,15 +22,14 @@ export default handleActions({
 	ADD_STARRED_WORKSHOP_START: (state, action) => {
 		return ({
 			...state,
-			starredWorkshops: [...state.starredWorkshops, action.payload],
+			starredWorkshops: [...state.starredWorkshops, { _id: action.payload }],
 			isStarringWorkshop: true
 		})
 	},
 
-	ADD_STARRED_WORKSHOP_DONE: (state, action) => {
+	ADD_STARRED_WORKSHOP_DONE: (state) => {
 		return ({
 			...state,
-			starredWorkshops: action.payload,
 			isStarringWorkshop: false
 		})
 	},
@@ -38,15 +37,14 @@ export default handleActions({
 	REMOVE_STARRED_WORKSHOP_START: (state, action) => {
 		return ({
 			...state,
-			starredWorkshops: [...state.starredWorkshops].filter(workshopId => workshopId !== action.payload),
+			starredWorkshops: [...state.starredWorkshops].filter(workshop => workshop._id !== action.payload),
 			isUnstarringWorkshop: true
 		})
 	},
 
-	REMOVE_STARRED_WORKSHOP_DONE: (state, action) => {
+	REMOVE_STARRED_WORKSHOP_DONE: (state) => {
 		return ({
 			...state,
-			starredWorkshops: action.payload,
 			isUnstarringWorkshop: false
 		})
 	}

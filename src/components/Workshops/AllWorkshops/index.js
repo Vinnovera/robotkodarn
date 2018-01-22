@@ -44,16 +44,16 @@ class AllWorkshops extends Component {
 		this.props.dispatch(setActiveWorkshopsTab('user'))
 	}
 
-	starWorkshop(e, workshopId, userId) {
+	starWorkshop(e, workshopId) {
 		e.preventDefault()
 		if (!this.props.isStarringWorkshop) {
-			this.props.dispatch(starWorkshop(workshopId, userId))
+			this.props.dispatch(starWorkshop(workshopId))
 		}
 	}
-	unstarWorkshop(e, workshopId, userId) {
+	unstarWorkshop(e, workshopId) {
 		e.preventDefault()
 		if (!this.props.isUnstarringWorkshop) {
-			this.props.dispatch(unstarWorkshop(workshopId, userId))
+			this.props.dispatch(unstarWorkshop(workshopId))
 		}
 	}
 
@@ -95,6 +95,10 @@ class AllWorkshops extends Component {
 					<tbody>
 						{
 							this.props.allWorkshops.map((workshop) => {
+								const isStarred = this.props.starredWorkshops.filter((starredWorkshop) => {
+									return starredWorkshop._id === workshop._id
+								}).length > 0
+
 								return (
 									<tr className={styles.workshopItem} key={workshop._id}>
 										<td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
@@ -107,14 +111,14 @@ class AllWorkshops extends Component {
 										</td>
 										<td className={styles.centered}>
 											{
-												this.props.starredWorkshops.indexOf(workshop._id) !== -1
+												isStarred
 													? (
-														<button onClick={e => this.unstarWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
+														<button onClick={e => this.unstarWorkshop(e, workshop._id)} type="submit" className={styles.tableIcon}>
 															<FA name="star" />
 														</button>
 													)
 													: (
-														<button onClick={e => this.starWorkshop(e, workshop._id, this.props.userId)} type="submit" className={styles.tableIcon}>
+														<button onClick={e => this.starWorkshop(e, workshop._id)} type="submit" className={styles.tableIcon}>
 															<FA name="star-o" />
 														</button>
 													)
@@ -166,7 +170,6 @@ function mapStateToProps(state) {
 		isLoggedIn: state.user.isLoggedIn,
 		starredWorkshops: state.user.starredWorkshops,
 		isLoadingAllWorkshops: state.workshops.isLoadingAllWorkshops,
-		userId: state.user._id,
 		isStarringWorkshop: state.user.isStarringWorkshop,
 		isUnstarringWorkshop: state.user.isUnstarringWorkshop
 	}

@@ -39,11 +39,21 @@ const getUserById = (request, reply) => {
 			name: user.name,
 			starredWorkshops: user.starredWorkshops
 		}).code(200)
-	}).populate('starredWorkshops', {
-		_id: 1,
-		pincode: 1,
-		title: 1,
-		author: 1
+	}).populate({
+		path: 'starredWorkshops',
+		select: {
+			_id: 1,
+			pincode: 1,
+			title: 1,
+			author: 1
+		},
+		populate: {
+			path: 'author',
+			select: {
+				_id: 1,
+				name: 1
+			}
+		}
 	})
 }
 
@@ -97,9 +107,12 @@ const addUser = (request, reply) => {
 // Star a workshop in a user [POST]
 // -----------------------------------------------------------------------------
 const starWorkshop = async (request, reply) => {
+	// Get the userId from session
+	const userId = request.auth.credentials._id
+
 	try {
 		// This will cast a 500 error if no workshop is found.
-		const user = await User.findOne({ _id: request.params.id })
+		const user = await User.findOne({ _id: userId })
 
 		// First make sure that the content received is valid
 		const validatedWorkshopId = starredWorkshopValidation.validate(request.payload.workshopId, { abortEarly: false })
@@ -130,9 +143,12 @@ const starWorkshop = async (request, reply) => {
 // Unstar a workshop in a user [DELETE]
 // -----------------------------------------------------------------------------
 const unstarWorkshop = async (request, reply) => {
+	// Get the userId from session
+	const userId = request.auth.credentials._id
+
 	try {
 		// This will cast a 500 error if no workshop is found.
-		const user = await User.findOne({ _id: request.params.uid })
+		const user = await User.findOne({ _id: userId })
 
 		// First make sure that the content received is valid
 		const validatedWorkshopId = starredWorkshopValidation.validate(request.params.wid, { abortEarly: false })
@@ -224,7 +240,7 @@ exports.register = (server, options, next) => {
 		},
 		{
 			method: 'POST',
-			path: '/api/user/{id}/star',
+			path: '/api/user/star',
 			config: {
 				handler: starWorkshop,
 				auth: 'session'
@@ -232,7 +248,7 @@ exports.register = (server, options, next) => {
 		},
 		{
 			method: 'DELETE',
-			path: '/api/user/{uid}/star/{wid}',
+			path: '/api/user/star/{wid}',
 			config: {
 				handler: unstarWorkshop,
 				auth: 'session'

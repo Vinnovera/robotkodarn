@@ -22,16 +22,6 @@ export const signIn = (credentials, redirect) => (dispatch) => {
 				}
 			})
 
-			dispatch({
-				type: SET_USER_INFO,
-				payload: {
-					_id: response.data.user._id,
-					name: response.data.user.name,
-					role: response.data.user.role,
-					email: response.data.user.email,
-					starredWorkshops: response.data.user.starredWorkshops
-				}
-			})
 			dispatch(routeActions.push(redirect))
 		}
 	}).catch(error => console.log(error))
@@ -44,12 +34,16 @@ export const signIn = (credentials, redirect) => (dispatch) => {
 export const signOut = path => (dispatch) => {
 	axios.get('/auth/logout')
 		.then(() => {
-			// Remove user from Redux State.
 			dispatch({
 				type: SET_LOGGED_IN_STATUS,
 				payload: {
 					isLoggedIn: false
 				}
+			})
+			// Remove user info when logging out
+			dispatch({
+				type: SET_USER_INFO,
+				payload: {}
 			})
 			dispatch(routeActions.push(path))
 		})

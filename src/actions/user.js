@@ -30,18 +30,21 @@ export const setUserInfo = () => (dispatch) => {
 // -----------------------------------------------------------------------------
 // Star a workshop
 // -----------------------------------------------------------------------------
-export const starWorkshop = (workshopId, userId) => (dispatch) => {
+export const starWorkshop = workshopId => (dispatch) => {
 	dispatch({
 		type: ADD_STARRED_WORKSHOP_START,
 		payload: workshopId
 	})
 	axios
-		.post(`/api/user/${userId}/star`, { workshopId }, {
+		.post('/api/user/star', { workshopId }, {
 			headers: {
 				'content-type': 'application/json'
 			}
 		})
 		.then(({ data }) => {
+			// Run setUserInfo to populate the starred workshops to user state
+			dispatch(setUserInfo())
+
 			dispatch({
 				type: ADD_STARRED_WORKSHOP_DONE,
 				payload: data
@@ -53,19 +56,22 @@ export const starWorkshop = (workshopId, userId) => (dispatch) => {
 // -----------------------------------------------------------------------------
 // Unstar a workshop
 // -----------------------------------------------------------------------------
-export const unstarWorkshop = (workshopId, userId) => (dispatch) => {
+export const unstarWorkshop = workshopId => (dispatch) => {
 	dispatch({
 		type: REMOVE_STARRED_WORKSHOP_START,
 		payload: workshopId
 	})
 
 	axios
-		.delete(`/api/user/${userId}/star/${workshopId}`, {
+		.delete(`/api/user/star/${workshopId}`, {
 			headers: {
 				'content-type': 'application/json'
 			}
 		})
 		.then(({ data }) => {
+			// Run setUserInfo to populate the starred workshops to user state
+			dispatch(setUserInfo())
+
 			dispatch({
 				type: REMOVE_STARRED_WORKSHOP_DONE,
 				payload: data

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import FA from 'react-fontawesome'
-import { Link } from 'react-router'
 
 import {
 	toggleEditing,
@@ -11,9 +9,10 @@ import {
 	deleteWorkshop
 } from '../../../actions/workshops'
 
+import { unstarWorkshop } from '../../../actions/user'
+
 import FadeIn from '../../FadeIn'
 import Button from '../../Button'
-import ToolsButton from '../../ToolsButton'
 import SpinnerCog from '../../SpinnerCog'
 import MyWorkshops from './MyWorkshops'
 import StarredWorkshops from './StarredWorkshops'
@@ -25,145 +24,101 @@ class UserWorkshops extends Component {
 	constructor(props) {
 		super(props)
 
-		this.handleWorkshop = this.handleWorkshop.bind(this)
-		this.startEditing = this.startEditing.bind(this)
-		this.handleAddWorkshop = this.handleAddWorkshop.bind(this)
-		this.renderNoWorkshops = this.renderNoWorkshops.bind(this)
-		this.renderListOfUserWorkshops = this.renderListOfUserWorkshops.bind(this)
-		this.renderHeader = this.renderHeader.bind(this)
-		this.renderCombined = this.renderCombined.bind(this)
+		this.addWorkshop = this.addWorkshop.bind(this)
+		this.copyWorkshop = this.copyWorkshop.bind(this)
+		this.deleteWorkshop = this.deleteWorkshop.bind(this)
+		this.toggleEditing = this.toggleEditing.bind(this)
+		this.unstarWorkshop = this.unstarWorkshop.bind(this)
 	}
 
 	componentWillMount() {
 		this.props.dispatch(getWorkshopsByUserId())
-		// this.props.dispatch(getAllWorkshops())
 	}
 
 	componentDidMount() {
 		this.props.dispatch(toggleEditing(false))
 	}
 
-	handleWorkshop(event) {
-		event.preventDefault()
-		const { value, name } = event.currentTarget
-
-		if (name === 'copy') {
-			this.props.dispatch(copyWorkshop(value))
-		} else if (name === 'delete') {
-			this.props.dispatch(deleteWorkshop(value))
-		}
-	}
-
-	startEditing() {
-		if (!this.props.editing) {
-			this.props.dispatch(toggleEditing(true))
-		}
-	}
-
-	handleAddWorkshop(event) {
-		event.preventDefault()
+	addWorkshop(e) {
+		e.preventDefault()
 		this.props.dispatch(addWorkshop())
 	}
 
-	renderSpinner() {
-		return (
-			<div className={styles.spinnerCogWrapper}>
-				<SpinnerCog fontSize="5rem" />
-			</div>
-		)
+	copyWorkshop(e, workshopId) {
+		e.preventDefault()
+		this.props.dispatch(copyWorkshop(workshopId))
 	}
 
-	renderAddButton() {
-		return (
-			<form className={styles.form} method="post">
-				<Button disabled={this.props.isAddingWorkshop} kind="success" handleClick={this.handleAddWorkshop}>Lägg till ny</Button>
-			</form>
-		)
+	deleteWorkshop(e, workshopId) {
+		e.preventDefault()
+		this.props.dispatch(deleteWorkshop(workshopId))
 	}
-
-	renderNoWorkshops() {
-		return (
-			<FadeIn>
-				<p className={styles.info}>Du har inte skapat några workshops än.</p>
-				<div className={styles.buttonContainer}>
-					{ this.renderAddButton() }
-				</div>
-			</FadeIn>
-		)
-	}
-
-	renderListOfUserWorkshops() {
-		return (
-			<FadeIn>
-				<MyWorkshops
-					userWorkshops={this.props.userWorkshops}
-					styles={styles}
-					handleWorkshop={this.handleWorkshop}
-					startEditing={this.startEditing}
-				/>
-				{
-					this.props.isAddingWorkshop
-						? <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="1.5rem" style={{ marginBottom: '10px' }} /></div>
-						: ''
-				}
-				{ this.renderAddButton() }
-			</FadeIn>
-		)
-	}
-
-	renderStarred() {
-		const starredWorkshops = this.props.starredWorkshops.map((starredWorkshop) => {
-			return this.props.allWorkshops.filter((workshop) => {
-				return workshop._id === starredWorkshop
-			})[0]
-		})
-
-		console.log(0, this.props.allWorkshops)
-
-		setTimeout(() => {
-			console.log(1, this.props.allWorkshops)
-		}, 2000)
-
-		// return (
-		// 	<FadeIn>
-		// 		<StarredWorkshops
-		// 			starredWorkshops={starredWorkshops}
-		// 			styles={styles}
-		// 			handleWorkshop={this.handleWorkshop}
-		// 			startEditing={this.startEditing}
-		// 		/>
-		// 	</FadeIn>
-		// )
-	}
-
-	renderHeader() {
-		return this.props.isLoggedIn ? (
-			<header className={styles.header}>
-				<h1 className={styles.headerTitle}>Robotkodarn</h1>
-				<ToolsButton />
-			</header>
-		) : ''
-	}
-
-	renderCombined() {
-		if (this.props.isLoadingUserWorkshops) {
-			return this.renderSpinner()
-		} else if (this.props.userWorkshops.length > 0) {
-			return this.renderListOfUserWorkshops()
+	unstarWorkshop(e, workshopId) {
+		e.preventDefault()
+		if (!this.props.isUnstarringWorkshop) {
+			this.props.dispatch(unstarWorkshop(workshopId))
 		}
-		return this.renderNoWorkshops()
+	}
+
+	toggleEditing(willEdit) {
+		if (!this.props.editing) {
+			this.props.dispatch(toggleEditing(willEdit))
+		}
+	}
+
+	renderStarredWorkshops() {
+		return (
+			<FadeIn>
+				<StarredWorkshops
+					starredWorkshops={this.props.starredWorkshops}
+					styles={styles}
+					copyWorkshop={this.copyWorkshop}
+					toggleEditing={this.toggleEditing}
+					unstarWorkshop={this.unstarWorkshop}
+				/>
+			</FadeIn>
+		)
+	}
+
+	renderUserWorkshops() {
+		if (this.props.isLoadingUserWorkshops) {
+			return (
+				<div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="5rem" /></div>
+			)
+		} else if (this.props.userWorkshops.length > 0) {
+			return (
+				<FadeIn>
+					<MyWorkshops
+						userWorkshops={this.props.userWorkshops}
+						styles={styles}
+						copyWorkshop={this.copyWorkshop}
+						deleteWorkshop={this.deleteWorkshop}
+						toggleEditing={this.toggleEditing}
+					/>
+
+					{ this.props.isAddingWorkshop && <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="1.5rem" style={{ marginBottom: '10px' }} /></div> }
+
+					<form className={styles.form} method="post">
+						<Button disabled={this.props.isAddingWorkshop} kind="success" handleClick={this.addWorkshop}>Lägg till ny workshop</Button>
+					</form>
+				</FadeIn>
+			)
+		}
+		return (<p className={styles.info}>Du har inte skapat några workshops än.</p>)
 	}
 
 	render() {
 		return (
 			<div className={styles.workshops}>
 				<h2 className={styles.workshopHeadline}>Mina workshops</h2>
-				{ this.renderCombined() }
+				{ this.renderUserWorkshops() }
 
-				<hr />
-
-				<h2 className={styles.workshopHeadline}>Mina stjärnmärkta workshops</h2>
-				{/* { this.renderStarred() } */}
+				<h2 style={{ marginTop: '50px' }} className={styles.workshopHeadline}>Mina stjärnmärkta workshops</h2>
+				{
+					this.props.starredWorkshops.length > 0
+						? this.renderStarredWorkshops()
+						: <p className={styles.noStarredMessage}>Du har inga stjärnmärkta workshops</p>
+				}
 			</div>
 		)
 	}
@@ -178,7 +133,8 @@ function mapStateToProps(state) {
 		isLoggedIn: state.user.isLoggedIn,
 		isLoadingUserWorkshops: state.workshops.isLoadingUserWorkshops,
 		isAddingWorkshop: state.workshops.isAddingWorkshop,
-		starredWorkshops: state.user.starredWorkshops
+		starredWorkshops: state.user.starredWorkshops,
+		isUnstarringWorkshop: state.user.isUnstarringWorkshop
 	}
 }
 

@@ -36,10 +36,10 @@ const getWorkshop = (request, reply) => {
 // Get one workshop with {id} [GET]
 // -----------------------------------------------------------------------------
 const getWorkshopsByUserId = (request, reply) => {
-	const name = request.auth.artifacts
+	const { _id } = request.auth.credentials
 
 	Workshop.find({
-		author: name._id
+		author: _id
 	}, (error, workshops) => {
 		if (error) {
 			return reply(error).code(500)
