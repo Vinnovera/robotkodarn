@@ -11,6 +11,9 @@ const getWorkshops = (request, reply) => {
 		}
 
 		return reply(workshops).code(200)
+	}).populate('author', {
+		_id: 1,
+		name: 1
 	})
 }
 
@@ -26,17 +29,17 @@ const getWorkshop = (request, reply) => {
 		}
 
 		return reply(workshops).code(200)
-	})
+	}).populate('author')
 }
 
 // -----------------------------------------------------------------------------
 // Get one workshop with {id} [GET]
 // -----------------------------------------------------------------------------
 const getWorkshopsByUserId = (request, reply) => {
-	const name = request.auth.artifacts
+	const { _id } = request.auth.credentials
 
 	Workshop.find({
-		userId: name._id
+		author: _id
 	}, (error, workshops) => {
 		if (error) {
 			return reply(error).code(500)
@@ -54,7 +57,7 @@ const addWorkshop = async (request, reply) => {
 	try {
 		const user = request.auth.artifacts
 		const workshop = new Workshop(request.payload)
-		workshop.userId = user._id
+		workshop.author = user._id
 		workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
 
 		/**
@@ -80,6 +83,12 @@ const updateWorkshop = async (request, reply) => {
 	try {
 		const workshop = await Workshop.findOne({ _id: request.params.id })
 		const updatedWorkshop = Object.assign(workshop, request.payload)
+
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
+
 
 		const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
 		if (validated.error) {
@@ -154,6 +163,8 @@ const updateWorkshopLinks = async (request, reply) => {
 // Copy a workshop by existing workshop with ID [POST]
 // -----------------------------------------------------------------------------
 const copyWorkshop = async (request, reply) => {
+	const loggedInUserId = request.auth.credentials._id
+
 	try {
 		const existingWorkshop = await Workshop.findOne({ _id: request.params.id })
 
@@ -161,7 +172,8 @@ const copyWorkshop = async (request, reply) => {
 			title: `${existingWorkshop.title} – kopia`,
 			_id: mongoose.Types.ObjectId(),
 			isNew: true,
-			pincode: Math.floor(1000 + (Math.random() * 9000))
+			pincode: Math.floor(1000 + (Math.random() * 9000)),
+			author: loggedInUserId
 		})
 
 		await copy.save()

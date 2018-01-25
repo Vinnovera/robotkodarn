@@ -33,7 +33,19 @@ const userSchema = Schema({
 		type: Boolean,
 		required: true,
 		default: false
+	},
+	starredWorkshops: [{
+		type: String,
+		ref: 'Workshop'
+	}]
+})
+
+// We default with these three workshops
+userSchema.pre('save', function (next) {
+	if (this.starredWorkshops.length === 0) {
+		this.starredWorkshops.push('5a699e382afe770691584b5c', '5a699e3e2afe770691584b5d', '5a699e3f2afe770691584b5e')
 	}
+	next()
 })
 
 export const User = mongoose.model('User', userSchema)
@@ -49,6 +61,9 @@ export const userValidation = Joi.object().keys({
 	email: Joi.string().required(),
 	role: Joi.string().required(),
 	invitationID: Joi.string().required(),
-	complete: Joi.boolean().required()
+	complete: Joi.boolean().required(),
+	starredWorkshop: Joi.array()
 }).unknown()
+
+export const starredWorkshopValidation = Joi.string()
 

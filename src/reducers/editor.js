@@ -99,5 +99,5 @@ export default handleActions({
 	},
 	partsToEdit: [],
 	codeIsUnsaved: false,
-	editorFontSize: 14
+	editorFontSize: '1rem'
 })

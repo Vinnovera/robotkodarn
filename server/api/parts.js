@@ -45,6 +45,11 @@ const createPart = async (request, reply) => {
 		// If no workshop found, this will throw a 500 error
 		const workshop = await Workshop.findOne({ _id: request.params.id })
 
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
+
 		const part = new Part(validated.value)
 		workshop.parts.push(part)
 
@@ -63,6 +68,11 @@ const updatePart = async (request, reply) => {
 	try {
 		// This will cast a 500 error if no workshop is found.
 		const workshop = await Workshop.findOne({ _id: request.params.wid })
+
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
 
 		// Find the part that is to be updated
 		const partToUpdate = workshop.parts.filter((part) => {
@@ -100,20 +110,25 @@ const updatePart = async (request, reply) => {
 // -----------------------------------------------------------------------------
 const deletePart = async (request, reply) => {
 	try {
-		const currentWorkshop = await Workshop.findOne({ _id: request.params.wid })
+		const workshop = await Workshop.findOne({ _id: request.params.wid })
+
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
 
 		/*
 		 * Remove all parts with the id that we want to delete.
 		 * Since part._id is an object, we first need to convert it to a string.
 		 */
-		const updatedPartsList = currentWorkshop.parts.filter((part) => {
+		const updatedPartsList = workshop.parts.filter((part) => {
 			return part._id.toString() !== request.params.pid
 		})
 
 		// Save updatedPartsList as list of parts.
-		currentWorkshop.parts = updatedPartsList
+		workshop.parts = updatedPartsList
 
-		await currentWorkshop.save()
+		await workshop.save()
 
 		return reply(updatedPartsList).code(200)
 	} catch (error) {

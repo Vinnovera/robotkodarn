@@ -99,12 +99,12 @@
 :local .fontSizeButtons .active {
 	color: #333;
 }
-:local .fontSizeSmall {
+:local .fontSize.small {
 	font-size: 10px !important;
 }
-:local .fontSizeMedium {
+:local .fontSize.medium {
 	font-size: 14px !important;
 }
-:local .fontSizeLarge {
+:local .fontSize.large {
 	font-size: 20px !important;
 }

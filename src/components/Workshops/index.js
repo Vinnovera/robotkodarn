@@ -1,137 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import FA from 'react-fontawesome'
-import { Link } from 'react-router'
 
-import {
-	toggleEditing,
-	getWorkshopsByUserId,
-	addWorkshop,
-	copyWorkshop,
-	deleteWorkshop
-} from '../../actions/workshops'
+import { setActiveWorkshopsTab } from '../../actions/workshops'
+import { setUserInfo } from '../../actions/user'
 
 import View from '../View'
-import FadeIn from '../FadeIn'
-import Button from '../Button'
+import UserWorkshops from './UserWorkshops'
+import AllWorkshops from './AllWorkshops'
 import ToolsButton from '../ToolsButton'
-import SpinnerCog from '../SpinnerCog'
 
 import styles from './workshops.css'
 
 class Workshops extends Component {
-	constructor(props) {
-		super(props)
-
-		this.handleWorkshop = this.handleWorkshop.bind(this)
-		this.startEditing = this.startEditing.bind(this)
-		this.handleAddWorkshop = this.handleAddWorkshop.bind(this)
-		this.renderNoWorkshops = this.renderNoWorkshops.bind(this)
-		this.renderListOfWorkshops = this.renderListOfWorkshops.bind(this)
-		this.renderHeader = this.renderHeader.bind(this)
-		this.renderCombined = this.renderCombined.bind(this)
-	}
-
 	componentWillMount() {
-		this.props.dispatch(getWorkshopsByUserId())
+		this.props.dispatch(setUserInfo())
 	}
-
-	componentDidMount() {
-		this.props.dispatch(toggleEditing(false))
-	}
-
-	handleWorkshop(event) {
-		event.preventDefault()
-		const { value, name } = event.currentTarget
-
-		if (name === 'copy') {
-			this.props.dispatch(copyWorkshop(value))
-		} else if (name === 'delete') {
-			this.props.dispatch(deleteWorkshop(value))
-		}
-	}
-
-	startEditing() {
-		if (!this.props.editing) {
-			this.props.dispatch(toggleEditing(true))
-		}
-	}
-
-	handleAddWorkshop(event) {
-		event.preventDefault()
-		this.props.dispatch(addWorkshop())
-	}
-
-	renderSpinner() {
-		return (
-			<div className={styles.spinnerCogWrapper}>
-				<SpinnerCog fontSize="5rem" />
-			</div>
-		)
-	}
-
-	renderAddButton() {
-		return (
-			<form className={styles.form} method="post">
-				<Button disabled={this.props.isAddingWorkshop} kind="success" handleClick={this.handleAddWorkshop}>Lägg till ny</Button>
-			</form>
-		)
-	}
-
-	renderNoWorkshops() {
-		return (
-			<FadeIn>
-				<p className={styles.info}>Du har inte skapat några workshops än.</p>
-				<div className={styles.buttonContainer}>
-					{ this.renderAddButton() }
-				</div>
-			</FadeIn>
-		)
-	}
-
-	renderListOfWorkshops() {
-		return (
-			<FadeIn>
-				<table className={styles.workshopTable}>
-					<thead>
-						<tr>
-							<th>Namn</th>
-							<th>Pinkod</th>
-							<th>Kopiera</th>
-							<th>Radera</th>
-						</tr>
-					</thead>
-					<tbody>
-						{
-							this.props.userWorkshops.map((workshop) => {
-								return (
-									<tr className={styles.workshopItem} key={workshop._id}>
-										<td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
-										<td>{workshop.pincode}</td>
-										<td>
-											<button onClick={this.handleWorkshop} type="submit" className={styles.tableIcon} value={workshop._id} name="copy">
-												<FA name="clone" />
-											</button>
-										</td>
-										<td>
-											<button onClick={this.handleWorkshop} type="submit" className={styles.tableIconDanger} value={workshop._id} name="delete">
-												<FA name="times" />
-											</button>
-										</td>
-									</tr>
-								)
-							})
-						}
-					</tbody>
-				</table>
-				{
-					this.props.isAddingWorkshop
-						? <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="1.5rem" style={{ marginBottom: '10px' }} /></div>
-						: ''
-				}
-				{ this.renderAddButton() }
-			</FadeIn>
-		)
+	setTab(tab) {
+		this.props.dispatch(setActiveWorkshopsTab(tab))
 	}
 
 	renderHeader() {
@@ -143,22 +28,38 @@ class Workshops extends Component {
 		) : ''
 	}
 
-	renderCombined() {
-		if (this.props.isLoadingWorkshop) {
-			return this.renderSpinner()
-		} else if (this.props.userWorkshops.length > 0) {
-			return this.renderListOfWorkshops()
+	renderWorkshopList() {
+		if (this.props.activeWorkshopsTab === 'user') {
+			return <UserWorkshops />
+		} else if (this.props.activeWorkshopsTab === 'all') {
+			return <AllWorkshops />
 		}
-		return this.renderNoWorkshops()
+	}
+
+	renderNav() {
+		return (
+			<nav>
+				<ul>
+					<li className={`${this.props.activeWorkshopsTab === 'user' ? styles.activeTab : ''}`}>
+						<button onClick={() => this.setTab('user')}>Mina workshops</button>
+					</li>
+
+					<li className={`${this.props.activeWorkshopsTab === 'all' ? styles.activeTab : ''}`}>
+						<button onClick={() => this.setTab('all')}>Alla workshops</button>
+					</li>
+				</ul>
+			</nav>
+		)
 	}
 
 	render() {
 		return (
 			<View background="listWorkshopsView">
 				{ this.renderHeader() }
+
 				<div className={styles.workshops}>
-					<h1 className={styles.workshopHeadline}>Mina workshops</h1>
-					{ this.renderCombined() }
+					{ this.renderNav() }
+					{ this.renderWorkshopList() }
 				</div>
 			</View>
 		)
@@ -167,12 +68,8 @@ class Workshops extends Component {
 
 function mapStateToProps(state) {
 	return {
-		userWorkshops: state.workshops.userWorkshops,
-		role: state.user.isLoggedIn,
-		editing: state.editor.editing,
 		isLoggedIn: state.user.isLoggedIn,
-		isLoadingWorkshop: state.workshops.isLoadingWorkshop,
-		isAddingWorkshop: state.workshops.isAddingWorkshop
+		activeWorkshopsTab: state.workshops.activeWorkshopsTab
 	}
 }
 
