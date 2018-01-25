@@ -60,10 +60,8 @@ class UserWorkshops extends Component {
 		}
 	}
 
-	toggleEditing(willEdit) {
-		if (!this.props.editing) {
-			this.props.dispatch(toggleEditing(willEdit))
-		}
+	toggleEditing() {
+		this.props.dispatch(toggleEditing(true))
 	}
 
 	renderStarredWorkshops() {

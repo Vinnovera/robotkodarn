@@ -23,7 +23,7 @@ class AllWorkshops extends Component {
 		super(props)
 
 		this.copyWorkshop = this.copyWorkshop.bind(this)
-		this.startEditing = this.startEditing.bind(this)
+		this.toggleEditing = this.toggleEditing.bind(this)
 		this.renderNoWorkshops = this.renderNoWorkshops.bind(this)
 		this.renderListOfWorkshops = this.renderListOfWorkshops.bind(this)
 		this.renderHeader = this.renderHeader.bind(this)
@@ -57,10 +57,8 @@ class AllWorkshops extends Component {
 		}
 	}
 
-	startEditing() {
-		if (!this.props.editing) {
-			this.props.dispatch(toggleEditing(true))
-		}
+	toggleEditing() {
+		this.props.dispatch(toggleEditing(false))
 	}
 
 	renderSpinner() {
@@ -101,7 +99,7 @@ class AllWorkshops extends Component {
 
 								return (
 									<tr className={styles.workshopItem} key={workshop._id}>
-										<td><Link onClick={this.startEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
+										<td><Link onClick={this.toggleEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
 										<td>{workshop.author.name}</td>
 										<td>{workshop.pincode}</td>
 										<td className={styles.centered}>
