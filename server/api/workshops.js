@@ -84,6 +84,12 @@ const updateWorkshop = async (request, reply) => {
 		const workshop = await Workshop.findOne({ _id: request.params.id })
 		const updatedWorkshop = Object.assign(workshop, request.payload)
 
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
+
+
 		const validated = workshopValidation.validate(updatedWorkshop, { abortEarly: false })
 		if (validated.error) {
 			throw validated.error

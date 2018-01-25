@@ -45,6 +45,11 @@ const addLink = async (request, reply) => {
 		const workshop = await Workshop.findOne({ _id: request.params.id })
 		const link = new Link(validated.value)
 
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
+
 		workshop.links.push(link)
 		await workshop.save()
 
@@ -61,6 +66,11 @@ const updateLink = async (request, reply) => {
 	try {
 		// This will cast a 500 error if no workshop is found.
 		const workshop = await Workshop.findOne({ _id: request.params.wid })
+
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
 
 		// Find the link that is to be updated
 		const linkToUpdate = workshop.links.filter((link) => {
@@ -96,20 +106,25 @@ const updateLink = async (request, reply) => {
 // -----------------------------------------------------------------------------
 const deleteLink = async (request, reply) => {
 	try {
-		const currentWorkshop = await Workshop.findOne({ _id: request.params.wid })
+		const workshop = await Workshop.findOne({ _id: request.params.wid })
+
+		// Return with 401 (Unauthorized) if we don't have permission
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+			return reply({ error: 'Du försökte en fuling?' }).code(401)
+		}
 
 		/*
 		 * Remove all links with the id of link to be deleted.
 		 * Since link._id is an object, we first need to convert it to a string.
 		 */
-		const updatedLinkList = currentWorkshop.links.filter((link) => {
+		const updatedLinkList = workshop.links.filter((link) => {
 			return link._id.toString() !== request.params.lid
 		})
 
 		// Save updatedLinkList as list of links.
-		currentWorkshop.links = updatedLinkList
+		workshop.links = updatedLinkList
 
-		await currentWorkshop.save()
+		await workshop.save()
 
 		return reply(updatedLinkList).code(200)
 	} catch (error) {

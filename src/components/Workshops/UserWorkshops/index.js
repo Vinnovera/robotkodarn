@@ -104,7 +104,15 @@ class UserWorkshops extends Component {
 				</FadeIn>
 			)
 		}
-		return (<p className={styles.info}>Du har inte skapat några workshops än.</p>)
+		return (
+			<div>
+				<p className={styles.infoText}>Du har inga egna workshops. Tryck på knappen nedan för att skapa en ny workshop.</p>
+
+				<form className={styles.form} method="post">
+					<Button disabled={this.props.isAddingWorkshop} kind="success" handleClick={this.addWorkshop}>Lägg till ny workshop</Button>
+				</form>
+			</div>
+		)
 	}
 
 	render() {
@@ -117,7 +125,7 @@ class UserWorkshops extends Component {
 				{
 					this.props.starredWorkshops.length > 0
 						? this.renderStarredWorkshops()
-						: <p className={styles.noStarredMessage}>Du har inga stjärnmärkta workshops</p>
+						: <p className={styles.infoText}>Du har inga stjärnmärkta workshops.</p>
 				}
 			</div>
 		)

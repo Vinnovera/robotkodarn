@@ -29,6 +29,10 @@ const workshopSchema = Schema({
 	}
 })
 
+workshopSchema.methods.isAuthorizedToEdit = function (userId) {
+	return this.author === userId
+}
+
 export const workshopValidation = Joi.object().keys({
 	_id: Joi.object().required(),
 	title: Joi.string().required(),

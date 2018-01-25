@@ -44,8 +44,13 @@ class Menu extends Component {
 						<p className={styles.userName}>Inloggad som: {this.props.name}</p>
 						<p className={styles.userRole}>Roll: {this.props.role}</p>
 					</div>
-					{ this.props.currentWorkshop ?
-						<Link className={this.getLinkStyle(`/id/${pin}`)} onClick={() => this.startEditing(!this.props.editing)}>{ this.props.editing ? `Sluta redigera ${pin}` : `Redigera ${pin}`}</Link>
+					{ this.props.currentWorkshop && (this.props.currentWorkshop.author === this.props.userId) ?
+						<Link
+							className={this.getLinkStyle(`/id/${pin}`)}
+							onClick={() => this.startEditing(!this.props.editing)}
+						>
+							{ this.props.editing ? `Sluta redigera ${pin}` : `Redigera ${pin}`}
+						</Link>
 						:
 						''
 					}
@@ -69,10 +74,10 @@ function mapStateToProps(state) {
 		role: state.user.role,
 		name: state.user.name,
 		menu: state.menu.open,
+		userId: state.user._id,
 		currentWorkshop: state.workshops.item,
 		editing: state.editor.editing,
-		path: state.routeReducer.location.pathname,
-		activePartIndex: state.editor.activePartIndex
+		path: state.routeReducer.location.pathname
 	}
 }
 

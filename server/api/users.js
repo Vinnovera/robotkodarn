@@ -34,6 +34,7 @@ const getUserById = (request, reply) => {
 		if (error) return reply(error).code(500)
 
 		return reply({
+			_id: user._id,
 			email: user.email,
 			role: user.role,
 			name: user.name,
@@ -120,16 +121,14 @@ const starWorkshop = async (request, reply) => {
 			throw validatedWorkshopId.error
 		}
 
-		const newStarredWorkshops = [...user.starredWorkshops]
-
 		// Check if we already have the workshopId in the starredWorkshops array
 		// 409 = https://stackoverflow.com/questions/3825990/http-response-code-for-post-when-resource-already-exists
-		if (newStarredWorkshops.indexOf(validatedWorkshopId.value) !== -1) {
+		if (user.starredWorkshops.indexOf(validatedWorkshopId.value) !== -1) {
 			return reply({ error: 'Workshopen är redan stjärnmärkt' }).code(409)
 		}
 
-		// Push the workshopID to the array
-		newStarredWorkshops.push(validatedWorkshopId.value)
+		// Push the workshopID to a new array
+		const newStarredWorkshops = [...user.starredWorkshops, validatedWorkshopId.value]
 
 		// Update and save to database
 		await User.update({ _id: user._id }, { starredWorkshops: newStarredWorkshops })

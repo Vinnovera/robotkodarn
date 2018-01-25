@@ -4,6 +4,7 @@ import FA from 'react-fontawesome'
 
 import { updatePartContent, setCodeToUnsaved } from '../../actions/parts'
 import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
+import { setUserInfo } from '../../actions/user'
 
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
@@ -27,6 +28,7 @@ export class Workspace extends Component {
 	}
 
 	componentWillMount() {
+		this.props.dispatch(setUserInfo())
 		this.props.dispatch(findWorkshopByPin(this.props.params.pin))
 	}
 	componentWillUnmount() {
