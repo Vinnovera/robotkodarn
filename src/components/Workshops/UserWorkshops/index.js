@@ -121,7 +121,7 @@ class UserWorkshops extends Component {
 
 				<h2 style={{ marginTop: '50px' }} className={styles.workshopHeadline}>Mina stjärnmärkta workshops</h2>
 				{
-					this.props.starredWorkshops.length > 0
+					this.props.starredWorkshops && this.props.starredWorkshops.length > 0
 						? this.renderStarredWorkshops()
 						: <p className={styles.infoText}>Du har inga stjärnmärkta workshops.</p>
 				}

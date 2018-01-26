@@ -14,7 +14,7 @@ import styles from './workspacebuttons.css'
 
 export class WorkspaceButtons extends Component {
 	componentWillMount() {
-		// this.ping(1000)
+		this.ping(1000)
 	}
 
 	ping(interval) {

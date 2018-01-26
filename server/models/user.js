@@ -43,7 +43,7 @@ const userSchema = Schema({
 // We default with these three workshops
 userSchema.pre('save', function (next) {
 	if (this.starredWorkshops.length === 0) {
-		this.starredWorkshops.push('5a699e382afe770691584b5c', '5a699e3e2afe770691584b5d', '5a699e3f2afe770691584b5e')
+		this.starredWorkshops.push('5a69f55a581a3d04aa278c99', '5a69f55a581a3d04aa278c9a', '5a69f460043dedf306b6c16f')
 	}
 	next()
 })

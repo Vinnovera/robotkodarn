@@ -85,7 +85,7 @@ const updateWorkshop = async (request, reply) => {
 		const updatedWorkshop = Object.assign(workshop, request.payload)
 
 		// Return with 401 (Unauthorized) if we don't have permission
-		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials._id)) {
 			return reply({ error: 'Du försökte en fuling?' }).code(401)
 		}
 

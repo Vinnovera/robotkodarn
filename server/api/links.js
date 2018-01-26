@@ -46,7 +46,7 @@ const addLink = async (request, reply) => {
 		const link = new Link(validated.value)
 
 		// Return with 401 (Unauthorized) if we don't have permission
-		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials._id)) {
 			return reply({ error: 'Du försökte en fuling?' }).code(401)
 		}
 
@@ -68,7 +68,7 @@ const updateLink = async (request, reply) => {
 		const workshop = await Workshop.findOne({ _id: request.params.wid })
 
 		// Return with 401 (Unauthorized) if we don't have permission
-		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials._id)) {
 			return reply({ error: 'Du försökte en fuling?' }).code(401)
 		}
 
@@ -109,7 +109,7 @@ const deleteLink = async (request, reply) => {
 		const workshop = await Workshop.findOne({ _id: request.params.wid })
 
 		// Return with 401 (Unauthorized) if we don't have permission
-		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials._id)) {
 			return reply({ error: 'Du försökte en fuling?' }).code(401)
 		}
 

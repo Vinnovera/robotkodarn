@@ -59,15 +59,21 @@ class Menu extends Component {
 		this.props.dispatch(unstarWorkshop(workshopId))
 	}
 
+	getIsStarred = () => {
+		if (this.props.starredWorkshops) {
+			return this.props.starredWorkshops.filter((starredWorkshop) => {
+				return !!this.props.currentWorkshop && (starredWorkshop._id === this.props.currentWorkshop._id)
+			}).length > 0
+		}
+
+		return false
+	}
+
 	render() {
 		const navigationStyles = this.props.menu ? styles.navigationOpen : styles.navigation
 		const pin = this.props.currentWorkshop ? this.props.currentWorkshop.pincode : ''
 
-		// console.log(this.props.starredWorkshops.length)
-
-		const isStarred = this.props.starredWorkshops.filter((starredWorkshop) => {
-			return !!this.props.currentWorkshop && (starredWorkshop._id === this.props.currentWorkshop._id)
-		}).length > 0
+		const isStarred = this.getIsStarred()
 
 		return (
 			<OutsideAlerter>

@@ -14,7 +14,7 @@ const createUserFromInvitation = async (request, reply) => {
 
 		if (existingInvitation) {
 			const newUser = new User({ invitationID: inviteID })
-			console.log('newUser', newUser)
+
 			await newUser.save()
 			request.cookieAuth.set({ _id: newUser._id })
 			reply().redirect('/register')

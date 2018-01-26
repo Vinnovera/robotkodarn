@@ -45,6 +45,7 @@ export const signOut = path => (dispatch) => {
 				type: SET_USER_INFO,
 				payload: {}
 			})
+
 			dispatch(routeActions.push(path))
 		})
 		.catch(error => console.log(error))

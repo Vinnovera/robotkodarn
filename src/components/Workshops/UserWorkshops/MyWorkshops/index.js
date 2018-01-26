@@ -26,8 +26,8 @@ const MyWorkshops = ({ ...props }) => {
 									</button>
 								</td>
 								<td>
-									<button onClick={e => props.deleteWorkshop(e, workshop._id)} type="submit" className={props.styles.tableIconDanger} value={workshop._id} name="delete">
-										<FA name="times" />
+									<button onClick={e => props.deleteWorkshop(e, workshop._id)} type="submit" className={props.styles.tableIcon} value={workshop._id} name="delete">
+										<FA name="trash-o" />
 									</button>
 								</td>
 							</tr>
