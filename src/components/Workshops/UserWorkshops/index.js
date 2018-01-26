@@ -84,8 +84,8 @@ class UserWorkshops extends Component {
 		}
 	}
 
-	toggleEditing() {
-		this.props.dispatch(toggleEditing(true))
+	toggleEditing(boolean = true) {
+		this.props.dispatch(toggleEditing(boolean))
 	}
 
 	renderStarredWorkshops() {

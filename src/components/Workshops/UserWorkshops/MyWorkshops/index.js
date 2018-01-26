@@ -18,7 +18,7 @@ const MyWorkshops = ({ ...props }) => {
 					props.userWorkshops.map((workshop, i) => {
 						return (
 							<tr className={props.styles.workshopItem} key={workshop._id}>
-								<td><Link onClick={props.toggleEditing} className={props.styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
+								<td><Link onClick={() => props.toggleEditing(true)} className={props.styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
 								<td>{workshop.pincode}</td>
 								<td>
 									<button onClick={e => props.copyWorkshop(e, workshop._id)} type="submit" className={props.styles.tableIcon} value={workshop._id} name="copy">
