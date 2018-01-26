@@ -42,7 +42,7 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
 				payload: data.title
 			})
 		})
-		.catch(error => console.log(error))
+		.catch(error => console.log(error.response)) // TODO: Make custom dispatch?
 }
 
 // -----------------------------------------------------------------------------

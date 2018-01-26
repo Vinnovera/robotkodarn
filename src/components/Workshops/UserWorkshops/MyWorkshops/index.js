@@ -15,7 +15,7 @@ const MyWorkshops = ({ ...props }) => {
 			</thead>
 			<tbody>
 				{
-					props.userWorkshops.map((workshop) => {
+					props.userWorkshops.map((workshop, i) => {
 						return (
 							<tr className={props.styles.workshopItem} key={workshop._id}>
 								<td><Link onClick={props.toggleEditing} className={props.styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
@@ -26,8 +26,25 @@ const MyWorkshops = ({ ...props }) => {
 									</button>
 								</td>
 								<td>
-									<button onClick={e => props.deleteWorkshop(e, workshop._id)} type="submit" className={props.styles.tableIconDanger} value={workshop._id} name="delete">
-										<FA name="times" />
+									{
+										(props.deletePromptIndex === i)
+											? (
+												<div className={props.styles.deletePromptWrapperParent}>
+													<div className={props.styles.deletePromptWrapper}>
+														<p>
+															Radera workshop?
+															<span>
+																<button onClick={e => props.deleteHandleClickConfirm(e, workshop._id)}><FA className={props.styles.codeIcon} name="check-circle" /></button>
+																<button onClick={props.deleteHandleClickCancel}><FA className={props.styles.codeIcon} name="times-circle" /></button>
+															</span>
+														</p>
+													</div>
+												</div>
+											)
+											: ''
+									}
+									<button onClick={e => props.promptForDeletion(e, workshop._id, i)} type="submit" className={props.styles.tableIcon} value={workshop._id} name="delete">
+										<FA name="trash-o" />
 									</button>
 								</td>
 							</tr>

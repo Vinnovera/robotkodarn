@@ -46,7 +46,7 @@ const createPart = async (request, reply) => {
 		const workshop = await Workshop.findOne({ _id: request.params.id })
 
 		// Return with 401 (Unauthorized) if we don't have permission
-		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials._id)) {
 			return reply({ error: 'Du försökte en fuling?' }).code(401)
 		}
 
@@ -70,7 +70,7 @@ const updatePart = async (request, reply) => {
 		const workshop = await Workshop.findOne({ _id: request.params.wid })
 
 		// Return with 401 (Unauthorized) if we don't have permission
-		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials._id)) {
 			return reply({ error: 'Du försökte en fuling?' }).code(401)
 		}
 
@@ -113,7 +113,7 @@ const deletePart = async (request, reply) => {
 		const workshop = await Workshop.findOne({ _id: request.params.wid })
 
 		// Return with 401 (Unauthorized) if we don't have permission
-		if (!workshop.isAuthorizedToEdit(request.auth.credentials)) {
+		if (!workshop.isAuthorizedToEdit(request.auth.credentials._id)) {
 			return reply({ error: 'Du försökte en fuling?' }).code(401)
 		}
 
