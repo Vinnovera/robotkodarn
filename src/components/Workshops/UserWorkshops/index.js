@@ -24,9 +24,15 @@ class UserWorkshops extends Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			deletePromptIndex: null
+		}
+
 		this.addWorkshop = this.addWorkshop.bind(this)
 		this.copyWorkshop = this.copyWorkshop.bind(this)
-		this.deleteWorkshop = this.deleteWorkshop.bind(this)
+		this.promptForDeletion = this.promptForDeletion.bind(this)
+		this.deleteHandleClickConfirm = this.deleteHandleClickConfirm.bind(this)
+		this.deleteHandleClickCancel = this.deleteHandleClickCancel.bind(this)
 		this.toggleEditing = this.toggleEditing.bind(this)
 		this.unstarWorkshop = this.unstarWorkshop.bind(this)
 	}
@@ -49,10 +55,28 @@ class UserWorkshops extends Component {
 		this.props.dispatch(copyWorkshop(workshopId))
 	}
 
-	deleteWorkshop(e, workshopId) {
+	promptForDeletion(e, workshopId, i) {
 		e.preventDefault()
+		this.setState({
+			deletePromptIndex: i
+		})
+	}
+
+	deleteHandleClickConfirm(e, workshopId) {
+		e.preventDefault()
+		this.setState({
+			deletePromptIndex: null
+		})
 		this.props.dispatch(deleteWorkshop(workshopId))
 	}
+
+	deleteHandleClickCancel(e) {
+		e.preventDefault()
+		this.setState({
+			deletePromptIndex: null
+		})
+	}
+
 	unstarWorkshop(e, workshopId) {
 		e.preventDefault()
 		if (!this.props.isUnstarringWorkshop) {
@@ -90,8 +114,11 @@ class UserWorkshops extends Component {
 						userWorkshops={this.props.userWorkshops}
 						styles={styles}
 						copyWorkshop={this.copyWorkshop}
-						deleteWorkshop={this.deleteWorkshop}
+						promptForDeletion={this.promptForDeletion}
 						toggleEditing={this.toggleEditing}
+						deletePromptIndex={this.state.deletePromptIndex}
+						deleteHandleClickConfirm={this.deleteHandleClickConfirm}
+						deleteHandleClickCancel={this.deleteHandleClickCancel}
 					/>
 
 					{ this.props.isAddingWorkshop && <div className={styles.spinnerCogWrapper}><SpinnerCog fontSize="1.5rem" style={{ marginBottom: '10px' }} /></div> }

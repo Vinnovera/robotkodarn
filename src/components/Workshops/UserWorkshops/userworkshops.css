@@ -82,6 +82,10 @@
 	padding: 0.7rem 1rem 0.5rem;
 }
 
+:local .workshopItem td {
+	position: relative;
+}
+
 /*
  * FIX TO ADD BORDER RADIUS ON TR
  * 1. Fix to improve spacing
@@ -159,4 +163,69 @@
 }
 :local .spinnerCogWrapper {
 	text-align: center;
+}
+
+/* ----------------------------------------
+ DELETE PROMPT
+----------------------------------------- */
+:local .deletePromptWrapperParent {
+	overflow: hidden;
+	height: 37px;
+	width: 240px;
+	position: absolute;
+	top: 0;
+	right: -2px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+:local .deletePromptWrapper {
+	position: absolute;
+	height: 100%;
+	background-color: #f83620;
+	transform: translateX(100%);
+	color: white;
+	animation: slideIn .2s ease-out forwards;
+	display: flex;
+	align-items: center;
+	padding: 0 15px;
+}
+	:local .deletePromptWrapper p {
+		font-size: .9rem;
+		width: 100%;
+		margin-top: 6px;
+	}
+		:local .deletePromptWrapper p span {
+			display: block;
+			float: right;
+			margin-top: 1px;
+			margin-left: 15px;
+		}
+			:local .deletePromptWrapper p span button {
+				width: 25px;
+				border: 0;
+				background: none;
+				border-radius: 0;
+				font-size: 1rem;
+				padding: 0;
+				color: white;
+				margin-left: 5px;
+				cursor: pointer;
+				opacity: .9;
+				margin-top: 1px;
+		}
+			:local .deletePromptWrapper p span button:hover {
+				opacity: 1;
+				color: white;
+			}
+				:local .deletePromptWrapper p span button span {
+					font-size: 1.4rem;
+				}
+				
+@keyframes :local(slideIn) {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0%);
+	}
 }
