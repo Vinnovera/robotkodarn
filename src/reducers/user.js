@@ -22,30 +22,30 @@ export default handleActions({
 	ADD_STARRED_WORKSHOP_START: (state, action) => {
 		return ({
 			...state,
-			starredWorkshops: [...state.starredWorkshops, { _id: action.payload }],
-			isStarringWorkshop: true
+			starredWorkshops: [...state.starredWorkshops, { _id: action.payload }]
+			// isStarringWorkshop: true
 		})
 	},
 
 	ADD_STARRED_WORKSHOP_DONE: (state) => {
 		return ({
-			...state,
-			isStarringWorkshop: false
+			...state
+			// isStarringWorkshop: false
 		})
 	},
 
 	REMOVE_STARRED_WORKSHOP_START: (state, action) => {
 		return ({
 			...state,
-			starredWorkshops: [...state.starredWorkshops].filter(workshop => workshop._id !== action.payload),
-			isUnstarringWorkshop: true
+			starredWorkshops: [...state.starredWorkshops].filter(workshop => workshop._id !== action.payload)
+			// isUnstarringWorkshop: true
 		})
 	},
 
 	REMOVE_STARRED_WORKSHOP_DONE: (state) => {
 		return ({
-			...state,
-			isUnstarringWorkshop: false
+			...state
+			// isUnstarringWorkshop: false
 		})
 	}
 }, {

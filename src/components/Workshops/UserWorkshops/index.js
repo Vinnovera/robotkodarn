@@ -9,7 +9,7 @@ import {
 	deleteWorkshop
 } from '../../../actions/workshops'
 
-import { unstarWorkshop } from '../../../actions/user'
+import { unstarWorkshop, setUserInfo } from '../../../actions/user'
 
 import FadeIn from '../../FadeIn'
 import Button from '../../Button'
@@ -39,6 +39,7 @@ class UserWorkshops extends Component {
 
 	componentWillMount() {
 		this.props.dispatch(getWorkshopsByUserId())
+		this.props.dispatch(setUserInfo())
 	}
 
 	componentDidMount() {

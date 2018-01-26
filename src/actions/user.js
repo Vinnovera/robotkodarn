@@ -69,9 +69,6 @@ export const unstarWorkshop = workshopId => (dispatch) => {
 			}
 		})
 		.then(({ data }) => {
-			// Run setUserInfo to populate the starred workshops to user state
-			dispatch(setUserInfo())
-
 			dispatch({
 				type: REMOVE_STARRED_WORKSHOP_DONE,
 				payload: data
