@@ -53,27 +53,34 @@ const getWorkshopsByUserId = (request, reply) => {
 // Add a workshop [POST]
 // -----------------------------------------------------------------------------
 
-const addWorkshop = async (request, reply) => {
-	try {
-		const user = request.auth.artifacts
-		const workshop = new Workshop(request.payload)
-		workshop.author = user._id
-		workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
+const addWorkshop = (request, reply) => {
+	const user = request.auth.artifacts
+	const workshop = new Workshop(request.payload)
+	workshop.author = user._id
 
-		/**
-		 * First make sure that the content received is valid
-		*/
-		const validated = workshopValidation.validate(workshop, { abortEarly: false })
-		if (validated.error) {
-			throw validated.error
+	const trySave = async () => {
+		try {
+			workshop.pincode = Math.floor(1000 + (Math.random() * 9000))
+
+			/**
+			 * First make sure that the content received is valid
+			*/
+			const validated = workshopValidation.validate(workshop, { abortEarly: false })
+			if (validated.error) {
+				throw validated.error
+			}
+
+			await validated.value.save()
+
+			return reply(validated.value).code(200)
+		} catch (error) {
+			// if pincode already exists run trySave again to generate new pincode
+			return error.code === 11000
+				? trySave()
+				: reply({ error: error.message }).code(error.code || 500)
 		}
-
-		await validated.value.save()
-
-		return reply(validated.value).code(200)
-	} catch (error) {
-		return reply({ error: error.message }).code(error.code || 500)
 	}
+	trySave()
 }
 
 // -----------------------------------------------------------------------------
