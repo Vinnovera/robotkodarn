@@ -1,24 +1,25 @@
 import React from 'react'
-import Navbar from './../Navbar'
+
 import styles from './view.css'
 
 const View = ({ children, background = 'beige' }) => {
-  let componentStyle
+	let componentStyle
 
-  if (background === 'beige') {
-    componentStyle = styles.beigeView
-  } else if (background === 'red') {
-    componentStyle = styles.redView
-  } else if (background === 'green') {
-    componentStyle = styles.greenView
-  }
+	switch (background) {
+	case 'beige': componentStyle = styles.beigeView; break
+	case 'red': componentStyle = styles.redView; break
+	case 'green': componentStyle = styles.greenView; break
+	case 'editMode': componentStyle = styles.editView; break
+	case 'listWorkshopsView': componentStyle = styles.listWorkshopsView; break
 
-  return (
-    <div className={componentStyle}>
-      <Navbar />
-      { children }
-    </div>
-  )
+	default: componentStyle = styles.beigeView; break
+	}
+
+	return (
+		<div className={componentStyle}>
+			{ children }
+		</div>
+	)
 }
 
 export default View

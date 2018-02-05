@@ -1,42 +1,49 @@
 :local .button,
 :local .buttonSuccess,
-:local .buttonDanger {
-  border-radius: 2px;
-  background-color: #3E3748;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  display: block;
-  font: inherit;
-  font-size: 1rem;
-  transition: 300ms;
-  text-transform: uppercase;
-  padding: 1rem 0 0.9rem;
-  width: 100%;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
+:local .buttonDanger,
+:local .buttonDisabled {
+	border-radius: 2px;
+	background-color: #3E3748;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	display: block;
+	font: inherit;
+	font-size: 1rem;
+	transition: 300ms;
+	text-transform: uppercase;
+	padding: 1rem 0 0.9rem;
+	width: 100%;
+	-webkit-font-smoothing: antialiased;
 }
 
 :local .buttonSuccess {
-  background-color: #3DA099;
+	background-color: #3DA099;
 
 }
 :local .buttonSuccess:hover {
-  background-color: #238F88;
+	background-color: #238F88;
 }
 
 :local .buttonDanger {
-  background-color: #FE5D4B;
+	background-color: #FE5D4B;
 }
 :local .buttonDanger:hover {
-  background-color: #C52522;
+	background-color: #C52522;
+}
+
+:local .buttonDisabled,
+:local button[disabled],
+:local button[disabled]:hover {
+	background-color: #BABABA;
+	cursor: not-allowed;
 }
 
 :local .button:hover,
 :local .button:focus {
-  outline: none;
+	outline: none;
 }
 
 :local .button:hover {
-  background-color: #332C3D;
+	background-color: #332C3D;
 }

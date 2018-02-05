@@ -1,0 +1,273 @@
+:local .partList {
+	text-align: left;
+	margin: 0 auto;
+	width: 100%;
+}
+:local .partList li {
+	padding: 5px 12%;
+	position: relative;
+}
+:local .partList li:hover .sortHandler {
+	opacity: 1;
+}
+
+:local .partList li button {
+	font-size: 1rem;
+	color: #36303f;
+	text-align: left;
+	border: none;
+	background: none;
+	cursor: pointer;
+	width: auto;
+	transition: all .2s;
+}
+	:local .partList li button span {
+		margin-right: .2rem;
+	}
+	:local .partList li button:hover {
+		color: #fe5d4b;
+	}
+:local .activePart {
+	background-color: #eae8e2;
+}
+
+:local li button.deletePartButton {
+	width: auto;
+	float: right;
+	color: #333;
+}
+:local li button.changePartButton {
+	padding: 0;
+}
+
+:local li button.deletePartButtonRemove {
+	position: absolute;
+	right: -1px;
+	bottom: 5px;
+}
+:local li button.deletePartButtonRemove span {
+	animation: deleteRemove .2s forwards;
+	transition: all .2s;
+}
+
+
+:local .partList.editingMode input {
+	max-width: 176px;
+	width: auto;
+	padding: 0;
+	margin: 0 0 1px 0;
+	display: inline;
+	text-align: left;
+	border: none;
+	height: 18px;
+	background: none;
+}
+
+:local .editing .pencilIcon {
+	animation: pencilRemove .2s forwards;
+	animation-timing-function: cubic-bezier(0.58, -0.85, 1, 1);
+}
+:local .editing .diskIcon {
+	animation: diskAdd .2s forwards;
+	animation-delay: .2s;
+	transform: scale(0);
+}
+:local .editing form {
+	box-shadow: 0 2px 0 #3e3748;
+	animation: colorPulse .4s infinite alternate;
+	padding: 1px 0;
+	position: relative;
+}
+:local .editing form button {
+	position: relative;
+	width: 31px;
+}
+:local .editing form button span {
+	position: absolute;
+	bottom: 0;
+	left: 7px;
+}
+
+:local .addButtonWrapper {
+	width: 76%;
+	margin: 5px auto 0 auto;
+	padding: 0 8px;
+	text-align: left;
+	border-top: 2px dashed #e7e5de;
+	padding-bottom: 10px;
+}
+	:local .addButtonWrapper button {
+		font-size: .9rem;
+		padding: 0;
+		margin-top: 10px;
+		width: auto;
+		border: 0;
+		background: none;
+		border-radius: 0;
+		color: #37968e;
+		cursor: pointer;
+		transition: all .2s ease-in-out;
+	}
+	:local .addButtonWrapper button[disabled],
+	:local .addButtonWrapper button[disabled]:hover {
+		color: #b6b6b6;
+		cursor: not-allowed;
+		background: transparent;
+	}
+	:local .addButtonWrapper button:hover {
+		color: #fe5d4b;
+	}
+		:local .addButtonWrapper button span {
+			margin-right: .5rem;
+		}
+
+:local .deletePromptWrapper {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #f83620;
+	top: 0;
+	left: 0;
+	transform: translateX(100%);
+	color: white;
+	animation: slideIn .2s ease-out forwards;
+	display: flex;
+	align-items: center;
+	padding: 0 41px;
+}
+	:local .deletePromptWrapper p {
+		font-size: .9rem;
+		width: 100%;
+		margin-top: 6px;
+	}
+		:local .deletePromptWrapper p span {
+			display: block;
+			float: right;
+			margin-right: -4px;
+		}
+			:local .deletePromptWrapper p span button {
+				width: auto;
+				border: 0;
+				background: none;
+				border-radius: 0;
+				font-size: 1rem;
+				padding: 0;
+				color: white;
+				margin-left: 5px;
+				cursor: pointer;
+				opacity: .9;
+				margin-top: -2px;
+		}
+			:local .deletePromptWrapper p span button:hover {
+				opacity: 1;
+				color: white;
+			}
+				:local .deletePromptWrapper p span button span {
+					font-size: 1.4rem;
+				}
+
+
+@keyframes :local(slideIn) {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes :local(colorPulse) {
+	from {
+			box-shadow: 0 2px 0 rgba(62, 55, 72, .1);
+	}
+	to {
+			box-shadow: 0 2px 0 #3e3748;
+	}
+}
+
+
+@keyframes :local(pencilRemove) {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(0);
+	}
+}
+@keyframes :local(diskAdd) {
+	from {
+		transform: scale(0);
+	}
+	to {
+		transform: scale(1);
+	}
+}
+@keyframes :local(deleteRemove) {
+	from {
+		transform: scale(1) rotate(0deg);
+	}
+	to {
+		transform: scale(0) rotate(180deg);
+	}
+}
+@keyframes :local(fadeDown) {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: .5;
+	}
+}
+
+@keyframes :local(spin) {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+:local .sortHandler {
+	position: absolute;
+	left: 15px;
+	top: 6px;
+	font-size: 0.9rem;
+	opacity: .7;
+	cursor: -webkit-grab;
+	transition: opacity .4s;
+}
+:local .sorting .sortHandler {
+	opacity: 1;
+}
+:local .sorting {
+	list-style: none;
+	padding: 5px 33px;
+	cursor: pointer !important;
+	animation: fadeDown .5s forwards;
+}
+:local .sorting .deletePartButton {
+	margin-right: 3.5px;
+}
+:local .sorting button:first-of-type {
+	margin-right: 3.2px;
+}
+:local .sorting button {
+	color: #36303f;
+	width: auto;
+	background: none;
+	font-size: 1rem;
+	border: none;
+}
+
+:local .cogLoader {
+	text-align: center;
+	font-size: 1.4rem;
+	padding: 0 !important;
+	opacity: 1;
+	color: #36303f;
+}
+	:local .cogLoader span {
+		transform-origin: center;
+		animation: spin 2s linear infinite;
+	}

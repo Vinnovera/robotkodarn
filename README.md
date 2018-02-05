@@ -11,22 +11,20 @@ To start project if you are running MongoDB from the cloud:
 # Install dependencies
 $ npm install
 
-# Start project under development
-$ npm run dev
+# Create local version of .env
+$ cp .env.example .env
 
 ```
 
 If you are running MongoDB locally:
 
 ```bash
-# Install dependencies
-$ npm install
+
+# Seed local mongo database named "robotkodarn" with some data
+$ npm run mongo:seed
 
 # Start mongo in a seperate window
 $ npm run mongo:start
-
-# Start project under development
-$ npm run dev
 
 ```
 
@@ -44,6 +42,18 @@ $ sudo mkdir -p /data/db && sudo chmod 777 /data/db
 First make sure to download the mongo shell, see [mongodb.org](http://mongodb.org) for more info, or just install mong using [homebrew](https://brew.sh/index_se.html):
 
 `brew install mongodb`
+
+## Develop
+Start project under development
+
+```bash
+$ npm run dev
+```
+
+If you are using the local database seed it includes:
+
+* One user _maria@example.com_ with password _123_ **Make sure to remove this user before deploying**
+* One workshop with pin _6172_
 
 ## Build
 ```bash

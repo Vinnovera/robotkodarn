@@ -1,109 +1,138 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { compileCode, setConsoleOutput } from '../../actions/editor'
-import { findWorkshopByPin, clearWorkshop } from '../../actions/currentWorkshop'
+
+import { updatePartContent, setCodeToUnsaved } from '../../actions/parts'
+import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
+import { setUserInfo } from '../../actions/user'
+
 import Sidebar from './../Sidebar'
 import Editor from './../Editor'
-import WorkspaceForm from './../WorkspaceForm'
 import Console from './../Console'
-import Button from './../Button'
 import Spinner from './../Spinner'
 import View from './../View'
 import FadeIn from './../FadeIn'
+import ToolsButton from './../ToolsButton'
+import LinkForm from './LinkForm'
+import PartTitle from './PartTitle'
+
+import WorkspaceButtons from './WorkspaceButtons'
+
 import styles from './workspace.css'
 
 export class Workspace extends Component {
-  componentWillMount() {
-    this.props.dispatch(findWorkshopByPin(this.props.params.pin))
-  }
+	constructor(props) {
+		super(props)
 
-  componentWillUnmount() {
-    this.props.dispatch(clearWorkshop())
-  }
+		this.updateCode = this.updateCode.bind(this)
+	}
 
-  getMainPaneClassName = () => {
-    if (this.props.isSidebarOpen) {
-      return styles.mainPane
-    }
+	componentWillMount() {
+		this.props.dispatch(setUserInfo())
+		this.props.dispatch(findWorkshopByPin(this.props.params.pin))
+	}
+	componentWillUnmount() {
+		this.props.dispatch(clearWorkshop())
+	}
 
-    return `${styles.mainPane} ${styles.mainPaneExpanded}`
-  }
+	getMainPaneClassName = () => {
+		if (this.props.isSidebarOpen) {
+			return styles.mainPane
+		}
 
-  /**
-   * Gives user message about compiling is taking place, and also dispatch the
-   * code that is about to be compiled. If upload is set to true, code will also
-   * be uploaded to Arduino.
-   *
-   * @param {boolean} upload true = code will be uploaded to Arduino
-   */
-  handleClick = (upload = false) => {
-    this.props.dispatch(setConsoleOutput({
-      type: 'info',
-      heading: 'Testar kod',
-      message: 'Skickar kod till kompilator...'
-    }))
+		return `${styles.mainPane} ${styles.mainPaneExpanded}`
+	}
 
-    this.props.dispatch(
-      compileCode(this.props.partsToEdit[this.props.activePartIndex].content, upload)
-    )
-  }
+	updateCode() {
+		const currentPartContent = this.props.partsToEdit[this.props.activePartIndex].content
+		const workshopId = this.props.currentWorkshop._id
+		const currentPartId = this.props.partsToEdit[this.props.activePartIndex]._id
 
-  renderMainContent() {
-    if (this.props.currentWorkshop) {
-      return (
-        <View>
-          <Sidebar />
-          { this.props.editing ?
-            <FadeIn>
-              <main className={this.getMainPaneClassName()}>
-                <WorkspaceForm type={this.props.editingType} />
-              </main>
-            </FadeIn>
-            :
-            <FadeIn>
-              <main className={this.getMainPaneClassName()}>
-                { this.props.currentWorkshop.parts.length > 0 ?
-                  <h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
-                  :
-                  <h1 className={styles.workspaceHeadline}>Övning</h1>
-                }
-                <div className={styles.codeButtonsWrapper} >
-                  <Button kind="success" handleClick={() => this.handleClick()}>
-                    <FA className={styles.icons} name="cogs" />Testa min kod
-                  </Button>
-                  <Button kind="success" handleClick={() => this.handleClick(true)}>
-                    <FA className={styles.icons} name="usb" />Ladda över kod
-                  </Button>
-                </div>
-                <Editor />
-                <Console />
-              </main>
-            </FadeIn>
-          }
-        </View>
-      )
-    }
+		this.props.dispatch(updatePartContent(currentPartContent, workshopId, currentPartId))
+		this.props.dispatch(setCodeToUnsaved(false))
+	}
 
-    return (
-      <Spinner />
-    )
-  }
+	renderMainContent() {
+		if (this.props.currentWorkshop) {
+			return (this.props.isLoggedIn && this.props.editing) ? (
+				<View background="editMode">
+					<ToolsButton />
+					<Sidebar />
 
-  render() {
-    return this.renderMainContent()
-  }
+					<FadeIn>
+						{ (this.props.currentEditingType === 'link') ?
+							<main className={this.getMainPaneClassName()}>
+								{ this.props.currentWorkshop.links.length > 0 ?
+									<LinkForm />
+									: <h3>Det finns inga länkar!</h3>
+								}
+							</main>
+							: (
+								<main className={this.getMainPaneClassName()}>
+									{ this.props.currentWorkshop.parts.length > 0 ? (
+										<div style={{ height: '100%' }}>
+											<PartTitle />
+											<WorkspaceButtons />
+											<Editor />
+											<div className={styles.saveCodeButtonContainer}>
+												<button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
+													<div><span><FA name="check" /> Sparat</span></div>
+													<FA name="save" /> Spara kod
+												</button>
+											</div>
+											<Console />
+										</div>) : <h3>Det finns inga lektioner!</h3>
+									}
+								</main>
+							)
+						}
+					</FadeIn>
+				</View>
+			) : (
+				<View>
+					{ this.props.isLoggedIn && <ToolsButton /> }
+					<Sidebar />
+
+					<FadeIn>
+						<main className={this.getMainPaneClassName()}>
+							{ this.props.currentWorkshop.parts.length > 0 && this.props.activePartIndex >= 0 ?
+								<h1 className={styles.workspaceHeadline}>{this.props.currentWorkshop.parts[this.props.activePartIndex].title}</h1>
+								:
+								<h1 className={styles.workspaceHeadline}>Övning</h1>
+							}
+							<WorkspaceButtons />
+							<Editor />
+							<Console />
+						</main>
+					</FadeIn>
+				</View>
+			)
+		}
+
+		return (
+			<Spinner />
+		)
+	}
+
+	render() {
+		return this.renderMainContent()
+	}
 }
 
 function mapStateToProps(state) {
-  return {
-    isSidebarOpen: state.sidebar.open,
-    currentWorkshop: state.currentWorkshop.item,
-    activePartIndex: state.editor.activePartIndex,
-    editing: state.editor.editing,
-    editingType: state.editor.editingType.type,
-    partsToEdit: state.editor.partsToEdit
-  }
+	return {
+		isSidebarOpen: state.sidebar.open,
+		currentWorkshop: state.workshops.item,
+		activePartIndex: state.editor.activePartIndex,
+		activeLinkIndex: state.workshops.activeLinkIndex,
+		editing: state.editor.editing,
+		editingType: state.editor.editingType.type,
+		partsToEdit: state.editor.partsToEdit,
+		isLoggedIn: state.user.isLoggedIn,
+		currentEditingType: state.workshops.currentEditingType,
+		codeSaved: state.workshops.codeSaved, // When code is saved (when button is pressed)
+		codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
+	}
 }
 
 export default connect(mapStateToProps)(Workspace)

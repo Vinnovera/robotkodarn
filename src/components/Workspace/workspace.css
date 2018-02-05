@@ -1,10 +1,9 @@
 /*
  * 1. 280px === width of sidebar
- * 2. 81px === height of navigation bar
  */
 :local .mainPane {
   bottom: 0;
-  height: calc(100vh - 81px); /* 2 */
+  height: 100vh;
   transition: width 300ms ease-in-out 75ms;
   padding: 20px;
   position: fixed;
@@ -20,18 +19,56 @@
   width: calc(100vw - 28px);
 }
 
-:local .codeButtonsWrapper {
-  display: flex;
-  float: right; /* To put buttons where they belong */
-  margin-top: -50px;
-  width: 25rem;
+:local .saveCodeButtonContainer {
+  overflow: hidden;
 }
 
-:local .codeButtonsWrapper button:first-of-type {
-  margin-right: 10px;
+:local .saveCodeButton {
+  width: auto;
+  float: right;
+  border-radius: 2px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font: inherit;
+  font-size: 1rem;
+  transition: 300ms;
+  text-transform: uppercase;
+  padding: 1rem;
+  -webkit-font-smoothing: antialiased;
+  background-color: #36968e;
+  animation: codeSaved 1s;
+  position: relative;
+  overflow: hidden;
 }
+  :local .saveCodeButton:hover {
+    background-color: #238F88;
+  }
+  :local .saveCodeButton span {
+    margin-right: .5rem;
+  }
+  :local .saveCodeButton[disabled] {
+    background: #b2b1b2;
+    cursor: not-allowed;
+  }
 
-/* FontAwesome */
-:local .icons {
-  margin-right: 10px;
-}
+  
+  :local .saveCodeButton div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2f8b56;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-100%);
+    transition: all .5s;
+  }
+  
+  :local .saveCodeButtonSaved div {
+    box-shadow: 0 0 60px black;
+    transform: translateX(0);
+  }

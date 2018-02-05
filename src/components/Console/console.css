@@ -1,101 +1,111 @@
+:local .makeRoomForSaveButton {
+	height: calc(100% - 105px) !important;
+}
 :local .consoleWrapper {
-  margin-top: 20px;
-  height: 30%;
+	margin-top: 15px;
+	height: 32.5%;
 }
 
 :local .headline {
-  font-size: 1rem;
-  margin: 2rem 0 0.2rem;
+	font-size: 1rem;
+	margin: 0 0 .2rem 0;
 }
 
 :local .console {
-  width: 100%;
-  height: calc(100% - 34px);
-  border: 1px solid #e5e5e5;
-  background: white;
-  font-size: 1rem;
-  overflow-y: scroll;
+	width: 100%;
+	height: calc(100% - 34px);
+	border: 1px solid #e5e5e5;
+	background: white;
+	font-size: 1rem;
+	overflow-y: scroll;
 }
 
 :local .console pre {
-  margin: 5px;
-  color: #333;
+	margin: 5px;
+	color: #333;
 }
 
 :local .console pre div {
-  border-bottom: 1px solid rgba(0, 0, 0, .1);
-  padding: 5px;
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	padding: 5px;
 }
 
-:local .console pre div:last-of-type {
-  background: #fffef1;
-  animation: fadeout 3s;
-  animation-iteration-count: 1;
+:local .console pre div:first-of-type {
+	background: #fffef1;
+	animation: fadeout 3s;
+	animation-iteration-count: 1;
 }
 
 :local .console .timestamp {
-  color: #bbb;
+	color: #bbb;
 }
 
 :local .console .error {
-  color: #C52522;
+	color: #d92814;
 }
 
 :local .console .success {
-  color: #238F88;
+	color: #14b265;
 }
 
 :local .console .info {
-  color: #208FA0;
+	color: #239efa;
 }
 
 
 @keyframes :local(fadeout) {
-  0% {
-    background-color: #FFFDD0;
-  }
-  100% {
-    background-color: #fffef1;
-  }
+	0% {
+		background-color: #FFFDD0;
+	}
+	100% {
+		background-color: #fffef1;
+	}
 }
 
 /* -----------------------------------------------------------------------------
-  CONSOLE BUTTON
+	CONSOLE BUTTON
 ------------------------------------------------------------------------------*/
-
 :local .consoleButton {
-  background: transparent;
-  border: none;
-  color: #238F88;
-  cursor: pointer;
-  font-weight: 700;
-  font-family: inherit;
-  float: right;
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
-  width: 7rem;
-  padding: 0;
-  transition: color 250ms ease;
+	background: transparent;
+	border: none;
+	color: #238F88;
+	cursor: pointer;
+	font-weight: 700;
+	font-family: inherit;
+	float: right;
+	font-size: 1rem;
+	margin-bottom: 0.2rem;
+	width: 7rem;
+	padding: 0;
+	transition: color 250ms ease;
 }
+
 
 :local .consoleButton:hover {
-  color: #214E50;
+	color: #214E50;
+}
+
+:local .editMode {
+	color: white;
+}
+:local .editMode:hover {
+	color: rgb(182, 182, 182);
 }
 
 /* -----------------------------------------------------------------------------
-  CUSTOM SCROLL BAR
+	CUSTOM SCROLL BAR
 ------------------------------------------------------------------------------*/
 
 :local .console::-webkit-scrollbar-track {
-  background-color: #EDEBE6;
+	background-color: #EDEBE6;
 }
 
 :local .console::-webkit-scrollbar {
-  background-color: #EDEBE6;
-  width: 6px;
+	background-color: #EDEBE6;
+	width: 6px;
 }
 
 :local .console::-webkit-scrollbar-thumb {
-  background-color: #FF9078;
+	background-color: #FF9078;
 }
 

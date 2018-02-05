@@ -1,12 +1,12 @@
 import { handleActions } from 'redux-actions'
 
 export default handleActions({
-  ADD_INVITE_ID: (state, action) => {
-    return ({
-      ...state,
-      items: [...state.items, action.payload]
-    })
-  }
+	ADD_INVITE_ID: (state, action) => {
+		return ({
+			...state,
+			items: [...state.items, action.payload]
+		})
+	}
 }, {
-  items: []
+	items: []
 })

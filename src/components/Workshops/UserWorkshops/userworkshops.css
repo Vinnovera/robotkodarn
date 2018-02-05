@@ -1,0 +1,231 @@
+:local .header {
+	background-color: #fff;
+	color: #31283E;
+	align-items: center;
+	border-bottom: 4px solid #EDEBE6;
+	display: flex;
+	justify-content: space-between;
+	min-height: 55px;
+	left: 0;
+	position: static;
+	top: 0;
+	width: 100vw;
+}
+
+:local .headerTitle {
+	color: inherit;
+	font-family: 'Roboto Slab', sans-serif;
+	font-size: 22px;
+	font-weight: 400;
+	margin: 0 20px;
+	padding: 0;
+	text-transform: uppercase;
+	-webkit-font-smoothing: antialiased;
+}
+
+:local .workshops {
+	background-color: #fff;
+	border-radius: 4px;
+	margin: 3rem auto;
+	max-width: 1000px;
+	padding: 1rem 0.5rem 1.5rem 0.5rem;
+	width: 95vw;
+}
+
+@media screen and (min-height: 900px) {
+	:local .workshops {
+		margin: 7rem auto;
+	}
+}
+
+:local .form {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+:local .workshopHeadline {
+	font-size: 2.5rem;
+	margin: 1rem;
+	text-align: center;
+}
+
+:local .workshopTable {
+	border-spacing: 0 1rem;
+	text-align: left;
+	width: 100%;
+	-webkit-font-smoothing: antialiased;
+}
+
+:local .tableLink {
+	color: inherit;
+	transition: color 250ms ease;
+}
+
+:local .tableLink:hover {
+	color: #503F69;
+	text-decoration: none;
+}
+
+:local th:first-of-type {
+	padding-left: 1.5rem;
+}
+
+:local .workshopItem {
+	border-radius: 2px;
+	background-color: #f6f6f6;
+	color: #31283E;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 2;
+	margin: 0.5rem 0;
+	padding: 0.7rem 1rem 0.5rem;
+}
+
+:local .workshopItem td {
+	position: relative;
+}
+
+/*
+ * FIX TO ADD BORDER RADIUS ON TR
+ * 1. Fix to improve spacing
+ */
+:local td {
+	border: 3px solid #f6f6f6;
+}
+
+:local td:first-of-type {
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	padding-left: 1.5rem;
+}
+
+:local td:last-of-type {
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+/*
+ * END OF FIX TO ADD BORDER RADIUS ON TR
+ */
+
+:local .info {
+	background-color: #c3e9e6;
+	border-radius: 4px;
+	font-weight: 700;
+	font-size: 1.1rem;
+	padding: 2rem 3rem;
+	text-align: center;
+	margin-bottom: 2rem;
+}
+:local .infoText {
+	font-size: 1rem;
+	text-align: center;
+	margin-bottom: 20px;
+	font-style: italic;
+}
+
+/* -----------------------------------------------------------------------------
+	TABLE ICONS
+------------------------------------------------------------------------------*/
+
+:local .tableIcon,
+:local .tableIconDanger {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	font-size: 1.5rem;
+	height: 2rem;
+	width: 2rem;
+	transition: color 250ms ease;
+}
+
+:local .tableIcon:focus,
+:local .tableIcon:active,
+:local .tableIconDanger:focus,
+:local .tableIconDanger:active {
+	outline: none;
+}
+
+:local .tableIcon {
+	color: #31283E;
+}
+
+:local .tableIcon:hover {
+	color: #503F69;
+}
+
+:local .tableIconDanger {
+	color: #C52522;
+}
+
+:local .tableIconDanger:hover {
+	color: #FE5D4B;
+}
+:local .spinnerCogWrapper {
+	text-align: center;
+}
+
+/* ----------------------------------------
+ DELETE PROMPT
+----------------------------------------- */
+:local .deletePromptWrapperParent {
+	overflow: hidden;
+	height: 37px;
+	width: 240px;
+	position: absolute;
+	top: 0;
+	right: -2px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+:local .deletePromptWrapper {
+	position: absolute;
+	height: 100%;
+	background-color: #f83620;
+	transform: translateX(100%);
+	color: white;
+	animation: slideIn .2s ease-out forwards;
+	display: flex;
+	align-items: center;
+	padding: 0 15px;
+}
+	:local .deletePromptWrapper p {
+		font-size: .9rem;
+		width: 100%;
+		margin-top: 6px;
+	}
+		:local .deletePromptWrapper p span {
+			display: block;
+			float: right;
+			margin-top: 1px;
+			margin-left: 15px;
+		}
+			:local .deletePromptWrapper p span button {
+				width: 25px;
+				border: 0;
+				background: none;
+				border-radius: 0;
+				font-size: 1rem;
+				padding: 0;
+				color: white;
+				margin-left: 5px;
+				cursor: pointer;
+				opacity: .9;
+				margin-top: 1px;
+		}
+			:local .deletePromptWrapper p span button:hover {
+				opacity: 1;
+				color: white;
+			}
+				:local .deletePromptWrapper p span button span {
+					font-size: 1.4rem;
+				}
+				
+@keyframes :local(slideIn) {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0%);
+	}
+}

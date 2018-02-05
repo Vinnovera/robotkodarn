@@ -11,160 +11,220 @@ import AceEditor from 'react-ace'
 /* eslint-disable import/no-extraneous-dependencies */
 import 'brace/mode/c_cpp'
 import 'brace/theme/github'
+import 'brace/theme/tomorrow'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import FA from 'react-fontawesome'
-import {
-  changeEditorTab,
-  uploadCode,
-  setConsoleOutput,
-  setPartsToEdit
-} from '../../actions/editor'
+import { changeEditorTab, changeEditorFontSize } from '../../actions/editor'
+import { setConsoleOutput } from '../../actions/console'
+import { setPartsToEdit, setCodeToUnsaved } from '../../actions/parts'
+import { uploadCode, toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
+
 import styles from './editor.css'
 
 export class Editor extends Component {
-  /*
-   * Make a copy of original parts and add the array in Redux state
-   * if it's not already there.
-   */
-  componentWillMount() {
-    if (this.props.partsToEdit.length === 0) {
-      const copyOfParts = [...this.props.currentWorkshop.parts]
-      this.props.dispatch(setPartsToEdit(copyOfParts))
-    }
-  }
+	/*
+	 * Make a copy of original parts and add the array in Redux state
+	 * if it's not already there.
+	 */
+	componentWillMount() {
+		if (this.props.partsToEdit.length === 0) {
+			const copyOfParts = [...this.props.currentWorkshop.parts]
+			this.props.dispatch(setPartsToEdit(copyOfParts))
+		}
+	}
 
-  componentWillReceiveProps(nextProps) {
-    let msg
+	componentWillReceiveProps(nextProps) {
+		let msg
 
-    if (nextProps.compilerResponse !== this.props.compilerResponse) {
-      if (!nextProps.compilerResponse.response.error && nextProps.willUpload) {
-        msg = {
-          type: 'success',
-          heading: 'Kompilering klar',
-          message: 'Laddar upp till robot...'
-        }
+		if (nextProps.compilerResponse !== this.props.compilerResponse) {
+			if (!nextProps.compilerResponse.response.error && nextProps.willUpload) {
+				msg = {
+					type: 'success',
+					heading: 'Kompilering klar',
+					message: 'Laddar upp till robot...'
+				}
 
-        this.props.dispatch(setConsoleOutput(msg))
-        this.props.dispatch(uploadCode(nextProps.compilerResponse.response))
+				this.props.dispatch(setConsoleOutput(msg))
+				this.props.dispatch(uploadCode(nextProps.compilerResponse.response, nextProps.connectedDevice.board))
 
-      // If code is without error, print message to user.
-      } else if (!nextProps.compilerResponse.response.error && !nextProps.willUpload) {
-        msg = {
-          type: 'success',
-          heading: 'Kompilering klar',
-          message: 'Din kod ser bra ut!'
-        }
+			// If code is without error, print message to user.
+			} else if (!nextProps.compilerResponse.response.error && !nextProps.willUpload) {
+				msg = {
+					type: 'success',
+					heading: 'Kompilering klar',
+					message: 'Din kod ser bra ut!'
+				}
 
-        this.props.dispatch(setConsoleOutput(msg))
-      }
-    }
-  }
+				this.props.dispatch(setConsoleOutput(msg))
+				this.props.dispatch(animateCompileButton(false))
+				this.props.dispatch(toggleCodeButtons(true))
+			}
+		}
+	}
 
-  /*
-   * Update Redux state on the fly
-   * when user is editing a part.
-   */
-  onChange = (value) => {
-    // Rename for easier use
-    const { activePartIndex: index } = this.props
+	/*
+	 * Update Redux state on the fly
+	 * when user is editing a part.
+	 */
+	onChange = (value) => {
+		// Rename for easier use
+		const { activePartIndex: index } = this.props
 
-    // Copy current state and replace old content with new value
-    const updatedParts = [...this.props.partsToEdit]
-    updatedParts[index] = { ...updatedParts[index], content: value }
+		// Copy current state and replace old content with new value
+		const updatedParts = [...this.props.partsToEdit]
+		updatedParts[index] = { ...updatedParts[index], content: value }
 
-    this.props.dispatch(setPartsToEdit(updatedParts))
-  }
+		this.props.dispatch(setPartsToEdit(updatedParts))
 
-  /*
-   * Set ref on editor
-   */
-  setEditorRef = (node) => {
-    this.editorRef = node
-  }
+		// Set the code to be unsaved if content has been changed
+		if (this.props.currentWorkshop.parts[this.props.activePartIndex].content === value) {
+			this.props.dispatch(setCodeToUnsaved(false))
+		} else {
+			this.props.dispatch(setCodeToUnsaved(true))
+		}
+	}
 
-  /**
-   * Toggle between tabs (user or original)
-   */
-  handleTabClick = (userOrOriginal) => {
-    this.props.dispatch(changeEditorTab(userOrOriginal))
-  }
+	/*
+	 * Set ref on editor
+	 */
+	setEditorRef = (node) => {
+		this.editorRef = node
+	}
+
+	/**
+	 * Toggle between tabs (user or original)
+	 */
+	handleTabClick = (userOrOriginal) => {
+		this.props.dispatch(changeEditorTab(userOrOriginal))
+	}
+
+	changeFontSize(fontSize) {
+		this.props.dispatch(changeEditorFontSize(fontSize))
+	}
 
 
-  /**
-   * Render the Ace Editor with different content and editing
-   * possibilities depending on if user has chosen 'user' or 'original'
-   */
-  renderAceEditor = () => {
-    const { activePartIndex: index } = this.props
-    const userTab = this.props.activeTab === 'user' // true if user tab is chosen
+	/**
+	 * Render the Ace Editor with different content and editing
+	 * possibilities depending on if user has chosen 'user' or 'original'
+	 */
+	renderAceEditor = () => {
+		const { activePartIndex: index } = this.props
+		const userTab = this.props.activeTab === 'user' // true if user tab is chosen
 
-    let activeEditPart = ''
-    let activeOriginalPart = ''
+		let activeEditPart = ''
+		let activeOriginalPart = ''
 
-    if (this.props.partsToEdit.length > 0) {
-      activeEditPart = this.props.partsToEdit[index].content
-    }
+		if (this.props.partsToEdit.length > 0) {
+			activeEditPart = this.props.partsToEdit[index].content
+		}
 
-    if (this.props.currentWorkshop.parts.length > 0) {
-      activeOriginalPart = this.props.currentWorkshop.parts[index].content
-    }
+		if (this.props.currentWorkshop.parts.length > 0) {
+			activeOriginalPart = this.props.currentWorkshop.parts[index].content
+		}
 
-    return (
-      <AceEditor
-        ref={this.setEditorRef}
-        theme="github"
-        fontSize="16px"
-        mode="c_cpp"
-        name="codeEditor"
-        width="100%"
-        height="90%"
-        highlightActiveLine={userTab}
-        editorProps={{ $blockScrolling: true }}
-        showPrintMargin={false}
-        onChange={(...args) => userTab && this.onChange(...args)}
-        setOptions={userTab ? { readOnly: false } : { readOnly: true }}
-        value={userTab ? activeEditPart : activeOriginalPart}
-      />
-    )
-  }
+		return (
+			<AceEditor
+				ref={this.setEditorRef}
+				theme="tomorrow"
+				fontSize="16px"
+				mode="c_cpp"
+				name="codeEditor"
+				width="100%"
+				height="90%"
+				highlightActiveLine={userTab}
+				editorProps={{ $blockScrolling: true }}
+				showPrintMargin={false}
+				onChange={(...args) => userTab && this.onChange(...args)}
+				setOptions={{
+					readOnly: !userTab,
+					tabSize: 4,
+					showFoldWidgets: false,
+					fontSize: this.props.editorFontSize
+				}}
+				value={userTab ? activeEditPart : activeOriginalPart}
+			/>
+		)
+	}
 
-  /*
-   * Undo and redo buttons used for going back and forth
-   * when editing a specific part.
-   */
-  renderUndoRedo() {
-    if (this.props.activeTab === 'user') {
-      return (
-        <div>
-          <button className={styles.undo} onClick={() => { this.editorRef.editor.undo() }}><FA name="undo" /></button>
-          <button className={styles.redo} onClick={() => { this.editorRef.editor.redo() }}><FA name="repeat" /></button>
-        </div>
-      )
-    }
-  }
+	/*
+	 * Undo and redo buttons used for going back and forth
+	 * when editing a specific part.
+	 */
+	renderUndoRedo() {
+		if (this.props.activeTab === 'user') {
+			return (
+				<div>
+					<button className={styles.undo} onClick={() => { this.editorRef.editor.undo() }}><FA name="undo" /></button>
+					<button className={styles.redo} onClick={() => { this.editorRef.editor.redo() }}><FA name="repeat" /></button>
+				</div>
+			)
+		}
+	}
 
-  render() {
-    return (
-      <div className={styles.codeWrapper}>
-        <button onClick={() => this.handleTabClick('user')} className={(this.props.activeTab === 'user') ? styles.activeButton : styles.inactiveButton}>Din kod</button>
-        <button onClick={() => this.handleTabClick('original')} className={(this.props.activeTab === 'original') ? styles.activeButton : styles.inactiveButton}>Original</button>
-        {this.renderUndoRedo()}
-        {this.renderAceEditor()}
-      </div>
-    )
-  }
+	renderFontSizeButtons() {
+		const fontSizes = [
+			{ name: 'small', size: '.9rem' },
+			{ name: 'medium', size: '1rem' },
+			{ name: 'large', size: '1.2rem' }
+		]
+
+		return (
+			<div className={styles.fontSizeButtons}>
+				{
+					fontSizes.map((fontSize) => {
+						return (
+							<button
+								key={fontSize.name}
+								className={`${styles.fontSize} ${styles[fontSize.name]} ${this.props.editorFontSize === fontSize.size ? styles.active : ''}`}
+								onClick={() => { this.changeFontSize(fontSize.size) }}
+							>
+								<FA name="font" />
+							</button>
+						)
+					})
+				}
+			</div>
+		)
+	}
+
+	renderTabs() {
+		return this.props.editing ? (
+			<div>
+				<button onClick={() => this.handleTabClick('original')} className={styles.activeButton}>Original</button>
+			</div>
+		) : (
+			<div>
+				<button onClick={() => this.handleTabClick('user')} className={(this.props.activeTab === 'user') ? styles.activeButton : styles.inactiveButton}>Din kod</button>
+				<button onClick={() => this.handleTabClick('original')} className={(this.props.activeTab === 'original') ? styles.activeButton : styles.inactiveButton}>Original</button>
+			</div>
+		)
+	}
+
+	render() {
+		return (
+			<div className={styles.codeWrapper}>
+				{this.renderTabs()}
+				{/* {this.renderUndoRedo()} */}
+				{this.renderFontSizeButtons()}
+				{this.renderAceEditor()}
+			</div>
+		)
+	}
 }
 
 function mapStateToProps(state) {
-  return {
-    activeTab: state.editor.activeTab,
-    compilerResponse: state.editor.compilerResponse,
-    willUpload: state.editor.willUpload,
-    activePartIndex: state.editor.activePartIndex,
-    partsToEdit: state.editor.partsToEdit,
-    currentWorkshop: state.currentWorkshop.item
-  }
+	return {
+		activeTab: state.editor.activeTab,
+		compilerResponse: state.editor.compilerResponse,
+		willUpload: state.editor.willUpload,
+		activePartIndex: state.editor.activePartIndex,
+		partsToEdit: state.editor.partsToEdit,
+		editing: state.workshops.editing,
+		connectedDevice: state.statusBar.connectedDevice,
+		currentWorkshop: state.workshops.item,
+		editorFontSize: state.editor.editorFontSize
+	}
 }
 
 export default connect(mapStateToProps)(Editor)
