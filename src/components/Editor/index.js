@@ -30,7 +30,6 @@ export class Editor extends Component {
 	componentWillMount() {
 		if (this.props.partsToEdit.length === 0) {
 			const copyOfParts = [...this.props.currentWorkshop.parts]
-			console.log('hör körs setPartsToEdit med arg: ', copyOfParts)
 			this.props.dispatch(setPartsToEdit(copyOfParts))
 		}
 	}
