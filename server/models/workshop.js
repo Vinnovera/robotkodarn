@@ -27,6 +27,8 @@ const workshopSchema = Schema({
 		type: Array,
 		default: []
 	}
+}, {
+	timestamps: true
 })
 
 workshopSchema.methods.isAuthorizedToEdit = function (userId) {

@@ -7,6 +7,8 @@ const inviteSchema = Schema({
 		required: true,
 		default: uuidv4
 	}
+}, {
+	timestamps: true
 })
 
 export const Invite = mongoose.model('Invite', inviteSchema)
