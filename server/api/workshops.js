@@ -56,7 +56,8 @@ const getWorkshopsByUserId = (request, reply) => {
 
 const addWorkshop = (request, reply) => {
 	const user = request.auth.artifacts
-	const workshop = new Workshop(request.payload)
+
+	const workshop = new Workshop()
 	workshop.author = user._id
 
 	const trySave = async () => {

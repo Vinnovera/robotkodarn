@@ -13,7 +13,7 @@ const createUserFromInvitation = async (request, reply) => {
 		const existingInvitation = await Invite.findOne({ inviteID })
 
 		if (existingInvitation) {
-			const newUser = new User({ invitationID: inviteID })
+			const newUser = new User({ invitationID: inviteID, organisation: existingInvitation.organisation })
 
 			await newUser.save()
 			request.cookieAuth.set({ _id: newUser._id })

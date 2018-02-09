@@ -6,6 +6,10 @@ const inviteSchema = Schema({
 		type: String,
 		required: true,
 		default: uuidv4
+	},
+	organisation: {
+		type: String,
+		required: true
 	}
 }, {
 	timestamps: true

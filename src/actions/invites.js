@@ -6,9 +6,9 @@ const ADD_INVITE_ID = 'ADD_INVITE_ID'
  * Adds the invitation ID in database. When added, dispatch
  * message to user that unique ID is added.
  */
-const addInvitationID = () => (dispatch) => {
+const addInvitationID = organisation => (dispatch) => {
 	axios
-		.post('/api/invite', {}, {
+		.post('/api/invite', { organisation }, {
 			headers: {
 				'content-type': 'application/json'
 			}
