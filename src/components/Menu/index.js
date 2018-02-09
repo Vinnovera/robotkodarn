@@ -100,12 +100,12 @@ class Menu extends Component {
 								>
 									Kopiera {pin}
 								</Link>
-								{/* <Link
+								<Link
 									className={styles.navigationLink}
 									onClick={isStarred ? this.unstarWorkshop : this.starWorkshop}
 								>
 									{ isStarred ? 'Ta bort stjärnmärkning' : `Stjärnmärk ${pin}` }
-								</Link> */}
+								</Link>
 							</div>
 						) : ''
 					}
