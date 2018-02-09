@@ -10,6 +10,8 @@ const partSchema = Schema({
 		type: String,
 		required: true
 	}
+}, {
+	timestamps: true
 })
 
 export const partValidation = Joi.object().keys({

@@ -1,5 +1,5 @@
 import CookieAuth from 'hapi-auth-cookie'
-import { User } from '../models/user'
+import { User, dateValidation, userValidation } from '../models/user'
 
 // -----------------------------------------------------------------------------
 // Get one user using email [POST]
@@ -14,12 +14,30 @@ const signIn = (request, reply) => {
 
 		// Email found, check if password is correct
 		if (user) {
-			const { _id, name, email, starredWorkshops, role } = user
 			if (user.password === request.payload.password) {
-				request.cookieAuth.set({ _id })
-				reply({
-					user: { _id, name, email, starredWorkshops, role }
-				}).code(200)
+				request.cookieAuth.set({ _id: user._id })
+
+				// Set a new date to `now` and validate it
+				const now = new Date().toISOString()
+				const validatedDate = dateValidation.validate(now, { abortEarly: false })
+
+
+				if (validatedDate.error) {
+					throw validatedDate.error
+				}
+				// Update the user with the new date
+				const updatedUser = Object.assign(user, { lastLogin: validatedDate.value })
+
+				// Save it
+				updatedUser.save((saveError) => {
+					if (!saveError) {
+						const { _id, name, lastLogin, email, organisation, starredWorkshops, role } = updatedUser
+
+						reply({
+							user: { _id, name, lastLogin, email, organisation, starredWorkshops, role }
+						}).code(200)
+					}
+				})
 			} else {
 				// TODO: Check how to response with this custom message when using code 401
 				reply({ error: 'Fel användarnamn och/eller lösenord' }).code(401)

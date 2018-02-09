@@ -26,7 +26,23 @@ const workshopSchema = Schema({
 	links: {
 		type: Array,
 		default: []
+	},
+	hardware: {
+		type: String
+	},
+	tags: {
+		type: Array
+	},
+	description: {
+		type: String
+	},
+	isPublished: {
+		type: Boolean,
+		required: true,
+		default: false
 	}
+}, {
+	timestamps: true
 })
 
 workshopSchema.methods.isAuthorizedToEdit = function (userId) {
@@ -39,7 +55,11 @@ export const workshopValidation = Joi.object().keys({
 	pincode: Joi.string().required(),
 	author: Joi.string().required(),
 	parts: Joi.array().required(),
-	links: Joi.array().required()
+	links: Joi.array().required(),
+	hardware: Joi.string(),
+	tags: Joi.array(),
+	description: Joi.string(),
+	isPublished: Joi.boolean().required()
 }).unknown()
 
 export const Workshop = mongoose.model('Workshop', workshopSchema)

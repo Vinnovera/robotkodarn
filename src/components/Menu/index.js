@@ -82,6 +82,7 @@ class Menu extends Component {
 					<div className={styles.userInfo}>
 						<p className={styles.userName}>Inloggad som: {this.props.name}</p>
 						<p className={styles.userRole}>Roll: {this.props.role}</p>
+						<p className={styles.userRole}>Organisation: {this.props.organisation}</p>
 					</div>
 					{ this.props.currentWorkshop && (this.props.currentWorkshop.author === this.props.userId) ?
 						<Link
@@ -128,6 +129,7 @@ function mapStateToProps(state) {
 	return {
 		role: state.user.role,
 		name: state.user.name,
+		organisation: state.user.organisation,
 		menu: state.menu.open,
 		userId: state.user._id,
 		starredWorkshops: state.user.starredWorkshops,

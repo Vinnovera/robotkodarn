@@ -38,6 +38,7 @@ const getUserById = (request, reply) => {
 			email: user.email,
 			role: user.role,
 			name: user.name,
+			organisation: user.organisation,
 			starredWorkshops: user.starredWorkshops
 		}).code(200)
 	}).populate({
