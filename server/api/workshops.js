@@ -20,7 +20,7 @@ const getWorkshops = (request, reply) => {
 // -----------------------------------------------------------------------------
 // Get one workshop with {id} [GET]
 // -----------------------------------------------------------------------------
-const getWorkshop = (request, reply) => {
+/* const getWorkshop = (request, reply) => {
 	Workshop.findOne({
 		_id: request.params.id
 	}, (error, workshops) => {
@@ -30,10 +30,10 @@ const getWorkshop = (request, reply) => {
 
 		return reply(workshops).code(200)
 	}).populate('author')
-}
+} */
 
 // -----------------------------------------------------------------------------
-// Get one workshop with {id} [GET]
+// Get all workshops created by logged in user - with {id} [GET]
 // -----------------------------------------------------------------------------
 const getWorkshopsByUserId = (request, reply) => {
 	const { _id } = request.auth.credentials
@@ -242,13 +242,13 @@ exports.register = (server, options, next) => {
 				auth: 'session'
 			}
 		},
-		{
-			method: 'GET',
-			path: '/api/workshop/{id}',
-			config: {
-				handler: getWorkshop
-			}
-		},
+		// {
+		// 	method: 'GET',
+		// 	path: '/api/workshop/{id}',
+		// 	config: {
+		// 		handler: getWorkshop
+		// 	}
+		// },
 		{
 			method: 'POST',
 			path: '/api/workshop',

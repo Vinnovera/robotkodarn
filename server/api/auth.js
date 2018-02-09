@@ -4,23 +4,10 @@ import { User, dateValidation, userValidation } from '../models/user'
 // -----------------------------------------------------------------------------
 // Get one user using email [POST]
 // -----------------------------------------------------------------------------
-const signIn = async (request, reply) => {
+const signIn = (request, reply) => {
 	if (!request.payload.email || !request.payload.password) {
 		return reply({ message: 'Missing email or password' }).code(401)
 	}
-
-	/* try {
-		const user = await User.findOne({ email: request.payload.email })
-		const updatedUser = Object.assign(user, { lastLogin: validatedDate.value })
-
-		const validatedUser = userValidation.validate(updatedUser, { abortEarly: false })
-		if (validatedUser.error) {
-			throw validatedUser.error
-		}
-
-	} catch(error) {
-		return reply({ error: error.message }).code(error.code || 500)
-	} */
 
 	User.findOne({ email: request.payload.email }, (error, user) => {
 		if (error) return reply(error).code(500)
@@ -30,6 +17,7 @@ const signIn = async (request, reply) => {
 			if (user.password === request.payload.password) {
 				request.cookieAuth.set({ _id: user._id })
 
+				// Set a new date to `now` and validate it
 				const now = new Date().toISOString()
 				const validatedDate = dateValidation.validate(now, { abortEarly: false })
 
@@ -37,14 +25,16 @@ const signIn = async (request, reply) => {
 				if (validatedDate.error) {
 					throw validatedDate.error
 				}
+				// Update the user with the new date
 				const updatedUser = Object.assign(user, { lastLogin: validatedDate.value })
 
+				// Save it
 				updatedUser.save((saveError) => {
 					if (!saveError) {
-						const { _id, name, lastLogin, email, starredWorkshops, role } = updatedUser
+						const { _id, name, lastLogin, email, organisation, starredWorkshops, role } = updatedUser
 
 						reply({
-							user: { _id, name, lastLogin, email, starredWorkshops, role }
+							user: { _id, name, lastLogin, email, organisation, starredWorkshops, role }
 						}).code(200)
 					}
 				})

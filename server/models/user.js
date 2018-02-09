@@ -38,10 +38,10 @@ const userSchema = Schema({
 		type: String,
 		ref: 'Workshop'
 	}],
-	// organisation: {
-	// 	type: String,
-	// 	required: true
-	// },
+	organisation: {
+		type: String,
+		required: true
+	},
 	lastLogin: {
 		type: Date
 	}
@@ -72,22 +72,9 @@ export const userValidation = Joi.object().keys({
 	invitationID: Joi.string().required(),
 	complete: Joi.boolean().required(),
 	starredWorkshop: Joi.array(),
-	// organisation: Joi.string().required(),
+	organisation: Joi.string().required(),
 	lastLogin: Joi.date()
 }).unknown()
 
 export const starredWorkshopValidation = Joi.string()
 export const dateValidation = Joi.date().required()
-
-// export const loginValidation = Joi.object().keys({
-// 	_id: Joi.object().required(),
-// 	name: Joi.string().required(),
-// 	password: Joi.string().required(),
-// 	email: Joi.string().required(),
-// 	role: Joi.string().required(),
-// 	invitationID: Joi.string(),
-// 	complete: Joi.boolean(),
-// 	starredWorkshop: Joi.array(),
-// 	organisation: Joi.string().required(),
-// 	lastLogin: Joi.date().required()
-// }).unknown()
