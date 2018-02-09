@@ -58,8 +58,7 @@ class Workshops extends Component {
 				{ this.renderHeader() }
 
 				<div className={styles.workshops}>
-					{/* Disabled for beta */}
-					{/* { this.renderNav() } */}
+					{ this.renderNav() }
 					{ this.renderWorkshopList() }
 				</div>
 			</View>
