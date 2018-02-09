@@ -85,6 +85,7 @@ class AllWorkshops extends Component {
 						<tr>
 							<th>Namn</th>
 							<th>Redaktör</th>
+							<th>Organisation</th>
 							<th>Pinkod</th>
 							<th className={styles.centered}>Kopiera</th>
 							<th className={styles.centered}>Stjärnmärk</th>
@@ -101,6 +102,7 @@ class AllWorkshops extends Component {
 									<tr className={styles.workshopItem} key={workshop._id}>
 										<td><Link onClick={this.toggleEditing} className={styles.tableLink} to={`/id/${workshop.pincode}`}>{workshop.title}</Link></td>
 										<td>{workshop.author.name}</td>
+										<td>{workshop.author.organisation}</td>
 										<td>{workshop.pincode}</td>
 										<td className={styles.centered}>
 											<button onClick={e => this.copyWorkshop(e, workshop._id)} type="submit" className={styles.tableIcon}>

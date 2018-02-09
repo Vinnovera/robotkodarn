@@ -13,7 +13,8 @@ const getWorkshops = (request, reply) => {
 		return reply(workshops).code(200)
 	}).populate('author', {
 		_id: 1,
-		name: 1
+		name: 1,
+		organisation: 1
 	})
 }
 
