@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
 import { toggleSidebar } from '../../actions/sidebar'
+import { setCurrentEditingType } from '../../actions/workshops'
 
 import PartList from './PartList'
 import LinkList from './LinkList'
@@ -30,12 +31,21 @@ class Sidebar extends Component {
 		this.props.dispatch(toggleSidebar(!this.props.isSidebarOpen))
 	}
 
+	showProperties = () => {
+		this.props.dispatch(setCurrentEditingType('workshopProperties'))
+	}
+
 	render() {
 		return (
 			<aside className={this.getSidebarClassName()}>
 				<h1>Robotkodarn</h1>
 				<section>
 					<p className={styles.pinCode}>{this.props.workshop.pincode}</p>
+					{
+						this.props.editing
+							? <button onClick={this.showProperties} className={styles.propertiesButton}><FA name="wrench" />Egenskaper</button>
+							: ''
+					}
 					<WorkshopTitle />
 				</section>
 				<section className={styles.section}>

@@ -15,6 +15,7 @@ import FadeIn from './../FadeIn'
 import ToolsButton from './../ToolsButton'
 import LinkForm from './LinkForm'
 import PartTitle from './PartTitle'
+import WorkshopProperties from '../WorkshopProperties'
 
 import WorkspaceButtons from './WorkspaceButtons'
 
@@ -52,6 +53,31 @@ export class Workspace extends Component {
 		this.props.dispatch(setCodeToUnsaved(false))
 	}
 
+	renderCurrentEditingType() {
+		if (this.props.currentEditingType === 'link') {
+			return this.props.currentWorkshop.links.length > 0
+				? <LinkForm />
+				: <h3>Det finns inga länkar!</h3>
+		} else if (this.props.currentEditingType === 'workshopProperties') {
+			return <WorkshopProperties />
+		}
+
+		return this.props.currentWorkshop.parts.length > 0 ? (
+			<div style={{ height: '100%' }}>
+				<PartTitle />
+				<WorkspaceButtons />
+				<Editor />
+				<div className={styles.saveCodeButtonContainer}>
+					<button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
+						<div><span><FA name="check" /> Sparat</span></div>
+						<FA name="save" /> Spara kod
+					</button>
+				</div>
+				<Console />
+			</div>) : <h3>Det finns inga lektioner!</h3>
+	}
+
+
 	renderMainContent() {
 		if (this.props.currentWorkshop) {
 			return (this.props.isLoggedIn && this.props.editing) ? (
@@ -60,32 +86,9 @@ export class Workspace extends Component {
 					<Sidebar />
 
 					<FadeIn>
-						{ (this.props.currentEditingType === 'link') ?
-							<main className={this.getMainPaneClassName()}>
-								{ this.props.currentWorkshop.links.length > 0 ?
-									<LinkForm />
-									: <h3>Det finns inga länkar!</h3>
-								}
-							</main>
-							: (
-								<main className={this.getMainPaneClassName()}>
-									{ this.props.currentWorkshop.parts.length > 0 ? (
-										<div style={{ height: '100%' }}>
-											<PartTitle />
-											<WorkspaceButtons />
-											<Editor />
-											<div className={styles.saveCodeButtonContainer}>
-												<button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
-													<div><span><FA name="check" /> Sparat</span></div>
-													<FA name="save" /> Spara kod
-												</button>
-											</div>
-											<Console />
-										</div>) : <h3>Det finns inga lektioner!</h3>
-									}
-								</main>
-							)
-						}
+						<main className={this.getMainPaneClassName()}>
+							{ this.renderCurrentEditingType() }
+						</main>
 					</FadeIn>
 				</View>
 			) : (
@@ -122,6 +125,7 @@ export class Workspace extends Component {
 function mapStateToProps(state) {
 	return {
 		isSidebarOpen: state.sidebar.open,
+		workshopPropertiesVisible: state.sidebar.workshopPropertiesVisible,
 		currentWorkshop: state.workshops.item,
 		activePartIndex: state.editor.activePartIndex,
 		activeLinkIndex: state.workshops.activeLinkIndex,
