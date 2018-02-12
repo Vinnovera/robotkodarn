@@ -182,7 +182,8 @@ const copyWorkshop = async (request, reply) => {
 			_id: mongoose.Types.ObjectId(),
 			isNew: true,
 			pincode: Math.floor(1000 + (Math.random() * 9000)),
-			author: loggedInUserId
+			author: loggedInUserId,
+			ancestors: (existingWorkshop.author !== loggedInUserId) ? [...existingWorkshop.ancestors, existingWorkshop.author] : existingWorkshop.ancestors
 		})
 
 		await copy.save()
