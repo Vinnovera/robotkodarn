@@ -164,6 +164,8 @@ export const findWorkshopByPin = pin => (dispatch) => {
 			}
 		})
 		.then((response) => {
+			console.log(response.data)
+
 			if (response.status === 200) {
 				dispatch({
 					type: SET_WORKSHOP_BY_PIN,

@@ -183,7 +183,10 @@ const copyWorkshop = async (request, reply) => {
 			isNew: true,
 			pincode: Math.floor(1000 + (Math.random() * 9000)),
 			author: loggedInUserId,
-			ancestors: (existingWorkshop.author !== loggedInUserId) ? [...existingWorkshop.ancestors, existingWorkshop.author] : existingWorkshop.ancestors
+			ancestors: (existingWorkshop.author !== loggedInUserId) ? [...existingWorkshop.ancestors, {
+				workshop: existingWorkshop._id,
+				author: existingWorkshop.author
+			}] : existingWorkshop.ancestors
 		})
 
 		await copy.save()
@@ -225,6 +228,15 @@ const getWorkshopByPin = (request, reply) => {
 
 		return reply(foundWorkshop).code(200)
 	})
+		.populate('ancestors.workshop', {
+			_id: 1,
+			pincode: 1,
+			title: 1
+		})
+		.populate('ancestors.author', {
+			_id: 1,
+			name: 1
+		})
 }
 
 exports.register = (server, options, next) => {

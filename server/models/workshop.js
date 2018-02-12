@@ -17,8 +17,15 @@ const workshopSchema = Schema({
 		ref: 'User'
 	},
 	ancestors: [{
-		type: String,
-		ref: 'User'
+		_id: false,
+		workshop: {
+			type: String,
+			ref: 'Workshop'
+		},
+		author: {
+			type: String,
+			ref: 'User'
+		}
 	}],
 	parts: {
 		type: Array,
@@ -30,6 +37,12 @@ const workshopSchema = Schema({
 	links: {
 		type: Array,
 		default: []
+	},
+	grade: {
+		type: String
+	},
+	subject: {
+		type: String
 	},
 	hardware: {
 		type: String
@@ -61,6 +74,8 @@ export const workshopValidation = Joi.object().keys({
 	ancestors: Joi.array(),
 	parts: Joi.array().required(),
 	links: Joi.array().required(),
+	grade: Joi.string(),
+	subject: Joi.string(),
 	hardware: Joi.string(),
 	tags: Joi.array(),
 	description: Joi.string(),
