@@ -14,6 +14,7 @@
 		color: white;
 		cursor: pointer;
 		transition: all .2s;
+		text-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
 	}
 	:local .notEditing button:hover,
 	:local .notEditing button h2:hover,

@@ -1,40 +1,59 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-// import FA from 'react-fontawesome'
+import FA from 'react-fontawesome'
 
 import styles from './workshopproperties.css'
 
 class WorkshopProperties extends Component {
-	componentWillReceiveProps() {
-		// Update the forms when the link has changed
-		// this.setState({
-		// 	title: nextProps.workshop.links[nextProps.activeLinkIndex].title,
-		// 	content: nextProps.workshop.links[nextProps.activeLinkIndex].content
-		// })
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			select: ''
+		}
 	}
 
-	saveLink(e) {
-		e.preventDefault()
-
-		// const linkObj = {
-		// 	title: this.state.title,
-		// 	content: this.state.content
-		// }
-		// const workshopId = this.props.workshop._id
-		// const linkId = this.props.workshop.links[this.props.activeLinkIndex]._id
-
-		if (!this.props.linkSaved) {
-			// this.props.dispatch(updateLink(linkObj, workshopId, linkId))
-		}
+	handleSelectChange(e) {
+		console.dir(e.target)
 	}
 
 	render() {
 		return (
-			<div>
-                Du är inloggad o blablas
+			<div className={styles.workshopPropertiesWrapper}>
+				<h2>Egenskaper för workshop {this.props.workshop.title}</h2>
 				<form onSubmit={this.saveLink} className={styles.linkForm}>
-					<h2>hejsan</h2>
+
+					<div className={styles.workshopMarksWrapper}>
+						<span>Märk din lektion</span>
+
+						<div className={styles.selectWrapper}>
+							<select onChange={this.handleSelectChange}>
+								<option selected disabled value="volvo">Årskurs</option>
+								<option value="volvo">Volvo</option>
+								<option value="saab">Saab</option>
+								<option value="opel">Opel</option>
+							</select>
+						</div>
+
+						<div className={styles.selectWrapper}>
+							<select onChange={this.handleSelectChange}>
+								<option selected disabled value="volvo">Ämne</option>
+								<option value="volvo">Volvo</option>
+								<option value="saab">Saab</option>
+								<option value="opel">Opel</option>
+							</select>
+						</div>
+
+						<div className={styles.selectWrapper}>
+							<select onChange={this.handleSelectChange}>
+								<option selected disabled value="volvo">Hårdvara</option>
+								<option value="volvo">Volvo</option>
+								<option value="saab">Saab</option>
+								<option value="opel">Opel</option>
+							</select>
+						</div>
+					</div>
 				</form>
 			</div>
 		)

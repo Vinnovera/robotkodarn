@@ -1,93 +1,70 @@
-:local .linkForm {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 2rem;
-    border-radius: 10px;
-    margin-top: 35px;
-    color: #302a37;
+:local .workshopPropertiesWrapper h2 {
+	font-size: 1.5rem;
+	text-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
 }
+:local .workshopPropertiesWrapper h2::after {
+	content: 'HEJHEJ'
+}
+	:local .workshopPropertiesWrapper form {
+		background: rgba(255, 255, 255, 1);
+		padding: 2rem;
+		border-radius: 5px;
+	}    
 
+	:local .workshopPropertiesWrapper .workshopMarksWrapper span {
+		font-size: 1rem;
+		display: block;
+		color: #3E3748;
+		text-transform: uppercase;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
 
-:local .workshopPin {
-    color: #3e9f98;
-    font-size: 1rem;
-    margin: 0;
-}
+	:local .workshopPropertiesWrapper .workshopMarksWrapper select {
+		display: inline-block;
+		width: auto;
+		cursor: pointer;
+		padding: 10px 40px 10px 15px;
+		outline: 0;
+		border: 1px solid #666;
+		border-radius: 0;
+		background: #ffffff;
+		-webkit-appearance: none;
+		margin: 0 10px 0 0;
+		-moz-appearance: none;
+		font-size: 1rem;
+		font-family: 'Open Sans', sans-serif;
+		color: #37303f;
+		position: relative;
+		max-width: 300px;
+	}
+		:local .workshopPropertiesWrapper .workshopMarksWrapper select::after {
+			position: absolute;
+			content: 'X';
+			top: 0;
+			left: 0;
+			color: red;
+		}
+		:local .workshopPropertiesWrapper .workshopMarksWrapper select:hover {
+			border: 1px solid black;
+			color: black;
+		}
 
-:local .formHeadline {
-    font-size: 2rem;
-    margin: 0 0 1rem;
+:local .selectWrapper {
+	display: inline-block;
+	position: relative;
 }
+	:local .selectWrapper::after {
+		font-family: 'FontAwesome';
+		content: '\f078';
+		color: #666;
+		position: absolute;
+		top: 50%;
+		right: 20px;
+		transform: translateY(-50%);
+		transition: color .3s;
+	}
 
-:local .editorWrapper {
-    border: 2px solid #dce4ec;
-    height: calc(100vh - 400px);
-    width: 100%;
-}
-
-
-:local .linkForm label {
-    font-size: 0.8rem;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    font-synthesis: antialiased;
-}
-
-:local .linkForm input {
-    margin: 0.5rem 0 1.5rem;
-    text-align: left;
-    border: 2px solid #8b878b;
-}
-
-:local .buttonContainer {
-    margin-top: 1rem;
-}
-
-:local .flex {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-:local .saveLinkButton {
-width: auto;
-border-radius: 2px;
-border: none;
-color: #fff;
-cursor: pointer;
-display: block;
-font: inherit;
-font-size: 1rem;
-transition: 300ms;
-text-transform: uppercase;
-padding: 1rem;
--webkit-font-smoothing: antialiased;
-background-color: #36968e;
-animation: linkSaved 1s;
-position: relative;
-overflow: hidden;
-}
-:local .saveLinkButton:hover {
-    background-color: #238F88;
-}
-:local .saveLinkButton span {
-    margin-right: .5rem;
-}
-
-:local .saveLinkButton div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #2f8b56;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translateX(-100%);
-    transition: all .5s;
-}
-
-:local .saveLinkButtonSaved div {
-    box-shadow: 0 0 60px black;
-    transform: translateX(0);
-}
+	:local .selectWrapper:hover::after {
+		color: black;
+	}
