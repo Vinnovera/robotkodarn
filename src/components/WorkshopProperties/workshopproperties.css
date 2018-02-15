@@ -2,9 +2,6 @@
 	font-size: 1.5rem;
 	text-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
 }
-:local .workshopPropertiesWrapper h2::after {
-	content: 'HEJHEJ'
-}
 	:local .workshopPropertiesWrapper form {
 		background: rgba(255, 255, 255, 1);
 		padding: 2rem;
@@ -38,13 +35,6 @@
 		position: relative;
 		max-width: 300px;
 	}
-		:local .workshopPropertiesWrapper .workshopMarksWrapper select::after {
-			position: absolute;
-			content: 'X';
-			top: 0;
-			left: 0;
-			color: red;
-		}
 		:local .workshopPropertiesWrapper .workshopMarksWrapper select:hover {
 			border: 1px solid black;
 			color: black;
@@ -62,9 +52,64 @@
 		top: 50%;
 		right: 20px;
 		transform: translateY(-50%);
-		transition: color .3s;
 	}
 
 	:local .selectWrapper:hover::after {
 		color: black;
 	}
+
+
+
+
+	:local .saveButtonContainer {
+		overflow: hidden;
+	  }
+	  
+	  :local .saveButton {
+		width: auto;
+		float: right;
+		border-radius: 2px;
+		border: none;
+		color: #fff;
+		cursor: pointer;
+		display: block;
+		font: inherit;
+		font-size: 1rem;
+		transition: 300ms;
+		text-transform: uppercase;
+		padding: 1rem;
+		-webkit-font-smoothing: antialiased;
+		background-color: #36968e;
+		position: relative;
+		overflow: hidden;
+	  }
+		:local .saveButton:hover {
+		  background-color: #238F88;
+		}
+		:local .saveButton span {
+		  margin-right: .5rem;
+		}
+		:local .saveButton[disabled] {
+		  background: #b2b1b2;
+		  cursor: not-allowed;
+		}
+	  
+		
+		:local .saveButton div {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  background: #2f8b56;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  transform: translateX(-100%);
+		  transition: all .5s;
+		}
+		
+		:local .saveButtonSaved div {
+		  box-shadow: 0 0 60px black;
+		  transform: translateX(0);
+		}

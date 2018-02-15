@@ -39,7 +39,6 @@
   padding: 1rem;
   -webkit-font-smoothing: antialiased;
   background-color: #36968e;
-  animation: codeSaved 1s;
   position: relative;
   overflow: hidden;
 }

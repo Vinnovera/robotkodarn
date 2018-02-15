@@ -21,6 +21,8 @@ const SET_EDITING_TYPE = 'SET_EDITING_TYPE'
 const UPDATE_TIMESTAMP = 'UPDATE_TIMESTAMP'
 const SET_ACTIVE_WORKSHOPS_TAB = 'SET_ACTIVE_WORKSHOPS_TAB'
 
+const SET_WORKSHOP_PROPERTIES_TO_UNSAVED = 'SET_WORKSHOP_PROPERTIES_TO_UNSAVED'
+
 // -----------------------------------------------------------------------------
 // updateWorkshopTitle, updates the workshop title in current workshop
 // -----------------------------------------------------------------------------
@@ -232,5 +234,15 @@ export const setActiveWorkshopsTab = activeTab => (dispatch) => {
 	dispatch({
 		type: SET_ACTIVE_WORKSHOPS_TAB,
 		payload: activeTab
+	})
+}
+
+// -----------------------------------------------------------------------------
+// setWorkshopPropertiesToUnsaved, sets the workshop properties to be unsaved
+// -----------------------------------------------------------------------------
+export const setWorkshopPropertiesToUnsaved = isUnsaved => (dispatch) => {
+	dispatch({
+		type: SET_WORKSHOP_PROPERTIES_TO_UNSAVED,
+		payload: isUnsaved
 	})
 }
