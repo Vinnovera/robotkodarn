@@ -54,11 +54,16 @@ class WorkshopProperties extends Component {
 	}
 
 	handleCheckboxChange() {
-		this.setState({
-			isPublished: !this.state.isPublished
-		}, () => {
-			this.checkSaveState()
-		})
+		const { grade, subject, hardware } = this.state
+		if (grade && subject && hardware) {
+			this.setState({
+				isPublished: !this.state.isPublished
+			}, () => {
+				this.checkSaveState()
+			})
+		} else {
+			alert('Du måste märka din lektion först')
+		}
 	}
 
 	updateWorkshopProperties(e) {
@@ -101,6 +106,7 @@ class WorkshopProperties extends Component {
 								<option value="matematik">Matematik</option>
 								<option value="teknik">Teknik</option>
 								<option value="fysik">Fysik</option>
+								<option value="slojd">Slöjd</option>
 							</select>
 						</div>
 
