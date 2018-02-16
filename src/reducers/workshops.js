@@ -316,6 +316,21 @@ export default handleActions({
 			...state,
 			workshopPropertiesIsUnsaved: action.payload
 		})
+	},
+
+	UPDATE_WORKSHOP_PROPERTIES_START: (state) => {
+		return ({
+			...state,
+			isSavingWorkshopProperties: true
+		})
+	},
+
+	UPDATE_WORKSHOP_PROPERTIES_DONE: (state, action) => {
+		return ({
+			...state,
+			isSavingWorkshopProperties: false,
+			workshopPropertiesIsSaved: action.payload
+		})
 	}
 
 }, {
@@ -333,5 +348,7 @@ export default handleActions({
 	isAddingWorkshop: false,
 	isLoadingUserWorkshops: false,
 	isLoadingAllWorkshops: false,
+	isSavingWorkshopProperties: false,
+	workshopPropertiesIsSaved: false,
 	activeWorkshopsTab: 'user'
 })

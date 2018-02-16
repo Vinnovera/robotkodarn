@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
 
 import { updatePartContent, setCodeToUnsaved } from '../../actions/parts'
-import { findWorkshopByPin, clearWorkshop } from '../../actions/workshops'
+import { findWorkshopByPin, clearWorkshop, setCurrentEditingType } from '../../actions/workshops'
 import { setUserInfo } from '../../actions/user'
 
 import Sidebar from './../Sidebar'
@@ -34,6 +34,7 @@ export class Workspace extends Component {
 	}
 	componentWillUnmount() {
 		this.props.dispatch(clearWorkshop())
+		this.props.dispatch(setCurrentEditingType('part'))
 	}
 
 	getMainPaneClassName = () => {
@@ -68,7 +69,11 @@ export class Workspace extends Component {
 				<WorkspaceButtons />
 				<Editor />
 				<div className={styles.saveCodeButtonContainer}>
-					<button disabled={!this.props.codeIsUnsaved} className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`} onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}>
+					<button
+						disabled={!this.props.codeIsUnsaved}
+						className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`}
+						onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}
+					>
 						<div><span><FA name="check" /> Sparat</span></div>
 						<FA name="save" /> Spara kod
 					</button>

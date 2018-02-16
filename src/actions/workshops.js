@@ -23,6 +23,9 @@ const SET_ACTIVE_WORKSHOPS_TAB = 'SET_ACTIVE_WORKSHOPS_TAB'
 
 const SET_WORKSHOP_PROPERTIES_TO_UNSAVED = 'SET_WORKSHOP_PROPERTIES_TO_UNSAVED'
 
+const UPDATE_WORKSHOP_PROPERTIES_START = 'UPDATE_WORKSHOP_PROPERTIES_START'
+const UPDATE_WORKSHOP_PROPERTIES_DONE = 'UPDATE_WORKSHOP_PROPERTIES_DONE'
+
 // -----------------------------------------------------------------------------
 // updateWorkshopTitle, updates the workshop title in current workshop
 // -----------------------------------------------------------------------------
@@ -43,6 +46,48 @@ export const updateWorkshopTitle = (workshopId, title) => (dispatch) => {
 				type: UPDATE_WORKSHOP_TITLE_DONE,
 				payload: data.title
 			})
+		})
+		.catch(error => console.log(error.response)) // TODO: Make custom dispatch?
+}
+
+// -----------------------------------------------------------------------------
+// updateWorkshopProperties, updates the workshop properties
+// -----------------------------------------------------------------------------
+export const updateWorkshopProperties = (workshopId, workshopProperties) => (dispatch) => {
+	dispatch({
+		type: UPDATE_WORKSHOP_PROPERTIES_START,
+		payload: workshopProperties
+	})
+
+	axios
+		.put(`/api/workshop/${workshopId}`, workshopProperties, {
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		.then(({ data }) => {
+			console.log(data)
+			dispatch({
+				type: UPDATE_WORKSHOP_PROPERTIES_DONE,
+				payload: true
+			})
+
+			// Set the client side workshop to the new one (state.workshops.item)
+			dispatch({
+				type: SET_WORKSHOP_BY_PIN,
+				payload: data
+			})
+			dispatch({
+				type: SET_WORKSHOP_PROPERTIES_TO_UNSAVED,
+				payload: false
+			})
+
+			setTimeout(() => {
+				dispatch({
+					type: UPDATE_WORKSHOP_PROPERTIES_DONE,
+					payload: false
+				})
+			}, 2000)
 		})
 		.catch(error => console.log(error.response)) // TODO: Make custom dispatch?
 }

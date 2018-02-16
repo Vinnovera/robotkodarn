@@ -5,50 +5,87 @@ import FA from 'react-fontawesome'
 
 import styles from './workshopproperties.css'
 
+import { setWorkshopPropertiesToUnsaved, updateWorkshopProperties } from '../../actions/workshops'
+
 class WorkshopProperties extends Component {
 	constructor(props) {
 		super(props)
 
-		this.handleSelectChange = this.handleSelectChange.bind(this)
-
 		this.state = {
 			grade: '',
 			subject: '',
-			hardware: ''
+			hardware: '',
+			isPublished: false
 		}
+
+		this.handleSelectChange = this.handleSelectChange.bind(this)
+		this.updateWorkshopProperties = this.updateWorkshopProperties.bind(this)
+		this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
 	}
 
 	componentWillMount() {
 		this.setState({
 			grade: this.props.currentWorkshop.grade,
 			subject: this.props.currentWorkshop.subject,
-			hardware: this.props.currentWorkshop.hardware
+			hardware: this.props.currentWorkshop.hardware,
+			isPublished: this.props.currentWorkshop.isPublished
 		})
 	}
 
-	handleSelectChange(e) {
+	checkSaveState() {
 		const { currentWorkshop } = this.props
 
+		if (currentWorkshop.grade !== this.state.grade ||
+			currentWorkshop.subject !== this.state.subject ||
+			currentWorkshop.hardware !== this.state.hardware ||
+			currentWorkshop.isPublished !== this.state.isPublished) {
+			this.props.dispatch(setWorkshopPropertiesToUnsaved(true))
+		} else {
+			this.props.dispatch(setWorkshopPropertiesToUnsaved(false))
+		}
+	}
+
+	handleSelectChange(e) {
 		this.setState({
 			[e.target[0].value]: e.target.value
 		}, () => {
-			if (currentWorkshop.grade !== this.state.grade || currentWorkshop.subject !== this.state.subject || currentWorkshop.hardware !== this.state.hardware) {
-				console.log('Dags att spara')
-			} else {
-				console.log('Disabla knappen')
-			}
+			this.checkSaveState()
 		})
+	}
+
+	handleCheckboxChange() {
+		this.setState({
+			isPublished: !this.state.isPublished
+		}, () => {
+			this.checkSaveState()
+		})
+	}
+
+	updateWorkshopProperties(e) {
+		e.preventDefault()
+
+		const updatedProperties = {
+			grade: this.state.grade,
+			subject: this.state.subject,
+			hardware: this.state.hardware,
+			isPublished: this.state.isPublished
+		}
+
+		this.props.dispatch(updateWorkshopProperties(this.props.currentWorkshop._id, updatedProperties))
 	}
 
 	render() {
 		return (
 			<div className={styles.workshopPropertiesWrapper}>
 				<h2>Egenskaper för workshop {this.props.currentWorkshop.title}</h2>
-				<form onSubmit={this.saveLink} className={styles.linkForm}>
+				<form
+					onSubmit={this.props.workshopPropertiesIsUnsaved ? this.updateWorkshopProperties : ''}
+					className={styles.linkForm}
+				>
+
+					<span className={styles.formHeading}>Märk din lektion</span>
 
 					<div className={styles.workshopMarksWrapper}>
-						<span>Märk din lektion</span>
-
 						<div className={styles.selectWrapper}>
 							<select value={this.state.grade || 'grade'} onChange={this.handleSelectChange}>
 								<option disabled value="grade">Årskurs</option>
@@ -75,13 +112,22 @@ class WorkshopProperties extends Component {
 								<option value="zumo">Zumo</option>
 							</select>
 						</div>
+
 					</div>
 
+					<span className={styles.formHeading}>Ska lektionen vara publicerad?</span>
+
+					<label className={styles.switch} htmlFor="checkbox">
+						<input type="checkbox" id="checkbox" checked={this.state.isPublished} onChange={this.handleCheckboxChange} />
+						<span className="slider" />
+					</label>
+
 					<div className={styles.saveButtonContainer}>
+
 						<button
-							disabled={!this.props.workshopPropertiesIsUnsaved}
-							className={`${styles.saveButton} ${this.props.workshopPropertiesIsUnsaved ? styles.saveButtonSaved : ''}`}
-							onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}
+							type="submit"
+							disabled={!this.props.workshopPropertiesIsUnsaved || this.props.isSavingWorkshopProperties}
+							className={`${styles.saveButton} ${this.props.workshopPropertiesIsSaved ? styles.saveButtonSaved : ''}`}
 						>
 							<div><span><FA name="check" /> Sparat</span></div>
 							<FA name="save" /> Spara egenskaper
@@ -97,7 +143,9 @@ function mapStateToProps(state) {
 	return {
 		currentWorkshop: state.workshops.item,
 		activeLinkIndex: state.workshops.activeLinkIndex,
-		workshopPropertiesIsUnsaved: state.workshops.workshopPropertiesIsUnsaved
+		workshopPropertiesIsUnsaved: state.workshops.workshopPropertiesIsUnsaved,
+		isSavingWorkshopProperties: state.workshops.isSavingWorkshopProperties,
+		workshopPropertiesIsSaved: state.workshops.workshopPropertiesIsSaved
 	}
 }
 
