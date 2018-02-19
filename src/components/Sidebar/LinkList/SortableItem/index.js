@@ -27,7 +27,7 @@ const SortableItem = SortableElement(({ ...props }) => {
 				(props.deletePromptIndex === props.linkIndex) && (
 					<div className={styles.deletePromptWrapper}>
 						<p>
-							Radera övning?
+							Radera länk?
 							<span>
 								<button onClick={props.deleteHandleClickConfirm}><FA className={styles.codeIcon} name="check-circle" /></button>
 								<button onClick={props.deleteHandleClickCancel}><FA className={styles.codeIcon} name="times-circle" /></button>
