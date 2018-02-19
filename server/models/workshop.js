@@ -66,6 +66,20 @@ workshopSchema.methods.isAuthorizedToEdit = function (userId) {
 	return this.author === userId
 }
 
+workshopSchema.methods.populateAncestors = function (workshop) {
+	return workshop
+		.populate('ancestors.workshop', {
+			_id: 1,
+			pincode: 1,
+			title: 1
+		})
+		.populate('ancestors.author', {
+			_id: 1,
+			name: 1
+		})
+		.execPopulate()
+}
+
 export const workshopValidation = Joi.object().keys({
 	_id: Joi.object().required(),
 	title: Joi.string().required(),

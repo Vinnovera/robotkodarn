@@ -66,7 +66,6 @@ export const updateWorkshopProperties = (workshopId, workshopProperties) => (dis
 			}
 		})
 		.then(({ data }) => {
-			console.log(data)
 			dispatch({
 				type: UPDATE_WORKSHOP_PROPERTIES_DONE,
 				payload: true

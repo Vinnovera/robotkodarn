@@ -91,6 +91,15 @@ const addWorkshop = (request, reply) => {
 const updateWorkshop = async (request, reply) => {
 	try {
 		const workshop = await Workshop.findOne({ _id: request.params.id })
+			.populate('ancestors.workshop', {
+				_id: 1,
+				pincode: 1,
+				title: 1
+			})
+			.populate('ancestors.author', {
+				_id: 1,
+				name: 1
+			})
 		const updatedWorkshop = Object.assign(workshop, request.payload)
 
 		// Return with 401 (Unauthorized) if we don't have permission
