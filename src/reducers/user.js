@@ -11,11 +11,7 @@ export default handleActions({
 	SET_USER_INFO: (state, action) => {
 		return ({
 			...state,
-			_id: action.payload._id,
-			name: action.payload.name,
-			role: action.payload.role,
-			email: action.payload.email,
-			starredWorkshops: action.payload.starredWorkshops
+			...action.payload
 		})
 	},
 

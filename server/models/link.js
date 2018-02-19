@@ -10,6 +10,8 @@ const linkSchema = Schema({
 		type: String,
 		required: true
 	}
+}, {
+	timestamps: true
 })
 
 export const linkValidation = Joi.object().keys({

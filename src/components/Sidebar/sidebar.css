@@ -135,3 +135,31 @@
 :local .sidebarList {
 	margin-top: 20px;
 }
+
+/* ----------------------------------------
+ Properties button
+----------------------------------------- */
+:local .propertiesButton {
+	padding: 7px 0;
+	display: block;
+	width: 50%;
+	margin: 20px auto -10px auto;
+	background-color: #36968e;
+	color: white;
+	border-radius: 20px;
+	border: none;
+	font-family: 'Open Sans', sans-serif;
+	text-transform: uppercase;
+	font-size: 0.7rem;
+	font-weight: 400;
+	cursor: pointer;
+	transition: background-color .3s;
+}
+
+:local .propertiesButton:hover {
+	background-color: #22867f;
+}
+
+:local .propertiesButton span {
+	margin-right: 5px;
+}

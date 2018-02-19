@@ -1,0 +1,172 @@
+:local .workshopPropertiesWrapper h2 {
+	font-size: 1.5rem;
+	text-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+}
+	:local .workshopPropertiesWrapper form {
+		background: rgba(255, 255, 255, 1);
+		padding: 2rem;
+		border-radius: 5px;
+	}
+	:local .workshopPropertiesWrapper form p {
+		color: #3E3748;
+		margin-bottom: 20px;
+		font-size: 1rem;
+	}     
+
+	:local .workshopPropertiesWrapper form span.formHeading {
+		font-size: 1rem;
+		display: block;
+		color: #3E3748;
+		text-transform: uppercase;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
+	:local .workshopPropertiesWrapper .workshopMarksWrapper {
+		margin-bottom: 30px;
+	}
+		:local .workshopPropertiesWrapper .workshopMarksWrapper select {
+			display: inline-block;
+			width: auto;
+			cursor: pointer;
+			padding: 10px 40px 10px 15px;
+			outline: 0;
+			border: 1px solid #666;
+			border-radius: 0;
+			background: #ffffff;
+			-webkit-appearance: none;
+			margin: 0 10px 0 0;
+			-moz-appearance: none;
+			font-size: 1rem;
+			font-family: 'Open Sans', sans-serif;
+			color: #37303f;
+			position: relative;
+			max-width: 300px;
+		}
+			:local .workshopPropertiesWrapper .workshopMarksWrapper select:hover {
+				border: 1px solid black;
+				color: black;
+			}
+
+:local .selectWrapper {
+	display: inline-block;
+	position: relative;
+}
+	:local .selectWrapper::after {
+		font-family: 'FontAwesome';
+		content: '\f078';
+		color: #666;
+		position: absolute;
+		top: 50%;
+		right: 20px;
+		transform: translateY(-50%);
+	}
+
+	:local .selectWrapper:hover::after {
+		color: black;
+	}
+
+
+
+	/*----------------------------------------
+	  SAVE BUTTON
+	----------------------------------------*/	
+	:local .saveButtonContainer {
+		overflow: hidden;
+		}
+		
+		:local .saveButton {
+		width: auto;
+		float: right;
+		border-radius: 2px;
+		border: none;
+		color: #fff;
+		cursor: pointer;
+		display: block;
+		font: inherit;
+		font-size: 1rem;
+		transition: 300ms;
+		text-transform: uppercase;
+		padding: 1rem;
+		-webkit-font-smoothing: antialiased;
+		background-color: #36968e;
+		position: relative;
+		overflow: hidden;
+		}
+		:local .saveButton:hover {
+			background-color: #238F88;
+		}
+		:local .saveButton span {
+			margin-right: .5rem;
+		}
+		:local .saveButton[disabled] {
+			background: #b2b1b2;
+			cursor: not-allowed;
+		}
+		
+		
+		:local .saveButton div {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #2f8b56;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform: translateX(-100%);
+			transition: all .5s;
+		}
+		
+		:local .saveButtonSaved div {
+			box-shadow: 0 0 60px black;
+			transform: translateX(0);
+		}
+
+/*----------------------------------------
+  CHECKBOX
+----------------------------------------*/
+:local .workshopPropertiesWrapper .switch {
+	position: relative;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	width: 70px;
+	height: 30px;
+	display: inline-block;
+}
+:local .workshopPropertiesWrapper .switch input {
+	display: none;
+}
+	/* Rounded background (green) */
+	:local .workshopPropertiesWrapper .switch span::before {
+		content: '';
+		position: absolute;
+		width: 70px;
+		height: 30px;
+		background: grey;
+		border-radius: 20px;
+		transition: all .5s;
+	}
+	/* Rounded background when checked (green) */
+	:local .workshopPropertiesWrapper .switch input:checked + span::before {
+		background: #5bb25f;
+		transition: all .5s;
+	}
+	/* Rounded white switch */
+	:local .workshopPropertiesWrapper .switch span::after {
+		content: '';
+		position: absolute;
+		width: 24px;
+		height: 24px;
+		background: white;
+		border-radius: 50%;
+		top: 3px;
+		left: 0;
+		transform: translateX(15%);
+		box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
+		transition: all .5s;
+	}
+	:local .workshopPropertiesWrapper .switch input:checked + span::after {
+		transform: translateX(177%);
+	}

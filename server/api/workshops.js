@@ -13,14 +13,15 @@ const getWorkshops = (request, reply) => {
 		return reply(workshops).code(200)
 	}).populate('author', {
 		_id: 1,
-		name: 1
+		name: 1,
+		organisation: 1
 	})
 }
 
 // -----------------------------------------------------------------------------
 // Get one workshop with {id} [GET]
 // -----------------------------------------------------------------------------
-const getWorkshop = (request, reply) => {
+/* const getWorkshop = (request, reply) => {
 	Workshop.findOne({
 		_id: request.params.id
 	}, (error, workshops) => {
@@ -30,10 +31,10 @@ const getWorkshop = (request, reply) => {
 
 		return reply(workshops).code(200)
 	}).populate('author')
-}
+} */
 
 // -----------------------------------------------------------------------------
-// Get one workshop with {id} [GET]
+// Get all workshops created by logged in user - with {id} [GET]
 // -----------------------------------------------------------------------------
 const getWorkshopsByUserId = (request, reply) => {
 	const { _id } = request.auth.credentials
@@ -55,7 +56,8 @@ const getWorkshopsByUserId = (request, reply) => {
 
 const addWorkshop = (request, reply) => {
 	const user = request.auth.artifacts
-	const workshop = new Workshop(request.payload)
+
+	const workshop = new Workshop()
 	workshop.author = user._id
 
 	const trySave = async () => {
@@ -89,6 +91,15 @@ const addWorkshop = (request, reply) => {
 const updateWorkshop = async (request, reply) => {
 	try {
 		const workshop = await Workshop.findOne({ _id: request.params.id })
+			.populate('ancestors.workshop', {
+				_id: 1,
+				pincode: 1,
+				title: 1
+			})
+			.populate('ancestors.author', {
+				_id: 1,
+				name: 1
+			})
 		const updatedWorkshop = Object.assign(workshop, request.payload)
 
 		// Return with 401 (Unauthorized) if we don't have permission
@@ -180,7 +191,11 @@ const copyWorkshop = async (request, reply) => {
 			_id: mongoose.Types.ObjectId(),
 			isNew: true,
 			pincode: Math.floor(1000 + (Math.random() * 9000)),
-			author: loggedInUserId
+			author: loggedInUserId,
+			ancestors: (existingWorkshop.author !== loggedInUserId) ? [...existingWorkshop.ancestors, {
+				workshop: existingWorkshop._id,
+				author: existingWorkshop.author
+			}] : existingWorkshop.ancestors
 		})
 
 		await copy.save()
@@ -222,6 +237,15 @@ const getWorkshopByPin = (request, reply) => {
 
 		return reply(foundWorkshop).code(200)
 	})
+		.populate('ancestors.workshop', {
+			_id: 1,
+			pincode: 1,
+			title: 1
+		})
+		.populate('ancestors.author', {
+			_id: 1,
+			name: 1
+		})
 }
 
 exports.register = (server, options, next) => {
@@ -242,13 +266,13 @@ exports.register = (server, options, next) => {
 				auth: 'session'
 			}
 		},
-		{
-			method: 'GET',
-			path: '/api/workshop/{id}',
-			config: {
-				handler: getWorkshop
-			}
-		},
+		// {
+		// 	method: 'GET',
+		// 	path: '/api/workshop/{id}',
+		// 	config: {
+		// 		handler: getWorkshop
+		// 	}
+		// },
 		{
 			method: 'POST',
 			path: '/api/workshop',

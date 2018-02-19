@@ -1,8 +1,12 @@
 import { Invite } from '../models/invite'
 
 const addInvite = async (request, reply) => {
+	const { organisation } = request.payload
+
 	try {
 		const invite = new Invite()
+		invite.organisation = organisation
+
 		await invite.save()
 
 		return reply(invite).code(200)

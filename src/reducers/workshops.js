@@ -309,6 +309,28 @@ export default handleActions({
 			...state,
 			linkSaved: action.payload
 		})
+	},
+
+	SET_WORKSHOP_PROPERTIES_TO_UNSAVED: (state, action) => {
+		return ({
+			...state,
+			workshopPropertiesIsUnsaved: action.payload
+		})
+	},
+
+	UPDATE_WORKSHOP_PROPERTIES_START: (state) => {
+		return ({
+			...state,
+			isSavingWorkshopProperties: true
+		})
+	},
+
+	UPDATE_WORKSHOP_PROPERTIES_DONE: (state, action) => {
+		return ({
+			...state,
+			isSavingWorkshopProperties: false,
+			workshopPropertiesIsSaved: action.payload
+		})
 	}
 
 }, {
@@ -318,6 +340,7 @@ export default handleActions({
 	currentEditingType: 'part',
 	loginAttemptTimestamp: +new Date(),
 	codeSaved: false,
+	workshopPropertiesIsUnsaved: false,
 	activeLinkIndex: 0,
 	linkSaved: false,
 	isAddingPart: false,
@@ -325,5 +348,7 @@ export default handleActions({
 	isAddingWorkshop: false,
 	isLoadingUserWorkshops: false,
 	isLoadingAllWorkshops: false,
+	isSavingWorkshopProperties: false,
+	workshopPropertiesIsSaved: false,
 	activeWorkshopsTab: 'user'
 })

@@ -80,10 +80,9 @@ class UserWorkshops extends Component {
 
 	unstarWorkshop(e, workshopId) {
 		e.preventDefault()
-		// Disabled for beta
-		// if (!this.props.isUnstarringWorkshop) {
-		// 	this.props.dispatch(unstarWorkshop(workshopId))
-		// }
+		if (!this.props.isUnstarringWorkshop) {
+			this.props.dispatch(unstarWorkshop(workshopId))
+		}
 	}
 
 	toggleEditing(boolean = true) {

@@ -37,7 +37,16 @@ const userSchema = Schema({
 	starredWorkshops: [{
 		type: String,
 		ref: 'Workshop'
-	}]
+	}],
+	organisation: {
+		type: String,
+		required: true
+	},
+	lastLogin: {
+		type: Date
+	}
+}, {
+	timestamps: true
 })
 
 // We default with these three workshops
@@ -62,8 +71,10 @@ export const userValidation = Joi.object().keys({
 	role: Joi.string().required(),
 	invitationID: Joi.string().required(),
 	complete: Joi.boolean().required(),
-	starredWorkshop: Joi.array()
+	starredWorkshop: Joi.array(),
+	organisation: Joi.string().required(),
+	lastLogin: Joi.date()
 }).unknown()
 
 export const starredWorkshopValidation = Joi.string()
-
+export const dateValidation = Joi.date().required()

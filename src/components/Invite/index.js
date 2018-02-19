@@ -12,7 +12,7 @@ class Invite extends Component {
 	 * Creates a unique invitation ID
 	 */
 	createInviteLink = () => {
-		this.props.dispatch(addInvitationID())
+		this.props.dispatch(addInvitationID(this.props.organisation))
 	}
 
 	render() {
@@ -57,7 +57,8 @@ class Invite extends Component {
 function mapStateToProps(state) {
 	return {
 		invite: state.invite.items,
-		role: state.user.role
+		role: state.user.role,
+		organisation: state.user.organisation
 	}
 }
 
