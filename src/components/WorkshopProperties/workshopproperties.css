@@ -10,7 +10,7 @@
 	:local .workshopPropertiesWrapper form p {
 		color: #3E3748;
 		margin-bottom: 20px;
-		font-size: 0.8rem;
+		font-size: 1rem;
 	}     
 
 	:local .workshopPropertiesWrapper form span.formHeading {
