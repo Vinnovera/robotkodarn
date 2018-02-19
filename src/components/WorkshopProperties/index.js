@@ -79,6 +79,16 @@ class WorkshopProperties extends Component {
 		this.props.dispatch(updateWorkshopProperties(this.props.currentWorkshop._id, updatedProperties))
 	}
 
+	renderProperties() {
+		const lastAncestor = this.props.currentWorkshop.ancestors[this.props.currentWorkshop.ancestors.length - 1]
+		const parsedDate = this.props.currentWorkshop.createdAt.slice(0, 10)
+
+		if (lastAncestor) {
+			return <p>Den här lektionen är en kopia av { lastAncestor.workshop.title } som skapades av { lastAncestor.author.name }. Kopian skapades { parsedDate }.</p>
+		}
+		return <p>Den här lektionen skapades av dig { parsedDate }.</p>
+	}
+
 	render() {
 		return (
 			<div className={styles.workshopPropertiesWrapper}>
@@ -87,7 +97,7 @@ class WorkshopProperties extends Component {
 					onSubmit={this.props.workshopPropertiesIsUnsaved ? this.updateWorkshopProperties : ''}
 					className={styles.linkForm}
 				>
-
+					{ this.renderProperties() }
 					<span className={styles.formHeading}>Märk din lektion</span>
 
 					<div className={styles.workshopMarksWrapper}>
@@ -151,7 +161,8 @@ function mapStateToProps(state) {
 		activeLinkIndex: state.workshops.activeLinkIndex,
 		workshopPropertiesIsUnsaved: state.workshops.workshopPropertiesIsUnsaved,
 		isSavingWorkshopProperties: state.workshops.isSavingWorkshopProperties,
-		workshopPropertiesIsSaved: state.workshops.workshopPropertiesIsSaved
+		workshopPropertiesIsSaved: state.workshops.workshopPropertiesIsSaved,
+		userId: state.user._id
 	}
 }
 

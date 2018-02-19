@@ -6,7 +6,11 @@
 		background: rgba(255, 255, 255, 1);
 		padding: 2rem;
 		border-radius: 5px;
-	}    
+	}
+	:local .workshopPropertiesWrapper form p {
+		color: #3E3748;
+		margin-bottom: 20px;
+	}     
 
 	:local .workshopPropertiesWrapper form span.formHeading {
 		font-size: 1rem;
