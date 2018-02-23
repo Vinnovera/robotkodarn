@@ -12,7 +12,8 @@ export default function webpackRegistration(server) {
 					noInfo: true,
 					publicPath: wpconfig.output.publicPath,
 					quiet: true
-				}
+				},
+				hot: new webpack.HotModuleReplacementPlugin()
 			}
 		}])
 	)

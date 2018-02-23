@@ -7,6 +7,7 @@ module.exports = {
 	devtool: 'source-map',
 	entry: [
 		'babel-polyfill',
+		'webpack-hot-middleware/client',
 		'./src/index'
 	],
 	output: {
@@ -15,6 +16,7 @@ module.exports = {
 		publicPath: '/static/'
 	},
 	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
 		function () {
 			this.plugin('done', (stats) => {
