@@ -15,6 +15,14 @@
 	width: 100%;
 	-webkit-font-smoothing: antialiased;
 	transition: all .3s;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+:local .button:hover,
+:local .buttonSuccess:hover,
+:local .buttonDanger:hover {
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+	transform: translateY(-1px) scale(1.01);
 }
 
 :local .buttonSuccess {

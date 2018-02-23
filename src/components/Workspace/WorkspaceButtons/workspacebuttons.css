@@ -1,9 +1,9 @@
 :local .codeButtonsWrapper {
-		display: flex;
-		float: right; /* To put buttons where they belong */
-		margin-top: -50px;
-		width: 25rem;
-	}
+	display: flex;
+	float: right; /* To put buttons where they belong */
+	margin-top: -50px;
+	width: 25rem;
+}
 	
 	:local .codeButtonsWrapper button:first-of-type {
 		margin-right: 10px;
