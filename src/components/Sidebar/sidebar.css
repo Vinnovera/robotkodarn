@@ -86,6 +86,43 @@
 	padding: 0.5rem 2rem;
 }
 
+:local .blurred {
+	color: transparent;
+	text-shadow: 0 0 5px rgba(255, 255, 255, 1);
+	position: relative;
+	cursor: pointer;
+}
+	:local .blurred:hover::after {
+		opacity: 1;
+	}
+	:local .blurred::before {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		content: '⚠️';
+		color: white;
+		text-align: center;
+		font-size: 1.5rem;
+		width: 100%;
+		text-shadow: 0px 0px 10px black;
+	}
+	:local .blurred::after {
+		transition: all .3s;
+		opacity: 0;
+		content: 'Lektionen \E4r ej publicerad';
+		color: white;
+		padding: 5px;
+		background: #151515;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 200%;
+		border-radius: 15px;
+		text-shadow: none;
+	}
+
 /* -----------------------------------------------------------------------------
 	TOGGLE SIDEBAR BUTTON
 ------------------------------------------------------------------------------*/

@@ -225,6 +225,26 @@
 				:local .deletePromptWrapper p span button span {
 					font-size: 1.4rem;
 				}
+
+/* :local .isNotPublished td:first-child::before {
+	position: absolute;
+	content: '';
+	top: 0;
+	left: 5px;
+	width: 10px;
+	height: 10px;
+	background: red;
+} */
+:local .isNotPublished td:first-child span {
+	font-style: italic;
+	font-weight: 100;
+}
+
+:local .isNotPublished .pin {
+	color: transparent;
+	text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+	cursor: default;
+}
 				
 @keyframes :local(slideIn) {
 	from {

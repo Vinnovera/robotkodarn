@@ -78,6 +78,7 @@ class AllWorkshops extends Component {
 	}
 
 	renderListOfWorkshops() {
+		console.log(this.props.allWorkshops)
 		return (
 			<FadeIn>
 				<table className={styles.workshopTable}>
@@ -93,7 +94,7 @@ class AllWorkshops extends Component {
 					</thead>
 					<tbody>
 						{
-							this.props.allWorkshops.map((workshop) => {
+							this.props.allWorkshops.filter(workshop => workshop.isPublished).map((workshop) => {
 								const isStarred = this.props.starredWorkshops.filter((starredWorkshop) => {
 									return starredWorkshop._id === workshop._id
 								}).length > 0
