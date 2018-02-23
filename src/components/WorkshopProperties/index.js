@@ -20,7 +20,6 @@ class WorkshopProperties extends Component {
 
 		this.handleSelectChange = this.handleSelectChange.bind(this)
 		this.updateWorkshopProperties = this.updateWorkshopProperties.bind(this)
-		this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
 	}
 
 	componentWillMount() {
@@ -61,19 +60,6 @@ class WorkshopProperties extends Component {
 			}
 			this.checkSaveState()
 		})
-	}
-
-	handleCheckboxChange() {
-		const { grade, subject, hardware } = this.state
-		if (grade && subject && hardware) {
-			this.setState({
-				isPublished: !this.state.isPublished
-			}, () => {
-				this.checkSaveState()
-			})
-		} else {
-			alert('Du måste märka din lektion först')
-		}
 	}
 
 	updateWorkshopProperties(e) {
