@@ -146,12 +146,15 @@
 		height: 30px;
 		background: grey;
 		border-radius: 20px;
-		transition: all .5s;
 	}
 	/* Rounded background when checked (green) */
 	:local .workshopPropertiesWrapper .switch input:checked + span::before {
 		background: #5bb25f;
+	}
+	:local .workshopPropertiesWrapper .switch span::before,
+	:local .workshopPropertiesWrapper .switch input:checked + span::before {
 		transition: all .5s;
+		box-shadow: inset 0px 5px 10px rgba(0, 0, 0, .3);
 	}
 	/* Rounded white switch */
 	:local .workshopPropertiesWrapper .switch span::after {
