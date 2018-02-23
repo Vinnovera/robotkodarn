@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import FA from 'react-fontawesome'
 import { setConsoleOutput, clearConsole } from '../../actions/console'
 import { toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
 import styles from './console.css'
@@ -39,11 +40,16 @@ export class Console extends Component {
 			<div className={styles.consoleWrapper}>
 				<h3 className={styles.headline}>
 					Konsol
-					<button className={`${styles.consoleButton} ${this.props.editing ? styles.editMode : ''}`} onClick={this.handleClearConsoleClick}>
-						Rensa konsol
-					</button>
 				</h3>
 				<div className={`${styles.console} ${this.props.editing ? styles.makeRoomForSaveButton : ''}`} id="console">
+					<div className={styles.innerButtons}>
+						<button onClick={this.handleClearConsoleClick}>
+							<FA name="trash-o" />
+						</button>
+						<button>
+							<FA name="chevron-down" />
+						</button>
+					</div>
 					<pre>
 						{
 							this.props.consoleOutput.map((message) => {
