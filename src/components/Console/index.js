@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FA from 'react-fontawesome'
-import { setConsoleOutput, clearConsole } from '../../actions/console'
+import { setConsoleOutput, clearConsole, showConsole } from '../../actions/console'
 import { toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
 import styles from './console.css'
 
@@ -9,6 +9,7 @@ export class Console extends Component {
 	constructor(props) {
 		super(props)
 		this.handleClearConsoleClick = this.handleClearConsoleClick.bind(this)
+		this.toggleConsole = this.toggleConsole.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -35,19 +36,23 @@ export class Console extends Component {
 		this.props.dispatch(clearConsole())
 	}
 
+	toggleConsole() {
+		this.props.dispatch(showConsole())
+	}
+
 	render() {
 		return (
-			<div className={styles.consoleWrapper}>
+			<div className={`${styles.consoleWrapper} ${this.props.showConsole ? '' : styles.hidden}`}>
 				<h3 className={styles.headline}>
 					Konsol
 				</h3>
 				<div className={`${styles.console} ${this.props.editing ? styles.makeRoomForSaveButton : ''}`} id="console">
-					<div className={styles.innerButtons}>
+					<div className={`${styles.innerButtons} ${!this.props.showConsole ? styles.minimized : ''}`}>
 						<button onClick={this.handleClearConsoleClick}>
 							<FA name="trash-o" />
 						</button>
-						<button>
-							<FA name="chevron-down" />
+						<button onClick={this.toggleConsole}>
+							<FA name={this.props.showConsole ? 'chevron-down' : 'chevron-up'} />
 						</button>
 					</div>
 					<pre>
@@ -88,7 +93,8 @@ function mapStateToProps(state) {
 	return {
 		compilerResponse: state.editor.compilerResponse || '',
 		consoleOutput: state.editor.consoleOutput,
-		editing: state.editor.editing
+		editing: state.editor.editing,
+		showConsole: state.editor.showConsole
 	}
 }
 

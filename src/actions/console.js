@@ -1,5 +1,6 @@
 const SET_CONSOLE_OUTPUT = 'SET_CONSOLE_OUTPUT'
 const CLEAR_CONSOLE = 'CLEAR_CONSOLE'
+const SHOW_CONSOLE = 'SHOW_CONSOLE'
 
 // -----------------------------------------------------------------------------
 // setConsoleOutput
@@ -31,5 +32,14 @@ export const setConsoleOutput = output => (dispatch) => {
 export const clearConsole = () => (dispatch) => {
 	dispatch({
 		type: CLEAR_CONSOLE
+	})
+}
+
+// -----------------------------------------------------------------------------
+// toggleConsole, show or hide
+// -----------------------------------------------------------------------------
+export const showConsole = () => (dispatch) => {
+	dispatch({
+		type: SHOW_CONSOLE
 	})
 }

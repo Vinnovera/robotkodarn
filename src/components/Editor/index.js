@@ -207,7 +207,7 @@ export class Editor extends Component {
 
 	render() {
 		return (
-			<div className={styles.codeWrapper}>
+			<div className={`${styles.codeWrapper} ${this.props.showConsole ? '' : styles.expanded}`}>
 				{this.renderTabs()}
 				{/* {this.renderUndoRedo()} */}
 				{this.renderFontSizeButtons()}
@@ -227,7 +227,8 @@ function mapStateToProps(state) {
 		editing: state.workshops.editing,
 		connectedDevice: state.statusBar.connectedDevice,
 		currentWorkshop: state.workshops.item,
-		editorFontSize: state.editor.editorFontSize
+		editorFontSize: state.editor.editorFontSize,
+		showConsole: state.editor.showConsole
 	}
 }
 

@@ -39,6 +39,10 @@
 	color: #3E3748;
 }
 
+:local .codeWrapper.expanded {
+	height: calc(100% - 140px)
+}
+
 :local .undo,
 :local .redo {
 	position: absolute;

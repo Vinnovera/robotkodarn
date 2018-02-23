@@ -53,6 +53,19 @@
 	color: #239efa;
 }
 
+:local .consoleWrapper.hidden {
+	margin-top: 15px;
+	height: 30px;
+	width: calc(100% - 40px);
+	position: absolute;
+	bottom: 62px;
+	left: 20px;
+}
+
+
+:local .consoleWrapper.hidden  .console{
+	height: 53px;
+}
 
 @keyframes :local(fadeout) {
 	0% {
@@ -144,4 +157,8 @@
 
 :local .innerButtons button:hover{
 	color: #fe5d4b
+}
+
+:local .minimized {
+	right: 7px;
 }

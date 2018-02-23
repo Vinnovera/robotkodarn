@@ -45,6 +45,13 @@ export default handleActions({
 		})
 	},
 
+	SHOW_CONSOLE: (state) => {
+		return ({
+			...state,
+			showConsole: !state.showConsole
+		})
+	},
+
 	CLEAR_CONSOLE: (state) => {
 		return ({
 			...state,
@@ -91,6 +98,7 @@ export default handleActions({
 	activeTab: 'user',
 	compilerResponse: null,
 	consoleOutput: [],
+	showConsole: true,
 	activePartIndex: 0,
 	editing: false,
 	editingType: {
