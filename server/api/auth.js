@@ -9,6 +9,7 @@ const signIn = (request, reply) => {
 		return reply({ message: 'Missing email or password' }).code(401)
 	}
 
+
 	User.findOne({ email: request.payload.email }, (error, user) => {
 		if (error) return reply(error).code(500)
 
@@ -36,6 +37,8 @@ const signIn = (request, reply) => {
 						reply({
 							user: { _id, name, lastLogin, email, organisation, starredWorkshops, role }
 						}).code(200)
+					} else {
+						reply({ error: saveError }).code(500)
 					}
 				})
 			} else {

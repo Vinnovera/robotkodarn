@@ -39,8 +39,10 @@ const userSchema = Schema({
 		ref: 'Workshop'
 	}],
 	organisation: {
-		type: String,
-		required: true
+		type: String
+		// Disabled for now so you don't get errors when trying to log in to newer deploys
+		// with old created users
+		// required: true
 	},
 	lastLogin: {
 		type: Date
