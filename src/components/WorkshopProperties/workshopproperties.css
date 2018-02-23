@@ -123,53 +123,7 @@
 			transform: translateX(0);
 		}
 
-/*----------------------------------------
-  CHECKBOX
-----------------------------------------*/
-:local .workshopPropertiesWrapper .switch {
-	position: relative;
-	cursor: pointer;
-	position: relative;
-	overflow: hidden;
-	width: 70px;
-	height: 30px;
-	display: inline-block;
+
+:local .publishedWarning {
+	color: red !important;
 }
-:local .workshopPropertiesWrapper .switch input {
-	display: none;
-}
-	/* Rounded background (green) */
-	:local .workshopPropertiesWrapper .switch span::before {
-		content: '';
-		position: absolute;
-		width: 70px;
-		height: 30px;
-		background: grey;
-		border-radius: 20px;
-	}
-	/* Rounded background when checked (green) */
-	:local .workshopPropertiesWrapper .switch input:checked + span::before {
-		background: #5bb25f;
-	}
-	:local .workshopPropertiesWrapper .switch span::before,
-	:local .workshopPropertiesWrapper .switch input:checked + span::before {
-		transition: all .5s;
-		box-shadow: inset 0px 5px 10px rgba(0, 0, 0, .3);
-	}
-	/* Rounded white switch */
-	:local .workshopPropertiesWrapper .switch span::after {
-		content: '';
-		position: absolute;
-		width: 24px;
-		height: 24px;
-		background: white;
-		border-radius: 50%;
-		top: 3px;
-		left: 0;
-		transform: translateX(15%);
-		box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
-		transition: all .5s;
-	}
-	:local .workshopPropertiesWrapper .switch input:checked + span::after {
-		transform: translateX(177%);
-	}

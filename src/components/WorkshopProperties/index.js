@@ -49,6 +49,16 @@ class WorkshopProperties extends Component {
 		this.setState({
 			[e.target[0].value]: e.target.value
 		}, () => {
+			const { grade, subject, hardware } = this.state
+			if (grade && subject && hardware) {
+				this.setState({
+					isPublished: true
+				})
+			} else {
+				this.setState({
+					isPublished: false
+				})
+			}
 			this.checkSaveState()
 		})
 	}
@@ -79,14 +89,13 @@ class WorkshopProperties extends Component {
 		this.props.dispatch(updateWorkshopProperties(this.props.currentWorkshop._id, updatedProperties))
 	}
 
-	renderProperties() {
+	renderPropertiesText() {
 		const lastAncestor = this.props.currentWorkshop.ancestors[this.props.currentWorkshop.ancestors.length - 1]
 		const parsedDate = this.props.currentWorkshop.createdAt.slice(0, 10)
 
-		if (lastAncestor) {
-			return <p>Den här lektionen är en kopia av { lastAncestor.workshop.title } som skapades av { lastAncestor.author.name }. Kopian skapades { parsedDate }.</p>
-		}
-		return <p>Den här lektionen skapades av dig { parsedDate }.</p>
+		return lastAncestor
+			? <p>Den här lektionen är en kopia av { lastAncestor.workshop.title } som skapades av { lastAncestor.author.name }. Kopian skapades { parsedDate }.</p>
+			: <p>Den här lektionen skapades av dig { parsedDate }.</p>
 	}
 
 	render() {
@@ -97,7 +106,7 @@ class WorkshopProperties extends Component {
 					onSubmit={this.props.workshopPropertiesIsUnsaved ? this.updateWorkshopProperties : ''}
 					className={styles.linkForm}
 				>
-					{ this.renderProperties() }
+					{ this.renderPropertiesText() }
 					<span className={styles.formHeading}>Märk din lektion</span>
 
 					<div className={styles.workshopMarksWrapper}>
@@ -131,12 +140,14 @@ class WorkshopProperties extends Component {
 
 					</div>
 
-					<span className={styles.formHeading}>Ska lektionen vara publicerad?</span>
+					{
+						!this.props.currentWorkshop.isPublished ?
+							<p className={styles.publishedWarning}>
+								Din lektion är inte publicerad och syns inte i listan bland workshops.<br />
+								För att publicera denna lektion måste du märka upp den med årskurs, ämne och hårdvara.
+							</p> : ''
 
-					<label className={styles.switch} htmlFor="checkbox">
-						<input type="checkbox" id="checkbox" checked={this.state.isPublished} onChange={this.handleCheckboxChange} />
-						<span className="slider" />
-					</label>
+					}
 
 					<div className={styles.saveButtonContainer}>
 
