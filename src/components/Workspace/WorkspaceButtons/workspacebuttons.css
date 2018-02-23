@@ -53,14 +53,19 @@
 		fill: white;
 	}
 	
-	:local .cogwheelIcon.compileButtonIsAnimated path:nth-child(odd) {
+	:local .cogwheelIcon.compileButtonIsAnimated path:nth-child(1) {
 		animation: cogwheel--rotate-right 5s infinite linear;
-		transform-origin: center;
+		transform-origin: 71.6% 18.5%;
 	}
 	
 	:local .cogwheelIcon.compileButtonIsAnimated path:nth-child(even) {
 		animation: cogwheel--rotate-left 5s infinite linear;
-		transform-origin: center;
+		transform-origin: 31.5% 48.9%
+	}
+
+	:local .cogwheelIcon.compileButtonIsAnimated path:nth-child(3) {
+		animation: cogwheel--rotate-right 5s infinite linear;
+		transform-origin: 71.6% 79.9%;
 	}
 	
 	@keyframes :local(cogwheel--rotate-right) {

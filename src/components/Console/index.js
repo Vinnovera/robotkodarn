@@ -26,6 +26,10 @@ export class Console extends Component {
 		}
 	}
 
+	componentWillUnmount() {
+		this.props.dispatch(clearConsole())
+	}
+
 	handleClearConsoleClick() {
 		this.props.dispatch(clearConsole())
 	}
