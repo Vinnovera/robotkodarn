@@ -78,7 +78,6 @@ class AllWorkshops extends Component {
 	}
 
 	renderListOfWorkshops() {
-		console.log(this.props.allWorkshops)
 		return (
 			<FadeIn>
 				<table className={styles.workshopTable}>

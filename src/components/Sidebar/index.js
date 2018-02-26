@@ -40,7 +40,7 @@ class Sidebar extends Component {
 			<aside className={this.getSidebarClassName()}>
 				<h1>Robotkodarn</h1>
 				<section>
-					<p className={`${styles.pinCode} ${!this.props.workshop.isPublished ? styles.blurred : ''}`}>{this.props.workshop.pincode}</p>
+					<p className={`${styles.pinCode} ${!this.props.workshop.isPublished ? styles.blurred : ''}`}>{this.props.workshop.isPublished ? this.props.workshop.pincode : 'XXXX'}</p>
 					{
 						this.props.editing
 							? <button onClick={this.showProperties} className={styles.propertiesButton}><FA name="wrench" />Egenskaper</button>

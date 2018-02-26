@@ -23,7 +23,7 @@ const MyWorkshops = ({ ...props }) => {
 										{workshop.title} { !workshop.isPublished && <span>(ej publicerad)</span> }
 									</Link>
 								</td>
-								<td className={props.styles.pin}>{workshop.pincode}</td>
+								<td className={props.styles.pin}>{workshop.isPublished ? workshop.pincode : 'XXXX'}</td>
 								<td>
 									<button onClick={e => props.copyWorkshop(e, workshop._id)} type="submit" className={props.styles.tableIcon} value={workshop._id} name="copy">
 										<FA name="clone" />
