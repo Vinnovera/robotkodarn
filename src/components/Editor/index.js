@@ -65,6 +65,13 @@ export class Editor extends Component {
 				this.props.dispatch(toggleCodeButtons(true))
 			}
 		}
+
+		if (nextProps.showConsole !== this.props.showConsole) {
+			// Fix for AceEditor to adapt to the new size when toggling the console
+			setTimeout(() => {
+				window.dispatchEvent(new Event('resize'))
+			}, 300)
+		}
 	}
 	componentWillUnmount() {
 		// Empty the partsToEdit so it will re-init when going in this component again
