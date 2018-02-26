@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import FA from 'react-fontawesome'
 
-import { updatePartContent, setCodeToUnsaved } from '../../actions/parts'
 import { findWorkshopByPin, clearWorkshop, setCurrentEditingType } from '../../actions/workshops'
 import { setUserInfo } from '../../actions/user'
 
@@ -22,12 +20,6 @@ import WorkspaceButtons from './WorkspaceButtons'
 import styles from './workspace.css'
 
 export class Workspace extends Component {
-	constructor(props) {
-		super(props)
-
-		this.updateCode = this.updateCode.bind(this)
-	}
-
 	componentWillMount() {
 		this.props.dispatch(setUserInfo())
 		this.props.dispatch(findWorkshopByPin(this.props.params.pin))
@@ -45,15 +37,6 @@ export class Workspace extends Component {
 		return `${styles.mainPane} ${styles.mainPaneExpanded}`
 	}
 
-	updateCode() {
-		const currentPartContent = this.props.partsToEdit[this.props.activePartIndex].content
-		const workshopId = this.props.currentWorkshop._id
-		const currentPartId = this.props.partsToEdit[this.props.activePartIndex]._id
-
-		this.props.dispatch(updatePartContent(currentPartContent, workshopId, currentPartId))
-		this.props.dispatch(setCodeToUnsaved(false))
-	}
-
 	renderCurrentEditingType() {
 		if (this.props.currentEditingType === 'link') {
 			return this.props.currentWorkshop.links.length > 0
@@ -67,18 +50,10 @@ export class Workspace extends Component {
 			<div style={{ height: '100%' }}>
 				<PartTitle />
 				<WorkspaceButtons />
-				<Editor />
-				<div className={styles.saveCodeButtonContainer}>
-					<button
-						disabled={!this.props.codeIsUnsaved}
-						className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`}
-						onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}
-					>
-						<div><span><FA name="check" /> Sparat</span></div>
-						<FA name="save" /> Spara kod
-					</button>
+				<div className={styles.editorConsoleWrapper}>
+					<Editor />
+					<Console />
 				</div>
-				<Console />
 			</div>) : <h3>Det finns inga lektioner!</h3>
 	}
 
@@ -109,8 +84,10 @@ export class Workspace extends Component {
 								<h1 className={styles.workspaceHeadline}>Övning</h1>
 							}
 							<WorkspaceButtons />
-							<Editor />
-							<Console />
+							<div className={styles.editorConsoleWrapper}>
+								<Editor />
+								<Console />
+							</div>
 						</main>
 					</FadeIn>
 				</View>
@@ -138,9 +115,7 @@ function mapStateToProps(state) {
 		editingType: state.editor.editingType.type,
 		partsToEdit: state.editor.partsToEdit,
 		isLoggedIn: state.user.isLoggedIn,
-		currentEditingType: state.workshops.currentEditingType,
-		codeSaved: state.workshops.codeSaved, // When code is saved (when button is pressed)
-		codeIsUnsaved: state.editor.codeIsUnsaved // When content in editor has changed and you have unsaved content
+		currentEditingType: state.workshops.currentEditingType
 	}
 }
 

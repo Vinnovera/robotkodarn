@@ -46,7 +46,7 @@ export class Console extends Component {
 				<h3 className={styles.headline}>
 					Konsol
 				</h3>
-				<div className={`${styles.console} ${this.props.editing ? styles.makeRoomForSaveButton : ''}`} id="console">
+				<div className={styles.console} id="console">
 					<div className={`${styles.innerButtons} ${!this.props.showConsole ? styles.minimized : ''}`}>
 						<button onClick={this.handleClearConsoleClick}>
 							<FA name="trash-o" />

@@ -17,12 +17,17 @@ import 'brace/theme/tomorrow'
 import FA from 'react-fontawesome'
 import { changeEditorTab, changeEditorFontSize } from '../../actions/editor'
 import { setConsoleOutput } from '../../actions/console'
-import { setPartsToEdit, setCodeToUnsaved } from '../../actions/parts'
+import { setPartsToEdit, setCodeToUnsaved, updatePartContent } from '../../actions/parts'
 import { uploadCode, toggleCodeButtons, animateCompileButton } from '../../actions/workspaceButtons'
 
 import styles from './editor.css'
 
 export class Editor extends Component {
+	constructor(props) {
+		super(props)
+
+		this.updateCode = this.updateCode.bind(this)
+	}
 	/*
 	 * Make a copy of original parts and add the array in Redux state
 	 * if it's not already there.
@@ -135,7 +140,7 @@ export class Editor extends Component {
 				mode="c_cpp"
 				name="codeEditor"
 				width="100%"
-				height="90%"
+				height="calc(100% - 38.39px)"
 				highlightActiveLine={userTab}
 				editorProps={{ $blockScrolling: true }}
 				showPrintMargin={false}
@@ -205,12 +210,37 @@ export class Editor extends Component {
 		)
 	}
 
+	updateCode() {
+		const currentPartContent = this.props.partsToEdit[this.props.activePartIndex].content
+		const workshopId = this.props.currentWorkshop._id
+		const currentPartId = this.props.partsToEdit[this.props.activePartIndex]._id
+
+		this.props.dispatch(updatePartContent(currentPartContent, workshopId, currentPartId))
+		this.props.dispatch(setCodeToUnsaved(false))
+	}
+
+	renderSaveCodeButton() {
+		return (this.props.isLoggedIn && this.props.editing) ? (
+			<div className={styles.saveCodeButtonContainer}>
+				<button
+					disabled={!this.props.codeIsUnsaved}
+					className={`${styles.saveCodeButton} ${this.props.codeSaved ? styles.saveCodeButtonSaved : ''}`}
+					onClick={!this.props.codeSaved && this.props.codeIsUnsaved ? this.updateCode : ''}
+				>
+					<div><span><FA name="check" /> Sparat</span></div>
+					<FA name="save" /> Spara kod
+				</button>
+			</div>
+		) : null
+	}
+
 	render() {
 		return (
 			<div className={`${styles.codeWrapper} ${this.props.showConsole ? '' : styles.expanded}`}>
 				{this.renderTabs()}
 				{/* {this.renderUndoRedo()} */}
 				{this.renderFontSizeButtons()}
+				{this.renderSaveCodeButton()}
 				{this.renderAceEditor()}
 			</div>
 		)
@@ -224,11 +254,14 @@ function mapStateToProps(state) {
 		willUpload: state.editor.willUpload,
 		activePartIndex: state.editor.activePartIndex,
 		partsToEdit: state.editor.partsToEdit,
-		editing: state.workshops.editing,
+		editing: state.editor.editing,
 		connectedDevice: state.statusBar.connectedDevice,
 		currentWorkshop: state.workshops.item,
 		editorFontSize: state.editor.editorFontSize,
-		showConsole: state.editor.showConsole
+		showConsole: state.editor.showConsole,
+		codeIsUnsaved: state.editor.codeIsUnsaved, // When content in editor has changed and you have unsaved content
+		codeSaved: state.workshops.codeSaved, // When code is saved (when button is pressed)
+		isLoggedIn: state.user.isLoggedIn
 	}
 }
 

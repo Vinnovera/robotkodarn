@@ -1,9 +1,11 @@
-:local .makeRoomForSaveButton {
-	height: calc(100% - 105px) !important;
-}
 :local .consoleWrapper {
 	margin-top: 15px;
-	height: 32.5%;
+	height: 30%;
+
+	/* width: calc(100% - 40px); */
+	/* position: absolute;
+	bottom: 62px;
+	left: 20px; */
 }
 
 :local .headline {
@@ -53,18 +55,8 @@
 	color: #239efa;
 }
 
-:local .consoleWrapper.hidden {
-	margin-top: 15px;
-	height: 30px;
-	width: calc(100% - 40px);
-	position: absolute;
-	bottom: 62px;
-	left: 20px;
-}
-
-
-:local .consoleWrapper.hidden  .console{
-	height: 53px;
+:local .consoleWrapper.hidden .console {
+	height: 59px;
 }
 
 @keyframes :local(fadeout) {
@@ -160,5 +152,5 @@
 }
 
 :local .minimized {
-	right: 7px;
+	/* right: 7px; */
 }

@@ -48,7 +48,8 @@ module.exports = {
 			"error",
 			"tab"
 		],
-		"no-nested-ternary": 0
+		"no-nested-ternary": 0,
+		"react/sort-comp": "off"
 	},
 	"globals": {
 		"chrome": false
