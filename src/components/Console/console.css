@@ -20,6 +20,7 @@
 	background: white;
 	font-size: 1rem;
 	overflow-y: scroll;
+	transition: height .3s;
 }
 
 :local .console pre {
@@ -55,7 +56,7 @@
 	color: #239efa;
 }
 
-:local .consoleWrapper.hidden .console {
+:local .consoleWrapper.collapsed .console {
 	height: 59px;
 }
 

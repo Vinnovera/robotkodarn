@@ -75,9 +75,6 @@
 
 
 	:local .editorConsoleWrapper {
-		display: flex;
-		flex-direction: column;
 		width: 100%;
 		height: calc(100% - 85px);
-		justify-content: space-between;
 	}

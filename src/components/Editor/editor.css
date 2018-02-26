@@ -1,6 +1,7 @@
 :local .codeWrapper {
 	position: relative;
 	height: 70%;
+	transition: height .3s;
 }
 
 #codeEditor {
@@ -168,5 +169,5 @@
 }
 
 :local .expanded {
-	height: calc(100% - 102px);
+	height: calc(100% - 93px);
 }

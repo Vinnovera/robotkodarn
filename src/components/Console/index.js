@@ -42,7 +42,7 @@ export class Console extends Component {
 
 	render() {
 		return (
-			<div className={`${styles.consoleWrapper} ${this.props.showConsole ? '' : styles.hidden}`}>
+			<div className={`${styles.consoleWrapper} ${this.props.showConsole ? '' : styles.collapsed}`}>
 				<h3 className={styles.headline}>
 					Konsol
 				</h3>
