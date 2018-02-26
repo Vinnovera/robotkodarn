@@ -33,10 +33,8 @@ export class Editor extends Component {
 	 * if it's not already there.
 	 */
 	componentWillMount() {
-		if (this.props.partsToEdit.length === 0) {
-			const copyOfParts = [...this.props.currentWorkshop.parts]
-			this.props.dispatch(setPartsToEdit(copyOfParts))
-		}
+		const copyOfParts = [...this.props.currentWorkshop.parts]
+		this.props.dispatch(setPartsToEdit(copyOfParts))
 	}
 	componentWillReceiveProps(nextProps) {
 		let msg
@@ -73,11 +71,6 @@ export class Editor extends Component {
 			}, 300)
 		}
 	}
-	componentWillUnmount() {
-		// Empty the partsToEdit so it will re-init when going in this component again
-		this.props.dispatch(setPartsToEdit([]))
-	}
-
 
 	/*
 	 * Update Redux state on the fly
